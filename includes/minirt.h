@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/08/26 11:07:13 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/27 01:49:02 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ t_vec3				vec3_new(float x, float y, float z);
 
 typedef struct s_rgba
 {
-	char			b;
-	char			g;
-	char			r;
-	char			a;
+	unsigned char	b;
+	unsigned char	g;
+	unsigned char	r;
+	unsigned char	a;
 }					t_rgba;
 
 typedef union u_color
@@ -56,7 +56,25 @@ typedef union u_color
 	t_rgba			rgba;
 }					t_color;
 
+# define MAX_UCHAR_2 65025;
+# define DIV_MAX_UCHAR_2 0.000015384615384615385;
+
+/**
+ * @brief Color with correction and in float
+ * 
+ */
+typedef struct s_color_c
+{
+	float			b;
+	float			g;
+	float			r;
+	float			a;
+}					t_color_c;
+
 t_rgba				color_new(char a, char r, char g, char b);
+t_color_c			color_tween(t_color_c color1, t_color_c color2, double t);
+t_color_c			color_correct(t_color color);
+t_color				color_revert(t_color_c color_c);
 typedef struct s_image
 {
 	void			*img;

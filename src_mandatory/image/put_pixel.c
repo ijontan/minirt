@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 21:20:25 by itan              #+#    #+#             */
-/*   Updated: 2023/08/26 11:24:33 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/26 23:28:00 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ unsigned int	convert_endian(unsigned int color)
 
 	tmp.as_int = color;
 	rgba = tmp.rgba;
-	return ((unsigned int)(unsigned char[4]){rgba.a, rgba.r, rgba.g, rgba.b});
+	tmp.rgba = (t_rgba){rgba.a, rgba.r, rgba.g, rgba.b};
+	return (tmp.as_int);
 }
 // for (unsigned char *ptr = &color; ptr < &color + 1; ptr++)
 // 	printf("[%x]", *ptr);
