@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/08/27 01:49:02 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/27 03:02:29 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 /* -------------------------------------------------------------------------- */
 /*                                   Shared                                   */
 /* -------------------------------------------------------------------------- */
+
+/* ---------------------------------- vec3 ---------------------------------- */
 typedef struct s_vec3
 {
 	float			x;
@@ -41,6 +43,32 @@ typedef struct s_vec3
 }					t_vec3;
 
 t_vec3				vec3_new(float x, float y, float z);
+float				vec3_length(t_vec3 vec);
+t_vec3				vec3_normalize(t_vec3 vec);
+t_vec3				vec3_cross(t_vec3 vec1, t_vec3 vec2);
+float				vec3_dot(t_vec3 vec1, t_vec3 vec2);
+t_vec3				vec3_add(t_vec3 vec1, t_vec3 vec2);
+t_vec3				vec3_subtract(t_vec3 vec1, t_vec3 vec2);
+t_vec3				vec3_multiply(t_vec3 vec, float scale);
+t_vec3				vec3_divide(t_vec3 vec, float scale);
+
+typedef struct s_cam
+{
+	t_vec3			origin;
+	t_vec3			direction;
+	float			focal_length;
+}					t_cam;
+
+void				cam_init(t_cam *cam);
+
+typedef struct s_ray
+{
+	t_vec3			origin;
+	t_vec3			direction;
+}					t_ray;
+
+t_ray				ray_init(t_vec3 origin, t_vec3 direction);
+t_ray				ray_primary(t_cam *cam, float x, float y);
 
 typedef struct s_rgba
 {
@@ -86,18 +114,15 @@ typedef struct s_image
 
 void				put_pixel(t_image *image, int x, int y, unsigned int color);
 
-typedef struct s_cam
-{
-	t_vec3			origin;
-	t_vec3			direction;
-	float			fov;
-}					t_cam;
-
 typedef struct s_sphere
 {
 	t_vec3			center;
 	float			radius;
-	t_color			color;
+	t_color_c		color;
 }					t_sphere;
+
+t_sphere			sphere_new(t_vec3 center, float radius, t_color_c color);
+t_vec3				sphere_normal(t_sphere *sphere, t_vec3 point);
+t_vec3				sphere_intersect(t_sphere *sphere, t_ray ray);
 
 #endif
