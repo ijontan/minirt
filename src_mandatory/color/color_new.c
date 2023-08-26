@@ -6,13 +6,13 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 22:05:13 by itan              #+#    #+#             */
-/*   Updated: 2023/08/25 23:11:06 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/26 11:20:11 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_color	color_new(char a, char r, char g, char b)
+t_rgba	color_new(char a, char r, char g, char b)
 {
-	return ((t_color){b, g, r, a});
+	return ((t_rgba){b, g, r, a});
 }

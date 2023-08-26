@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/08/25 23:51:07 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/26 11:34:38 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,12 @@ void	gradient(t_image *image)
 {
 	int		x;
 	int		y;
-	t_color	*color;
+	t_color	color;
 	double	opacity;
 	double	opacity2;
 
-	color = malloc(sizeof(t_color));
 	y = 0;
-	*color = color_new(0, 0xdd, 0xee, 0xff);
+	color.rgba = color_new(0, 0xdd, 0xee, 0xff);
 	while (y < 1080)
 	{
 		x = 0;
@@ -30,9 +29,9 @@ void	gradient(t_image *image)
 		while (x < 1920)
 		{
 			opacity = (double)x / 1920;
-			*color = color_new(ft_sqrt(((double)1 - opacity) * 0xff * 0xff),
-				0xff, ft_sqrt(((double)1 - opacity2) * 0xff * 0xff), 0xff);
-			put_pixel(image, x, y, *(unsigned int *)color);
+			color.rgba = color_new(0, 0, ft_power((opacity)*ft_sqrt(0xff), 2),
+				ft_power((opacity)*ft_sqrt(0xff), 2));
+			put_pixel(image, x, y, color.as_int);
 			x++;
 		}
 		y++;
@@ -54,7 +53,7 @@ int	main(int ac, char const **av)
 	cam.fov = 90;
 	sphere.center = vec3_new(0, 0, 5);
 	sphere.radius = 1;
-	sphere.color = color_new(0xff, 0, 0, 0xff);
+	sphere.color.rgba = color_new(0xff, 0, 0, 0xff);
 	mlx = mlx_init();
 	win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
 	image.img = mlx_new_image(mlx, 1920, 1080);
