@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/08/27 03:02:29 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/27 03:42:57 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,6 @@ typedef struct s_sphere
 
 t_sphere			sphere_new(t_vec3 center, float radius, t_color_c color);
 t_vec3				sphere_normal(t_sphere *sphere, t_vec3 point);
-t_vec3				sphere_intersect(t_sphere *sphere, t_ray ray);
+bool				sphere_intersect(t_sphere *sphere, t_ray ray);
 
 #endif

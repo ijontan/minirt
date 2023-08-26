@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/08/27 03:19:55 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/27 03:50:10 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	gradient(t_image *image)
 
 	// double	opacity;
 	y = 0;
-	start_color = color_correct((t_color)color_new(0, 0xff, 0, 0));
-	end_color = color_correct((t_color)color_new(0, 0, 0xff, 0));
+	start_color = color_correct((t_color)color_new(0, 0xff, 0xff, 0xff));
+	end_color = color_correct((t_color)color_new(0, 0xff, 0xff, 0xff));
 	color = color_tween(start_color, end_color, 0.5);
 	while (y < 720)
 	{
@@ -48,8 +48,8 @@ void	draw_scene(t_image *image, t_cam *cam, t_sphere *sphere)
 	int			y;
 	t_color_c	color;
 	t_ray		ray;
-	t_vec3		point;
 
+	// t_vec3		point;
 	y = 0;
 	while (y < 720)
 	{
@@ -59,8 +59,9 @@ void	draw_scene(t_image *image, t_cam *cam, t_sphere *sphere)
 			ray = ray_primary(cam, ((float)x - 280.0f) / 720 - 0.5, (float)y
 					/ 720 - 0.5);
 			color = sphere->color;
-			point = sphere_intersect(sphere, ray);
-			if (point.x != 0 || point.y != 0 || point.z != 0)
+			// point = sphere_intersect(sphere, ray);
+			// if (point.x != 0 || point.y != 0 || point.z != 0)
+			if (sphere_intersect(sphere, ray))
 				put_pixel(image, x, y, color_revert(color).as_int);
 			x++;
 		}
@@ -90,8 +91,8 @@ int	main(int ac, char const **av)
 	image.img = mlx_new_image(mlx, 1280, 720);
 	image.buffer = mlx_get_data_addr(image.img, &image.pixel_bits,
 			&image.line_bytes, &image.endian);
+	gradient(&image);
 	draw_scene(&image, &cam, &sphere);
-	// gradient(&image);
 	mlx_put_image_to_window(mlx, win, image.img, 0, 0);
 	mlx_destroy_image(mlx, image.img);
 	mlx_loop(mlx);
