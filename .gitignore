@@ -4,4 +4,4 @@ minirt
 minirt.dSYM
 minirt_bonus
 minirt_bonus.dSYM
-debug.out.dSYM
+*.out.dSYM
