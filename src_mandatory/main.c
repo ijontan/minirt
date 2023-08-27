@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/08/27 12:09:09 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/27 12:12:57 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,25 @@ void	gradient(t_image *image)
 	t_color_c	start_color;
 	t_color_c	end_color;
 	t_color_c	color;
-	double		opacity2;
+	double		opacity;
 
-	// double	opacity;
-	y = 0;
-	start_color = color_correct((t_color)color_new(0, 0xff, 0xff, 0xff));
-	end_color = color_correct((t_color)color_new(0, 0xff, 0xff, 0xff));
+	// double		opacity2;
+	x = 0;
+	start_color = color_correct((t_color)color_new(0, 0xff, 0, 0xff));
+	end_color = color_correct((t_color)color_new(0, 0, 0xff, 0xff));
 	color = color_tween(start_color, end_color, 0.5);
-	while (y < 720)
+	while (x < 1280)
 	{
-		x = 0;
-		opacity2 = (double)y / (double)720;
-		while (x < 1280)
+		y = 0;
+		opacity = (double)x / 1280;
+		while (y < 720)
 		{
-			// opacity = (double)x / 1280;
-			color = color_tween(start_color, end_color, opacity2);
+			// opacity2 = (double)y / (double)720;
+			color = color_tween(start_color, end_color, opacity);
 			put_pixel(image, x, y, color_revert(color).as_int);
-			x++;
+			y++;
 		}
-		y++;
+		x++;
 	}
 }
 
