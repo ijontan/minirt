@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/08/27 12:12:57 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/27 14:32:46 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ray_cast(t_image *image, t_cam *cam, t_sphere *sphere, t_offset offset)
 
 	prev_intersect = vec3_new(0, 0, 0);
 	ray = ray_primary(cam, (((float)offset.x - 280.0f) / 720 - 0.5) * cam->fov,
-			((float)offset.y / 720 - 0.5) * cam->fov);
+		((float)offset.y / 720 - 0.5) * cam->fov);
 	i = -1;
 	while (++i < 10)
 	{
@@ -64,7 +64,7 @@ void	ray_cast(t_image *image, t_cam *cam, t_sphere *sphere, t_offset offset)
 			{
 				color = sphere[i].color;
 				put_pixel(image, offset.x, offset.y,
-						color_revert(color).as_int);
+					color_revert(color).as_int);
 				prev_intersect = intersect;
 			}
 		}
@@ -96,12 +96,16 @@ int	main(int ac, char const **av)
 	t_image		image;
 	t_cam		cam;
 	t_sphere	sphere[10];
+	t_color_c	start_color;
+	t_color_c	end_color;
+	t_color_c	color;
 
+	end_color = color_correct((t_color)color_new(0, 0xff, 0, 0xff));
+	start_color = color_correct((t_color)color_new(0, 0, 0xff, 0xff));
 	for (size_t i = 0; i < 10; i++)
 	{
-		sphere[i] = sphere_new(vec3_new(-4.0f + i, 0, 5), 1,
-				color_correct((t_color)color_new(0, 0xff * ((10.0f + (float)i)
-							/ 19), 0, 0)));
+		color = color_tween(start_color, end_color, (float)(10.0f + i) / 19);
+		sphere[i] = sphere_new(vec3_new(-4.0f + i, 0, 5), 1, color);
 	}
 	// t_sphere	sphere;
 	(void)ac;
@@ -114,7 +118,7 @@ int	main(int ac, char const **av)
 	win = mlx_new_window(mlx, 1280, 720, "Hello world!");
 	image.img = mlx_new_image(mlx, 1280, 720);
 	image.buffer = mlx_get_data_addr(image.img, &image.pixel_bits,
-			&image.line_bytes, &image.endian);
+		&image.line_bytes, &image.endian);
 	gradient(&image);
 	draw_scene(&image, &cam, sphere);
 	mlx_put_image_to_window(mlx, win, image.img, 0, 0);
