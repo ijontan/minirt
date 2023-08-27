@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/08/27 12:05:55 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/27 12:09:09 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ void	ray_cast(t_image *image, t_cam *cam, t_sphere *sphere, t_offset offset)
 	i = -1;
 	while (++i < 10)
 	{
-		color = sphere[i].color;
 		intersect = sphere_intersect(sphere + i, ray);
 		// if (sphere_intersect(sphere, ray))
 		if (intersect.z > 0)
 		{
 			if (prev_intersect.z == 0 || intersect.x < prev_intersect.x)
 			{
+				color = sphere[i].color;
 				put_pixel(image, offset.x, offset.y,
 						color_revert(color).as_int);
 				prev_intersect = intersect;
