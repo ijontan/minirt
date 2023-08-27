@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/08/27 03:42:57 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/27 11:59:19 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@
 /* -------------------------------------------------------------------------- */
 
 /* ---------------------------------- vec3 ---------------------------------- */
+
+typedef struct s_offset
+{
+	int				x;
+	int				y;
+}					t_offset;
 typedef struct s_vec3
 {
 	float			x;
@@ -56,7 +62,7 @@ typedef struct s_cam
 {
 	t_vec3			origin;
 	t_vec3			direction;
-	float			focal_length;
+	float			fov;
 }					t_cam;
 
 void				cam_init(t_cam *cam);
@@ -123,6 +129,6 @@ typedef struct s_sphere
 
 t_sphere			sphere_new(t_vec3 center, float radius, t_color_c color);
 t_vec3				sphere_normal(t_sphere *sphere, t_vec3 point);
-bool				sphere_intersect(t_sphere *sphere, t_ray ray);
+t_vec3				sphere_intersect(t_sphere *sphere, t_ray ray);
 
 #endif
