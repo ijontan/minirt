@@ -6,13 +6,47 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 21:17:37 by itan              #+#    #+#             */
-/*   Updated: 2023/08/25 22:21:11 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/28 22:39:38 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
+/**
+ * @brief create a new vector
+ * 
+ * @param x 
+ * @param y 
+ * @param z 
+ * @return t_vec3 
+ */
 t_vec3	vec3_new(float x, float y, float z)
 {
 	return ((t_vec3){x, y, z});
+}
+
+/**
+ * @brief random vector to any direction
+ * 
+ * @param state 
+ * @return t_vec3 
+ */
+t_vec3	random_vec3(unsigned int *state)
+{
+	t_vec3	vec;
+
+	vec.x = normal_dist_random_num(state);
+	vec.y = normal_dist_random_num(state);
+	vec.z = normal_dist_random_num(state);
+	return (vec3_normalize(vec));
+}
+
+t_vec3	random_vec3_hs(t_vec3 normal, unsigned int *state)
+{
+	t_vec3	vec;
+
+	vec = random_vec3(state);
+	if (vec3_dot(vec, normal) < 0)
+		vec = vec3_multiply(vec, -1);
+	return (vec);
 }

@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/08/28 21:41:51 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/29 01:59:49 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@
 # endif
 
 # include "libft.h"
-
+# include <math.h>
 # include <mlx.h>
+# include <stdio.h>
 
 /* -------------------------------------------------------------------------- */
 /*                                  Mandatory                                 */
@@ -93,6 +94,11 @@ typedef struct s_color_c
 	float			r;
 	float			a;
 }					t_color_c;
+t_color_c			color_correct_new(float a, float r, float g, float b);
+t_color_c			color_multiply(t_color_c color1, t_color_c color2);
+t_color_c			color_scale(t_color_c color, float scale);
+t_color_c			color_add(t_color_c color1, t_color_c color2);
+t_color_c			color_average(t_color_c color1, t_color_c color2);
 
 typedef struct s_light
 {
@@ -130,14 +136,22 @@ typedef struct s_image
 
 void				put_pixel(t_image *image, int x, int y, unsigned int color);
 
+typedef struct s_material
+{
+	t_color_c		color;
+	t_color_c		emission;
+	float			emission_i;
+}					t_material;
+
 typedef struct s_sphere
 {
 	t_vec3			center;
 	float			radius;
-	t_color_c		color;
+	t_material		material;
 }					t_sphere;
 
-t_sphere			sphere_new(t_vec3 center, float radius, t_color_c color);
+t_sphere			sphere_new(t_vec3 center, float radius,
+						t_material material);
 t_vec3				sphere_normal(t_sphere *sphere, t_vec3 point);
 t_vec3				sphere_intersect(t_sphere *sphere, t_ray *ray);
 
@@ -164,19 +178,35 @@ typedef struct s_minirt
 	void			*win;
 	t_image			image;
 	t_cam			cam;
-	t_sphere		sphere[10];
+	t_sphere		sphere[4];
 	t_key_events	key_events;
 	t_mouse_events	mouse_events;
 	t_light			light;
 }					t_minirt;
 
+typedef struct s_hit_info
+{
+	t_vec3			point;
+	t_vec3			normal;
+	t_material		material;
+	bool			hit;
+}					t_hit_info;
+
 int					key_down_hook(int keycode, t_minirt *minirt);
 int					key_up_hook(int keycode, t_minirt *minirt);
-void				draw_scene(t_image *image, t_cam *cam, t_sphere *sphere,
-						t_light *light);
 int					mouse_down_hook(int button, int x, int y, t_minirt *minirt);
 int					mouse_up_hook(int button, int x, int y, t_minirt *minirt);
 int					mouse_move_hook(int x, int y, t_minirt *minirt);
 int					loop_hook(t_minirt *minirt);
 float				random_num(unsigned int *state);
+float				normal_dist_random_num(unsigned int *state);
+t_vec3				random_vec3_hs(t_vec3 normal, unsigned int *state);
+
+t_vec3				random_vec3_hs(t_vec3 normal, unsigned int *state);
+
+t_hit_info			intersections(t_minirt *minirt, t_ray *ray,
+						unsigned int *state);
+
+t_color_c			ray_tracing(t_ray *ray, t_minirt *minirt,
+						unsigned int *state);
 #endif

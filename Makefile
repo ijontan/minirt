@@ -6,7 +6,7 @@
 #    By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/18 20:55:16 by itan              #+#    #+#              #
-#    Updated: 2023/08/25 01:15:39 by itan             ###   ########.fr        #
+#    Updated: 2023/08/28 22:27:28 by itan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ HEADERS	= $(shell find includes -type f -name '*.h')
 INC		= $(addprefix -I , $(shell find includes -type d -name includes))
 
 LIBDIR	= includes/libft
-LIB		= -L$(LIBDIR) -lft
+LIB		= -L$(LIBDIR) -lft -lm
 LIBNAME	= libft.a
 # this is for debugging
 DMNAME	= dm.out

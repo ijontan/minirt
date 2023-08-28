@@ -6,19 +6,19 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 21:04:34 by itan              #+#    #+#             */
-/*   Updated: 2023/08/28 16:20:25 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/28 23:16:14 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_sphere	sphere_new(t_vec3 center, float radius, t_color_c color)
+t_sphere	sphere_new(t_vec3 center, float radius, t_material material)
 {
 	t_sphere	sphere;
 
 	sphere.center = center;
 	sphere.radius = radius;
-	sphere.color = color;
+	sphere.material = material;
 	return (sphere);
 }
 

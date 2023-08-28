@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 21:20:25 by itan              #+#    #+#             */
-/*   Updated: 2023/08/26 23:28:00 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/29 00:46:32 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ unsigned int	convert_endian(unsigned int color)
 
 void	put_pixel(t_image *image, int x, int y, unsigned int color)
 {
-	char	*dst;
+	char *dst;
 
 	dst = image->buffer + (y * image->line_bytes + x * (image->pixel_bits / 8));
 	if (image->endian == 1)
