@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/08/28 16:25:01 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/28 20:52:33 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ void	draw_scene(t_image *image, t_cam *cam, t_sphere *sphere, t_light *light)
 	int	x;
 	int	y;
 
-	(void)light;
 	y = 0;
 	while (y < 720)
 	{
@@ -147,6 +146,6 @@ int	main(int ac, char const **av)
 	// mlx_loop_hook(mlx, loop_hook, &minirt);
 	mlx_put_image_to_window(mlx, win, image.img, 0, 0);
 	mlx_destroy_image(mlx, image.img);
-	// mlx_loop(mlx);
+	mlx_loop(mlx);
 	return (0);
 }
