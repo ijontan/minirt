@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/08/28 16:20:46 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/28 21:41:51 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # endif
 
 # include "libft.h"
+
 # include <mlx.h>
 
 /* -------------------------------------------------------------------------- */
@@ -177,4 +178,5 @@ int					mouse_down_hook(int button, int x, int y, t_minirt *minirt);
 int					mouse_up_hook(int button, int x, int y, t_minirt *minirt);
 int					mouse_move_hook(int x, int y, t_minirt *minirt);
 int					loop_hook(t_minirt *minirt);
+float				random_num(unsigned int *state);
 #endif
