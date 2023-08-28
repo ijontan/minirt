@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 01:59:54 by itan              #+#    #+#             */
-/*   Updated: 2023/08/27 21:36:21 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/28 16:04:18 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 void	cam_init(t_cam *cam)
 {
 	cam->origin = vec3_new(0, 0, 0);
-	cam->direction = vec3_new(0, 0, 10);
+	cam->direction = vec3_new(0, 0, 1);
 	cam->fov = 0.7f;
 }

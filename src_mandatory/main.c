@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/08/27 21:37:10 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/28 16:25:01 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	gradient(t_image *image)
 	}
 }
 
-void	ray_cast(t_image *image, t_cam *cam, t_sphere *sphere, t_offset offset)
+void	ray_cast(t_image *image, t_cam *cam, t_sphere *sphere, t_offset offset,
+		t_light *light)
 {
 	int			i;
 	t_ray		ray;
@@ -50,13 +51,14 @@ void	ray_cast(t_image *image, t_cam *cam, t_sphere *sphere, t_offset offset)
 	t_vec3		prev_intersect;
 	t_vec3		intersect;
 
+	(void)light;
 	prev_intersect = vec3_new(0, 0, 0);
 	ray = ray_primary(cam, (((float)offset.x - 280.0f) / 720 - 0.5) * cam->fov,
 		((float)offset.y / 720 - 0.5) * cam->fov);
 	i = -1;
 	while (++i < 10)
 	{
-		intersect = sphere_intersect(sphere + i, ray);
+		intersect = sphere_intersect(sphere + i, &ray);
 		// if (sphere_intersect(sphere, ray))
 		if (intersect.z > 0)
 		{
@@ -71,18 +73,19 @@ void	ray_cast(t_image *image, t_cam *cam, t_sphere *sphere, t_offset offset)
 	}
 }
 
-void	draw_scene(t_image *image, t_cam *cam, t_sphere *sphere)
+void	draw_scene(t_image *image, t_cam *cam, t_sphere *sphere, t_light *light)
 {
 	int	x;
 	int	y;
 
+	(void)light;
 	y = 0;
 	while (y < 720)
 	{
 		x = 0;
 		while (x < 1280)
 		{
-			ray_cast(image, cam, sphere, (t_offset){x, y});
+			ray_cast(image, cam, sphere, (t_offset){x, y}, light);
 			x += 1;
 		}
 		y += 1;
@@ -99,6 +102,7 @@ int	main(int ac, char const **av)
 	t_color_c	start_color;
 	t_color_c	end_color;
 	t_color_c	color;
+	t_light		light;
 	t_minirt	minirt;
 
 	end_color = color_correct((t_color)color_new(0, 0xff, 0, 0xff));
@@ -106,7 +110,8 @@ int	main(int ac, char const **av)
 	for (size_t i = 0; i < 10; i++)
 	{
 		color = color_tween(start_color, end_color, (float)(10.0f + i) / 19);
-		sphere[i] = sphere_new(vec3_new(-4.0f + i, 0, 50), 1, color);
+		sphere[i] = sphere_new(vec3_new(-20.0f + i * 5, 0, 50), 2.0f + (float)i
+			/ 3, color);
 	}
 	// t_sphere	sphere;
 	(void)ac;
@@ -120,6 +125,9 @@ int	main(int ac, char const **av)
 	image.img = mlx_new_image(mlx, 1280, 720);
 	image.buffer = mlx_get_data_addr(image.img, &image.pixel_bits,
 		&image.line_bytes, &image.endian);
+	light.color = color_correct((t_color)color_new(0, 0xff, 0xff, 0xff));
+	light.origin = vec3_new(0, 5, 1);
+	light.intensity = 1;
 	gradient(&image);
 	minirt.mlx = mlx;
 	minirt.win = win;
@@ -127,17 +135,18 @@ int	main(int ac, char const **av)
 	minirt.cam = cam;
 	minirt.key_events = (t_key_events){};
 	minirt.mouse_events = (t_mouse_events){};
+	minirt.light = light;
 	for (size_t i = 0; i < 10; i++)
 		minirt.sphere[i] = sphere[i];
-	draw_scene(&minirt.image, &minirt.cam, minirt.sphere);
-	mlx_hook(win, 2, 1L << 0, key_down_hook, &minirt);
-	mlx_hook(win, 3, 1L << 1, key_up_hook, &minirt);
-	mlx_hook(win, 4, 1L << 2, mouse_down_hook, &minirt);
-	mlx_hook(win, 5, 1L << 3, mouse_up_hook, &minirt);
-	mlx_hook(win, 6, 1L << 6, mouse_move_hook, &minirt);
+	draw_scene(&minirt.image, &minirt.cam, minirt.sphere, &minirt.light);
+	// mlx_hook(win, 2, 1L << 0, key_down_hook, &minirt);
+	// mlx_hook(win, 3, 1L << 1, key_up_hook, &minirt);
+	// mlx_hook(win, 4, 1L << 2, mouse_down_hook, &minirt);
+	// mlx_hook(win, 5, 1L << 3, mouse_up_hook, &minirt);
+	// mlx_hook(win, 6, 1L << 6, mouse_move_hook, &minirt);
 	// mlx_loop_hook(mlx, loop_hook, &minirt);
 	mlx_put_image_to_window(mlx, win, image.img, 0, 0);
 	mlx_destroy_image(mlx, image.img);
-	mlx_loop(mlx);
+	// mlx_loop(mlx);
 	return (0);
 }

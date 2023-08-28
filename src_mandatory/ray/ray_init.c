@@ -6,16 +6,16 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 02:39:58 by itan              #+#    #+#             */
-/*   Updated: 2023/08/27 11:57:23 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/28 16:03:47 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_ray	ray_init(t_vec3 origin, t_vec3 direction)
-{
-	return ((t_ray){origin, direction});
-}
+// t_ray	ray_init(t_vec3 origin, t_vec3 direction)
+// {
+// 	return ((t_ray){origin, direction, 1, });
+// }
 
 t_ray	ray_primary(t_cam *cam, float x, float y)
 {

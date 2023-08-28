@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/08/27 21:15:52 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/28 16:20:46 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,6 @@ typedef struct s_cam
 
 void				cam_init(t_cam *cam);
 
-typedef struct s_ray
-{
-	t_vec3			origin;
-	t_vec3			direction;
-}					t_ray;
-
-t_ray				ray_init(t_vec3 origin, t_vec3 direction);
-t_ray				ray_primary(t_cam *cam, float x, float y);
-
 typedef struct s_rgba
 {
 	unsigned char	b;
@@ -90,9 +81,6 @@ typedef union u_color
 	t_rgba			rgba;
 }					t_color;
 
-# define MAX_UCHAR_2 65025;
-# define DIV_MAX_UCHAR_2 0.000015384615384615385;
-
 /**
  * @brief Color with correction and in float
  *
@@ -104,6 +92,27 @@ typedef struct s_color_c
 	float			r;
 	float			a;
 }					t_color_c;
+
+typedef struct s_light
+{
+	t_vec3			origin;
+	float			intensity;
+	t_color_c		color;
+}					t_light;
+
+typedef struct s_ray
+{
+	t_vec3			origin;
+	t_vec3			direction;
+	float			intensity;
+	t_color_c		color;
+}					t_ray;
+
+t_ray				ray_init(t_vec3 origin, t_vec3 direction);
+t_ray				ray_primary(t_cam *cam, float x, float y);
+
+# define MAX_UCHAR_2 65025;
+# define DIV_MAX_UCHAR_2 0.000015384615384615385;
 
 t_rgba				color_new(char a, char r, char g, char b);
 t_color_c			color_tween(t_color_c color1, t_color_c color2, double t);
@@ -129,7 +138,7 @@ typedef struct s_sphere
 
 t_sphere			sphere_new(t_vec3 center, float radius, t_color_c color);
 t_vec3				sphere_normal(t_sphere *sphere, t_vec3 point);
-t_vec3				sphere_intersect(t_sphere *sphere, t_ray ray);
+t_vec3				sphere_intersect(t_sphere *sphere, t_ray *ray);
 
 /* ---------------------------------- hooks --------------------------------- */
 typedef struct s_key_events
@@ -157,11 +166,13 @@ typedef struct s_minirt
 	t_sphere		sphere[10];
 	t_key_events	key_events;
 	t_mouse_events	mouse_events;
+	t_light			light;
 }					t_minirt;
 
 int					key_down_hook(int keycode, t_minirt *minirt);
 int					key_up_hook(int keycode, t_minirt *minirt);
-void				draw_scene(t_image *image, t_cam *cam, t_sphere *sphere);
+void				draw_scene(t_image *image, t_cam *cam, t_sphere *sphere,
+						t_light *light);
 int					mouse_down_hook(int button, int x, int y, t_minirt *minirt);
 int					mouse_up_hook(int button, int x, int y, t_minirt *minirt);
 int					mouse_move_hook(int x, int y, t_minirt *minirt);

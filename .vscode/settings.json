@@ -3,6 +3,7 @@
     "*.h": "cpp",
     "*.c": "c",
     "__locale": "c",
-    "ios": "c"
+    "ios": "c",
+    "__node_handle": "c"
   }
 }
