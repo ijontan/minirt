@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/08/29 15:48:44 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/29 19:29:37 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	gradient(t_image *image)
 	double		opacity2;
 
 	// double		opacity;
-	start_color = color_correct((t_color)color_new(0, 0xff, 0x00, 0x00));
-	end_color = color_correct((t_color)color_new(0, 0x00, 0x00, 0xff));
+	start_color = color_correct((t_color)color_new(0, 0xff, 0xff, 0x00));
+	end_color = color_correct((t_color)color_new(0, 0x00, 0xff, 0xff));
 	color = color_tween(start_color, end_color, 0.5);
 	y = 0;
 	while (y < 720)
@@ -189,8 +189,8 @@ int	main(int ac, char const **av)
 	minirt.light = light;
 	for (size_t i = 0; i < 4; i++)
 		minirt.sphere[i] = sphere[i];
-	gradient(&minirt.image);
-	draw_scene(&minirt);
+	// gradient(&minirt.image);
+	ray_cast(&minirt);
 	ft_printf("done");
 	// mlx_hook(win, 2, 1L << 0, key_down_hook, &minirt);
 	// mlx_hook(win, 3, 1L << 1, key_up_hook, &minirt);
