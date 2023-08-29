@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/08/29 15:48:44 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/29 16:25:31 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ int	main(int ac, char const **av)
 	for (size_t i = 0; i < 4; i++)
 		minirt.sphere[i] = sphere[i];
 	gradient(&minirt.image);
-	draw_scene(&minirt);
+	ray_cast(&minirt);
 	ft_printf("done");
 	// mlx_hook(win, 2, 1L << 0, key_down_hook, &minirt);
 	// mlx_hook(win, 3, 1L << 1, key_up_hook, &minirt);
