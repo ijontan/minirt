@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:40:55 by itan              #+#    #+#             */
-/*   Updated: 2023/08/29 02:14:56 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/29 12:08:59 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ static void	calculate_incoming(t_color_c *in_light, t_color_c rayColor,
 	emitting = color_multiply(emitting, rayColor);
 	*in_light = color_add(*in_light, emitting);
 	if (in_light->b > 1)
-		in_light->b = 1;
+		in_light->b /= 2;
 	if (in_light->g > 1)
-		in_light->g = 1;
+		in_light->g /= 2;
 	if (in_light->r > 1)
-		in_light->r = 1;
+		in_light->r /= 2;
 }
 
 t_color_c	ray_tracing(t_ray *ray, t_minirt *minirt, unsigned int *state)
@@ -52,6 +52,8 @@ t_color_c	ray_tracing(t_ray *ray, t_minirt *minirt, unsigned int *state)
 		}
 		else
 		{
+			calculate_incoming(&incoming_light, color,
+				&minirt->amb_light.material);
 			break ;
 		}
 	}

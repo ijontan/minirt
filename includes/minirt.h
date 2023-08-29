@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/08/29 16:30:27 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/08/29 11:57:25 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ typedef struct s_light_src
 {
 	t_vec3			position;
 	float			ratio;
-	t_color_c 		color; // bonus
+	t_color_c color; // bonus
 }					t_light_src;
 
 typedef struct s_sphere
@@ -187,6 +187,7 @@ typedef struct s_minirt
 	t_key_events	key_events;
 	t_mouse_events	mouse_events;
 	t_light			light;
+	t_amb_light		amb_light;
 }					t_minirt;
 
 typedef struct s_hit_info
