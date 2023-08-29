@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 16:47:53 by rsoo              #+#    #+#             */
-/*   Updated: 2023/08/29 09:21:45 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/08/29 16:25:18 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,32 @@ float	atof(char *s)
 	i = 0;
 	while (is_wspace(s[i]))
 		i++;
-	if (str[i] == '-' || str[i] == '+')
+	if (s[i] == '-' || s[i] == '+')
 	{
-		if (str[i] == '-')
+		if (s[i] == '-')
 			sign = -1;
 		i++;
 	}
-	if (str[i] == '.')
+	while (ft_isdigit(s[i]))
+	{
+		result = result * 10.0 + (s[i] - '0');
+		i++;
+	}
+	if (s[i] == '.')
 	{
 		i++;
 		while (ft_isdigit(s[i]))
 		{
-			result = result * 10.0 + (str[i] - '0');
+			result = result * 10.0 + (s[i] - '0');
 			power *= 10;
 			i++;
 		}
 	}
 	return (sign * result / power);
 }
+
+// int main(int ac, char **av)
+// {
+// 	(void)ac;
+// 	printf("result: %f\n", atof(av[1]));
+// }

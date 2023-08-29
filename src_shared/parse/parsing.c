@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:52:31 by rsoo              #+#    #+#             */
-/*   Updated: 2023/08/29 09:21:45 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/08/29 18:12:59 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,31 +19,44 @@
 // - elements which are defined by a capital letter can only be declared once 
 // in the scene
 
+// mand_flag: flag and check if all minimum requirements of a scene are present
+typedef struct s_parse
+{
+	int			infile_fd;
+	int 		mand_flag[6];
+	char		obj_type[6];
+	void		(*func_ptr[6])(t_parse *);
+
+	int			rgb[3];
+	float		coords[3];
+	
+	s_amb_light amb_light;
+	s_cam		camera;
+	s_light_src	light_source;
+	s_sphere	sphere;
+	s_plane		plane;
+	s_cylinder	cylinder;
+}				t_parse;
+
 static bool parse_line(char *line, t_parse *parse_info)
 {
-	char **info;
+	char	**info;
+	int		i;
 
 	info = ft_split(line, ' ');
-	if (!ft_strncmp(info[0], "A", ft_strlen(info[0])))
-		parse_ambient_lighting(info, parse_info);
-	else if (!ft_strncmp(info[0], "C", ft_strlen(info[0])))
-		parse_camera(info, parse_info);
-	else if (!ft_strncmp(info[0], "L", ft_strlen(info[0])))
-		parse_light(info, parse_info);
-	else if (!ft_strncmp(info[0], "pl", ft_strlen(info[0])))
-		parse_plane(info, parse_info);
-	else if (!ft_strncmp(info[0], "sp", ft_strlen(info[0])))
-		parse_sphere(info, parse_info);
-	else if (!ft_strncmp(info[0], "cy", ft_strlen(info[0])))
-		parse_cylinder(info, parse_info);
-	else
+	i = -1;
+	while (i < 6)
 	{
-		printf("\e[0;31mError: Unknown object \e[0m%s", info[0]);
-		free_2darray(info);
-		return (false);
+		if (!ft_strncmp(info[0], parse_info->obj_type[i], ft_strlen(info[0])))
+		{
+			func_ptr[i](parse_info);
+			free_2darray(info);
+			return (true);
+		}
 	}
+	printf("\e[0;31mError: Unknown object \e[0m%s", info[0]);
 	free_2darray(info);
-	return (true);
+	return (false);
 }
 
 static int open_infile(char *infile)
@@ -59,13 +72,25 @@ static int open_infile(char *infile)
 	return (fd);
 }
 
-static void	init_mand_flag(t_parse *parse_info)
+static void	init_parsing(t_parse *parse_info)
 {
 	int	i;
 
 	i = -1;
 	while (++i < 6)
 		parse_info->mand_flag[i] = 0;
+	parse_info->obj_type[0] = "A";
+	parse_info->obj_type[1] = "C";
+	parse_info->obj_type[2] = "L";
+	parse_info->obj_type[3] = "pl";
+	parse_info->obj_type[4] = "sp";
+	parse_info->obj_type[5] = "cy";
+	parse_info->func_ptr[0] = parse_ambient_lighting;
+	parse_info->func_ptr[1] = parse_camera;
+	parse_info->func_ptr[2] = parse_light;
+	parse_info->func_ptr[3] = parse_plane;
+	parse_info->func_ptr[4] = parse_sphere;
+	parse_info->func_ptr[5] = parse_cylinder;
 }
 
 bool parse_rt_file(char *infile, t_parse *parse_info)
@@ -75,7 +100,7 @@ bool parse_rt_file(char *infile, t_parse *parse_info)
 	parse_info->infile_fd = open_infile(infile);
 	if (parse_info->infile_fd == 0)
 		return (false);
-	init_mand_flag(parse_info);
+	init_parsing(parse_info);
 	buff = get_next_line(parse_info->infile_fd);
 	while (buff)
 	{

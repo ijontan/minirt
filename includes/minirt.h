@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/08/29 15:27:56 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/29 16:30:27 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ typedef struct s_ray
 
 typedef struct s_amb_light
 {
-	float			lighting_ratio;
-	t_color_c		color;
+	float			ratio;
+	t_material		material;
 }					t_amb_light;
 
 typedef struct s_cam
@@ -70,8 +70,8 @@ void				cam_init(t_cam *cam);
 typedef struct s_light_src
 {
 	t_vec3			position;
-	float			brightness_ratio;
-	t_color_c color; // bonus
+	float			ratio;
+	t_color_c 		color; // bonus
 }					t_light_src;
 
 typedef struct s_sphere
@@ -91,7 +91,7 @@ typedef struct s_plane
 {
 	t_vec3			point_on_plane;
 	t_vec3			normalized_norm_vec;
-	t_color_c		color;
+	t_material		material;
 	float			t;
 }					t_plane;
 
@@ -105,21 +105,6 @@ typedef struct s_cylinder
 }					t_cylinder;
 t_vec3				cylinder_intersect(t_cylinder *cylinder, t_ray *ray);
 t_vec3				cylinder_normal(t_cylinder *cylinder, t_vec3 point);
-
-// mand_flag: flag and check if all minimum requirements of a scene are present
-typedef struct s_parse
-{
-	int				infile_fd;
-	int				mand_flag[6];
-	float			temp_f;
-	int				temp_i;
-	t_amb_light		amb_light;
-	t_cam			camera;
-	t_light_src		light_source;
-	t_sphere		sphere;
-	t_plane			plane;
-	t_cylinder		cylinder;
-}					t_parse;
 
 /* ---------------------------------- vec3 ---------------------------------- */
 
