@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 16:47:53 by rsoo              #+#    #+#             */
-/*   Updated: 2023/08/29 16:25:18 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/08/29 22:44:42 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	free_2darray(char **s)
 	free(s);
 }
 
-bool	is_wspace(char c)
+static bool	is_wspace(char c)
 {
 	if ((c >= '\t' && c <= '\r') || c == ' ')
 		return (true);
