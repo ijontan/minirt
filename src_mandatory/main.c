@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/08/29 02:34:03 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/29 08:27:09 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	draw_scene(t_minirt *minirt)
 	unsigned int	state;
 	t_ray			ray;
 	t_color_c		color;
-	t_color_c		incoming_light;
+	// t_color_c		incoming_light;
 
 	y = 0;
 	(void)minirt;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/08/29 01:59:49 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/29 10:14:07 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,72 @@
 /*                                   Shared                                   */
 /* -------------------------------------------------------------------------- */
 
+typedef struct s_amb_light
+{
+	float		lighting_ratio;
+	t_color_c	color;
+}				t_amb_light;
+
+typedef struct s_cam
+{
+	t_vec3			origin;
+	t_vec3			direction;
+	float			fov;
+}					t_cam;
+
+void				cam_init(t_cam *cam);
+
+typedef struct s_light_src
+{
+	t_vec3		position;
+	float		brightness_ratio;
+	t_color_c	color; // bonus
+}				t_light_src;
+
+typedef struct s_sphere
+{
+	t_vec3			center;
+	float			diameter;
+	t_color_c		color;
+	t_material		material;
+}					t_sphere;
+
+t_sphere			sphere_new(t_vec3 center, float radius, t_color_c color);
+t_vec3				sphere_normal(t_sphere *sphere, t_vec3 point);
+t_vec3				sphere_intersect(t_sphere *sphere, t_ray ray);
+
+typedef struct s_plane
+{
+	t_vec3		point_on_plane;
+	t_vec3		normalized_norm_vec;
+	t_color_c	color;
+	float		t;
+}				t_plane;
+
+typedef struct s_cylinder
+{
+	t_vec3		center;
+	t_vec3		normalized_axis;
+	float		diameter;
+	float		height;
+	t_color_c	color;
+}				t_cylinder;
+
+// mand_flag: flag and check if all minimum requirements of a scene are present
+typedef struct s_parse
+{
+	int			infile_fd;
+	int 		mand_flag[6];
+	float		temp_f;
+	int			temp_i;
+	s_amb_light amb_light;
+	s_cam		camera;
+	s_light_src	light_source;
+	s_sphere	sphere;
+	s_plane		plane;
+	s_cylinder	cylinder;
+}				t_parse;
+
 /* ---------------------------------- vec3 ---------------------------------- */
 
 typedef struct s_offset
@@ -43,6 +109,7 @@ typedef struct s_offset
 	int				x;
 	int				y;
 }					t_offset;
+
 typedef struct s_vec3
 {
 	float			x;
@@ -59,15 +126,6 @@ t_vec3				vec3_add(t_vec3 vec1, t_vec3 vec2);
 t_vec3				vec3_subtract(t_vec3 vec1, t_vec3 vec2);
 t_vec3				vec3_multiply(t_vec3 vec, float scale);
 t_vec3				vec3_divide(t_vec3 vec, float scale);
-
-typedef struct s_cam
-{
-	t_vec3			origin;
-	t_vec3			direction;
-	float			fov;
-}					t_cam;
-
-void				cam_init(t_cam *cam);
 
 typedef struct s_rgba
 {
@@ -94,6 +152,7 @@ typedef struct s_color_c
 	float			r;
 	float			a;
 }					t_color_c;
+
 t_color_c			color_correct_new(float a, float r, float g, float b);
 t_color_c			color_multiply(t_color_c color1, t_color_c color2);
 t_color_c			color_scale(t_color_c color, float scale);
@@ -125,6 +184,7 @@ t_rgba				color_new(char a, char r, char g, char b);
 t_color_c			color_tween(t_color_c color1, t_color_c color2, double t);
 t_color_c			color_correct(t_color color);
 t_color				color_revert(t_color_c color_c);
+
 typedef struct s_image
 {
 	void			*img;
@@ -142,18 +202,6 @@ typedef struct s_material
 	t_color_c		emission;
 	float			emission_i;
 }					t_material;
-
-typedef struct s_sphere
-{
-	t_vec3			center;
-	float			radius;
-	t_material		material;
-}					t_sphere;
-
-t_sphere			sphere_new(t_vec3 center, float radius,
-						t_material material);
-t_vec3				sphere_normal(t_sphere *sphere, t_vec3 point);
-t_vec3				sphere_intersect(t_sphere *sphere, t_ray *ray);
 
 /* ---------------------------------- hooks --------------------------------- */
 typedef struct s_key_events
