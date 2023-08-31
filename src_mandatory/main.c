@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/08/29 12:04:09 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/31 18:10:20 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	gradient(t_image *image)
 	double		opacity2;
 
 	// double		opacity;
-	start_color = color_correct((t_color)color_new(0, 0xff, 0xff, 0x00));
+	start_color = color_correct((t_color)color_new(0, 0xf, 0xff, 0x00));
 	end_color = color_correct((t_color)color_new(0, 0x00, 0xff, 0xff));
 	color = color_tween(start_color, end_color, 0.5);
 	y = 0;
@@ -128,22 +128,24 @@ int	main(int ac, char const **av)
 
 	end_color = color_correct((t_color)color_new(0, 0xff, 0, 0xff));
 	start_color = color_correct((t_color)color_new(0, 0, 0xff, 0xff));
+
+	// sphere init
 	for (size_t i = 0; i < 4; i++)
 	{
 		if (i == 0)
 		{
 			material.emission_i = 1;
 			material.color = color_correct_new(0, 0, 0, 0);
-			material.emission = color_correct_new(0, 1, 1, 1);
-			sphere[i] = sphere_new(vec3_new(0, 200, 200), 100.0f, material);
+			material.emission = color_correct_new(0, 0, 1, 0.5);
+			sphere[i] = sphere_new(vec3_new(0, 0, 200), 20.0f, material);
 		}
-		else if (i == 3)
-		{
-			material.emission_i = 0;
-			material.color = color_correct_new(0, 1, 0.7, 0.5);
-			material.emission = color_correct_new(0, 0, 0, 0);
-			sphere[i] = sphere_new(vec3_new(0, -106, 50), 100.0f, material);
-		}
+		// else if (i == 3)
+		// {
+		// 	material.emission_i = 0;
+		// 	material.color = color_correct_new(0, 1, 0.7, 0.5);
+		// 	material.emission = color_correct_new(0, 0, 0, 0);
+		// 	sphere[i] = sphere_new(vec3_new(0, -106, 50), 100.0f, material);
+		// }
 		else
 		{
 			material.emission_i = 0;
@@ -154,19 +156,35 @@ int	main(int ac, char const **av)
 				+ (float)i / 3, material);
 		}
 	}
+	
+	// cylinder init
 	minirt.cylinder->center = vec3_new(5, 0, 50);
-	minirt.cylinder->radius = 5;
+	minirt.cylinder->radius = 2;
 	minirt.cylinder->height = 3;
 	minirt.cylinder->normalized_axis = vec3_normalize(vec3_new(2, 1, 0));
+	
 	material.emission_i = 0;
-	material.color = color_correct_new(0, 1, 0, 0.8);
 	material.emission = color_correct_new(0, 0, 0, 0);
-	minirt.cylinder->material = material;
-	material.emission_i = 0.1;
 	material.color = color_correct_new(0, 1, 0, 0.8);
+	minirt.cylinder->material = material;
+	
+	// ambient lighting init
+	material.emission_i = 0.1;
 	material.emission = color_correct_new(0, 1, 1, 1);
+	material.color = color_correct_new(0, 1, 0, 0.8);
+
 	minirt.amb_light.material = material;
 	minirt.amb_light.ratio = 0.1;
+
+	// plane init
+	minirt.plane->point_on_plane = vec3_new(5, 5, 100);
+	minirt.plane->normalized_norm_vec = vec3_new(1, 1, 1);
+	
+	material.emission_i = 0;
+	material.emission = color_correct_new(0, 0, 0, 0);
+	material.color = color_correct_new(0, 0.5, 0.5, 0);
+	minirt.plane->material = material;
+	
 	// t_sphere	sphere;
 	(void)ac;
 	(void)av;
@@ -174,6 +192,7 @@ int	main(int ac, char const **av)
 	// sphere.center = vec3_new(0, 0, 5);
 	// sphere.radius = 1;
 	// sphere.color.rgba = color_new(0xff, 0, 0, 0xff);
+	
 	mlx = mlx_init();
 	win = mlx_new_window(mlx, 1280, 720, "Hello world!");
 	image.img = mlx_new_image(mlx, 1280, 720);

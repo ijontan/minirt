@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_tracing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:40:55 by itan              #+#    #+#             */
-/*   Updated: 2023/08/29 12:08:59 by itan             ###   ########.fr       */
+/*   Updated: 2023/08/31 11:41:36 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_color_c	ray_tracing(t_ray *ray, t_minirt *minirt, unsigned int *state)
 	incoming_light = color_correct_new(0, 0, 0, 0);
 	color = color_correct_new(0, 1, 1, 1);
 	i = -1;
-	while (++i < 20)
+	while (++i < 50)
 	{
 		hit_info = intersections(minirt, ray, state);
 		if (hit_info.hit)

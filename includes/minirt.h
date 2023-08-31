@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/08/30 01:00:23 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/08/31 11:13:51 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ typedef struct s_minirt
 	t_cam			cam;
 	t_sphere		sphere[4];
 	t_cylinder		cylinder[1];
+	t_plane			plane[1];
 	t_key_events	key_events;
 	t_mouse_events	mouse_events;
 	t_light			light;
