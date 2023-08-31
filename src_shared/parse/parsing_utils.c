@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 16:47:53 by rsoo              #+#    #+#             */
-/*   Updated: 2023/08/29 22:44:42 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/08/31 10:22:36 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,41 +31,41 @@ static bool	is_wspace(char c)
 	return (false);
 }
 
-float	atof(char *s)
+static void	init_atof(t_parse *p)
 {
-	float	result;
-	float 	power;
-	int		sign;
-	int		i;
+	p->atof.result = 0.0;
+	p->atof.power = 1.0;
+	p->atof.sign = 1;
+	p->atof.i = 0;
+}
 
-	result = 0.0;
-	power = 1.0;
-	sign = 1;
-	i = 0;
-	while (is_wspace(s[i]))
-		i++;
-	if (s[i] == '-' || s[i] == '+')
+float	ft_atof(char *s, t_parse *p)
+{
+	init_atof(p);
+	while (is_wspace(s[p->atof.i]))
+		p->atof.i++;
+	if (s[p->atof.i] == '-' || s[p->atof.i] == '+')
 	{
-		if (s[i] == '-')
-			sign = -1;
-		i++;
+		if (s[p->atof.i] == '-')
+			p->atof.sign = -1;
+		p->atof.i++;
 	}
-	while (ft_isdigit(s[i]))
+	while (ft_isdigit(s[p->atof.i]))
 	{
-		result = result * 10.0 + (s[i] - '0');
-		i++;
+		p->atof.result = p->atof.result * 10.0 + (s[p->atof.i] - '0');
+		p->atof.i++;
 	}
-	if (s[i] == '.')
+	if (s[p->atof.i] == '.')
 	{
-		i++;
-		while (ft_isdigit(s[i]))
+		p->atof.i++;
+		while (ft_isdigit(s[p->atof.i]))
 		{
-			result = result * 10.0 + (s[i] - '0');
-			power *= 10;
-			i++;
+			p->atof.result = p->atof.result * 10.0 + (s[p->atof.i] - '0');
+			p->atof.power *= 10;
+			p->atof.i++;
 		}
 	}
-	return (sign * result / power);
+	return (p->atof.sign * p->atof.result / p->atof.power);
 }
 
 // int main(int ac, char **av)

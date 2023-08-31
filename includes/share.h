@@ -6,12 +6,14 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/08/30 00:56:45 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/08/31 10:21:28 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHARE_H
 # define SHARE_H
+
+#include <fcntl.h>
 
 typedef struct s_vec3
 {
@@ -80,7 +82,7 @@ typedef struct s_light_src
 {
 	t_vec3			position;
 	float			ratio;
-	t_color_c 		color; // bonus
+	t_material		material; // bonus
 }					t_light_src;
 
 typedef struct s_sphere
@@ -116,22 +118,31 @@ typedef struct s_cylinder
 t_vec3				cylinder_intersect(t_cylinder *cylinder, t_ray *ray);
 t_vec3				cylinder_normal(t_cylinder *cylinder, t_vec3 point);
 
+typedef struct	s_atof
+{
+	float	result;
+	float 	power;
+	int		sign;
+	int		i;
+}				t_atof;
+
 // Parsing
 typedef struct s_parse
 {
 	int			infile_fd;
 	int 		mand_flag[6];
-	char		obj_type[6];
-	void		(*func_ptr[6])(t_parse *);
+	char		*obj_type[6];
+	void		(*func_ptr[6])(struct s_parse*);
 	char		**info;
 	int			rgb[3];
 	float		coords[3];
-	s_amb_light amb_light;
-	s_cam		camera;
-	s_light_src	light_source;
-	s_sphere	sphere;
-	s_plane		plane;
-	s_cylinder	cylinder;
+	t_atof		atof;
+	t_amb_light amb_light;
+	t_cam		camera;
+	t_light_src	light_source;
+	t_sphere	sphere;
+	t_plane		plane;
+	t_cylinder	cylinder;
 }				t_parse;
 
 // parsing.c
@@ -139,7 +150,7 @@ bool parse_rt_file(char *infile, t_parse *parse_info);
 
 // parsing_utils.c
 void	free_2darray(char **s);
-float	atof(char *s);
+float	ft_atof(char *s, t_parse *p);
 
 // parse_objects.c
 void 	parse_sphere(t_parse *p);
@@ -155,7 +166,7 @@ void 	parse_lighting(t_parse *p);
 bool	check_rgb(char *s, t_parse *p);
 bool	check_normalized(char *s, t_parse *p);
 t_vec3	assign_norm_vec(t_parse *p);
-t_vec3	parse_coordinates(char *s);
+t_vec3	parse_coordinates(char *s, t_parse *p);
 
 // error_handling.c
 void	exit_parse(char **info, char *s, char c);

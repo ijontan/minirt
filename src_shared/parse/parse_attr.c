@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 20:20:11 by rsoo              #+#    #+#             */
-/*   Updated: 2023/08/29 21:10:47 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/08/31 10:21:13 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ bool	check_normalized(char *s, t_parse *p)
 
 	i = -1;
 	comp = ft_split(s, ',');
-	p->coords[0] = ft_atof(comp[0]);
-	p->coords[1] = ft_atof(comp[1]);
-	p->coords[2] = ft_atof(comp[2]);
+	p->coords[0] = ft_atof(comp[0], p);
+	p->coords[1] = ft_atof(comp[1], p);
+	p->coords[2] = ft_atof(comp[2], p);
 	while (++i < 3)
 	{
 		if (p->coords[i] < -1.0 || p->coords[i] > 1.0)
@@ -66,15 +66,15 @@ t_vec3	assign_norm_vec(t_parse *p)
 	return (res);
 }
 
-t_vec3	parse_coordinates(char *s)
+t_vec3	parse_coordinates(char *s, t_parse *p)
 {
 	t_vec3	res;
 	char	**coords;
 
 	coords = ft_split(s, ',');
-	res.x = ft_atof(coords[0]);
-	res.y = ft_atof(coords[1]);
-	res.z = ft_atof(coords[2]);
+	res.x = ft_atof(coords[0], p);
+	res.y = ft_atof(coords[1], p);
+	res.z = ft_atof(coords[2], p);
 	free_2darray(coords);
 	return (res);
 }

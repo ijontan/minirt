@@ -24,7 +24,7 @@ bool	valid_float(char *s)
     i = 0;
     if (s[i] == '-')
         i++;
-    if (s[i] == '0' && s[i + 1] != '.' || s[i] == '.')
+    if ((s[i] == '0' && s[i + 1] != '.') || s[i] == '.')
         return (false);
     while (ft_isdigit(s[i]))
         i++;
@@ -57,7 +57,7 @@ bool	valid_triplet(char *s)
     char    **val;
     int     i;
 
-    val = ft_split(s, ",");
+    val = ft_split(s, ',');
     i = -1;
     if (!check_triplet_size(val))
     {
