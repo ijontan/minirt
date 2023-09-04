@@ -1,0 +1,11 @@
+A  [lighting ratio]     [color]
+
+C  [position]     [normalized direction]     [fov angle (degrees)]
+
+L  [position]     [lighting ratio]     [color]
+
+sp [center]      [diameter]     [color]
+
+pl [point on plane]     [normalized normal vector]     [color]
+
+cy [center]     [normalized axis vector]     [diameter]      [height]     [color]

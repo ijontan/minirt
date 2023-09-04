@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/08/31 18:10:20 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/04 16:27:54 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ int	main(int ac, char const **av)
 		minirt.sphere[i] = sphere[i];
 	// gradient(&minirt.image);
 	draw_scene(&minirt);
-	ft_printf("done");
+	printf("done");
 	// mlx_hook(win, 2, 1L << 0, key_down_hook, &minirt);
 	// mlx_hook(win, 3, 1L << 1, key_up_hook, &minirt);
 	// mlx_hook(win, 4, 1L << 2, mouse_down_hook, &minirt);

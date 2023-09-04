@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/08/31 11:13:51 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/04 16:54:08 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,14 +108,16 @@ typedef struct s_minirt
 	void			*mlx;
 	void			*win;
 	t_image			image;
+
+	t_amb_light		amb_light;
 	t_cam			cam;
-	t_sphere		sphere[4];
-	t_cylinder		cylinder[1];
-	t_plane			plane[1];
+	t_light_src		light_source;
+	t_sphere		sphere;
+	t_plane			plane;
+	t_cylinder		cylinder;
+
 	t_key_events	key_events;
 	t_mouse_events	mouse_events;
-	t_light			light;
-	t_amb_light		amb_light;
 }					t_minirt;
 
 typedef struct s_hit_info
@@ -125,6 +127,8 @@ typedef struct s_hit_info
 	t_material		material;
 	bool			hit;
 }					t_hit_info;
+
+void				draw_scene(t_minirt *minirt);
 
 int					key_down_hook(int keycode, t_minirt *minirt);
 int					key_up_hook(int keycode, t_minirt *minirt);
