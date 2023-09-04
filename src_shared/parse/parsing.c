@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:52:31 by rsoo              #+#    #+#             */
-/*   Updated: 2023/08/31 10:11:13 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/04 16:09:29 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static bool parse_line(char *line, t_parse *p)
 
 	p->info = ft_split(line, ' ');
 	i = -1;
-	while (i < 6)
+	while (++i < 6)
 	{
 		if (!ft_strncmp(p->info[0], p->obj_type[i], ft_strlen(p->info[0])))
 		{
@@ -36,11 +36,17 @@ static bool parse_line(char *line, t_parse *p)
 			return (true);
 		}
 	}
-	printf("\e[0;31mError: Unknown object \e[0m%s\n", p->info[0]);
+	if (!ft_strncmp(p->info[0], "\n", ft_strlen(p->info[0])))
+		printf("\e[0;31mError: No empty newlines allowed\e[0m\n");
+	else
+		printf("\e[0;31mError: Unknown object \e[0m%s\n", p->info[0]);
 	free_2darray(p->info);
 	return (false);
 }
 
+/*
+this function opens the input .rt file
+*/
 static int open_infile(char *infile)
 {
 	int	fd;
@@ -48,7 +54,7 @@ static int open_infile(char *infile)
 	fd = open(infile, O_RDONLY);
 	if (fd < 0)
 	{
-		perror("\e[0;31mError: unable to open .rt file\e[0m\n");
+		printf("\e[0;31mError: unable to open input file (%s)\e[0m\n", infile);
 		return (0);
 	}
 	return (fd);

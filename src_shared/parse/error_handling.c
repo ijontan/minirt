@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 18:03:48 by rsoo              #+#    #+#             */
-/*   Updated: 2023/08/31 09:58:20 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/04 15:57:45 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ static void	exit_format_err(char **info, char *s, int n)
 	else if (n == 3)
 		printf("L -40,0,30 0.7 255,255,255\e[0m\n");
 	else if (n == 4)
-		printf("pl 0,0,0 0,1.0,0 255,0,225\e[0m\n");
-	else if (n == 5)
 		printf("sp 0,0,20 20 255,0,0\e[0m\n");
+	else if (n == 5)
+		printf("pl 0,0,0 0,1.0,0 255,0,225\e[0m\n");
 	else if (n == 6)
 		printf("cy 50.0,0.0,20.6 0,0,1.0 14.2 21.42 10,0,255\e[0m\n");
 	exit(EXIT_FAILURE);
@@ -45,31 +45,37 @@ static void	exit_format_err(char **info, char *s, int n)
 
 static void	check_line_format2(char *s, t_parse *p)
 {
-	if (!ft_strncmp(s, "sp", ft_strlen(s)) && (!check_info_size(3, p) || \
-	!valid_triplet(p->info[1]) || !valid_triplet(p->info[2]) || \
-	!valid_triplet(p->info[3])))
-		exit_format_err(p->info, "Sphere", 4);
-	else if (!ft_strncmp(s, "pl", ft_strlen(s)) && (!check_info_size(3, p) || \
+	if (!ft_strncmp(s, "sp", ft_strlen(s)) && (!check_info_size(4, p) || \
 	!valid_triplet(p->info[1]) || !valid_float(p->info[2]) || \
 	!valid_triplet(p->info[3])))
+		exit_format_err(p->info, "Sphere", 4);
+	else if (!ft_strncmp(s, "pl", ft_strlen(s)) && (!check_info_size(4, p) || \
+	!valid_triplet(p->info[1]) || !valid_triplet(p->info[2]) || \
+	!valid_triplet(p->info[3])))
 		exit_format_err(p->info, "Plane", 5);
-	else if (!ft_strncmp(s, "cy", ft_strlen(s)) && (!check_info_size(5, p) || \
+	else if (!ft_strncmp(s, "cy", ft_strlen(s)) && (!check_info_size(6, p) || \
 	!valid_triplet(p->info[1]) || !valid_triplet(p->info[2]) || \
 	!valid_float(p->info[3]) || !valid_float(p->info[4]) || \
 	!valid_triplet(p->info[5])))
 		exit_format_err(p->info, "Cylinder", 6);
 }
 
+/*
+checks if the info in the .rt file is in the correct format by checking:
+- number of info (A 0.2 255,255,255 has 3 blocks of info)
+- check if a float is in correct format
+- check if a triplet (255,255,255) is in correct format
+*/
 void	check_line_format(char *s, t_parse *p)
 {
-	if (!ft_strncmp(s, "A", ft_strlen(s)) && (!check_info_size(2, p) || \
+	if (!ft_strncmp(s, "A", ft_strlen(s)) && (!check_info_size(3, p) || \
 	!valid_float(p->info[1]) || !valid_triplet(p->info[2])))
 		exit_format_err(p->info, "Ambient light", 1);
-	else if (!ft_strncmp(s, "C", ft_strlen(s)) && (!check_info_size(3, p) || \
+	else if (!ft_strncmp(s, "C", ft_strlen(s)) && (!check_info_size(4, p) || \
 	!valid_triplet(p->info[1]) || !valid_triplet(p->info[2]) || \
 	!valid_float(p->info[3])))
 		exit_format_err(p->info, "Camera", 2);
-	else if (!ft_strncmp(s, "L", ft_strlen(s)) && (!check_info_size(3, p) || \
+	else if (!ft_strncmp(s, "L", ft_strlen(s)) && (!check_info_size(4, p) || \
 	!valid_triplet(p->info[1]) || !valid_float(p->info[2]) || \
 	!valid_triplet(p->info[3])))
 		exit_format_err(p->info, "Lighting", 3);

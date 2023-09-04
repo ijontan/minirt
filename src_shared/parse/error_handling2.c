@@ -24,11 +24,16 @@ bool	valid_float(char *s)
     i = 0;
     if (s[i] == '-')
         i++;
-    if ((s[i] == '0' && s[i + 1] != '.') || s[i] == '.')
+    if ((s[i] == '0' && ft_isdigit(s[i + 1])) || s[i] == '.' \
+	|| !ft_isdigit(s[i]))
+	{
+		printf("\e[0;31mError: %s not allowed \
+				\nExpected float format: 0.4\e[0m\n\n", s);
         return (false);
+	}
     while (ft_isdigit(s[i]))
         i++;
-    if (!s[i])
+    if (!s[i] || s[i] == '\n')
         return (true);
     if (s[i] == '.')
         i++;
@@ -51,7 +56,7 @@ static bool	check_triplet_size(char **val)
 	return (false);
 }
 
-// checks if the triplet (x, y, z) is correct:
+// checks if the triplet format (x, y, z) is correct:
 bool	valid_triplet(char *s)
 {
     char    **val;
@@ -75,18 +80,3 @@ bool	valid_triplet(char *s)
     free_2darray(val);
 	return (true);
 }
-
-// #include <stdbool.h>
-// #include <stdio.h>
-
-// bool ft_isdigit(char n)
-// {
-//     return (n >= '0' && n <= '9');
-// }
-
-// int main(int ac, char **av)
-// {
-//     (void)ac;
-//     printf("%d\n", valid_float(av[1]));
-//     printf("%d\n", valid_triplet(av[1]));
-// }
