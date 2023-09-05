@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/09/04 17:16:54 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/05 11:11:36 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	ray_cast(t_minirt *minirt)
 		x = 0;
 		while (x < 1280)
 		{
+			printf("x: %d, y: %d\n", x, y);
 			hit_info.material.color = color_correct_new(0, 0, 0, 0);
 			ray = ray_primary(&minirt->cam, (((float)x - 280.0f) / 720 - 0.5)
 				* minirt->cam.fov, ((float)y / 720 - 0.5) * minirt->cam.fov);
