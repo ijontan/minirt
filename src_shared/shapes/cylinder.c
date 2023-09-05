@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 14:56:25 by itan              #+#    #+#             */
-/*   Updated: 2023/09/05 11:33:48 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/05 14:17:16 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,14 @@ t_vec3	cylinder_intersect(t_cylinder *cylinder, t_ray *ray)
 
 	ray2.direction = vec3_cross(ray->direction, cylinder->normalized_axis);
 	oc = vec3_cross(vec3_subtract(ray->origin, cylinder->center),
-		cylinder->normalized_axis);
+		cylinder->normalized_axis); 
+
 	abc.x = vec3_dot(ray2.direction, ray2.direction);
 	abc.y = 2.0f * vec3_dot(oc, ray2.direction);
 	abc.z = vec3_dot(oc, oc) - cylinder->radius * cylinder->radius;
+
 	discriminant = abc.y * abc.y - 4.0f * abc.x * abc.z;
+
 	if (discriminant < 0)
 		return (vec3_new(0, 0, 0));
 	sqrtd = ft_sqrt(discriminant);

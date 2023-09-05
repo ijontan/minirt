@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 21:04:34 by itan              #+#    #+#             */
-/*   Updated: 2023/09/05 11:08:38 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/05 13:28:32 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,13 @@ t_vec3	sphere_intersect(t_sphere *sphere, t_ray *ray)
 	t_vec3	sol2;
 
 	oc = vec3_subtract(ray->origin, sphere->center);
+	
 	abc.x = vec3_dot(ray->direction, ray->direction);
 	abc.y = 2.0f * vec3_dot(oc, ray->direction);
 	abc.z = vec3_dot(oc, oc) - sphere->radius * sphere->radius;
+
 	discriminant = abc.y * abc.y - 4.0f * abc.x * abc.z;
+	
 	if (discriminant < 0)
 		return (vec3_new(0, 0, 0));
 	sqrtd = ft_sqrt(discriminant);
