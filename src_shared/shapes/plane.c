@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:39:47 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/05 11:20:20 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/06 16:09:16 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ t_vec3	plane_intersect(t_plane *plane, t_ray *ray)
 {
 	float	denom;
 	t_vec3	p0_l0;
-	t_vec3	sols;
 
 	denom = vec3_dot(plane->normalized_norm_vec, ray->direction);
 	if (denom > 1e-6)
@@ -35,10 +34,7 @@ t_vec3	plane_intersect(t_plane *plane, t_ray *ray)
 		plane->t = vec3_dot(p0_l0, plane->normalized_norm_vec) / denom;
 		if (plane->t < 0)
 			return (vec3_new(0, 0, 0));
-		sols.x = ray->origin.x + ray->direction.x * plane->t;
-		sols.y = ray->origin.y + ray->direction.y * plane->t;
-		sols.z = ray->origin.z + ray->direction.z * plane->t;
-		return (sols);
+		return (vec3_new(plane->t, 0, 2));
 	}
 	else
 		return (vec3_new(0, 0, 0));
