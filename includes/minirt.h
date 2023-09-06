@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/09/04 16:54:08 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/06 15:39:38 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,29 +33,11 @@
 /*                                    Bonus                                   */
 /* -------------------------------------------------------------------------- */
 
-/* ---------------------------------- vec3 ---------------------------------- */
-
 typedef struct s_offset
 {
 	int				x;
 	int				y;
 }					t_offset;
-
-t_vec3				vec3_new(float x, float y, float z);
-float				vec3_length(t_vec3 vec);
-t_vec3				vec3_normalize(t_vec3 vec);
-t_vec3				vec3_cross(t_vec3 vec1, t_vec3 vec2);
-float				vec3_dot(t_vec3 vec1, t_vec3 vec2);
-t_vec3				vec3_add(t_vec3 vec1, t_vec3 vec2);
-t_vec3				vec3_subtract(t_vec3 vec1, t_vec3 vec2);
-t_vec3				vec3_multiply(t_vec3 vec, float scale);
-t_vec3				vec3_divide(t_vec3 vec, float scale);
-
-t_color_c			color_correct_new(float a, float r, float g, float b);
-t_color_c			color_multiply(t_color_c color1, t_color_c color2);
-t_color_c			color_scale(t_color_c color, float scale);
-t_color_c			color_add(t_color_c color1, t_color_c color2);
-t_color_c			color_average(t_color_c color1, t_color_c color2);
 
 typedef struct s_light
 {
@@ -64,27 +46,8 @@ typedef struct s_light
 	t_color_c		color;
 }					t_light;
 
-t_ray				ray_init(t_vec3 origin, t_vec3 direction);
-t_ray				ray_primary(t_cam *cam, float x, float y);
-
 # define MAX_UCHAR_2 65025;
 # define DIV_MAX_UCHAR_2 0.000015384615384615385;
-
-t_rgba				color_new(char a, char r, char g, char b);
-t_color_c			color_tween(t_color_c color1, t_color_c color2, double t);
-t_color_c			color_correct(t_color color);
-t_color				color_revert(t_color_c color_c);
-
-typedef struct s_image
-{
-	void			*img;
-	int				pixel_bits;
-	int				line_bytes;
-	int				endian;
-	char			*buffer;
-}					t_image;
-
-void				put_pixel(t_image *image, int x, int y, unsigned int color);
 
 /* ---------------------------------- hooks --------------------------------- */
 typedef struct s_key_events

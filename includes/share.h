@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/09/06 15:20:55 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/06 15:41:14 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,18 @@ typedef struct s_vec3
 	float			y;
 	float			z;
 }					t_vec3;
+
+t_vec3				vec3_new(float x, float y, float z);
+float				vec3_length(t_vec3 vec);
+t_vec3				vec3_normalize(t_vec3 vec);
+t_vec3				vec3_cross(t_vec3 vec1, t_vec3 vec2);
+float				vec3_dot(t_vec3 vec1, t_vec3 vec2);
+t_vec3				vec3_add(t_vec3 vec1, t_vec3 vec2);
+t_vec3				vec3_subtract(t_vec3 vec1, t_vec3 vec2);
+t_vec3				vec3_multiply(t_vec3 vec, float scale);
+t_vec3				vec3_divide(t_vec3 vec, float scale);
+
+/* ---------------------------------- color --------------------------------- */
 
 typedef struct s_rgba
 {
@@ -49,12 +61,26 @@ typedef struct s_color_c
 	float			a;
 }					t_color_c;
 
+t_color_c			color_correct_new(float a, float r, float g, float b);
+t_color_c			color_multiply(t_color_c color1, t_color_c color2);
+t_color_c			color_scale(t_color_c color, float scale);
+t_color_c			color_add(t_color_c color1, t_color_c color2);
+t_color_c			color_average(t_color_c color1, t_color_c color2);
+t_rgba				color_new(char a, char r, char g, char b);
+t_color_c			color_tween(t_color_c color1, t_color_c color2, double t);
+t_color_c			color_correct(t_color color);
+t_color				color_revert(t_color_c color_c);
+
+/* -------------------------------- material -------------------------------- */
+
 typedef struct s_material
 {
 	t_color_c		color;
 	t_color_c		emission;
 	float			emission_i;
 }					t_material;
+
+/* ----------------------------------- ray ---------------------------------- */
 
 typedef struct s_ray
 {
@@ -63,6 +89,9 @@ typedef struct s_ray
 	float			intensity;
 	t_color_c		color;
 }					t_ray;
+
+t_ray				ray_init(t_vec3 origin, t_vec3 direction);
+t_ray				ray_primary(t_cam *cam, float x, float y);
 
 typedef struct s_amb_light
 {
@@ -85,6 +114,8 @@ typedef struct s_light_src
 	float			ratio;
 	t_material material; // bonus
 }					t_light_src;
+
+/* ---------------------------------- shape --------------------------------- */
 
 typedef struct s_sphere
 {
@@ -208,5 +239,17 @@ typedef struct s_octree
 	t_list			*objects;
 	struct s_octree	**children;
 }					t_octree;
+
+/* ---------------------------------- image --------------------------------- */
+typedef struct s_image
+{
+	void			*img;
+	int				pixel_bits;
+	int				line_bytes;
+	int				endian;
+	char			*buffer;
+}					t_image;
+
+void				put_pixel(t_image *image, int x, int y, unsigned int color);
 
 #endif
