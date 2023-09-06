@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 22:46:40 by itan              #+#    #+#             */
-/*   Updated: 2023/09/06 16:09:09 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/07 01:48:55 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ t_hit_info	intersections(t_minirt *minirt, t_ray *ray, unsigned int *state)
 	hit_index = -1;
 	prev_intersect = vec3_new(0, 0, 0);
 	hit_info.hit = false;
+	hit_info.material.emission_i = 0;
+	hit_info.material.color = color_correct_new(0, 0, 0, 0);
+	hit_info.material.emission = color_correct_new(0, 0, 0, 0);
 	// sphere intersect
 	intersect = sphere_intersect(&minirt->sphere, ray);
 	if (intersect.z > 0)
@@ -77,7 +80,7 @@ t_hit_info	intersections(t_minirt *minirt, t_ray *ray, unsigned int *state)
 	{
 		hit_info.point = vec3_add(ray->origin, hit_info.point);
 		hit_info.normal = vec3_subtract(hit_info.point,
-			minirt->cylinder.center);
+										minirt->cylinder.center);
 	}
 	else
 	{

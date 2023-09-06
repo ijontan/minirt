@@ -4,7 +4,8 @@
     "*.c": "c",
     "__locale": "c",
     "ios": "c",
-    "__node_handle": "c"
+    "__node_handle": "c",
+    "random": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

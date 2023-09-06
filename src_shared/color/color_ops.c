@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 23:02:41 by itan              #+#    #+#             */
-/*   Updated: 2023/09/06 23:34:43 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/07 01:50:49 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,19 @@ t_color_c	color_multiply(t_color_c color1, t_color_c color2)
 {
 	t_color_c	new_color;
 
+	// static int	i;
 	new_color.a = color1.a * color2.a;
 	new_color.r = color1.r * color2.r;
 	new_color.g = color1.g * color2.g;
 	new_color.b = color1.b * color2.b;
+	// if (i < 100 && color1.r != 0 && color1.g != 0 && color1.b != 0)
+	// {
+	// 	printf("color1: %f %f %f\n", color1.r, color1.g, color1.b);
+	// 	printf("color2: %f %f %f\n", color2.r, color2.g, color2.b);
+	// 	printf("new_color: %f %f %f\n\n", new_color.r, new_color.g,
+	// 			new_color.b);
+	// 	i++;
+	// }
 	return (color_clamp(new_color));
 }
 
@@ -63,7 +72,7 @@ t_color_c	color_add(t_color_c color1, t_color_c color2)
 	new_color.r = color1.r + color2.r;
 	new_color.g = color1.g + color2.g;
 	new_color.b = color1.b + color2.b;
-	return (color_clamp(new_color));
+	return (new_color);
 }
 
 t_color_c	color_average(t_color_c color1, t_color_c color2)

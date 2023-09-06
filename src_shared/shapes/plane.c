@@ -48,7 +48,7 @@ t_vec3	plane_intersect(t_plane *plane, t_ray *ray)
 // 	denom = vec3_dot(plane->normalized_norm_vec, ray->direction);
 // 	if (denom > 1e-6)
 // 	{
-// 		p0_l0 = vec3_normalize(vec3_subtract(\
+// 		p0_l0 = vec3_normalize(vec3_subtract(
 // 		plane->point_on_plane, ray->origin));
 // 		plane->t = vec3_dot(p0_l0, plane->normalized_norm_vec) / denom;
 // 		return (plane->t >= 0);
