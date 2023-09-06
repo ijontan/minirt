@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/09/06 15:39:38 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/06 16:16:10 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct s_minirt
 	t_sphere		sphere;
 	t_plane			plane;
 	t_cylinder		cylinder;
-
+	t_list			*objects;
 	t_key_events	key_events;
 	t_mouse_events	mouse_events;
 }					t_minirt;
