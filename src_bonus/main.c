@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/09/06 16:14:43 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/06 22:45:38 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ void	draw_scene(t_minirt *minirt)
 	unsigned int	state;
 	t_ray			ray;
 	t_color_c		color;
+	t_color_c		incoming_light;
 
-	// t_color_c		incoming_light;
 	y = 0;
 	while (y < 720)
 	{
@@ -121,18 +121,25 @@ void	draw_scene(t_minirt *minirt)
 			ray = ray_primary(&minirt->cam, (((float)x - 280.0f) / 720 - 0.5)
 				* minirt->cam.fov, ((float)y / 720 - 0.5) * minirt->cam.fov);
 			// incoming_light = color_correct_new(0, 0, 0, 0);
-			state = (unsigned int)((x + y * 1280) + cycle);
+			state = (unsigned int)((x + y * 1280));
 			color = ray_tracing(&ray, minirt, &state);
-			// while (++cycle < 2)
-			// {
-			// 	state = (unsigned int)((x + y * 1280) + cycle);
-			// 	incoming_light = ray_tracing(&ray, minirt, &state);
-			// 	color = color_add(color, incoming_light);
-			// 	color.a /= 2;
-			// 	color.r /= 2;
-			// 	color.g /= 2;
-			// 	color.b /= 2;
-			// }
+			while (++cycle < 2)
+			{
+				incoming_light = ray_tracing(&ray, minirt, &state);
+				// incoming_light = color_scale(incoming_light, 0.5f);
+				color = color_add(color, incoming_light);
+				incoming_light = color_correct_new(0, 0, 0, 0);
+				// color.a /= 2;
+				// color.r /= 2;
+				// color.g /= 2;
+				// color.b /= 2;
+			}
+			if (color.b > 1.0f)
+				color.b = 1.0f;
+			if (color.g > 1.0f)
+				color.g = 1.0f;
+			if (color.r > 1.0f)
+				color.r = 1.0f;
 			// color = color_scale(color, 1.0f / (cycle + 1));
 			put_pixel(&minirt->image, x, y, color_revert(color).as_int);
 			x += 1;
@@ -159,10 +166,12 @@ static void	init_minirt(t_parse p)
 	minirt.cam = p.camera;
 	minirt.light_source = p.light_source;
 	minirt.sphere = p.sphere;
+	minirt.sphere.material.emission_i = 1.0f;
+	minirt.sphere.material.emission = color_correct_new(0, 1, 1, 1);
 	minirt.plane = p.plane;
 	minirt.cylinder = p.cylinder;
 	// rendering
-	ray_cast(&minirt);
+	draw_scene(&minirt);
 	printf("\e[0;32mRendering done!!! ~~\n\e[0m");
 	// mlx rendering
 	mlx_put_image_to_window(minirt.mlx, minirt.win, image.img, 0, 0);
