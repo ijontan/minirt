@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/09/06 15:41:14 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/06 15:58:17 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,17 @@ typedef struct s_material
 	float			emission_i;
 }					t_material;
 
+/* ----------------------------------- cam ---------------------------------- */
+
+typedef struct s_cam
+{
+	t_vec3			origin;
+	t_vec3			direction;
+	float			fov;
+}					t_cam;
+
+void				cam_init(t_cam *cam);
+
 /* ----------------------------------- ray ---------------------------------- */
 
 typedef struct s_ray
@@ -98,15 +109,6 @@ typedef struct s_amb_light
 	float			ratio;
 	t_material		material;
 }					t_amb_light;
-
-typedef struct s_cam
-{
-	t_vec3			origin;
-	t_vec3			direction;
-	float			fov;
-}					t_cam;
-
-void				cam_init(t_cam *cam);
 
 typedef struct s_light_src
 {

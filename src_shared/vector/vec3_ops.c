@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 02:06:22 by itan              #+#    #+#             */
-/*   Updated: 2023/08/27 03:04:44 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/06 15:56:23 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ float	vec3_length(t_vec3 vec)
 
 t_vec3	vec3_normalize(t_vec3 vec)
 {
-	float	len;
+	float	len_div;
 
-	len = vec3_length(vec);
-	return (vec3_new(vec.x / len, vec.y / len, vec.z / len));
+	len_div = ft_q_in_sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
+	return (vec3_new(vec.x * len_div, vec.y * len_div, vec.z * len_div));
 }
 
 t_vec3	vec3_cross(t_vec3 vec1, t_vec3 vec2)
