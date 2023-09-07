@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/09/07 13:34:23 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/07 20:36:45 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,15 @@ typedef struct s_minirt
 	t_mouse_events	mouse_events;
 }					t_minirt;
 
+/*
+sphere: obj_type = 1
+plane: obj_type = 2
+cylinder: obj_type = 3
+*/
 typedef struct s_hit_info
 {
-	t_vec3			point;
+	unsigned int	obj_type;
+	t_vec3			intersect_pt;
 	t_vec3			normal;
 	t_material		material;
 	bool			hit;

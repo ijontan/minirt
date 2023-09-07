@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_tracing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:40:55 by itan              #+#    #+#             */
-/*   Updated: 2023/09/07 13:58:30 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/07 20:38:18 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_color_c	ray_tracing(t_ray *ray, t_minirt *minirt, unsigned int *state)
 		hit_info = intersections(minirt, ray);
 		if (hit_info.hit)
 		{
-			ray->origin = hit_info.point;
+			ray->origin = hit_info.intersect_pt;
 			ray->direction = random_vec3_hs(hit_info.normal, state);
 			ray->direction = vec3_add(ray->direction, hit_info.normal);
 			// ray->direction = vec3_normalize(vec3_cross(hit_info.normal,
