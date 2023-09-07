@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/09/08 02:38:53 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/08 03:00:28 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	draw_scene(t_minirt *minirt)
 			// color = color_add(color, incoming_light);
 			cycle = -1;
 			state = (unsigned int)((x + y * 1280));
-			while (++cycle < 10)
+			while (++cycle < 2)
 			{
 				ray = ray_primary(&minirt->cam, (((float)x - 280.0f) / 720
 							- 0.5) * minirt->cam.fov, ((float)y / 720 - 0.5)
@@ -162,16 +162,16 @@ static void	init_minirt(t_parse p)
 	minirt.sphere = p.sphere;
 	// minirt.sphere.center = vec3_new(-600, 0, 20);
 	// minirt.sphere.radius = 100;
-	minirt.sphere.material.emission_i = 0;
-	minirt.sphere.material.color = color_correct_new(0, 0, 1, 1);
-	minirt.sphere.material.emission = color_correct_new(0, 0, 0, 0);
+	minirt.sphere.material.emission_i = 1;
+	minirt.sphere.material.color = color_correct_new(0, 0, 0, 0);
+	minirt.sphere.material.emission = color_correct_new(0, 1, 1, 1);
 	minirt.sphere.material.specular = color_correct_new(0, 0, 0, 0);
 	minirt.sphere.material.specular_i = 0;
 	minirt.sphere.material.shininess = 0;
 	minirt.sphere.material.diffuse_i = 0;
 	minirt.plane = p.plane;
-	minirt.plane.material.emission_i = 1.0f;
-	minirt.plane.material.emission = color_correct_new(0, 1, 1, 1);
+	minirt.plane.material.emission_i = 0;
+	minirt.plane.material.emission = color_correct_new(0, 0, 0, 0);
 	minirt.plane.material.specular = color_correct_new(0, 1, 1, 1);
 	minirt.plane.material.specular_i = 0.1f;
 	minirt.plane.material.shininess = 10;
