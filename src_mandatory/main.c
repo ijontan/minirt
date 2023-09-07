@@ -114,7 +114,7 @@ void	calculate_lighting(t_minirt *minirt, t_hit_info *hit_info)
 	// float	max_color;
 	t_color_c amb_color;
 	
-	if (hit_info->obj_type != 1)
+	if (hit_info->obj_type != SPHERE)
 		return ;
 	perfect_reflection = vec3_subtract(hit_info->intersect_pt, vec3_multiply(hit_info->normal, vec3_dot(hit_info->intersect_pt, hit_info->normal) * 2));
 	perfect_reflection = vec3_normalize(perfect_reflection);

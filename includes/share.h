@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/09/06 15:58:17 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/08 01:37:49 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,10 @@ typedef struct s_material
 {
 	t_color_c		color;
 	t_color_c		emission;
+	t_color_c		specular;
+	float			diffuse_i;
+	float			specular_i;
+	int				shininess;
 	float			emission_i;
 }					t_material;
 
@@ -224,10 +228,6 @@ typedef struct s_bounding_box
 # define OCTREE_MAX_DEPTH 10
 # define OCTREE_MAX_OBJECTS 10
 # define OCTREE_MAX_NODE 8
-
-# define SPHERE 0
-# define PLANE 1
-# define CYLINDER 2
 
 typedef struct s_object
 {

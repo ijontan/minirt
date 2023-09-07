@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/09/07 20:36:45 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/08 01:39:52 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,28 @@ sphere: obj_type = 1
 plane: obj_type = 2
 cylinder: obj_type = 3
 */
+
+/**
+ * @brief type of object
+ * 
+ * @param SPHERE: 0
+ * @param PLANE: 1
+ * @param CYLINDER: 2
+ */
+typedef enum e_obj_type
+{
+	SPHERE,
+	PLANE,
+	CYLINDER
+}					t_obj_type;
+
 typedef struct s_hit_info
 {
-	unsigned int	obj_type;
+	t_obj_type		obj_type;
 	t_vec3			intersect_pt;
 	t_vec3			normal;
+	t_vec3			p_reflection;
+	t_vec3			pt_to_l;
 	t_material		material;
 	bool			hit;
 }					t_hit_info;
@@ -115,4 +132,6 @@ t_hit_info			intersections(t_minirt *minirt, t_ray *ray);
 
 t_color_c			ray_tracing(t_ray *ray, t_minirt *minirt,
 						unsigned int *state);
+t_color_c			phong_reflection(t_minirt *minirt, t_ray *ray,
+						t_hit_info *hit_info);
 #endif
