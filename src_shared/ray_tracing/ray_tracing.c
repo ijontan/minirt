@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:40:55 by itan              #+#    #+#             */
-/*   Updated: 2023/09/08 02:36:10 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/08 02:55:57 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ t_color_c	ray_tracing(t_ray *ray, t_minirt *minirt, unsigned int *state)
 	incoming_light = color_correct_new(0, 0, 0, 0);
 	color = color_correct_new(0, 1.0f, 1.0f, 1.0f);
 	i = -1;
-	while (++i < 4)
+	while (++i < 3)
 	{
 		hit_info = intersections(minirt, ray);
 		if (hit_info.hit)
 		{
 			ray->origin = hit_info.intersect_pt;
 			ray->direction = random_vec3_hs(hit_info.normal, state);
-			// ray->direction = vec3_normalize(vec3_add(ray->direction,
-			// 			hit_info.normal));
+			ray->direction = vec3_normalize(vec3_add(ray->direction,
+														hit_info.normal));
 			// ray->direction = vec3_normalize(vec3_cross(hit_info.normal,
 			// 		random_vec3_hs(hit_info.normal, state)));
 			calculate_incoming(&incoming_light, color, &hit_info.material);
