@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 23:59:42 by itan              #+#    #+#             */
-/*   Updated: 2023/09/08 02:15:41 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/08 03:38:35 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_color_c	phong_reflection(t_minirt *minirt, t_ray *ray, t_hit_info *hit_info)
 						minirt->amb_light.material.emission_i);
 	emission = color_scale(hit_info->material.emission,
 							hit_info->material.emission_i);
-	emission = color_correct_new(0, 0, 0, 0);
+	// emission = color_correct_new(0, 0, 0, 0);
 	dot_prod = vec3_dot(hit_info->pt_to_l, hit_info->p_reflection);
 	if (dot_prod < 0)
 		dot_prod = 0;
