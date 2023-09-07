@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 22:46:40 by itan              #+#    #+#             */
-/*   Updated: 2023/09/07 01:48:55 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/07 11:10:10 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * @param state
  * @return t_hit_info
  */
-t_hit_info	intersections(t_minirt *minirt, t_ray *ray, unsigned int *state)
+t_hit_info	intersections(t_minirt *minirt, t_ray *ray)
 {
 	int			i;
 	t_vec3		prev_intersect;
@@ -30,7 +30,6 @@ t_hit_info	intersections(t_minirt *minirt, t_ray *ray, unsigned int *state)
 	int			hit_index;
 
 	i = -1;
-	(void)state;
 	hit_index = -1;
 	prev_intersect = vec3_new(0, 0, 0);
 	hit_info.hit = false;
@@ -80,7 +79,7 @@ t_hit_info	intersections(t_minirt *minirt, t_ray *ray, unsigned int *state)
 	{
 		hit_info.point = vec3_add(ray->origin, hit_info.point);
 		hit_info.normal = vec3_subtract(hit_info.point,
-										minirt->cylinder.center);
+			minirt->cylinder.center);
 	}
 	else
 	{

@@ -6,18 +6,19 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:40:55 by itan              #+#    #+#             */
-/*   Updated: 2023/09/07 02:04:54 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/07 13:58:30 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static void	calculate_incoming(t_color_c *in_light, t_color_c rayColor,
+void	calculate_incoming(t_color_c *in_light, t_color_c rayColor,
 		t_material *material)
 {
 	t_color_c	emitting;
 
-	emitting = color_scale(material->emission, material->emission_i);
+	emitting = material->emission;
+	emitting = color_scale(emitting, material->emission_i);
 	emitting = color_multiply(emitting, rayColor);
 	*in_light = color_add(*in_light, emitting);
 }
@@ -29,12 +30,12 @@ t_color_c	ray_tracing(t_ray *ray, t_minirt *minirt, unsigned int *state)
 	t_color_c	color;
 	t_color_c	incoming_light;
 
-	color = color_correct_new(0, 1.0f, 1.0f, 1.0f);
 	incoming_light = color_correct_new(0, 0, 0, 0);
+	color = color_correct_new(0, 1.0f, 1.0f, 1.0f);
 	i = -1;
-	while (++i < 10)
+	while (++i < 3)
 	{
-		hit_info = intersections(minirt, ray, state);
+		hit_info = intersections(minirt, ray);
 		if (hit_info.hit)
 		{
 			ray->origin = hit_info.point;

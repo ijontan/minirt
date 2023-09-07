@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/09/06 16:16:10 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/07 13:34:23 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,7 @@ t_vec3				random_vec3_hs(t_vec3 normal, unsigned int *state);
 
 t_vec3				random_vec3_hs(t_vec3 normal, unsigned int *state);
 
-t_hit_info			intersections(t_minirt *minirt, t_ray *ray,
-						unsigned int *state);
+t_hit_info			intersections(t_minirt *minirt, t_ray *ray);
 
 t_color_c			ray_tracing(t_ray *ray, t_minirt *minirt,
 						unsigned int *state);

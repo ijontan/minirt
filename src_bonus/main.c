@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/09/07 02:03:14 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/07 14:06:09 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,11 @@ void	gradient(t_image *image)
 
 void	ray_cast(t_minirt *minirt)
 {
-	int				x;
-	int				y;
-	unsigned int	state;
-	t_ray			ray;
-	t_color_c		color;
-	t_hit_info		hit_info;
+	int			x;
+	int			y;
+	t_ray		ray;
+	t_color_c	color;
+	t_hit_info	hit_info;
 
 	y = 0;
 	while (y < 720)
@@ -87,9 +86,8 @@ void	ray_cast(t_minirt *minirt)
 		{
 			hit_info.material.color = color_correct_new(0, 0, 0, 0);
 			ray = ray_primary(&minirt->cam, (((float)x - 280.0f) / 720 - 0.5)
-					* minirt->cam.fov, ((float)y / 720 - 0.5)
-					* minirt->cam.fov);
-			hit_info = intersections(minirt, &ray, &state);
+				* minirt->cam.fov, ((float)y / 720 - 0.5) * minirt->cam.fov);
+			hit_info = intersections(minirt, &ray);
 			if (hit_info.hit)
 			{
 				color = hit_info.material.color;
@@ -118,23 +116,23 @@ void	draw_scene(t_minirt *minirt)
 		while (x < 1280)
 		{
 			color = color_correct_new(0, 0, 0, 0);
-			ray = ray_primary(&minirt->cam, (((float)x - 280.0f) / 720 - 0.5)
-					* minirt->cam.fov, ((float)y / 720 - 0.5)
-					* minirt->cam.fov);
 			// incoming_light = color_correct_new(0, 0, 0, 0);
-			state = (unsigned int)((x + y * 1280));
-			color = ray_tracing(&ray, minirt, &state);
+			// color = ray_tracing(&ray, minirt, &state);
 			// incoming_light = ray_tracing(&ray, minirt, &state);
 			// color = color_add(color, incoming_light);
 			// incoming_light = ray_tracing(&ray, minirt, &state);
 			// color = color_add(color, incoming_light);
 			cycle = -1;
-			while (++cycle < 1)
+			state = (unsigned int)((x + y * 1280));
+			while (++cycle < 100)
 			{
+				ray = ray_primary(&minirt->cam, (((float)x - 280.0f) / 720
+						- 0.5) * minirt->cam.fov, ((float)y / 720 - 0.5)
+					* minirt->cam.fov);
 				incoming_light = ray_tracing(&ray, minirt, &state);
-				color = color_average(color, incoming_light);
+				color = color_add(color, incoming_light);
 			}
-			// color = color_scale(color, 1 / (float)cycle);
+			color = color_scale(color, 1 / (float)cycle);
 			put_pixel(&minirt->image, x, y, color_revert(color).as_int);
 			x += 1;
 		}
@@ -153,13 +151,15 @@ static void	init_minirt(t_parse p)
 	// images
 	image.img = mlx_new_image(minirt.mlx, 1280, 720);
 	image.buffer = mlx_get_data_addr(image.img, &image.pixel_bits,
-			&image.line_bytes, &image.endian);
+		&image.line_bytes, &image.endian);
 	minirt.image = image;
 	// scene objects
 	minirt.amb_light = p.amb_light;
 	minirt.cam = p.camera;
 	minirt.light_source = p.light_source;
 	minirt.sphere = p.sphere;
+	// minirt.sphere.center = vec3_new(-600, 0, 20);
+	// minirt.sphere.radius = 100;
 	minirt.sphere.material.emission_i = 1.0f;
 	minirt.sphere.material.color = color_correct_new(0, 0, 0, 0);
 	minirt.sphere.material.emission = color_correct_new(0, 1, 1, 1);
