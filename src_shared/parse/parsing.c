@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:52:31 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/04 16:09:29 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/08 14:30:00 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 // mand_flag: flag and check if all minimum requirements of a scene are present
 static bool parse_line(char *line, t_parse *p)
 {
-	int		i;
+	int			i;
 
 	p->info = ft_split(line, ' ');
 	i = -1;
@@ -30,7 +30,7 @@ static bool parse_line(char *line, t_parse *p)
 	{
 		if (!ft_strncmp(p->info[0], p->obj_type[i], ft_strlen(p->info[0])))
 		{
-			check_line_format(p->info[0], p);
+			check_line_format(p->obj_code[i], p);
 			p->func_ptr[i](p);
 			free_2darray(p->info);
 			return (true);
@@ -79,6 +79,12 @@ static void	init_parsing(t_parse *p)
 	p->func_ptr[3] = parse_plane;
 	p->func_ptr[4] = parse_sphere;
 	p->func_ptr[5] = parse_cylinder;
+	p->obj_code[0] = AMB_LIGHT;
+	p->obj_code[1] = CAM;
+	p->obj_code[2] = LIGHT;
+	p->obj_code[3] = PLANE;
+	p->obj_code[4] = SPHERE;
+	p->obj_code[5] = CYLINDER;
 }
 
 bool parse_rt_file(char *infile, t_parse *parse_info)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   share.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/09/08 01:37:49 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/08 14:18:40 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,20 +170,21 @@ typedef struct s_atof
 // Parsing
 typedef struct s_parse
 {
-	int				infile_fd;
-	int				mand_flag[6];
-	char			*obj_type[6];
-	void			(*func_ptr[6])(struct s_parse *);
-	char			**info;
-	int				rgb[3];
-	float			coords[3];
-	t_atof			atof;
-	t_amb_light		amb_light;
-	t_cam			camera;
-	t_light_src		light_source;
-	t_sphere		sphere;
-	t_plane			plane;
-	t_cylinder		cylinder;
+	int					infile_fd;
+	int					mand_flag[6];
+	const char			*obj_type[6];
+	void				(*func_ptr[6])(struct s_parse *);
+	const int			obj_code[6];
+	char				**info;
+	int					rgb[3];
+	float				coords[3];
+	t_atof				atof;
+	t_amb_light			amb_light;
+	t_cam				camera;
+	t_light_src			light_source;
+	t_sphere			sphere;
+	t_plane				plane;
+	t_cylinder			cylinder;
 }					t_parse;
 
 // parsing.c
@@ -211,7 +212,7 @@ t_vec3				parse_coordinates(char *s, t_parse *p);
 
 // error_handling.c
 void				exit_parse(char **info, char *s, char c);
-void				check_line_format(char *s, t_parse *p);
+void				check_line_format(int type, t_parse *p);
 
 // error_handling2.c
 bool				valid_float(char *s);

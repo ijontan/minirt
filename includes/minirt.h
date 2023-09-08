@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/09/08 01:39:52 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/08 11:40:06 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,18 @@ cylinder: obj_type = 3
 /**
  * @brief type of object
  * 
- * @param SPHERE: 0
- * @param PLANE: 1
- * @param CYLINDER: 2
+ * @param AMB_LIGHT: 0
+ * @param LIGHT: 1
+ * @param CAM: 2
+ * @param SPHERE: 3
+ * @param PLANE: 4
+ * @param CYLINDER: 5
  */
 typedef enum e_obj_type
 {
+	AMB_LIGHT,
+	LIGHT,
+	CAM,
 	SPHERE,
 	PLANE,
 	CYLINDER

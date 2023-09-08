@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/09/07 21:17:30 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/08 10:42:30 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,9 @@ dot_prod: represents cos(theta), with range: 0.0 - 1.0
 
 amb_color: the color of the object after ambient light is applied (object color * amb_light color)
 
-- if the cos(theta) is < 0, meaning theta is obtuse, then apply the ambient light
-- if the cos(theta) is 0.5 < <= 1.0, specular
+- ambient: if the cos(theta) is < 0, meaning theta is obtuse, then apply the ambient light
+- specular: if the cos(theta) is 0.5 < <= 1.0, color tween from obj color to a bright color
+- diffuse: if the cos(theta) is <= 0.5, color tween from dark color to obj color
 
 */
 void	calculate_lighting(t_minirt *minirt, t_hit_info *hit_info)
@@ -132,7 +133,7 @@ void	calculate_lighting(t_minirt *minirt, t_hit_info *hit_info)
 	else if (dot_prod <= 0.5)
 	{
 		hit_info->material.color = color_tween(color_correct_new(0,0,0,0), hit_info->material.color, dot_prod);
-		hit_info->material.color = color_add( hit_info->material.color, amb_color);
+		hit_info->material.color = color_add(hit_info->material.color, amb_color);
 	}
 }
 
@@ -154,7 +155,8 @@ void	ray_cast(t_minirt *minirt)
 			ray = ray_primary(&minirt->cam, (((float)x - 280.0f) / 720 - 0.5)
 				* minirt->cam.fov, ((float)y / 720 - 0.5) * minirt->cam.fov);
 			hit_info = intersections(minirt, &ray);
-			calculate_lighting(minirt, &hit_info);
+			hit_info.material.color = phong_reflection(minirt, &ray, &hit_info);
+			// calculate_lighting(minirt, &hit_info);
 			set_pixel(minirt, hit_info, x, y);
 			x += 1;
 		}

@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 18:03:48 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/04 15:57:45 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/08 14:17:38 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,40 +24,40 @@ static bool	check_info_size(int size, t_parse *p)
 	return (false);
 }
 
-static void	exit_format_err(char **info, char *s, int n)
+static void	exit_format_err(char **info, char *s, int type)
 {
 	free_2darray(info);
 	printf("\e[0;31mError: %s format\nExpected Format Example: ", s);
-	if (n == 1)
+	if (type == AMB_LIGHT)
 		printf("A 0.2 255,255,255\e[0m\n");
-	else if (n == 2)
+	else if (type == CAM)
 		printf("C -50,0,20 0,0,0 70\e[0m\n");
-	else if (n == 3)
+	else if (type == LIGHT)
 		printf("L -40,0,30 0.7 255,255,255\e[0m\n");
-	else if (n == 4)
+	else if (type == SPHERE)
 		printf("sp 0,0,20 20 255,0,0\e[0m\n");
-	else if (n == 5)
+	else if (type == PLANE)
 		printf("pl 0,0,0 0,1.0,0 255,0,225\e[0m\n");
-	else if (n == 6)
+	else if (type == CYLINDER)
 		printf("cy 50.0,0.0,20.6 0,0,1.0 14.2 21.42 10,0,255\e[0m\n");
 	exit(EXIT_FAILURE);
 }
 
-static void	check_line_format2(char *s, t_parse *p)
+static void	check_line_format2(int type, t_parse *p)
 {
-	if (!ft_strncmp(s, "sp", ft_strlen(s)) && (!check_info_size(4, p) || \
+	if (type == SPHERE && (!check_info_size(4, p) || \
 	!valid_triplet(p->info[1]) || !valid_float(p->info[2]) || \
 	!valid_triplet(p->info[3])))
-		exit_format_err(p->info, "Sphere", 4);
-	else if (!ft_strncmp(s, "pl", ft_strlen(s)) && (!check_info_size(4, p) || \
+		exit_format_err(p->info, "Sphere", SPHERE);
+	else if (type == PLANE && (!check_info_size(4, p) || \
 	!valid_triplet(p->info[1]) || !valid_triplet(p->info[2]) || \
 	!valid_triplet(p->info[3])))
-		exit_format_err(p->info, "Plane", 5);
-	else if (!ft_strncmp(s, "cy", ft_strlen(s)) && (!check_info_size(6, p) || \
+		exit_format_err(p->info, "Plane", PLANE);
+	else if (type == CYLINDER && (!check_info_size(6, p) || \
 	!valid_triplet(p->info[1]) || !valid_triplet(p->info[2]) || \
 	!valid_float(p->info[3]) || !valid_float(p->info[4]) || \
 	!valid_triplet(p->info[5])))
-		exit_format_err(p->info, "Cylinder", 6);
+		exit_format_err(p->info, "Cylinder", CYLINDER);
 }
 
 /*
@@ -66,20 +66,20 @@ checks if the info in the .rt file is in the correct format by checking:
 - check if a float is in correct format
 - check if a triplet (255,255,255) is in correct format
 */
-void	check_line_format(char *s, t_parse *p)
+void	check_line_format(int type, t_parse *p)
 {
-	if (!ft_strncmp(s, "A", ft_strlen(s)) && (!check_info_size(3, p) || \
+	if (type == AMB_LIGHT && (!check_info_size(3, p) || \
 	!valid_float(p->info[1]) || !valid_triplet(p->info[2])))
-		exit_format_err(p->info, "Ambient light", 1);
-	else if (!ft_strncmp(s, "C", ft_strlen(s)) && (!check_info_size(4, p) || \
+		exit_format_err(p->info, "Ambient light", AMB_LIGHT);
+	else if (type == CAM && (!check_info_size(4, p) || \
 	!valid_triplet(p->info[1]) || !valid_triplet(p->info[2]) || \
 	!valid_float(p->info[3])))
-		exit_format_err(p->info, "Camera", 2);
-	else if (!ft_strncmp(s, "L", ft_strlen(s)) && (!check_info_size(4, p) || \
+		exit_format_err(p->info, "Camera", CAM);
+	else if (type ==  LIGHT && (!check_info_size(4, p) || \
 	!valid_triplet(p->info[1]) || !valid_float(p->info[2]) || \
 	!valid_triplet(p->info[3])))
-		exit_format_err(p->info, "Lighting", 3);
-	check_line_format2(s, p);
+		exit_format_err(p->info, "Lighting", LIGHT);
+	check_line_format2(type, p);
 }
 
 
