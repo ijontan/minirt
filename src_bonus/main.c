@@ -6,40 +6,12 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/09/08 22:33:56 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/09 01:00:03 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <stdio.h>
-
-static bool	check_min_requirements(t_parse parse_info)
-{
-	int	i;
-
-	i = -1;
-	while (++i < 6)
-	{
-		if (!parse_info.mand_flag[i])
-		{
-			printf("\e[0;31mError: Missing Object: ");
-			if (i == 0)
-				printf("Ambient lighting required\e[0m");
-			else if (i == 1)
-				printf("Camera required\e[0m");
-			else if (i == 2)
-				printf("Lighting required\e[0m");
-			else if (i == 3)
-				printf("A sphere required\e[0m");
-			else if (i == 4)
-				printf("A plane required\e[0m");
-			else if (i == 5)
-				printf("A cylinder required\e[0m");
-			return (false);
-		}
-	}
-	return (true);
-}
 
 void	gradient(t_image *image)
 {
@@ -86,7 +58,8 @@ void	ray_cast(t_minirt *minirt)
 		{
 			hit_info.material.color = color_correct_new(0, 0, 0, 0);
 			ray = ray_primary(&minirt->cam, (((float)x - 280.0f) / 720 - 0.5)
-				* minirt->cam.fov, ((float)y / 720 - 0.5) * minirt->cam.fov);
+					* minirt->cam.fov, ((float)y / 720 - 0.5)
+					* minirt->cam.fov);
 			hit_info = intersections(minirt, &ray);
 			if (hit_info.hit)
 			{
@@ -124,12 +97,12 @@ void	draw_scene(t_minirt *minirt)
 			// incoming_light = ray_tracing(&ray, minirt, &state);
 			// color = color_add(color, incoming_light);
 			cycle = -1;
-			state = (unsigned int)((x + y * 1280));
 			while (++cycle < 10)
 			{
+				state = (unsigned int)((x + y * 1280 + cycle * 136274));
 				ray = ray_primary(&minirt->cam, (((float)x - 280.0f) / 720
-						- 0.5) * minirt->cam.fov, ((float)y / 720 - 0.5)
-					* minirt->cam.fov);
+							- 0.5) * minirt->cam.fov, ((float)y / 720 - 0.5)
+						* minirt->cam.fov);
 				incoming_light = ray_tracing(&ray, minirt, &state);
 				color = color_add(color, incoming_light);
 			}
@@ -141,10 +114,12 @@ void	draw_scene(t_minirt *minirt)
 	}
 }
 
-static void	init_minirt(t_parse p)
+static void	init_minirt(void)
 {
 	t_image		image;
 	t_minirt	minirt;
+	t_sphere	*sphere;
+	double		x;
 
 	// mlx and win
 	minirt.mlx = mlx_init();
@@ -152,36 +127,47 @@ static void	init_minirt(t_parse p)
 	// images
 	image.img = mlx_new_image(minirt.mlx, 1280, 720);
 	image.buffer = mlx_get_data_addr(image.img, &image.pixel_bits,
-		&image.line_bytes, &image.endian);
+			&image.line_bytes, &image.endian);
 	minirt.image = image;
-	// scene objects
-	minirt.amb_light = p.amb_light;
-	minirt.amb_light.material.emission_i = 0.01f;
-	minirt.cam = p.camera;
-	minirt.light_source = p.light_source;
-	minirt.sphere = p.sphere;
-	// minirt.sphere.center = vec3_new(-600, 0, 20);
-	// minirt.sphere.radius = 100;
-	minirt.sphere.material.emission_i = 0;
-	minirt.sphere.material.emission = color_correct_new(0, 1, 1, 1);
-	minirt.sphere.material.specular = color_correct_new(0, 1, 1, 1);
-	minirt.sphere.material.specular_i = 0.001;
-	minirt.sphere.material.shininess = 1.2;
-	minirt.sphere.material.diffuse_i = 1;
-	minirt.plane = p.plane;
-	minirt.plane.material.emission_i = 0;
-	minirt.plane.material.emission = color_correct_new(0, 0, 0, 0);
-	minirt.plane.material.specular = color_correct_new(0, 1, 1, 1);
-	minirt.plane.material.specular_i = 0.01;
-	minirt.plane.material.shininess = 0.1;
-	minirt.plane.material.diffuse_i = 0.1f;
-	minirt.cylinder = p.cylinder;
-	minirt.cylinder.material.emission_i = 0;
-	minirt.cylinder.material.emission = color_correct_new(0, 1, 0, 0);
-	minirt.cylinder.material.specular = color_correct_new(0, 1, 1, 1);
-	minirt.cylinder.material.specular_i = 0.001;
-	minirt.cylinder.material.shininess = 1;
-	minirt.cylinder.material.diffuse_i = 0.1f;
+	minirt.objects = NULL;
+	cam_init(&minirt.cam);
+	for (size_t i = 0; i < 5; i++)
+	{
+		x = (double)i / 4;
+		sphere = malloc(sizeof(t_sphere));
+		sphere->center = vec3_new(bazier_curves_1d_linear(x, (double[2]){-100,
+					100}),
+									0,
+									200);
+		sphere->radius = 20 * x + 20;
+		sphere->material.color = color_tween(color_correct_new(0, 1, 1, 0),
+												color_correct_new(0, 0, 1, 1),
+												x);
+		sphere->material.specular_i = 0;
+		sphere->material.emission = color_correct_new(0, 0, 0, 0);
+		sphere->material.emission_i = 0;
+		add_object(&minirt.objects, sphere, 0);
+	}
+	{
+		sphere = malloc(sizeof(t_sphere));
+		sphere->center = vec3_new(0, -500, 200);
+		sphere->radius = 300;
+		sphere->material.color = color_correct_new(0, 0, 0, 0);
+		sphere->material.specular_i = 0;
+		sphere->material.emission = color_correct_new(0, 1, 1, 1);
+		sphere->material.emission_i = 1;
+		add_object(&minirt.objects, sphere, 0);
+	}
+	{
+		sphere = malloc(sizeof(t_sphere));
+		sphere->center = vec3_new(0, 10030, 200);
+		sphere->radius = 10000;
+		sphere->material.color = color_correct_new(0, 0.2, 0.1, 0.2);
+		sphere->material.specular_i = 0;
+		sphere->material.emission = color_correct_new(0, 1, 1, 1);
+		sphere->material.emission_i = 0;
+		add_object(&minirt.objects, sphere, 0);
+	}
 	// rendering
 	draw_scene(&minirt);
 	printf("\e[0;32mRendering done!!! ~~\n\e[0m");
@@ -193,15 +179,8 @@ static void	init_minirt(t_parse p)
 
 int	main(int ac, char **av)
 {
-	t_parse	parse_info;
-
-	if (ac != 2)
-		return (printf("\e[0;31mError: argument error\nExpected input format: ./minirt ~.rt\e[0m"));
-	if (!parse_rt_file(av[1], &parse_info))
-		return (1);
-	if (!check_min_requirements(parse_info))
-		return (1);
-	printf("\e[0;32mParsing done!!! ~~\n\e[0m");
-	init_minirt(parse_info);
+	(void)ac;
+	(void)av;
+	init_minirt();
 	return (0);
 }

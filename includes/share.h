@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/09/08 20:32:07 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/09 00:21:32 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ float				vec3_length(t_vec3 vec);
 t_vec3				vec3_normalize(t_vec3 vec);
 t_vec3				vec3_cross(t_vec3 vec1, t_vec3 vec2);
 float				vec3_dot(t_vec3 vec1, t_vec3 vec2);
+t_vec3				vec3_tween(t_vec3 vec1, t_vec3 vec2, float t);
 t_vec3				vec3_add(t_vec3 vec1, t_vec3 vec2);
 t_vec3				vec3_subtract(t_vec3 vec1, t_vec3 vec2);
 t_vec3				vec3_multiply(t_vec3 vec, float scale);
