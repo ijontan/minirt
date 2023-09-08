@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:40:55 by itan              #+#    #+#             */
-/*   Updated: 2023/09/08 14:48:24 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/08 20:40:18 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_color_c	ray_tracing(t_ray *ray, t_minirt *minirt, unsigned int *state)
 	incoming_light = color_correct_new(0, 0, 0, 0);
 	color = color_correct_new(0, 1.0f, 1.0f, 1.0f);
 	i = -1;
-	while (++i < 3)
+	while (++i < 5)
 	{
 		hit_info = intersections(minirt, ray);
 		if (hit_info.hit)

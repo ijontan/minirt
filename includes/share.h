@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/09/08 15:25:11 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/08 20:32:07 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct s_material
 	t_color_c		specular;
 	float			diffuse_i;
 	float			specular_i;
-	int				shininess;
+	float			shininess;
 	float			emission_i;
 }					t_material;
 
@@ -172,9 +172,9 @@ typedef struct s_parse
 {
 	int				infile_fd;
 	int				mand_flag[6];
-	const char		*obj_type[6];
+	char			*obj_type[6];
 	void			(*func_ptr[6])(struct s_parse *);
-	const int		obj_code[6];
+	int				obj_code[6];
 	char			**info;
 	int				rgb[3];
 	float			coords[3];

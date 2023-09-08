@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/09/08 10:42:30 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/08 17:36:24 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void	ray_cast(t_minirt *minirt)
 			ray = ray_primary(&minirt->cam, (((float)x - 280.0f) / 720 - 0.5)
 				* minirt->cam.fov, ((float)y / 720 - 0.5) * minirt->cam.fov);
 			hit_info = intersections(minirt, &ray);
-			hit_info.material.color = phong_reflection(minirt, &ray, &hit_info);
+			hit_info.material.color = phong_reflection(minirt, &hit_info);
 			// calculate_lighting(minirt, &hit_info);
 			set_pixel(minirt, hit_info, x, y);
 			x += 1;

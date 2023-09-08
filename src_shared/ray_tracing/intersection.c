@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 22:46:40 by itan              #+#    #+#             */
-/*   Updated: 2023/09/08 15:04:18 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/08 18:32:59 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ t_hit_info	intersections(t_minirt *minirt, t_ray *ray)
 
 	// int			i;
 	// i = -1;
-	prev_intersect = vec3_new(0, 0, 1);
+	prev_intersect = vec3_new(INFINITY, 0, 0);
+	intersect = vec3_new(INFINITY, 0, 0);
 	hit_info.hit = false;
 	hit_info.material.emission_i = 0;
 	hit_info.material.color = color_correct_new(0, 0, 0, 0);
@@ -38,11 +39,17 @@ t_hit_info	intersections(t_minirt *minirt, t_ray *ray)
 	hit_info.material.specular_i = 0;
 	hit_info.material.shininess = 0;
 	hit_info.material.specular = color_correct_new(0, 0, 0, 0);
+	hit_info.normal = vec3_new(0, 0, 0);
+	hit_info.p_reflection = vec3_new(0, 0, 0);
+	hit_info.pt_to_cam = vec3_new(0, 0, 0);
+	hit_info.pt_to_l = vec3_new(0, 0, 0);
+	hit_info.intersect_pt = vec3_new(0, 0, 0);
+	hit_info.obj_type = 0;
 	// sphere intersect
 	intersect = sphere_intersect(&minirt->sphere, ray);
-	if (intersect.z > 1)
+	if (intersect.z > 0)
 	{
-		if (prev_intersect.z == 1 || intersect.x < prev_intersect.x)
+		if (prev_intersect.z == 0 || intersect.x < prev_intersect.x)
 		{
 			hit_info.material = minirt->sphere.material;
 			prev_intersect = intersect;
@@ -52,9 +59,9 @@ t_hit_info	intersections(t_minirt *minirt, t_ray *ray)
 	}
 	// cylinder intersect
 	intersect = cylinder_intersect(&minirt->cylinder, ray);
-	if (intersect.z > 1)
+	if (intersect.z > 0)
 	{
-		if (prev_intersect.z == 1 || intersect.x < prev_intersect.x)
+		if (prev_intersect.z == 0 || intersect.x < prev_intersect.x)
 		{
 			hit_info.material = minirt->cylinder.material;
 			prev_intersect = intersect;
@@ -64,9 +71,9 @@ t_hit_info	intersections(t_minirt *minirt, t_ray *ray)
 	}
 	// plane intersect
 	intersect = plane_intersect(&minirt->plane, ray);
-	if (intersect.z > 1)
+	if (intersect.z > 0)
 	{
-		if (prev_intersect.z == 1 || intersect.x < prev_intersect.x)
+		if (prev_intersect.z == 0 || intersect.x < prev_intersect.x)
 		{
 			hit_info.material = minirt->plane.material;
 			prev_intersect = intersect;
@@ -76,7 +83,7 @@ t_hit_info	intersections(t_minirt *minirt, t_ray *ray)
 	}
 	if (hit_info.hit == false)
 		return (hit_info);
-	hit_info.intersect_pt = vec3_multiply(ray->direction, intersect.x);
+	hit_info.intersect_pt = vec3_multiply(ray->direction, prev_intersect.x);
 	hit_info.intersect_pt = vec3_add(ray->origin, hit_info.intersect_pt);
 	if (hit_info.obj_type == SPHERE)
 		hit_info.normal = vec3_subtract(hit_info.intersect_pt,
