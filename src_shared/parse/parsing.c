@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:52:31 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/08 14:30:00 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/09 11:18:31 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 // mand_flag: flag and check if all minimum requirements of a scene are present
 static bool parse_line(char *line, t_parse *p)
 {
-	int			i;
+	int	i;
 
 	p->info = ft_split(line, ' ');
 	i = -1;
@@ -37,7 +37,7 @@ static bool parse_line(char *line, t_parse *p)
 		}
 	}
 	if (!ft_strncmp(p->info[0], "\n", ft_strlen(p->info[0])))
-		printf("\e[0;31mError: No empty newlines allowed\e[0m\n");
+		return (true);
 	else
 		printf("\e[0;31mError: Unknown object \e[0m%s\n", p->info[0]);
 	free_2darray(p->info);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   share.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/09/09 00:21:32 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/09 11:43:31 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ t_ray				ray_primary(t_cam *cam, float x, float y);
 typedef struct s_amb_light
 {
 	float			ratio;
-	t_material		material;
+	t_color_c		color;
 }					t_amb_light;
 
 typedef struct s_light_src
@@ -172,7 +172,6 @@ typedef struct s_atof
 typedef struct s_parse
 {
 	int				infile_fd;
-	int				mand_flag[6];
 	char			*obj_type[6];
 	void			(*func_ptr[6])(struct s_parse *);
 	int				obj_code[6];
@@ -183,9 +182,7 @@ typedef struct s_parse
 	t_amb_light		amb_light;
 	t_cam			camera;
 	t_light_src		light_source;
-	t_sphere		sphere;
-	t_plane			plane;
-	t_cylinder		cylinder;
+	t_list			*objects;
 }					t_parse;
 
 // parsing.c

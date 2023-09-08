@@ -6,32 +6,40 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 17:14:41 by rsoo              #+#    #+#             */
-/*   Updated: 2023/08/31 10:21:54 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/09 11:34:44 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // the objects consists of a sphere, plane and cylinder
 #include "minirt.h"
 
-void parse_sphere(t_parse *p)
+void    parse_sphere(t_parse *p)
 {
-	p->sphere.center = parse_coordinates(p->info[1], p);
+    t_sphere	*sphere;
 
-	p->sphere.radius = ft_atof(p->info[2], p) / 2;
-	if (p->sphere.radius <= 0.0)
-		exit_parse(p->info, "Sphere", 'd');
+    sphere = ft_calloc(1, sizeof(t_sphere));
 
-	if (check_rgb(p->info[3], p))
-		p->sphere.material.color = color_correct(\
-			(t_color)color_new(0, p->rgb[0], p->rgb[1], p->rgb[2]));
-	else
-		exit_parse(p->info, "Sphere", 'c');
+    sphere->center = parse_coordinates(p->info[1], p);
 
-	p->mand_flag[3] = 1;
+    sphere->radius = ft_atof(p->info[2], p) / 2;
+    if (sphere->radius <= 0.0)
+        exit_parse(p->info, "Sphere", 'd');
+
+    if (check_rgb(p->info[3], p))
+        sphere->material.color = color_correct((t_color)color_new(0, p->rgb[0],
+                p->rgb[1], p->rgb[2]));
+    else
+        exit_parse(p->info, "Sphere", 'c');
+	
+    add_object(&p->objects, sphere, SPHERE);
 }
 
 void parse_plane(t_parse *p)
 {
+    t_plane	*plane;
+
+    plane = ft_calloc(1, sizeof(t_plane));
+
 	p->plane.point_on_plane = parse_coordinates(p->info[1], p);
 
 	if (check_normalized(p->info[2], p))
@@ -45,11 +53,14 @@ void parse_plane(t_parse *p)
 	else
 		exit_parse(p->info, "Plane", 'c');
 
-	p->mand_flag[4] = 1;
+    add_object(&p->objects, plane, PLANE);
 }
 
 void parse_cylinder(t_parse *p)
 {
+	t_cylinder	*cylinder;
+
+    cylinder = ft_calloc(1, sizeof(t_cylinder));
 	p->cylinder.center = parse_coordinates(p->info[1], p);
 
 	if (check_normalized(p->info[2], p))
@@ -71,5 +82,6 @@ void parse_cylinder(t_parse *p)
 	else
 		exit_parse(p->info, "Cylinder", 'c');
 
-	p->mand_flag[5] = 1;
+    add_object(&p->objects, cylinder, CYLINDER);
 }
+

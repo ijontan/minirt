@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 16:16:39 by rsoo              #+#    #+#             */
-/*   Updated: 2023/08/31 10:21:38 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/09 11:43:39 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,10 @@ void parse_ambient_lighting(t_parse *p)
 		exit_parse(p->info, "Ambient lighting", 'r');
 
 	if (check_rgb(p->info[2], p))
-		p->amb_light.material.color = color_correct(\
+		p->amb_light.color = color_correct(\
 			(t_color)color_new(0, p->rgb[0], p->rgb[1], p->rgb[2]));
 	else
 		exit_parse(p->info, "Ambient lighting", 'c');
-
-	p->mand_flag[0] = 1;	
 }
 
 void parse_camera(t_parse *p)
@@ -37,13 +35,11 @@ void parse_camera(t_parse *p)
 		p->camera.direction = assign_norm_vec(p);
 	else
 		exit_parse(p->info, "Camera", 'n');
-	
+
 	p->camera.fov = ft_atof(p->info[3], p);
 	if (p->camera.fov < 0.0 || p->camera.fov > 180.0)
 		exit_parse(p->info, "Camera", 'a');
-	p->camera.fov = p->camera.fov * 3.14159 / 180.0;
-	
-	p->mand_flag[1] = 1;
+	p->camera.fov = p->camera.fov * PI / 180.0;
 }
 
 void parse_lighting(t_parse *p)
@@ -59,6 +55,4 @@ void parse_lighting(t_parse *p)
 			(t_color)color_new(0, p->rgb[0], p->rgb[1], p->rgb[2]));
 	else
 		exit_parse(p->info, "Lighting", 'c');
-
-	p->mand_flag[2] = 1;
 }
