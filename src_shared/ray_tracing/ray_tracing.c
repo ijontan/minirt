@@ -6,22 +6,22 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:40:55 by itan              #+#    #+#             */
-/*   Updated: 2023/09/08 03:51:03 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/08 14:48:24 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-// void	calculate_incoming(t_color_c *in_light, t_color_c rayColor, t_ray *ray,
-// 		t_minirt *minirt, t_hit_info *hit_info)
 void	calculate_incoming(t_color_c *in_light, t_color_c rayColor,
-		t_material *material)
+		t_minirt *minirt, t_hit_info *hit_info)
+// void	calculate_incoming(t_color_c *in_light, t_color_c rayColor,
+// 		t_material *material)
 {
 	t_color_c	emitting;
 
-	emitting = material->emission;
-	emitting = color_scale(emitting, material->emission_i);
-	// emitting = phong_reflection(minirt, ray, hit_info);
+	// emitting = material->emission;
+	// emitting = color_scale(emitting, material->emission_i);
+	emitting = phong_reflection(minirt, hit_info);
 	emitting = color_multiply(emitting, rayColor);
 	*in_light = color_add(*in_light, emitting);
 }
@@ -44,12 +44,11 @@ t_color_c	ray_tracing(t_ray *ray, t_minirt *minirt, unsigned int *state)
 			ray->origin = hit_info.intersect_pt;
 			ray->direction = random_vec3_hs(hit_info.normal, state);
 			ray->direction = vec3_normalize(vec3_add(ray->direction,
-														hit_info.normal));
+					hit_info.normal));
 			// ray->direction = vec3_normalize(vec3_cross(hit_info.normal,
 			// 		random_vec3_hs(hit_info.normal, state)));
-			calculate_incoming(&incoming_light, color, &hit_info.material);
-			// calculate_incoming(&incoming_light, color, ray, minirt,
-			// &hit_info);
+			// calculate_incoming(&incoming_light, color, &hit_info.material);
+			calculate_incoming(&incoming_light, color, minirt, &hit_info);
 			color = color_multiply(color, hit_info.material.color);
 			color = color_scale(color, 0.5f);
 		}

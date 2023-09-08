@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 22:46:40 by itan              #+#    #+#             */
-/*   Updated: 2023/09/08 03:35:55 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/08 15:04:18 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,12 @@ t_hit_info	intersections(t_minirt *minirt, t_ray *ray)
 	hit_info.intersect_pt = vec3_add(ray->origin, hit_info.intersect_pt);
 	if (hit_info.obj_type == SPHERE)
 		hit_info.normal = vec3_subtract(hit_info.intersect_pt,
-										minirt->sphere.center);
+			minirt->sphere.center);
 	else if (hit_info.obj_type == PLANE)
 		hit_info.normal = minirt->plane.normalized_norm_vec;
 	else if (hit_info.obj_type == CYLINDER)
 		hit_info.normal = vec3_subtract(hit_info.intersect_pt,
-										minirt->cylinder.center);
+			minirt->cylinder.center);
 	hit_info.normal = vec3_normalize(hit_info.normal);
 	return (hit_info);
 }

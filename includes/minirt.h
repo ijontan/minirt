@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/09/08 11:40:06 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/08 15:17:02 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ cylinder: obj_type = 3
 
 /**
  * @brief type of object
- * 
+ *
  * @param AMB_LIGHT: 0
  * @param LIGHT: 1
  * @param CAM: 2
@@ -116,6 +116,7 @@ typedef struct s_hit_info
 	t_vec3			normal;
 	t_vec3			p_reflection;
 	t_vec3			pt_to_l;
+	t_vec3			pt_to_cam;
 	t_material		material;
 	bool			hit;
 }					t_hit_info;
@@ -138,6 +139,5 @@ t_hit_info			intersections(t_minirt *minirt, t_ray *ray);
 
 t_color_c			ray_tracing(t_ray *ray, t_minirt *minirt,
 						unsigned int *state);
-t_color_c			phong_reflection(t_minirt *minirt, t_ray *ray,
-						t_hit_info *hit_info);
+t_color_c			phong_reflection(t_minirt *minirt, t_hit_info *hit_info);
 #endif

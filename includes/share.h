@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   share.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/09/08 14:18:40 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/08 15:25:11 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,21 +170,21 @@ typedef struct s_atof
 // Parsing
 typedef struct s_parse
 {
-	int					infile_fd;
-	int					mand_flag[6];
-	const char			*obj_type[6];
-	void				(*func_ptr[6])(struct s_parse *);
-	const int			obj_code[6];
-	char				**info;
-	int					rgb[3];
-	float				coords[3];
-	t_atof				atof;
-	t_amb_light			amb_light;
-	t_cam				camera;
-	t_light_src			light_source;
-	t_sphere			sphere;
-	t_plane				plane;
-	t_cylinder			cylinder;
+	int				infile_fd;
+	int				mand_flag[6];
+	const char		*obj_type[6];
+	void			(*func_ptr[6])(struct s_parse *);
+	const int		obj_code[6];
+	char			**info;
+	int				rgb[3];
+	float			coords[3];
+	t_atof			atof;
+	t_amb_light		amb_light;
+	t_cam			camera;
+	t_light_src		light_source;
+	t_sphere		sphere;
+	t_plane			plane;
+	t_cylinder		cylinder;
 }					t_parse;
 
 // parsing.c
@@ -195,6 +195,8 @@ void				free_2darray(char **s);
 float				ft_atof(char *s, t_parse *p);
 
 // parse_objects.c
+void				add_object(t_list **objects, void *object,
+						unsigned char type);
 void				parse_sphere(t_parse *p);
 void				parse_plane(t_parse *p);
 void				parse_cylinder(t_parse *p);

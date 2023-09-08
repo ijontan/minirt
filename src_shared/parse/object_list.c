@@ -37,6 +37,7 @@ do something
 
 typedef void	(*t_ft)(void *);
 
+eg1:
 void	funtion(void *objects)
 {
 	t_object	*obj;
@@ -48,4 +49,18 @@ void	funtion(void *objects)
 
 use
 ft_lstiter(objects, funtion);
+
+eg2:
+void	function(t_list *objects)
+{
+	t_object	*obj;
+	const t_ft	fun_ptr[3] = {&ft_example, &ft_example, &ft_example};
+
+	while (objects)
+	{
+		obj = objects->content;
+		fun_ptr[obj->type](obj->object);
+		objects = objects->next;
+	}
+} 
 */
