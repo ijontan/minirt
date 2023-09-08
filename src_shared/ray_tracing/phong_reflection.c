@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 23:59:42 by itan              #+#    #+#             */
-/*   Updated: 2023/09/08 20:32:54 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/08 22:32:14 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,11 @@ t_color_c	phong_reflection(t_minirt *minirt, t_hit_info *hit_info)
 	color = color_add(amb, emission);
 	color = color_add(color, diffuse);
 	color = color_add(color, specular);
+	if (color.b > 1)
+		color.b = 1;
+	if (color.g > 1)
+		color.g = 1;
+	if (color.r > 1)
+		color.r = 1;
 	return (color);
 }
