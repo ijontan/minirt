@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/09/11 00:44:25 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/11 01:04:10 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,7 @@ typedef struct s_object
 
 typedef struct s_octree
 {
-	t_bounding_box	bounding_box;
+	t_bound_box		bounding_box;
 	t_list			*objects;
 	struct s_octree	**children;
 }					t_octree;

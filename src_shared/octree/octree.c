@@ -6,13 +6,13 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 11:31:51 by itan              #+#    #+#             */
-/*   Updated: 2023/09/06 15:27:16 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/11 01:07:05 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_octree	*octree_new_node(t_bounding_box *box, t_list *objects)
+t_octree	*octree_new_node(t_bound_box *box, t_list *objects)
 {
 	t_octree	*node;
 
@@ -25,7 +25,7 @@ t_octree	*octree_new_node(t_bounding_box *box, t_list *objects)
 	return (node);
 }
 
-t_octree	*octree_new(t_bounding_box *box, t_list *objects)
+t_octree	*octree_new(t_bound_box *box, t_list *objects)
 {
 	(void)box;
 	(void)objects;
