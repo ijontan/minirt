@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/09/10 14:00:59 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/10 23:51:39 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	draw_scene(t_minirt *minirt)
 			ray = ray_primary(&minirt->cam, (((float)x - 280.0f) / 720 - 0.5)
 					* minirt->cam.fov, -(((float)y / 720 - 0.5))
 					* minirt->cam.fov);
-			while (++cycle < 10)
+			while (++cycle < 20)
 			{
 				state = (unsigned int)((x + y * 1280 + cycle * 136274));
 				incoming_light = ray_tracing(ray, minirt, &state);
@@ -119,8 +119,8 @@ static void	init_minirt(void)
 	t_image		image;
 	t_minirt	minirt;
 	t_sphere	*sphere;
-	t_plane		*plane;
 	double		x;
+	t_plane		*plane;
 
 	// mlx and win
 	minirt.mlx = mlx_init();
@@ -159,66 +159,66 @@ static void	init_minirt(void)
 	// 	sphere->material.emission_i = 1;
 	// 	add_object(&minirt.objects, sphere, 0);
 	// }
-	{
-		plane = malloc(sizeof(t_plane));
-		plane->point_on_plane = vec3_new(0, 40, 200);
-		plane->normalized_norm_vec = vec3_new(0, 1, 0);
-		plane->material.color = color_correct_new(0, 1, 1, 1);
-		plane->material.specular_i = 0;
-		plane->material.emission = color_correct_new(0, 1, 1, 1);
-		plane->material.emission_i = 1;
-		add_object(&minirt.objects, plane, 2);
-	}
+	// {
+	// 	plane = malloc(sizeof(t_plane));
+	// 	plane->point_on_plane = vec3_new(0, 40, 200);
+	// 	plane->normalized_norm_vec = vec3_new(0, 1, 0);
+	// 	plane->material.color = color_correct_new(0, 1, 1, 1);
+	// 	plane->material.specular_i = 0;
+	// 	plane->material.emission = color_correct_new(0, 1, 1, 1);
+	// 	plane->material.emission_i = 1;
+	// 	add_object(&minirt.objects, plane, 2);
+	// }
 	{
 		plane = malloc(sizeof(t_plane));
 		plane->point_on_plane = vec3_new(0, -40, 200);
 		plane->normalized_norm_vec = vec3_new(0, -1, 0);
 		plane->material.color = color_correct_new(0, 1, 1, 1);
-		plane->material.specular_i = 0;
+		plane->material.specular_i = 1;
 		plane->material.emission = color_correct_new(0, 0, 0, 0);
 		plane->material.emission_i = 0;
 		add_object(&minirt.objects, plane, 2);
 	}
-	{
-		plane = malloc(sizeof(t_plane));
-		plane->point_on_plane = vec3_new(120, 0, 0);
-		plane->normalized_norm_vec = vec3_new(1, 0, 0);
-		plane->material.color = color_correct_new(0, 0, 0, 1);
-		plane->material.specular_i = 0.1;
-		plane->material.emission = color_correct_new(0, 0, 0, 0);
-		plane->material.emission_i = 0;
-		add_object(&minirt.objects, plane, 2);
-	}
-	{
-		plane = malloc(sizeof(t_plane));
-		plane->point_on_plane = vec3_new(-120, 0, 0);
-		plane->normalized_norm_vec = vec3_new(-1, 0, 0);
-		plane->material.color = color_correct_new(0, 1, 0, 0);
-		plane->material.specular_i = 0.1;
-		plane->material.emission = color_correct_new(0, 0, 0, 0);
-		plane->material.emission_i = 0;
-		add_object(&minirt.objects, plane, 2);
-	}
-	{
-		plane = malloc(sizeof(t_plane));
-		plane->point_on_plane = vec3_new(0, 0, 400);
-		plane->normalized_norm_vec = vec3_new(0, 0, 1);
-		plane->material.color = color_correct_new(0, 0, 1, 0);
-		plane->material.specular_i = 0;
-		plane->material.emission = color_correct_new(0, 0, 0, 0);
-		plane->material.emission_i = 0;
-		add_object(&minirt.objects, plane, 2);
-	}
-	{
-		plane = malloc(sizeof(t_plane));
-		plane->point_on_plane = vec3_new(0, 0, -10);
-		plane->normalized_norm_vec = vec3_new(0, 0, 1);
-		plane->material.color = color_correct_new(0, 1, 1, 1);
-		plane->material.specular_i = 0;
-		plane->material.emission = color_correct_new(0, 0, 0, 0);
-		plane->material.emission_i = 0;
-		add_object(&minirt.objects, plane, 2);
-	}
+	// {
+	// 	plane = malloc(sizeof(t_plane));
+	// 	plane->point_on_plane = vec3_new(120, 0, 0);
+	// 	plane->normalized_norm_vec = vec3_new(1, 0, 0);
+	// 	plane->material.color = color_correct_new(0, 0, 0, 1);
+	// 	plane->material.specular_i = 0;
+	// 	plane->material.emission = color_correct_new(0, 0, 0, 0);
+	// 	plane->material.emission_i = 0;
+	// 	add_object(&minirt.objects, plane, 2);
+	// }
+	// {
+	// 	plane = malloc(sizeof(t_plane));
+	// 	plane->point_on_plane = vec3_new(-120, 0, 0);
+	// 	plane->normalized_norm_vec = vec3_new(-1, 0, 0);
+	// 	plane->material.color = color_correct_new(0, 1, 0, 0);
+	// 	plane->material.specular_i = 0;
+	// 	plane->material.emission = color_correct_new(0, 0, 0, 0);
+	// 	plane->material.emission_i = 0;
+	// 	add_object(&minirt.objects, plane, 2);
+	// }
+	// {
+	// 	plane = malloc(sizeof(t_plane));
+	// 	plane->point_on_plane = vec3_new(0, 0, 400);
+	// 	plane->normalized_norm_vec = vec3_new(0, 0, 1);
+	// 	plane->material.color = color_correct_new(0, 0, 1, 0);
+	// 	plane->material.specular_i = 0;
+	// 	plane->material.emission = color_correct_new(0, 0, 0, 0);
+	// 	plane->material.emission_i = 0;
+	// 	add_object(&minirt.objects, plane, 2);
+	// }
+	// {
+	// 	plane = malloc(sizeof(t_plane));
+	// 	plane->point_on_plane = vec3_new(0, 0, -10);
+	// 	plane->normalized_norm_vec = vec3_new(0, 0, 1);
+	// 	plane->material.color = color_correct_new(0, 1, 1, 1);
+	// 	plane->material.specular_i = 0;
+	// 	plane->material.emission = color_correct_new(0, 0, 0, 0);
+	// 	plane->material.emission_i = 0;
+	// 	add_object(&minirt.objects, plane, 2);
+	// }
 	// rendering
 	draw_scene(&minirt);
 	printf("\e[0;32mRendering done!!! ~~\n\e[0m");

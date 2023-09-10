@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:40:55 by itan              #+#    #+#             */
-/*   Updated: 2023/09/10 14:03:54 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/10 23:45:36 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,30 @@ t_vec3	reflect(t_vec3 d_ray, t_vec3 normal)
 	float	dot_prod;
 	t_vec3	d_specular;
 
-	d_ray = vec3_multiply(d_ray, -1);
 	dot_prod = vec3_dot(d_ray, normal) * 2;
-	d_specular = vec3_subtract(d_ray, normal);
-	d_specular = vec3_multiply(d_specular, dot_prod);
+	d_specular = vec3_multiply(normal, dot_prod);
+	d_specular = vec3_subtract(d_ray, d_specular);
 	d_specular = vec3_normalize(d_specular);
+	if (vec3_dot(d_specular, normal) < 0.0f)
+		d_specular = vec3_multiply(d_specular, -1.0f);
 	return (d_specular);
+}
+
+t_color_c	get_env_light(t_ray *ray, bool is_env)
+{
+	float	t;
+
+	if (!is_env && ray->direction.y > 0.0f)
+		return (color_correct_new(0, 1, 1, 1));
+	else if (!is_env && ray->direction.y < 0.0f)
+		return (color_correct_new(0, 0.1, 0.1, 0.1));
+	if (ray->direction.y < 0.0f)
+		return (color_correct_new(0, 0.1, 0.1, 0.1));
+	t = bazier_curves_1d_cubic(0.5f * (ray->direction.y + 1.0f),
+								(double[]){0, -3, 3.5, 1});
+	return (color_tween(color_correct_new(0, 1.0f, 1.0f, 1.0f),
+						color_correct_new(0, 0.4f, 0.6f, 1.0f),
+						t));
 }
 
 t_color_c	ray_tracing(t_ray ray, t_minirt *minirt, unsigned int *state)
@@ -45,7 +63,9 @@ t_color_c	ray_tracing(t_ray ray, t_minirt *minirt, unsigned int *state)
 	t_hit_info	hit_info;
 	t_color_c	color;
 	t_color_c	incoming_light;
+	bool		is_env;
 
+	is_env = true;
 	incoming_light = color_correct_new(0, 0, 0, 0);
 	color = color_correct_new(0, 1.0f, 1.0f, 1.0f);
 	i = -1;
@@ -54,17 +74,18 @@ t_color_c	ray_tracing(t_ray ray, t_minirt *minirt, unsigned int *state)
 		hit_info = intersect_list(minirt, &ray);
 		if (hit_info.hit)
 		{
+			is_env = false;
 			ray.origin = hit_info.intersect_pt;
-			// hit_info.d_diffuse = random_vec3_hs(hit_info.normal, state);
-			// hit_info.d_diffuse = vec3_normalize(vec3_add(hit_info.d_diffuse,
-			// 												hit_info.normal));
-			// hit_info.d_specular = reflect(ray.direction, hit_info.normal);
-			// ray.direction = vec3_tween(hit_info.d_diffuse,
-			// 							hit_info.d_specular,
-			// 							hit_info.material.specular_i);
-			ray.direction = random_vec3_hs(hit_info.normal, state);
-			ray.direction = vec3_normalize(vec3_add(ray.direction,
-													hit_info.normal));
+			hit_info.d_diffuse = random_vec3_hs(hit_info.normal, state);
+			hit_info.d_diffuse = vec3_normalize(vec3_add(hit_info.d_diffuse,
+															hit_info.normal));
+			hit_info.d_specular = reflect(ray.direction, hit_info.normal);
+			ray.direction = vec3_tween(hit_info.d_diffuse,
+										hit_info.d_specular,
+										hit_info.material.specular_i);
+			// ray.direction = random_vec3_hs(hit_info.normal, state);
+			// ray.direction = vec3_normalize(vec3_add(ray.direction,
+			// 										hit_info.normal));
 			// ray->direction = vec3_normalize(vec3_cross(hit_info.normal,
 			// 		random_vec3_hs(hit_info.normal, state)));
 			calculate_incoming(&incoming_light, color, &hit_info.material);
@@ -76,6 +97,10 @@ t_color_c	ray_tracing(t_ray ray, t_minirt *minirt, unsigned int *state)
 		{
 			// calculate_incoming(&incoming_light, color,
 			// 		&minirt->amb_light.material);
+			incoming_light = color_add(incoming_light,
+										color_multiply(get_env_light(&ray,
+																	is_env),
+														color));
 			break ;
 		}
 	}
