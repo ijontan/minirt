@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/09/10 13:09:43 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/10 14:00:59 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ static void	init_minirt(void)
 		plane->point_on_plane = vec3_new(120, 0, 0);
 		plane->normalized_norm_vec = vec3_new(1, 0, 0);
 		plane->material.color = color_correct_new(0, 0, 0, 1);
-		plane->material.specular_i = 0;
+		plane->material.specular_i = 0.1;
 		plane->material.emission = color_correct_new(0, 0, 0, 0);
 		plane->material.emission_i = 0;
 		add_object(&minirt.objects, plane, 2);
@@ -194,7 +194,7 @@ static void	init_minirt(void)
 		plane->point_on_plane = vec3_new(-120, 0, 0);
 		plane->normalized_norm_vec = vec3_new(-1, 0, 0);
 		plane->material.color = color_correct_new(0, 1, 0, 0);
-		plane->material.specular_i = 0;
+		plane->material.specular_i = 0.1;
 		plane->material.emission = color_correct_new(0, 0, 0, 0);
 		plane->material.emission_i = 0;
 		add_object(&minirt.objects, plane, 2);

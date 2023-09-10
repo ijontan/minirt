@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 23:59:42 by itan              #+#    #+#             */
-/*   Updated: 2023/09/08 23:32:30 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/10 13:17:55 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_color_c	phong_reflection(t_minirt *minirt, t_hit_info *hit_info)
 	float		dot_prod;
 
 	calculate_vector(minirt, hit_info);
-	amb = color_scale(minirt->amb_light.material.color,
+	amb = color_scale(minirt->amb_light.color,
 						minirt->amb_light.ratio);
 	// amb = color_correct_new(0, 0, 0, 0);
 	emission = color_scale(hit_info->material.emission,
