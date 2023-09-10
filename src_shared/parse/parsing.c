@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:52:31 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/09 11:18:31 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/10 22:20:57 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 // - need at least a plane, sphere and cylinder
 // - each type of element can be separated by one or more line breaks
 // - each type of element can be set in any order in the file
-// - elements which are defined by a capital letter can only be declared once 
+// - elements which are defined by a capital letter can only be declared once
 // in the scene
 
 // mand_flag: flag and check if all minimum requirements of a scene are present
-static bool parse_line(char *line, t_parse *p)
+static bool	parse_line(char *line, t_parse *p)
 {
 	int	i;
 
@@ -47,7 +47,7 @@ static bool parse_line(char *line, t_parse *p)
 /*
 this function opens the input .rt file
 */
-static int open_infile(char *infile)
+static int	open_infile(char *infile)
 {
 	int	fd;
 
@@ -62,11 +62,6 @@ static int open_infile(char *infile)
 
 static void	init_parsing(t_parse *p)
 {
-	int	i;
-
-	i = -1;
-	while (++i < 6)
-		p->mand_flag[i] = 0;
 	p->obj_type[0] = "A";
 	p->obj_type[1] = "C";
 	p->obj_type[2] = "L";
@@ -87,7 +82,7 @@ static void	init_parsing(t_parse *p)
 	p->obj_code[5] = CYLINDER;
 }
 
-bool parse_rt_file(char *infile, t_parse *parse_info)
+bool	parse_rt_file(char *infile, t_parse *parse_info)
 {
 	char	*buff;
 
