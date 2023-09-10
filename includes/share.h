@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   share.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/09/09 11:43:31 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/11 00:44:25 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_material
 	t_color_c		specular;
 	float			diffuse_i;
 	float			specular_i;
+	float			reflective_i;
 	float			shininess;
 	float			emission_i;
 }					t_material;
@@ -102,6 +103,7 @@ typedef struct s_ray
 {
 	t_vec3			origin;
 	t_vec3			direction;
+	t_vec3			inverse_direction;
 	float			intensity;
 	t_color_c		color;
 }					t_ray;
@@ -220,11 +222,11 @@ bool				valid_triplet(char *s);
 
 /* --------------------------------- octree --------------------------------- */
 
-typedef struct s_bounding_box
+typedef struct s_bound_box
 {
 	t_vec3			min;
 	t_vec3			max;
-}					t_bounding_box;
+}					t_bound_box;
 
 # define OCTREE_MAX_DEPTH 10
 # define OCTREE_MAX_OBJECTS 10
@@ -234,6 +236,7 @@ typedef struct s_object
 {
 	void			*object;
 	unsigned char	type;
+	t_bound_box		bounding_box;
 }					t_object;
 
 typedef struct s_octree
