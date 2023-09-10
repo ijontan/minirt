@@ -3,51 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/09/08 17:36:24 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/09 11:27:35 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-/*
-Checks if all objects are present:
-- ambient lighting
-- camera
-- lighting
-- sphere
-- plane
-- cylinder
-*/
-static bool check_min_requirements(t_parse parse_info)
-{	
-	int i;
-
-	i = -1;
-	while (++i < 6)
-	{
-		if (!parse_info.mand_flag[i])
-		{
-			printf("\e[0;31mError: Missing Object: ");
-			if (i == 0)
-				printf("Ambient lighting required\e[0m");
-			else if (i == 1)
-				printf("Camera required\e[0m");
-			else if (i == 2)
-				printf("Lighting required\e[0m");
-			else if (i == 3)
-				printf("A sphere required\e[0m");
-			else if (i == 4)
-				printf("A plane required\e[0m");
-			else if (i == 5)
-				printf("A cylinder required\e[0m");
-			return (false);
-		}
-	}
-	return (true);
-}
 
 void	set_pixel(t_minirt *minirt, t_hit_info hit_info, int x, int y)
 {
@@ -64,35 +27,6 @@ void	set_pixel(t_minirt *minirt, t_hit_info hit_info, int x, int y)
 	color.b = minirt->amb_light.material.color.b * minirt->amb_light.ratio;
 	put_pixel(&minirt->image, x, y, color_revert(color).as_int);
 }
-
-// float	find_max_color_value(t_hit_info *hit_info)
-// {
-// 	float	max_color;
-	
-// 	max_color = hit_info->material.color.r;
-// 	if (hit_info->material.color.g >  hit_info->material.color.r)
-// 		max_color = hit_info->material.color.g;
-// 	if (hit_info->material.color.b >  hit_info->material.color.g)
-// 		max_color = hit_info->material.color.b;
-// 	if ((hit_info->material.color.r == hit_info->material.color.g) && (hit_info->material.color.r == hit_info->material.color.b))
-// 		return (1.0);
-// 	return (max_color);
-// }
-// max_color = find_max_color_value(hit_info);
-	
-// if (hit_info->material.color.r != max_color)
-// 	hit_info->material.color.r += minirt->light_source.material.color.r * minirt->light_source.ratio * dot_prod;
-// if (hit_info->material.color.g != max_color)
-// 	hit_info->material.color.g += minirt->light_source.material.color.g * minirt->light_source.ratio * dot_prod;
-// if (hit_info->material.color.b != max_color)
-// 	hit_info->material.color.b += minirt->light_source.material.color.b * minirt->light_source.ratio * dot_prod;
-
-// if (hit_info->material.color.r > max_color)
-// 	hit_info->material.color.r = max_color;
-// if (hit_info->material.color.g > max_color)
-// 	hit_info->material.color.g = max_color;
-// if (hit_info->material.color.b > max_color)
-// 	hit_info->material.color.b = max_color;
 
 /*
 perfect reflection: vector that represents the reflection of an incident ray 
@@ -112,7 +46,6 @@ void	calculate_lighting(t_minirt *minirt, t_hit_info *hit_info)
 	t_vec3	perfect_reflection;
 	t_vec3	intersect_to_light;
 	float	dot_prod;
-	// float	max_color;
 	t_color_c amb_color;
 	
 	if (hit_info->obj_type != SPHERE)
@@ -204,8 +137,6 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		return (printf("\e[0;31mError: argument error\nExpected input format: ./minirt ~.rt\e[0m"));
 	if (!parse_rt_file(av[1], &parse_info))
-		return (1);
-	if (!check_min_requirements(parse_info))
 		return (1);
 	printf("\e[0;32mParsing done!!! ~~\n\e[0m");
 	init_minirt(parse_info);
