@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 21:04:34 by itan              #+#    #+#             */
-/*   Updated: 2023/09/06 16:40:17 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/11 15:02:17 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,26 @@ t_sphere	sphere_new(t_vec3 center, float radius, t_material material)
 	return (sphere);
 }
 
+/**
+ * @brief normal of a sphere at a point
+ * 
+ * @param sphere 
+ * @param point 
+ * @return t_vec3 
+ */
 t_vec3	sphere_normal(t_sphere *sphere, t_vec3 point)
 {
 	return (vec3_normalize(vec3_subtract(point, sphere->center)));
 }
 
+/**
+ * @brief find the intersection of a ray and a sphere
+ * 
+ * @param sphere 
+ * @param ray 
+ * @return t_vec3, x is the first intersection, y is the second,
+	z is a bool to indicate if there is an intersection
+ */
 t_vec3	sphere_intersect(t_sphere *sphere, t_ray *ray)
 {
 	t_vec3	oc;

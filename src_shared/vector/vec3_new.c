@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 21:17:37 by itan              #+#    #+#             */
-/*   Updated: 2023/08/28 22:39:38 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/11 15:29:06 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,13 @@ t_vec3	random_vec3(unsigned int *state)
 	return (vec3_normalize(vec));
 }
 
+/**
+ * @brief random vector to a hemisphere
+ *  
+ * @param normal 
+ * @param state 
+ * @return t_vec3 
+ */
 t_vec3	random_vec3_hs(t_vec3 normal, unsigned int *state)
 {
 	t_vec3	vec;

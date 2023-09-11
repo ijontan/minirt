@@ -6,12 +6,18 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 23:02:41 by itan              #+#    #+#             */
-/*   Updated: 2023/09/07 01:50:49 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/11 15:36:54 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
+/**
+ * @brief clamp corrected color values to 0.0 - 1.0
+ * 
+ * @param color 
+ * @return t_color_c 
+ */
 t_color_c	color_clamp(t_color_c color)
 {
 	if (color.a > 1.0f)
@@ -33,26 +39,31 @@ t_color_c	color_clamp(t_color_c color)
 	return (color);
 }
 
+/**
+ * @brief multiply two corrected colors
+ * 
+ * @param color1 
+ * @param color2 
+ * @return t_color_c 
+ */
 t_color_c	color_multiply(t_color_c color1, t_color_c color2)
 {
 	t_color_c	new_color;
 
-	// static int	i;
 	new_color.a = color1.a * color2.a;
 	new_color.r = color1.r * color2.r;
 	new_color.g = color1.g * color2.g;
 	new_color.b = color1.b * color2.b;
-	// if (i < 100 && color1.r != 0 && color1.g != 0 && color1.b != 0)
-	// {
-	// 	printf("color1: %f %f %f\n", color1.r, color1.g, color1.b);
-	// 	printf("color2: %f %f %f\n", color2.r, color2.g, color2.b);
-	// 	printf("new_color: %f %f %f\n\n", new_color.r, new_color.g,
-	// 			new_color.b);
-	// 	i++;
-	// }
 	return (color_clamp(new_color));
 }
 
+/**
+ * @brief scale a corrected color by a float
+ * 
+ * @param color 
+ * @param scale 
+ * @return t_color_c 
+ */
 t_color_c	color_scale(t_color_c color, float scale)
 {
 	t_color_c	new_color;
@@ -64,6 +75,13 @@ t_color_c	color_scale(t_color_c color, float scale)
 	return (color_clamp(new_color));
 }
 
+/**
+ * @brief add two corrected colors
+ * 
+ * @param color1 
+ * @param color2 
+ * @return t_color_c 
+ */
 t_color_c	color_add(t_color_c color1, t_color_c color2)
 {
 	t_color_c	new_color;
@@ -75,13 +93,20 @@ t_color_c	color_add(t_color_c color1, t_color_c color2)
 	return (new_color);
 }
 
+/**
+ * @brief average two corrected colors
+ * 
+ * @param color1 
+ * @param color2 
+ * @return t_color_c 
+ */
 t_color_c	color_average(t_color_c color1, t_color_c color2)
 {
 	t_color_c	new_color;
 
-	new_color.a = (color1.a + color2.a) / 2;
-	new_color.r = (color1.r + color2.r) / 2;
-	new_color.g = (color1.g + color2.g) / 2;
-	new_color.b = (color1.b + color2.b) / 2;
+	new_color.a = (color1.a + color2.a) * 0.5f;
+	new_color.r = (color1.r + color2.r) * 0.5f;
+	new_color.g = (color1.g + color2.g) * 0.5f;
+	new_color.b = (color1.b + color2.b) * 0.5f;
 	return (color_clamp(new_color));
 }

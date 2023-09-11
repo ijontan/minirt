@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/09/11 01:04:10 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/11 15:10:41 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,6 +256,17 @@ typedef struct s_image
 	char			*buffer;
 }					t_image;
 
-void				put_pixel(t_image *image, int x, int y, unsigned int color);
+typedef union u_offset
+{
+	int				xy[2];
+	struct
+	{
+		int			x;
+		int			y;
+	};
+}					t_offset;
+
+void				put_pixel(t_image *image, t_offset offset,
+						unsigned int color);
 
 #endif

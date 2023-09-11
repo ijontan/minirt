@@ -6,12 +6,19 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 00:32:55 by itan              #+#    #+#             */
-/*   Updated: 2023/09/11 00:53:09 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/11 15:42:25 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
+/**
+ * @brief new bounding box
+ * 
+ * @param min 
+ * @param max 
+ * @return t_bound_box 
+ */
 t_bound_box	bound_box_new(t_vec3 min, t_vec3 max)
 {
 	t_bound_box	bound_box;
@@ -35,6 +42,13 @@ float	float_max(float a, float b)
 	return (b);
 }
 
+/**
+ * @brief expend a bounding box to include a point
+ * 
+ * @param box 
+ * @param point 
+ * @return t_bound_box 
+ */
 t_bound_box	bound_box_expend(t_bound_box box, t_vec3 point)
 {
 	t_bound_box	new_box;
@@ -60,10 +74,18 @@ static void	ft_swap_min(float *a, float *b)
 	}
 }
 
+/**
+ * @brief find the intersection between a ray and a bounding box
+ * 
+ * @param box 
+ * @param ray 
+ * @return true 
+ * @return false 
+ */
 bool	bound_box_intersect(t_bound_box box, t_ray ray)
 {
-	t_vec3 tmin;
-	t_vec3 tmax;
+	t_vec3	tmin;
+	t_vec3	tmax;
 
 	tmin.x = (box.min.x - ray.origin.x) / ray.direction.x;
 	tmax.x = (box.max.x - ray.origin.x) / ray.direction.x;

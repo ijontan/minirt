@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:39:47 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/06 16:39:54 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/11 15:02:01 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@ t_plane	plane_new(t_vec3 point, t_vec3 dir, t_material material)
 	return (plane);
 }
 
+/**
+ * @brief find the intersection of a ray and a plane
+ * 
+ * @param plane 
+ * @param ray 
+ * @return t_vec3, x is theintersection,
+	z is a bool to indicate if there is an intersection
+ */
 t_vec3	plane_intersect(t_plane *plane, t_ray *ray)
 {
 	float	denom;

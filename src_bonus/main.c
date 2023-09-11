@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/09/11 01:59:51 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/11 15:27:49 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void	gradient(t_image *image)
 		{
 			// opacity = (double)x / 1280;
 			color = color_tween(start_color, end_color, opacity2);
-			put_pixel(image, x, y, color_revert(color).as_int);
+			put_pixel(image, (t_offset){.x = x, .y = y},
+					color_revert(color).as_int);
 			x++;
 		}
 		y++;
@@ -60,12 +61,13 @@ void	ray_cast(t_minirt *minirt)
 			ray = ray_primary(&minirt->cam, (((float)x - 280.0f) / 720 - 0.5)
 					* minirt->cam.fov, ((float)y / 720 - 0.5)
 					* minirt->cam.fov);
-			hit_info = intersections(minirt, &ray);
+			hit_info = intersect_list(minirt, &ray);
 			if (hit_info.hit)
 			{
 				color = hit_info.material.color;
 				// color = phong_reflection(minirt, &hit_info);
-				put_pixel(&minirt->image, x, y, color_revert(color).as_int);
+				put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
+						color_revert(color).as_int);
 			}
 			x += 1;
 		}
@@ -113,7 +115,8 @@ void	draw_scene(t_minirt *minirt)
 				color = color_add(color, incoming_light);
 			}
 			color = color_scale(color, 1 / (float)cycle);
-			put_pixel(&minirt->image, x, y, color_revert(color).as_int);
+			put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
+					color_revert(color).as_int);
 			++x;
 		}
 		++y;
