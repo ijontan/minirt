@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:40:55 by itan              #+#    #+#             */
-/*   Updated: 2023/09/11 01:17:24 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/12 00:17:39 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_color_c	ray_tracing(t_ray ray, t_minirt *minirt, unsigned int *state)
 	incoming_light = color_correct_new(0, 0, 0, 0);
 	color = color_correct_new(0, 1.0f, 1.0f, 1.0f);
 	i = -1;
-	while (++i < 5)
+	while (++i < 3)
 	{
 		hit_info = intersect_list(minirt, &ray);
 		if (hit_info.hit)
@@ -82,10 +82,12 @@ t_color_c	ray_tracing(t_ray ray, t_minirt *minirt, unsigned int *state)
 															hit_info.normal));
 			hit_info.d_specular = reflect(ray.direction, hit_info.normal);
 			is_specular = hit_info.material.specular_i > random_num(state);
-			ray.direction = vec3_tween(hit_info.d_diffuse,
-										hit_info.d_specular,
-										hit_info.material.reflective_i
-											* (float)is_specular);
+			if (is_specular)
+				ray.direction = vec3_tween(hit_info.d_diffuse,
+											hit_info.d_specular,
+											hit_info.material.reflective_i);
+			else
+				ray.direction = hit_info.d_diffuse;
 			// ray.direction = random_vec3_hs(hit_info.normal, state);
 			// ray.direction = vec3_normalize(vec3_add(ray.direction,
 			// 										hit_info.normal));

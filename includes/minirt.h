@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/09/11 20:13:03 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/11 23:56:01 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ typedef enum e_obj_type
 
 typedef struct s_hit_info
 {
-	t_obj_type		obj_type;
 	t_vec3			intersect_pt;
 	t_vec3			normal;
 	t_vec3			d_diffuse;
@@ -114,6 +113,7 @@ typedef struct s_hit_info
 	t_vec3			pt_to_cam;
 	t_material		material;
 	t_object		*object;
+	t_obj_type		obj_type;
 	bool			hit;
 }					t_hit_info;
 
@@ -136,5 +136,4 @@ t_hit_info			intersect_list(t_minirt *minirt, t_ray *ray);
 
 t_color_c			ray_tracing(t_ray ray, t_minirt *minirt,
 						unsigned int *state);
-t_color_c			phong_reflection(t_minirt *minirt, t_hit_info hit_info);
 #endif
