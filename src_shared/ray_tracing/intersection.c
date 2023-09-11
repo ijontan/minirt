@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 22:46:40 by itan              #+#    #+#             */
-/*   Updated: 2023/09/11 15:25:37 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/11 20:20:41 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,20 +115,7 @@ t_hit_info	intersect_list(t_minirt *minirt, t_ray *ray)
 	lst = minirt->objects;
 	prev_intersect = vec3_new(INFINITY, 0, 0);
 	intersect = vec3_new(INFINITY, 0, 0);
-	hit_info.hit = false;
-	hit_info.material.emission_i = 0;
-	hit_info.material.color = color_correct_new(0, 0, 0, 0);
-	hit_info.material.emission = color_correct_new(0, 0, 0, 0);
-	hit_info.material.diffuse_i = 0;
-	hit_info.material.specular_i = 0;
-	hit_info.material.shininess = 0;
-	hit_info.material.specular = color_correct_new(0, 0, 0, 0);
-	hit_info.normal = vec3_new(0, 0, 0);
-	hit_info.d_specular = vec3_new(0, 0, 0);
-	hit_info.pt_to_cam = vec3_new(0, 0, 0);
-	hit_info.pt_to_l = vec3_new(0, 0, 0);
-	hit_info.intersect_pt = vec3_new(0, 0, 0);
-	hit_info.obj_type = 0;
+	hit_info = (t_hit_info){0};
 	while (lst)
 	{
 		tmp = (t_object *)lst->content;

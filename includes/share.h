@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/09/11 15:10:41 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/11 18:59:23 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_color_c
 }					t_color_c;
 
 t_color_c			color_correct_new(float a, float r, float g, float b);
+t_color_c			color_clamp(t_color_c color);
 t_color_c			color_multiply(t_color_c color1, t_color_c color2);
 t_color_c			color_scale(t_color_c color, float scale);
 t_color_c			color_add(t_color_c color1, t_color_c color2);

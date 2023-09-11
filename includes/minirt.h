@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/09/11 15:10:25 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/11 20:13:03 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,5 +136,5 @@ t_hit_info			intersect_list(t_minirt *minirt, t_ray *ray);
 
 t_color_c			ray_tracing(t_ray ray, t_minirt *minirt,
 						unsigned int *state);
-t_color_c			phong_reflection(t_minirt *minirt, t_hit_info *hit_info);
+t_color_c			phong_reflection(t_minirt *minirt, t_hit_info hit_info);
 #endif
