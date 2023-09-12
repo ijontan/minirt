@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/09/12 17:31:06 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/12 21:33:06 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void	draw_scene(t_minirt *minirt)
 			cycle = -1;
 			ray = ray_primary(&minirt->cam, (((float)x - 280.0f) / 720 - 0.5)
 				* minirt->cam.fov, -(((float)y / 720 - 0.5)) * minirt->cam.fov);
-			while (++cycle < 10)
+			while (++cycle < 50)
 			{
 				state = (unsigned int)((x + y * 1280 + cycle * 136274));
 				offset.x = random_num(&state) - 0.5;
@@ -210,9 +210,8 @@ static void	init_minirt(void)
 		sphere->material.color = color_tween(color_correct_new(0, 1, 1, 0),
 			color_correct_new(0, 0, 1, 1), x);
 		// sphere->material.color = color_correct_new(0, 1, 1, 1);
-		sphere->material.specular_i = 1;
-		sphere->material.specular = color_tween(color_correct_new(0, 1, 1, 0),
-			color_correct_new(0, 0, 1, 1), x);
+		sphere->material.specular_i = 0.1;
+		sphere->material.specular = color_correct_new(0, 1, 1, 1);
 		sphere->material.reflective_i = 1;
 		sphere->material.emission = color_correct_new(0, 0, 0, 0);
 		sphere->material.emission_i = 0;
