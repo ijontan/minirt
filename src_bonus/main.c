@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/09/12 17:27:35 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/12 17:28:52 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void	draw_scene(t_minirt *minirt)
 			cycle = -1;
 			ray = ray_primary(&minirt->cam, (((float)x - 280.0f) / 720 - 0.5)
 				* minirt->cam.fov, -(((float)y / 720 - 0.5)) * minirt->cam.fov);
-			while (++cycle < 10)
+			while (++cycle < 20)
 			{
 				state = (unsigned int)((x + y * 1280 + cycle * 136274));
 				offset.x = random_num(&state) - 0.5;
