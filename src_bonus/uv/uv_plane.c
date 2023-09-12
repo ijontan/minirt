@@ -6,13 +6,14 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 01:54:46 by itan              #+#    #+#             */
-/*   Updated: 2023/09/11 02:01:01 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/12 16:09:10 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_vec3	uv_plane(t_vec3 point, t_offset)
+t_vec3	uv_plane(t_vec3 point, t_offset offset)
 {
+	(void)offset;
 	return (vec3_new(point.x, point.z, 0));
 }

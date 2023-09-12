@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/09/12 00:10:12 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/12 17:27:35 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	gradient(t_image *image)
 			// opacity = (double)x / 1280;
 			color = color_tween(start_color, end_color, opacity2);
 			put_pixel(image, (t_offset){.x = x, .y = y},
-					color_revert(color).as_int);
+				color_revert(color).as_int);
 			x++;
 		}
 		y++;
@@ -75,22 +75,21 @@ t_color_c	get_color(t_minirt *rt, t_hit_info *hi)
 		dot_prod = 1;
 	// printf("dot_prod: %f\n", dot_prod);
 	tmp = color_scale(color_multiply(rt->light_source.material.color,
-										hi->material.color),
-						dot_prod);
+			hi->material.color), dot_prod);
 	ret = tmp;
-	// dot_prod = vec3_dot(reflection(hi->pt_to_l, hi->normal), hi->pt_to_cam);
-	// if (dot_prod < 0)
-	// 	dot_prod = 0;
-	// if (dot_prod > 1)
-	// 	dot_prod = 1;
-	// tmp = color_scale(material.specular, material.specular_i * powf(dot_prod,
-	// 			material.shininess));
-	// ret = color_add(ret, tmp);
+	dot_prod = vec3_dot(reflection(hi->pt_to_l, hi->normal), hi->pt_to_cam);
+	if (dot_prod < 0)
+		dot_prod = 0;
+	if (dot_prod > 1)
+		dot_prod = 1;
+	tmp = color_scale(hi->material.specular, hi->material.specular_i
+		* powf(dot_prod, hi->material.shininess));
+	ret = color_add(ret, tmp);
 	tmp = rt->amb_light.color;
 	tmp = color_scale(tmp, rt->amb_light.ratio);
 	tmp = color_multiply(tmp, hi->material.color);
 	ret = color_add(ret, tmp);
-	printf("ret: %f %f %f\n", ret.r, ret.g, ret.b);
+	// printf("ret: %f %f %f\n", ret.r, ret.g, ret.b);
 	// hi->pt_to_l = vec3_subtract(rt->light_source.position,hi->intersect_pt);
 	return (color_clamp(ret));
 }
@@ -113,8 +112,7 @@ void	ray_cast(t_minirt *minirt)
 		{
 			ft_memset(&ray, 0, sizeof(t_ray));
 			ray = ray_primary(&minirt->cam, (((float)x - 280.0f) / 720 - 0.5)
-					* minirt->cam.fov, -(((float)y / 720 - 0.5))
-					* minirt->cam.fov);
+				* minirt->cam.fov, -(((float)y / 720 - 0.5)) * minirt->cam.fov);
 			hit_info = intersect_list(minirt, &ray);
 			color = color_correct_new(0, 0, 0, 0);
 			if (hit_info.hit)
@@ -122,7 +120,7 @@ void	ray_cast(t_minirt *minirt)
 				color = hit_info.material.color;
 				color = get_color(minirt, &hit_info);
 				put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
-						color_revert(color).as_int);
+					color_revert(color).as_int);
 			}
 			++y;
 		}
@@ -156,8 +154,7 @@ void	draw_scene(t_minirt *minirt)
 			// color = color_add(color, incoming_light);
 			cycle = -1;
 			ray = ray_primary(&minirt->cam, (((float)x - 280.0f) / 720 - 0.5)
-					* minirt->cam.fov, -(((float)y / 720 - 0.5))
-					* minirt->cam.fov);
+				* minirt->cam.fov, -(((float)y / 720 - 0.5)) * minirt->cam.fov);
 			while (++cycle < 10)
 			{
 				state = (unsigned int)((x + y * 1280 + cycle * 136274));
@@ -171,7 +168,7 @@ void	draw_scene(t_minirt *minirt)
 			}
 			color = color_scale(color, 1 / (float)cycle);
 			put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
-					color_revert(color).as_int);
+				color_revert(color).as_int);
 			++y;
 		}
 		++x;
@@ -193,7 +190,7 @@ static void	init_minirt(void)
 	// images
 	image.img = mlx_new_image(minirt.mlx, 1280, 720);
 	image.buffer = mlx_get_data_addr(image.img, &image.pixel_bits,
-			&image.line_bytes, &image.endian);
+		&image.line_bytes, &image.endian);
 	minirt.image = image;
 	cam_init(&minirt.cam);
 	minirt.light_source.position = vec3_new(0, 50, 200);
@@ -207,17 +204,15 @@ static void	init_minirt(void)
 		x = (double)i / 4;
 		sphere = malloc(sizeof(t_sphere));
 		sphere->center = vec3_new(bazier_curves_1d_linear(x, (double[2]){-100,
-					100}),
-									0,
-									200);
+				100}), 0, 200);
 		sphere->radius = 20 * x + 20;
 		ft_memset(&sphere->material, 0, sizeof(t_material));
 		sphere->material.color = color_tween(color_correct_new(0, 1, 1, 0),
-												color_correct_new(0, 0, 1, 1),
-												x);
+			color_correct_new(0, 0, 1, 1), x);
 		// sphere->material.color = color_correct_new(0, 1, 1, 1);
 		sphere->material.specular_i = 1;
-		sphere->material.specular = color_correct_new(0, 1, 1, 1);
+		sphere->material.specular = color_tween(color_correct_new(0, 1, 1, 0),
+			color_correct_new(0, 0, 1, 1), x);
 		sphere->material.reflective_i = 1;
 		sphere->material.emission = color_correct_new(0, 0, 0, 0);
 		sphere->material.emission_i = 0;
