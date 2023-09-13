@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/09/11 15:20:19 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/13 09:49:21 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	set_pixel(t_minirt *minirt, t_hit_info hit_info, int x, int y)
 				color_revert(color).as_int);
 		return ;
 	}
-	color.r = minirt->amb_light.material.color.r * minirt->amb_light.ratio;
-	color.g = minirt->amb_light.material.color.g * minirt->amb_light.ratio;
-	color.b = minirt->amb_light.material.color.b * minirt->amb_light.ratio;
+	color.r = minirt->amb_light.color.r * minirt->amb_light.ratio;
+	color.g = minirt->amb_light.color.g * minirt->amb_light.ratio;
+	color.b = minirt->amb_light.color.b * minirt->amb_light.ratio;
 	put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
 			color_revert(color).as_int);
 }
@@ -66,7 +66,7 @@ void	calculate_lighting(t_minirt *minirt, t_hit_info *hit_info)
 														hit_info->intersect_pt));
 	dot_prod = vec3_dot(perfect_reflection, intersect_to_light);
 	amb_color = color_multiply(hit_info->material.color,
-								minirt->amb_light.material.color);
+								minirt->amb_light.color);
 	if (dot_prod < 0)
 	{
 		hit_info->material.color = amb_color;
@@ -104,7 +104,7 @@ void	ray_cast(t_minirt *minirt)
 					* minirt->cam.fov, ((float)y / 720 - 0.5)
 					* minirt->cam.fov);
 			hit_info = intersections(minirt, &ray);
-			hit_info.material.color = phong_reflection(minirt, &hit_info);
+			// hit_info.material.color = phong_reflection(minirt, &hit_info);
 			// calculate_lighting(minirt, &hit_info);
 			set_pixel(minirt, hit_info, x, y);
 			x += 1;
@@ -130,9 +130,9 @@ static void	init_minirt(t_parse p)
 	minirt.amb_light = p.amb_light;
 	minirt.cam = p.camera;
 	minirt.light_source = p.light_source;
-	minirt.sphere = p.sphere;
-	minirt.plane = p.plane;
-	minirt.cylinder = p.cylinder;
+	// minirt.sphere = p.objects;
+	// minirt.plane = p.plane;
+	// minirt.cylinder = p.cylinder;
 	// rendering
 	ray_cast(&minirt);
 	printf("\e[0;32mRendering done!!! ~~\n\e[0m");

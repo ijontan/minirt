@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 18:03:48 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/08 14:17:38 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/13 11:06:15 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,16 @@ void	exit_parse(char **info, char *s, char c)
 	printf("\e[0;31mError: %s ", s);
 	if (c == 'r')
 		printf("ratio out of range [0.0, 1.0]\e[0m\n");
+	else if (c == 'i')
+		printf("index out of range [0.0, 1.0]\e[0m\n");
 	else if (c == 'c')
 		printf("color out of range [0, 255]\e[0m\n");
 	else if (c == 'd')
 		printf("diameter out of range [> 0.0]\e[0m\n");
 	else if (c == 'h')
 		printf("height out of range [> 0.0]\e[0m\n");
+	else if (c == 's')
+		printf("shininess out of range [> 0.0]\e[0m\n");
 	else if (c == 'a')
 		printf("field of view out of range [0.0, 180.0]\e[0m\n");
 	else if (c == 'n')
