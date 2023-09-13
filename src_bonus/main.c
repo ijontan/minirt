@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/09/12 17:31:06 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/13 15:45:45 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,13 +192,16 @@ static void	init_minirt(void)
 	image.buffer = mlx_get_data_addr(image.img, &image.pixel_bits,
 		&image.line_bytes, &image.endian);
 	minirt.image = image;
+
 	cam_init(&minirt.cam);
+
 	minirt.light_source.position = vec3_new(0, 50, 200);
 	minirt.light_source.material.color = color_correct_new(0, 1, 1, 1);
 	minirt.light_source.ratio = 0.1;
 	minirt.amb_light.color = color_correct_new(0, 1, 1, 1);
 	minirt.amb_light.ratio = 0.1;
 	minirt.objects = NULL;
+
 	for (size_t i = 0; i < 5; i++)
 	{
 		x = (double)i / 4;
@@ -296,7 +299,8 @@ static void	init_minirt(void)
 	// 	add_object(&minirt.objects, plane, 2);
 	// }
 	// rendering
-	draw_scene(&minirt);
+	ray_cast(&minirt);
+	// draw_scene(&minirt);
 	printf("\e[0;32mRendering done!!! ~~\n\e[0m");
 	// mlx rendering
 	mlx_put_image_to_window(minirt.mlx, minirt.win, image.img, 0, 0);

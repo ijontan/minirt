@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 18:03:48 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/13 11:06:15 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/13 14:37:19 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,15 @@ static void	exit_format_err(char **info, char *s, int type)
 
 static void	check_line_format2(int type, t_parse *p)
 {
-	if (type == SPHERE && (!check_info_size(4, p) || \
-	!valid_triplet(p->info[1]) || !valid_float(p->info[2]) || \
+	if (type == SPHERE && (!valid_triplet(p->info[1]) || !valid_float(p->info[2]) || \
 	!valid_triplet(p->info[3])))
 		exit_format_err(p->info, "Sphere", SPHERE);
-	else if (type == PLANE && (!check_info_size(4, p) || \
-	!valid_triplet(p->info[1]) || !valid_triplet(p->info[2]) || \
+	else if (type == PLANE && (!valid_triplet(p->info[1]) || !valid_triplet(p->info[2]) || \
 	!valid_triplet(p->info[3])))
 		exit_format_err(p->info, "Plane", PLANE);
-	else if (type == CYLINDER && (!check_info_size(6, p) || \
-	!valid_triplet(p->info[1]) || !valid_triplet(p->info[2]) || \
-	!valid_float(p->info[3]) || !valid_float(p->info[4]) || \
-	!valid_triplet(p->info[5])))
+	else if (type == CYLINDER && (!valid_triplet(p->info[1]) || \
+	!valid_triplet(p->info[2]) || !valid_float(p->info[3]) || \
+	!valid_float(p->info[4]) || !valid_triplet(p->info[5])))
 		exit_format_err(p->info, "Cylinder", CYLINDER);
 }
 

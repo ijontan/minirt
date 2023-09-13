@@ -1,26 +1,48 @@
 # Ambient light
 # ratio   color
-A  1.0    100,100,100
+A  1.0    125,125,255
 
 # Camera
 # position   direction   field of view
-C  0,0,0     0,0,1       20
+C  0,0,0     0,0,1       100
 
 # Point light
 # position      ratio     color
-L -20,0,100     1.0       255,255,255
+L -20,0,20        0.3       255,255,255
 
 # __________________________________________________________________________________________________________________________________________________________________
 # Objects
 
 # Sphere														  Material
-#  centre    diameter   color                                     specular index   reflective index   diffuse index   emission index   emission color   shininess
-sp 0,0,100   20         0,200,0
+#  centre        diameter  color                                  specular index   reflective index   diffuse index   emission index   emission color   shininess
+sp 0,10,40       20        255,255,255
+sp 0,-5,40       25        255,255,255                              1.0              1.0                0               0                0,0,0            10
+# blush
+sp 5,5,20        2.5       255,100,100
+sp -5,5,20       2.5       255,100,100
+# eyes
+sp 2,7,20        1         100,100,100
+sp -2,7,20       1         100,100,100
+# nose
+sp 0,5.5,20      0.8       255,200,0
+# smile
+sp 1.6,4,20      0.8       100,100,100
+sp 0.8,3.5,20    0.8       100,100,100
+
+sp 0,3.2,20      0.8       100,100,100
+
+sp -0.8,3.5,20   0.8       100,100,100
+sp -1.6,4,20     0.8       100,100,100
+# buttons
+sp 0,0,20        1         100,100,100
+sp 0,-3,20       1         100,100,100
+sp 0,-6,20       1         100,100,100
 
 # Plane															  Material
 #  point    normal vector   color                                 specular index   reflective index   diffuse index   emission index   emission color   shininess
-pl 0,10,0   0,0,0           100,0,0
+pl 0,20,0    0,1,0          255,255,255                            0                0                  0.01             0.0             255,255,255       100                                
+pl 20,20,0    1,1,0         255,255,255                            0                0                  0.01              0.0             255,255,255       100                                
 
 # Cylinder														  Material
 #  center      axis direction   diameter   height   color         specular index   reflective index   diffuse index   emission index   emission color   shininess
-cy 100,0,100   0,1,0            10         3        126,112,255
+cy 20,0,20      0,1,1            5          3       125,125,255    0                0                 0.01              0                0,0,0            0

@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 17:14:41 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/13 11:09:47 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/13 15:51:34 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static void	parse_material(char *obj_type, int i, t_material *mt, t_parse *p)
 {
-	if (p->info[i])
+	if (p->info[i] && ft_strncmp(p->info[i], "\n", ft_strlen(p->info[i])))
 	{
 		mt->specular_i = ft_atof(p->info[i], p);
 		if (mt->specular_i < 0.0 || mt->specular_i > 1.0)
@@ -107,7 +107,7 @@ void	parse_cylinder(t_parse *p)
 			(t_color)color_new(0, p->rgb[0], p->rgb[1], p->rgb[2]));
 	else
 		exit_parse(p->info, "Cylinder", 'c');
-		
+
 	parse_material("Cylinder", 6, &cylinder->material, p);
 
 	add_object(&p->objects, cylinder, CYLINDER);
