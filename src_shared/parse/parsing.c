@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:52:31 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/13 10:22:14 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/14 17:51:46 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static bool	parse_line(char *line, t_parse *p)
 {
 	int	i;
 
-	p->info = ft_split(line, ' ');
+	p->info = ft_split_nsep(line, (char *[]){" ", "\t", 0});
 	i = -1;
 	while (++i < 6)
 	{

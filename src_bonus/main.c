@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/09/14 10:40:12 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/14 18:11:25 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void	draw_scene(t_minirt *minirt)
 			cycle = -1;
 			ray = ray_primary(&minirt->cam, (((float)x - 280.0f) / 720 - 0.5)
 				* minirt->cam.fov, -(((float)y / 720 - 0.5)) * minirt->cam.fov);
-			while (++cycle < 10)
+			while (++cycle < 5)
 			{
 				state = (unsigned int)((x + y * 1280 + cycle * 136274));
 				offset.x = random_num(&state) - 0.5;
@@ -180,8 +180,9 @@ static void	init_minirt(void)
 	t_image		image;
 	t_minirt	minirt;
 	t_sphere	*sphere;
-	double		x;
+	// double		x;
 	t_plane		*plane;
+	t_cylinder	*cylinder;
 
 	// mlx and win
 	ft_memset(&minirt, 0, sizeof(t_minirt));
@@ -202,27 +203,27 @@ static void	init_minirt(void)
 	minirt.amb_light.ratio = 0.1;
 	minirt.objects = NULL;
 
-	for (size_t i = 0; i < 5; i++)
-	{
-		x = (double)i / 4;
-		sphere = malloc(sizeof(t_sphere));
-		sphere->center = vec3_new(bazier_curves_1d_linear(x, (double[2]){-100,
-				100}), 0, 200);
-		sphere->radius = 20 * x + 20;
-		ft_memset(&sphere->material, 0, sizeof(t_material));
-		sphere->material.color = color_tween(color_correct_new(0, 1, 1, 0),
-			color_correct_new(0, 0, 1, 1), x);
-		// sphere->material.color = color_correct_new(0, 1, 1, 1);
-		sphere->material.specular_i = 1;
-		sphere->material.specular = color_tween(color_correct_new(0, 1, 1, 0),
-			color_correct_new(0, 0, 1, 1), x);
-		sphere->material.reflective_i = 1;
-		sphere->material.emission = color_correct_new(0, 0, 0, 0);
-		sphere->material.emission_i = 0;
-		sphere->material.diffuse_i = 1;
-		sphere->material.shininess = 30;
-		add_object(&minirt.objects, sphere, 0);
-	}
+	// for (size_t i = 0; i < 5; i++)
+	// {
+	// 	x = (double)i / 4;
+	// 	sphere = malloc(sizeof(t_sphere));
+	// 	sphere->center = vec3_new(bazier_curves_1d_linear(x, (double[2]){-100,
+	// 			100}), 0, 200);
+	// 	sphere->radius = 20 * x + 20;
+	// 	ft_memset(&sphere->material, 0, sizeof(t_material));
+	// 	sphere->material.color = color_tween(color_correct_new(0, 1, 1, 0),
+	// 		color_correct_new(0, 0, 1, 1), x);
+	// 	// sphere->material.color = color_correct_new(0, 1, 1, 1);
+	// 	sphere->material.specular_i = 1;
+	// 	sphere->material.specular = color_tween(color_correct_new(0, 1, 1, 0),
+	// 		color_correct_new(0, 0, 1, 1), x);
+	// 	sphere->material.reflective_i = 1;
+	// 	sphere->material.emission = color_correct_new(0, 0, 0, 0);
+	// 	sphere->material.emission_i = 0;
+	// 	sphere->material.diffuse_i = 1;
+	// 	sphere->material.shininess = 30;
+	// 	add_object(&minirt.objects, sphere, 0);
+	// }
 	// {
 	// 	sphere = malloc(sizeof(t_sphere));
 	// 	sphere->center = vec3_new(0, 300, 200);
@@ -236,7 +237,7 @@ static void	init_minirt(void)
 	// }
 	{
 		plane = malloc(sizeof(t_plane));
-		plane->point_on_plane = vec3_new(0, 40, 200);
+		plane->point_on_plane = vec3_new(0, 100, 200);
 		plane->normalized_norm_vec = vec3_new(0, 1, 0);
 		plane->material.color = color_correct_new(0, 1, 1, 1);
 		plane->material.specular_i = 0;
@@ -277,6 +278,52 @@ static void	init_minirt(void)
 		plane->material.emission = color_correct_new(0, 0, 0, 0);
 		plane->material.emission_i = 0;
 		add_object(&minirt.objects, plane, 1);
+	}
+	{
+		cylinder = malloc(sizeof(t_cylinder));
+		cylinder->center = vec3_new(0, 30, 200);
+		cylinder->height = 80;
+		cylinder->radius = 15;
+		cylinder->normalized_axis = vec3_new(0, 1, 0);
+		cylinder->material.color = color_correct_new(0, 1, 0.8, 0.6);
+		cylinder->material.specular_i = 0;
+		cylinder->material.reflective_i = 1;
+		cylinder->material.emission = color_correct_new(0, 0, 0, 0);
+		cylinder->material.emission_i = 0;
+		add_object(&minirt.objects, cylinder, 2);
+	}
+	{
+		sphere = malloc(sizeof(t_sphere));
+		sphere->center = vec3_new(0, 70, 200);
+		sphere->radius = 15;
+		sphere->material.color = color_correct_new(0, 1, 0.8, 0.6);
+		sphere->material.specular_i = 0;
+		sphere->material.reflective_i = 1;
+		sphere->material.emission = color_correct_new(0, 0, 0, 0);
+		sphere->material.emission_i = 0;
+		add_object(&minirt.objects, sphere, 0);
+	}
+	{
+		sphere = malloc(sizeof(t_sphere));
+		sphere->center = vec3_new(-10, -25, 200);
+		sphere->radius = 20;
+		sphere->material.color = color_correct_new(0, 1, 0.8, 0.6);
+		sphere->material.specular_i = 0;
+		sphere->material.reflective_i = 1;
+		sphere->material.emission = color_correct_new(0, 0, 0, 0);
+		sphere->material.emission_i = 0;
+		add_object(&minirt.objects, sphere, 0);
+	}
+	{
+		sphere = malloc(sizeof(t_sphere));
+		sphere->center = vec3_new(10, -25, 200);
+		sphere->radius = 20;
+		sphere->material.color = color_correct_new(0, 1, 0.8, 0.6);
+		sphere->material.specular_i = 0;
+		sphere->material.reflective_i = 1;
+		sphere->material.emission = color_correct_new(0, 0, 0, 0);
+		sphere->material.emission_i = 0;
+		add_object(&minirt.objects, sphere, 0);
 	}
 	// {
 	// 	plane = malloc(sizeof(t_plane));
