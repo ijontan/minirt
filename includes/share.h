@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/09/13 11:40:45 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/14 16:00:10 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ typedef struct s_plane
 }					t_plane;
 
 t_plane				plane_new(t_vec3 point, t_vec3 dir, t_material material);
+t_vec3				disk_intersect(t_plane *plane, t_ray *ray, float radius, t_vec3 p0);
 t_vec3				plane_intersect(t_plane *plane, t_ray *ray);
 
 typedef struct s_cylinder
@@ -160,7 +161,7 @@ typedef struct s_cylinder
 }					t_cylinder;
 
 t_vec3				cylinder_intersect(t_cylinder *cylinder, t_ray *ray);
-t_vec3				cylinder_normal(t_cylinder *cylinder, t_vec3 point);
+t_vec3				cylinder_normal(t_cylinder *cylinder, t_vec3 point, float type);
 
 typedef struct s_atof
 {

@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/09/13 16:52:36 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/14 17:30:38 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,10 @@ t_color_c	get_color(t_minirt *rt, t_hit_info *hi)
 		dot_prod = 0;
 	if (dot_prod > 1)
 		dot_prod = 1;
-	tmp = color_scale(hi->material.specular, hi->material.specular_i
+	tmp = color_scale(color_correct_new(0, 1, 1, 1), hi->material.specular_i
 		* powf(dot_prod, hi->material.shininess));
+	// tmp = color_scale(hi->material.specular, hi->material.specular_i
+	// 	* powf(dot_prod, hi->material.shininess));
 	ret = color_add(ret, tmp);
 	tmp = rt->amb_light.color;
 	tmp = color_scale(tmp, rt->amb_light.ratio);
@@ -209,7 +211,7 @@ static void	init_minirt(t_parse p)
 	// mlx rendering
 	mlx_put_image_to_window(minirt.mlx, minirt.win, image.img, 0, 0);
 	mlx_destroy_image(minirt.mlx, image.img);
-	mlx_loop(minirt.mlx);
+	mlx_loop(minirt.mlx);	
 }
 
 int	main(int ac, char **av)

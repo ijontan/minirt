@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 22:46:40 by itan              #+#    #+#             */
-/*   Updated: 2023/09/13 16:50:40 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/14 16:00:36 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@
 
 typedef t_vec3	(*t_ft_intersect)(void *, t_ray *);
 
+// iterates through the object list and calculates which intersection is the 
+// closest for one ray
 t_hit_info	intersect_list(t_minirt *minirt, t_ray *ray)
 {
 	t_vec3		prev_intersect;
@@ -126,9 +128,9 @@ t_hit_info	intersect_list(t_minirt *minirt, t_ray *ray)
 			if (tmp->type == 0)
 				hit_info.material = ((t_sphere *)tmp->object)->material;
 			else if (tmp->type == 1)
-				hit_info.material = ((t_cylinder *)tmp->object)->material;
-			else if (tmp->type == 2)
 				hit_info.material = ((t_plane *)tmp->object)->material;
+			else if (tmp->type == 2)
+				hit_info.material = ((t_cylinder *)tmp->object)->material;
 			prev_intersect = intersect;
 			hit_info.obj_type = tmp->type;
 			hit_info.hit = true;
@@ -147,14 +149,14 @@ t_hit_info	intersect_list(t_minirt *minirt, t_ray *ray)
 	}
 	else if (hit_info.obj_type == 1)
 	{
-		hit_info.normal = cylinder_normal((t_cylinder *)(hit_info.object->object),
-											hit_info.intersect_pt);
-	}
-	else if (hit_info.obj_type == 2)
-	{
 		hit_info.normal = ((t_plane *)(hit_info.object->object))->normalized_norm_vec;
 		hit_info.normal = vec3_multiply(hit_info.normal, -1);
 		hit_info.normal = vec3_normalize(hit_info.normal);
+	}
+	else if (hit_info.obj_type == 2)
+	{
+		hit_info.normal = cylinder_normal((t_cylinder *)(hit_info.object->object),
+											hit_info.intersect_pt, prev_intersect.z);
 	}
 	hit_info.normal = vec3_normalize(hit_info.normal);
 	return (hit_info);

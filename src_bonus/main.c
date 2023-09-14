@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/09/13 15:45:45 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/14 10:40:12 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,7 +243,7 @@ static void	init_minirt(void)
 		plane->material.reflective_i = 0;
 		plane->material.emission = color_correct_new(0, 1, 1, 1);
 		plane->material.emission_i = 1;
-		add_object(&minirt.objects, plane, 2);
+		add_object(&minirt.objects, plane, 1);
 	}
 	{
 		plane = malloc(sizeof(t_plane));
@@ -254,7 +254,7 @@ static void	init_minirt(void)
 		plane->material.reflective_i = 0;
 		plane->material.emission = color_correct_new(0, 0, 0, 0);
 		plane->material.emission_i = 0;
-		add_object(&minirt.objects, plane, 2);
+		add_object(&minirt.objects, plane, 1);
 	}
 	{
 		plane = malloc(sizeof(t_plane));
@@ -265,7 +265,7 @@ static void	init_minirt(void)
 		plane->material.reflective_i = 0;
 		plane->material.emission = color_correct_new(0, 0, 0, 0);
 		plane->material.emission_i = 0;
-		add_object(&minirt.objects, plane, 2);
+		add_object(&minirt.objects, plane, 1);
 	}
 	{
 		plane = malloc(sizeof(t_plane));
@@ -276,7 +276,7 @@ static void	init_minirt(void)
 		plane->material.reflective_i = 0;
 		plane->material.emission = color_correct_new(0, 0, 0, 0);
 		plane->material.emission_i = 0;
-		add_object(&minirt.objects, plane, 2);
+		add_object(&minirt.objects, plane, 1);
 	}
 	// {
 	// 	plane = malloc(sizeof(t_plane));
@@ -286,7 +286,7 @@ static void	init_minirt(void)
 	// 	plane->material.specular_i = 0;
 	// 	plane->material.emission = color_correct_new(0, 0, 0, 0);
 	// 	plane->material.emission_i = 0;
-	// 	add_object(&minirt.objects, plane, 2);
+	// 	add_object(&minirt.objects, plane, 1);
 	// }
 	// {
 	// 	plane = malloc(sizeof(t_plane));
@@ -296,11 +296,11 @@ static void	init_minirt(void)
 	// 	plane->material.specular_i = 0;
 	// 	plane->material.emission = color_correct_new(0, 0, 0, 0);
 	// 	plane->material.emission_i = 0;
-	// 	add_object(&minirt.objects, plane, 2);
+	// 	add_object(&minirt.objects, plane, 1);
 	// }
 	// rendering
-	ray_cast(&minirt);
-	// draw_scene(&minirt);
+	// ray_cast(&minirt);
+	draw_scene(&minirt);
 	printf("\e[0;32mRendering done!!! ~~\n\e[0m");
 	// mlx rendering
 	mlx_put_image_to_window(minirt.mlx, minirt.win, image.img, 0, 0);
