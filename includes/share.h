@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/09/15 20:33:52 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/15 21:12:15 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,5 +289,9 @@ typedef struct s_octree
 	t_list			*objects;
 	struct s_octree	**children;
 }					t_octree;
+
+t_bound_box			bound_box_new(t_vec3 min, t_vec3 max);
+t_bound_box			bound_box_expend(t_bound_box box, t_vec3 point);
+bool				bound_box_intersect(t_bound_box box, t_ray ray);
 
 #endif

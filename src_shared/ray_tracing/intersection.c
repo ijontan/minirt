@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersection.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 22:46:40 by itan              #+#    #+#             */
-/*   Updated: 2023/09/14 16:00:36 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/15 21:48:40 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@
 
 typedef t_vec3	(*t_ft_intersect)(void *, t_ray *);
 
-// iterates through the object list and calculates which intersection is the 
+// iterates through the object list and calculates which intersection is the
 // closest for one ray
 t_hit_info	intersect_list(t_minirt *minirt, t_ray *ray)
 {
@@ -123,13 +123,14 @@ t_hit_info	intersect_list(t_minirt *minirt, t_ray *ray)
 		tmp = (t_object *)lst->content;
 		intersect = (*intersect_ft[tmp->type])(tmp->object, ray);
 		if (intersect.z > 0 && intersect.x > 0 && (prev_intersect.z == 0
-				|| intersect.x < prev_intersect.x))
+				|| intersect.x < prev_intersect.x)
+			&& bound_box_intersect(tmp->bounding_box, *ray))
 		{
-			if (tmp->type == 0)
+			if (tmp->type == SPHERE)
 				hit_info.material = ((t_sphere *)tmp->object)->material;
-			else if (tmp->type == 1)
+			else if (tmp->type == PLANE)
 				hit_info.material = ((t_plane *)tmp->object)->material;
-			else if (tmp->type == 2)
+			else if (tmp->type == CYLINDER)
 				hit_info.material = ((t_cylinder *)tmp->object)->material;
 			prev_intersect = intersect;
 			hit_info.obj_type = tmp->type;
@@ -142,21 +143,21 @@ t_hit_info	intersect_list(t_minirt *minirt, t_ray *ray)
 		return (hit_info);
 	hit_info.intersect_pt = vec3_multiply(ray->direction, prev_intersect.x);
 	hit_info.intersect_pt = vec3_add(ray->origin, hit_info.intersect_pt);
-	if (hit_info.obj_type == 0)
+	if (hit_info.obj_type == SPHERE)
 	{
 		hit_info.normal = ((t_sphere *)(hit_info.object->object))->center;
 		hit_info.normal = vec3_subtract(hit_info.intersect_pt, hit_info.normal);
 	}
-	else if (hit_info.obj_type == 1)
+	else if (hit_info.obj_type == PLANE)
 	{
 		hit_info.normal = ((t_plane *)(hit_info.object->object))->normalized_norm_vec;
 		hit_info.normal = vec3_multiply(hit_info.normal, -1);
 		hit_info.normal = vec3_normalize(hit_info.normal);
 	}
-	else if (hit_info.obj_type == 2)
+	else if (hit_info.obj_type == CYLINDER)
 	{
 		hit_info.normal = cylinder_normal((t_cylinder *)(hit_info.object->object),
-											hit_info.intersect_pt, prev_intersect.z);
+			hit_info.intersect_pt, prev_intersect.z);
 	}
 	hit_info.normal = vec3_normalize(hit_info.normal);
 	return (hit_info);
