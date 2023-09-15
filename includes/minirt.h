@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/09/11 23:56:01 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/13 13:34:56 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,21 +86,21 @@ cylinder: obj_type = 3
 /**
  * @brief type of object
  *
- * @param AMB_LIGHT: 0
- * @param LIGHT: 1
- * @param CAM: 2
- * @param SPHERE: 3
- * @param PLANE: 4
- * @param CYLINDER: 5
+ * @param SPHERE: 0
+ * @param PLANE: 1
+ * @param CYLINDER: 2
+ * @param AMB_LIGHT: 3
+ * @param CAM: 4
+ * @param LIGHT: 5
  */
 typedef enum e_obj_type
 {
-	AMB_LIGHT,
-	LIGHT,
-	CAM,
 	SPHERE,
 	PLANE,
-	CYLINDER
+	CYLINDER,
+	AMB_LIGHT,
+	CAM,
+	LIGHT
 }					t_obj_type;
 
 typedef struct s_hit_info
@@ -136,4 +136,7 @@ t_hit_info			intersect_list(t_minirt *minirt, t_ray *ray);
 
 t_color_c			ray_tracing(t_ray ray, t_minirt *minirt,
 						unsigned int *state);
+
+void	draw_scene(t_minirt *minirt);
+
 #endif

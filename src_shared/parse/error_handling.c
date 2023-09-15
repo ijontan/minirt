@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 18:03:48 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/08 14:17:38 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/13 14:37:19 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,15 @@ static void	exit_format_err(char **info, char *s, int type)
 
 static void	check_line_format2(int type, t_parse *p)
 {
-	if (type == SPHERE && (!check_info_size(4, p) || \
-	!valid_triplet(p->info[1]) || !valid_float(p->info[2]) || \
+	if (type == SPHERE && (!valid_triplet(p->info[1]) || !valid_float(p->info[2]) || \
 	!valid_triplet(p->info[3])))
 		exit_format_err(p->info, "Sphere", SPHERE);
-	else if (type == PLANE && (!check_info_size(4, p) || \
-	!valid_triplet(p->info[1]) || !valid_triplet(p->info[2]) || \
+	else if (type == PLANE && (!valid_triplet(p->info[1]) || !valid_triplet(p->info[2]) || \
 	!valid_triplet(p->info[3])))
 		exit_format_err(p->info, "Plane", PLANE);
-	else if (type == CYLINDER && (!check_info_size(6, p) || \
-	!valid_triplet(p->info[1]) || !valid_triplet(p->info[2]) || \
-	!valid_float(p->info[3]) || !valid_float(p->info[4]) || \
-	!valid_triplet(p->info[5])))
+	else if (type == CYLINDER && (!valid_triplet(p->info[1]) || \
+	!valid_triplet(p->info[2]) || !valid_float(p->info[3]) || \
+	!valid_float(p->info[4]) || !valid_triplet(p->info[5])))
 		exit_format_err(p->info, "Cylinder", CYLINDER);
 }
 
@@ -90,12 +87,16 @@ void	exit_parse(char **info, char *s, char c)
 	printf("\e[0;31mError: %s ", s);
 	if (c == 'r')
 		printf("ratio out of range [0.0, 1.0]\e[0m\n");
+	else if (c == 'i')
+		printf("index out of range [0.0, 1.0]\e[0m\n");
 	else if (c == 'c')
 		printf("color out of range [0, 255]\e[0m\n");
 	else if (c == 'd')
 		printf("diameter out of range [> 0.0]\e[0m\n");
 	else if (c == 'h')
 		printf("height out of range [> 0.0]\e[0m\n");
+	else if (c == 's')
+		printf("shininess out of range [> 0.0]\e[0m\n");
 	else if (c == 'a')
 		printf("field of view out of range [0.0, 180.0]\e[0m\n");
 	else if (c == 'n')

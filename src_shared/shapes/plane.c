@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:39:47 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/12 00:13:14 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/14 15:30:42 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,25 @@ t_plane	plane_new(t_vec3 point, t_vec3 dir, t_material material)
 	plane.normalized_norm_vec = dir;
 	plane.material = material;
 	return (plane);
+}
+
+// p: the intersection point of the ray and the plane
+// p0: the centre of the disk
+t_vec3	disk_intersect(t_plane *plane, t_ray *ray, float radius, t_vec3 p0)
+{
+	t_vec3	sols;
+	t_vec3	p;
+	float	len;
+
+	sols = plane_intersect(plane, ray);
+	if (!sols.x && !sols.y && !sols.z)
+		return (vec3_new(0, 0, 0));
+
+	p = vec3_multiply(ray->direction, sols.x);
+	len = vec3_length(vec3_subtract(p, p0));
+	if (len > radius)
+		return (vec3_new(0, 0, 0));
+	return (vec3_new(sols.x, 0, 2));
 }
 
 /**
@@ -45,49 +64,5 @@ t_vec3	plane_intersect(t_plane *plane, t_ray *ray)
 			return (vec3_new(0, 0, 0));
 		return (vec3_new(t, 0, 2));
 	}
-	else
-		return (vec3_new(0, 0, 0));
+	return (vec3_new(0, 0, 0));
 }
-
-// bool	plane_intersect(t_plane *plane, t_ray *ray)
-// {
-// 	float	denom;
-// 	t_vec3	p0_l0;
-
-// 	denom = vec3_dot(plane->normalized_norm_vec, ray->direction);
-// 	if (denom > 1e-6)
-// 	{
-// 		p0_l0 = vec3_normalize(vec3_subtract(
-// 		plane->point_on_plane, ray->origin));
-// 		plane->t = vec3_dot(p0_l0, plane->normalized_norm_vec) / denom;
-// 		return (plane->t >= 0);
-// 	}
-// 	return (false);
-// }
-
-// t_vec3	plane_intersect_solution(t_plane *plane, t_ray *ray)
-// {
-// 	t_vec3	solution;
-
-// 	if (!plane_intersect(plane, ray))
-// 		return (vec3_new(0, 0, 0));
-// 	solution.x = ray->origin.x + ray->direction.x * plane->t;
-// 	solution.y = ray->origin.y + ray->direction.y * plane->t;
-// 	solution.z = ray->origin.z + ray->direction.z * plane->t;
-// 	return (solution);
-// }
-
-// typedef struct s_plane
-// {
-// 	t_vec3		point_on_plane;
-// 	t_vec3		normalized_norm_vec;
-// 	t_color_c	color;
-// }				t_plane;
-
-// typedef struct s_ray
-// {
-// 	t_vec3			origin;
-// 	t_vec3			direction;
-// 	float			intensity;
-// 	t_color_c		color;
-// }					t_ray;

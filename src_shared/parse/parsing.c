@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:52:31 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/10 22:20:57 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/14 17:51:46 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static bool	parse_line(char *line, t_parse *p)
 {
 	int	i;
 
-	p->info = ft_split(line, ' ');
+	p->info = ft_split_nsep(line, (char *[]){" ", "\t", 0});
 	i = -1;
 	while (++i < 6)
 	{
@@ -36,7 +36,8 @@ static bool	parse_line(char *line, t_parse *p)
 			return (true);
 		}
 	}
-	if (!ft_strncmp(p->info[0], "\n", ft_strlen(p->info[0])))
+	if (!ft_strncmp(p->info[0], "#", ft_strlen(p->info[0])) \
+	|| !ft_strncmp(p->info[0], "\n", ft_strlen(p->info[0])))
 		return (true);
 	else
 		printf("\e[0;31mError: Unknown object \e[0m%s\n", p->info[0]);

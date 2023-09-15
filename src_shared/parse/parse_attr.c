@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 20:20:11 by rsoo              #+#    #+#             */
-/*   Updated: 2023/08/31 10:21:13 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/14 17:26:47 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_vec3	assign_norm_vec(t_parse *p)
 	res.x = p->coords[0];
 	res.y = p->coords[1];
 	res.z = p->coords[2];
-	return (res);
+	return vec3_normalize(res);
 }
 
 t_vec3	parse_coordinates(char *s, t_parse *p)
