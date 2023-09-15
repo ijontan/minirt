@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/09/13 13:34:56 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/15 15:39:37 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # endif
 
 # include "libft.h"
+# include "movement.h"
 # include "share.h"
 # include <math.h>
 # include <mlx.h>
@@ -49,13 +50,20 @@ typedef struct s_key_events
 	bool			holding_1;
 	bool			holding_2;
 	bool			holding_3;
-	bool			holding_m_left;
-	bool			holding_m_middle;
-	bool			holding_m_right;
+	bool			holding_w;
+	bool			holding_a;
+	bool			holding_s;
+	bool			holding_d;
+	bool			holding_q;
+	bool			holding_e;
+
 }					t_key_events;
 
 typedef struct s_mouse_events
 {
+	bool			holding_m_left;
+	bool			holding_m_middle;
+	bool			holding_m_right;
 	int				prev_x;
 	int				prev_y;
 }					t_mouse_events;
@@ -75,6 +83,7 @@ typedef struct s_minirt
 	t_list			*objects;
 	t_key_events	key_events;
 	t_mouse_events	mouse_events;
+	bool			moving;
 }					t_minirt;
 
 /*
@@ -119,6 +128,7 @@ typedef struct s_hit_info
 
 void				draw_scene(t_minirt *minirt);
 
+void				init_hooks(t_minirt *minirt);
 int					key_down_hook(int keycode, t_minirt *minirt);
 int					key_up_hook(int keycode, t_minirt *minirt);
 int					mouse_down_hook(int button, int x, int y, t_minirt *minirt);
@@ -137,6 +147,7 @@ t_hit_info			intersect_list(t_minirt *minirt, t_ray *ray);
 t_color_c			ray_tracing(t_ray ray, t_minirt *minirt,
 						unsigned int *state);
 
-void	draw_scene(t_minirt *minirt);
+void				draw_scene(t_minirt *minirt);
+void				ray_cast(t_minirt *minirt);
 
 #endif

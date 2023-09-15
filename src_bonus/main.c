@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/09/15 12:55:02 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/15 13:19:38 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,7 @@ void	ray_cast(t_minirt *minirt)
 		while (y < 720)
 		{
 			ft_memset(&ray, 0, sizeof(t_ray));
-			ray = ray_primary(&minirt->cam, (((float)x - 280.0f) / 720 - 0.5)
-				* minirt->cam.fov, -(((float)y / 720 - 0.5)) * minirt->cam.fov);
+			ray = ray_primary(&minirt->cam, (t_offset){.x = x, .y = y});
 			hit_info = intersect_list(minirt, &ray);
 			color = color_correct_new(0, 0, 0, 0);
 			if (hit_info.hit)
@@ -153,8 +152,7 @@ void	draw_scene(t_minirt *minirt)
 			// incoming_light = ray_tracing(&ray, minirt, &state);
 			// color = color_add(color, incoming_light);
 			cycle = -1;
-			ray = ray_primary(&minirt->cam, (((float)x - 280.0f) / 720 - 0.5)
-				* minirt->cam.fov, -(((float)y / 720 - 0.5)) * minirt->cam.fov);
+			ray = ray_primary(&minirt->cam, (t_offset){.x = x, .y = y});
 			while (++cycle < 5)
 			{
 				state = (unsigned int)((x + y * 1280 + cycle * 136274));

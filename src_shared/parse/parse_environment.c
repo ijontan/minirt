@@ -36,6 +36,15 @@ void parse_camera(t_parse *p)
 	else
 		exit_parse(p->info, "Camera", 'n');
 
+	// some code added for future use
+	p->camera.right = vec3_cross(p->camera.direction, vec3_new(0, 1, 0));
+	p->camera.right = vec3_normalize(p->camera.right);
+	p->camera.up = vec3_cross(p->camera.right, p->camera.direction);
+	p->camera.vp_height = 720;
+	p->camera.vp_width = 1280;
+	p->camera.rotation = quaternion_create_id();
+	p->camera.position = vec3_new(0, 0, 0);
+
 	p->camera.fov = ft_atof(p->info[3], p);
 	if (p->camera.fov < 0.0 || p->camera.fov > 180.0)
 		exit_parse(p->info, "Camera", 'a');

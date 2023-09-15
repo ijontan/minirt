@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cam_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 01:59:54 by itan              #+#    #+#             */
-/*   Updated: 2023/08/31 10:41:36 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/15 13:41:26 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,4 +17,10 @@ void	cam_init(t_cam *cam)
 	cam->origin = vec3_new(0, 0, 0);
 	cam->direction = vec3_new(0, 0, 1);
 	cam->fov = 0.9f;
+	cam->up = vec3_new(0, 1, 0);
+	cam->vp_width = 1280;
+	cam->vp_height = 720;
+	cam->position = vec3_new(0, 0, 0);
+	cam->rotation = quaternion_create_id();
+	cam->right = vec3_cross(cam->direction, cam->up);
 }

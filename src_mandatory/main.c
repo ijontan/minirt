@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/09/14 17:30:38 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/15 15:47:26 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,18 +73,18 @@ void	set_pixel(t_minirt *minirt, t_hit_info hit_info, int x, int y)
 	{
 		color = hit_info.material.color;
 		put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
-				color_revert(color).as_int);
+			color_revert(color).as_int);
 		return ;
 	}
 	color.r = minirt->amb_light.color.r * minirt->amb_light.ratio;
 	color.g = minirt->amb_light.color.g * minirt->amb_light.ratio;
 	color.b = minirt->amb_light.color.b * minirt->amb_light.ratio;
 	put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
-			color_revert(color).as_int);
+		color_revert(color).as_int);
 }
 
 /*
-perfect reflection: vector that represents the reflection of an incident ray 
+perfect reflection: vector that represents the reflection of an incident ray
 (d - 2(d.n)n) where d is the intersection vector and n is the surface normal
 
 dot_prod: represents cos(theta), with range: 0.0 - 1.0
@@ -107,7 +107,11 @@ void	ray_cast(t_minirt *minirt)
 	t_ray		ray;
 	t_color_c	color;
 	t_hit_info	hit_info;
+	int			pixel_size;
 
+	// int			i;
+	// int			j;
+	pixel_size = 7;
 	// printf("minirt->cam.origin: %f %f %f\n", minirt->cam.origin.x,
 	// 		minirt->cam.origin.y, minirt->cam.origin.z);
 	x = 0;
@@ -116,9 +120,13 @@ void	ray_cast(t_minirt *minirt)
 		y = 0;
 		while (y < 720)
 		{
+			if ((x % pixel_size != 0 || y % pixel_size != 0))
+			{
+				++y;
+				continue ;
+			}
 			ft_memset(&ray, 0, sizeof(t_ray));
-			ray = ray_primary(&minirt->cam, (((float)x - 280.0f) / 720 - 0.5)
-				* minirt->cam.fov, -(((float)y / 720 - 0.5)) * minirt->cam.fov);
+			ray = ray_primary(&minirt->cam, (t_offset){.x = x, .y = y});
 			hit_info = intersect_list(minirt, &ray);
 			color = color_correct_new(0, 0, 0, 0);
 			if (hit_info.hit)
@@ -130,6 +138,16 @@ void	ray_cast(t_minirt *minirt)
 			else
 				put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
 					color_revert(minirt->amb_light.color).as_int);
+			// i = -1;
+			// while (minirt->moving && ++i < pixel_size && x + i < 1280)
+			// {
+			// 	j = -1;
+			// 	while (++j < pixel_size && y + j < 720)
+			// 	{
+			// 		put_pixel(&minirt->image, (t_offset){.x = x + i, .y = y
+			// 			+ j}, color_revert(color).as_int);
+			// 	}
+			// }
 			++y;
 		}
 		++x;
@@ -161,8 +179,7 @@ void	draw_scene(t_minirt *minirt)
 			// incoming_light = ray_tracing(&ray, minirt, &state);
 			// color = color_add(color, incoming_light);
 			cycle = -1;
-			ray = ray_primary(&minirt->cam, (((float)x - 280.0f) / 720 - 0.5)
-				* minirt->cam.fov, -(((float)y / 720 - 0.5)) * minirt->cam.fov);
+			ray = ray_primary(&minirt->cam, (t_offset){.x = x, .y = y});
 			while (++cycle < 10)
 			{
 				state = (unsigned int)((x + y * 1280 + cycle * 136274));
@@ -192,26 +209,25 @@ static void	init_minirt(t_parse p)
 	ft_memset(&minirt, 0, sizeof(t_minirt));
 	minirt.mlx = mlx_init();
 	minirt.win = mlx_new_window(minirt.mlx, 1280, 720, "Hello world!");
+	init_hooks(&minirt);
 	// images
 	image.img = mlx_new_image(minirt.mlx, 1280, 720);
 	image.buffer = mlx_get_data_addr(image.img, &image.pixel_bits,
-			&image.line_bytes, &image.endian);
+		&image.line_bytes, &image.endian);
 	minirt.image = image;
-
 	// scene objects
 	minirt.amb_light = p.amb_light;
 	minirt.cam = p.camera;
 	minirt.light_source = p.light_source;
 	minirt.objects = p.objects;
-
 	// rendering
 	ray_cast(&minirt);
 	// draw_scene(&minirt);
 	printf("\e[0;32mRendering done!!! ~~\n\e[0m");
 	// mlx rendering
 	mlx_put_image_to_window(minirt.mlx, minirt.win, image.img, 0, 0);
-	mlx_destroy_image(minirt.mlx, image.img);
-	mlx_loop(minirt.mlx);	
+	// mlx_destroy_image(minirt.mlx, image.img);
+	mlx_loop(minirt.mlx);
 }
 
 int	main(int ac, char **av)

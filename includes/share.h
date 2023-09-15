@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   share.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/09/14 16:00:10 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/15 13:52:37 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,29 @@
 # define SHARE_H
 
 # include <fcntl.h>
+
+/* ---------------------------------- image --------------------------------- */
+typedef struct s_image
+{
+	void			*img;
+	int				pixel_bits;
+	int				line_bytes;
+	int				endian;
+	char			*buffer;
+}					t_image;
+
+typedef union u_offset
+{
+	int				xy[2];
+	struct
+	{
+		int			x;
+		int			y;
+	};
+}					t_offset;
+
+void				put_pixel(t_image *image, t_offset offset,
+						unsigned int color);
 
 /* ---------------------------------- vec3 ---------------------------------- */
 typedef struct s_vec3
@@ -89,11 +112,28 @@ typedef struct s_material
 
 /* ----------------------------------- cam ---------------------------------- */
 
+/**
+ * @brief Camera struct
+ *
+ * @param origin camera position
+ * @param direction camera direction or forward direction
+ * @param up up direction
+ * @param right right direction
+ * @param fov field of view
+ * @param vp_width viewport width
+ * @param vp_height viewport height
+ */
 typedef struct s_cam
 {
 	t_vec3			origin;
 	t_vec3			direction;
+	t_vec3			up;
+	t_vec3			right;
+	t_vec3			position;
+	t_quaternion	rotation;
 	float			fov;
+	int				vp_width;
+	int				vp_height;
 }					t_cam;
 
 void				cam_init(t_cam *cam);
@@ -110,7 +150,7 @@ typedef struct s_ray
 }					t_ray;
 
 t_ray				ray_init(t_vec3 origin, t_vec3 direction);
-t_ray				ray_primary(t_cam *cam, float x, float y);
+t_ray				ray_primary(t_cam *cam, t_offset offset);
 
 typedef struct s_amb_light
 {
@@ -148,7 +188,8 @@ typedef struct s_plane
 }					t_plane;
 
 t_plane				plane_new(t_vec3 point, t_vec3 dir, t_material material);
-t_vec3				disk_intersect(t_plane *plane, t_ray *ray, float radius, t_vec3 p0);
+t_vec3				disk_intersect(t_plane *plane, t_ray *ray, float radius,
+						t_vec3 p0);
 t_vec3				plane_intersect(t_plane *plane, t_ray *ray);
 
 typedef struct s_cylinder
@@ -161,7 +202,8 @@ typedef struct s_cylinder
 }					t_cylinder;
 
 t_vec3				cylinder_intersect(t_cylinder *cylinder, t_ray *ray);
-t_vec3				cylinder_normal(t_cylinder *cylinder, t_vec3 point, float type);
+t_vec3				cylinder_normal(t_cylinder *cylinder, t_vec3 point,
+						float type);
 
 typedef struct s_atof
 {
@@ -246,28 +288,5 @@ typedef struct s_octree
 	t_list			*objects;
 	struct s_octree	**children;
 }					t_octree;
-
-/* ---------------------------------- image --------------------------------- */
-typedef struct s_image
-{
-	void			*img;
-	int				pixel_bits;
-	int				line_bytes;
-	int				endian;
-	char			*buffer;
-}					t_image;
-
-typedef union u_offset
-{
-	int				xy[2];
-	struct
-	{
-		int			x;
-		int			y;
-	};
-}					t_offset;
-
-void				put_pixel(t_image *image, t_offset offset,
-						unsigned int color);
 
 #endif
