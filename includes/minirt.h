@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/09/15 15:39:37 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/15 16:00:54 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # endif
 
 # include "libft.h"
-# include "movement.h"
 # include "share.h"
 # include <math.h>
 # include <mlx.h>
