@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/09/15 13:52:37 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/15 20:33:52 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_vec3
 	float			z;
 }					t_vec3;
 
+t_vec3				vec3_apply_rot(t_vec3 vec, t_quaternion rot);
 t_vec3				vec3_new(float x, float y, float z);
 float				vec3_length(t_vec3 vec);
 t_vec3				vec3_normalize(t_vec3 vec);
