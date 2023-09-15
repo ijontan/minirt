@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/09/15 16:00:54 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/15 22:43:13 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "share.h"
 # include <math.h>
 # include <mlx.h>
+# include <pthread.h>
 # include <stdio.h>
 
 /* -------------------------------------------------------------------------- */
@@ -82,6 +83,7 @@ typedef struct s_minirt
 	t_list			*objects;
 	t_key_events	key_events;
 	t_mouse_events	mouse_events;
+	pthread_t		*threads;
 	bool			moving;
 }					t_minirt;
 
@@ -148,5 +150,6 @@ t_color_c			ray_tracing(t_ray ray, t_minirt *minirt,
 
 void				draw_scene(t_minirt *minirt);
 void				ray_cast(t_minirt *minirt);
+void				thread_init(t_minirt *minirt);
 
 #endif

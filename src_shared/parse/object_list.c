@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:22:28 by itan              #+#    #+#             */
-/*   Updated: 2023/09/15 21:52:46 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/15 22:55:58 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ t_bound_box	get_cylinder_bound(t_cylinder *cylinder)
 		+ cylinder->radius * 2);
 	bound_box.min = vec3_subtract(cylinder->center, vec3);
 	bound_box.max = vec3_add(cylinder->center, vec3);
+	bound_box.min = vec3_new(-INFINITY, -INFINITY, -INFINITY);
+	bound_box.max = vec3_new(INFINITY, INFINITY, INFINITY);
 	return (bound_box);
 }
 
