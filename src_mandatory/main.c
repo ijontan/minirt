@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/09/15 09:49:08 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/15 11:36:16 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,8 +210,10 @@ static void	init_minirt(t_parse p)
 	printf("\e[0;32mRendering done!!! ~~\n\e[0m");
 
 	// loop hooks
+	// render: found in the render dir
 	mlx_loop_hook(minirt.mlx, render, &minirt);
-	// mlx_hook(minirt.win, 2, 1, handle_keypress, &minirt);
+	mlx_hook(minirt.win, 2, 1, key_down_hook, &minirt);
+	mlx_hook(minirt.win, 17, 1, x_button_exit, &minirt);
 
 	// mlx rendering
 	mlx_put_image_to_window(minirt.mlx, minirt.win, image.image, 0, 0);

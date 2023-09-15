@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 09:11:04 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/15 10:55:51 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/15 11:18:48 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char **get_rt_files(int *num_of_files)
 	{
         while (++i < *num_of_files) 
 		{
-            printf("%s\n", name_list[i]->d_name);
 			rt_files[i] = ft_strdup(name_list[i]->d_name);
 			free(name_list[i]);
 		}
@@ -38,7 +37,7 @@ char **get_rt_files(int *num_of_files)
 	return (rt_files);
 }
 
-static void	render_menu(t_minirt *minirt)
+void	render_menu(t_minirt *minirt)
 {
 	char	*str;
 	char	**rt_files;

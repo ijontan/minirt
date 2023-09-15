@@ -390,6 +390,7 @@ typedef struct s_hit_info
 
 void				draw_scene(t_minirt *minirt);
 
+int					x_button_exit(int keycode, t_minirt *minirt);
 int					key_down_hook(int keycode, t_minirt *minirt);
 int					key_up_hook(int keycode, t_minirt *minirt);
 int					mouse_down_hook(int button, int x, int y, t_minirt *minirt);
