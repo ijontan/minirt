@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/09/14 18:11:25 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/15 09:38:43 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,8 +189,8 @@ static void	init_minirt(void)
 	minirt.mlx = mlx_init();
 	minirt.win = mlx_new_window(minirt.mlx, 1280, 720, "Hello world!");
 	// images
-	image.img = mlx_new_image(minirt.mlx, 1280, 720);
-	image.buffer = mlx_get_data_addr(image.img, &image.pixel_bits,
+	image.image = mlx_new_image(minirt.mlx, 1280, 720);
+	image.buffer = mlx_get_data_buffer(image.image, &image.pixel_bits,
 		&image.line_bytes, &image.endian);
 	minirt.image = image;
 
@@ -350,8 +350,8 @@ static void	init_minirt(void)
 	draw_scene(&minirt);
 	printf("\e[0;32mRendering done!!! ~~\n\e[0m");
 	// mlx rendering
-	mlx_put_image_to_window(minirt.mlx, minirt.win, image.img, 0, 0);
-	mlx_destroy_image(minirt.mlx, image.img);
+	mlx_put_image_to_window(minirt.mlx, minirt.win, image.image, 0, 0);
+	mlx_destroy_image(minirt.mlx, image.image);
 	mlx_loop(minirt.mlx);
 }
 

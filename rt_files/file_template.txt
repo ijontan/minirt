@@ -1,26 +1,26 @@
 # Ambient light
-# ratio   color
-A
+#	ratio	color
+A	
 
 # Camera
-# position   direction   field of view
+#	position	direction	field of view
 C
 
 # Point light
-# position      ratio     color
+#	position	ratio	color
 L
 
 # __________________________________________________________________________________________________________________________________________________________________
 # Objects
 
-# Sphere														  Material
-#  centre        diameter  color                                  specular index   reflective index   diffuse index   emission index   emission color   shininess
+# Sphere															Material
+#	centre	diameter		color									specular index	reflective index	diffuse index	emission index	emission color	shininess
 sp
 
-# Plane															  Material
-#  point    normal vector   color                                 specular index   reflective index   diffuse index   emission index   emission color   shininess
+# Plane																Material
+#	point	normal vector	color									specular index	reflective index	diffuse index	emission index	emission color	shininess
 pl
 
-# Cylinder														  Material
-#  center      axis direction   diameter   height   color         specular index   reflective index   diffuse index   emission index   emission color   shininess
+# Cylinder															Material
+#	center	axis direction	diameter	height		color			specular index	reflective index	diffuse index	emission index	emission color	shininess
 cy
