@@ -171,12 +171,12 @@ typedef struct s_amb_light
 	t_color_c		color;
 }					t_amb_light;
 
-typedef struct s_light_src
+typedef struct s_pt_light
 {
 	t_vec3			position;
 	float			ratio;
 	t_material material; // bonus
-}					t_light_src;
+}					t_pt_light;
 
 /* ---------------------------------- shape --------------------------------- */
 
@@ -216,6 +216,8 @@ typedef struct s_cylinder
 t_vec3				cylinder_intersect(t_cylinder *cylinder, t_ray *ray);
 t_vec3				cylinder_normal(t_cylinder *cylinder, t_vec3 point, float type);
 
+/* ---------------------------------- parse --------------------------------- */
+
 typedef struct s_atof
 {
 	float			result;
@@ -237,7 +239,7 @@ typedef struct s_parse
 	t_atof			atof;
 	t_amb_light		amb_light;
 	t_cam			camera;
-	t_light_src		light_source;
+	t_list			*pt_lights;
 	t_list			*objects;
 }					t_parse;
 
@@ -339,7 +341,7 @@ typedef struct s_minirt
 
 	t_amb_light		amb_light;
 	t_cam			cam;
-	t_light_src		light_source;
+	t_list			*pt_lights;
 	t_sphere		sphere;
 	t_plane			plane;
 	t_cylinder		cylinder;
