@@ -15,7 +15,7 @@ L 0,0,10       0.01       255,255,255
 
 # Sphere														  Material
 #  centre        diameter  color                                  specular index   reflective index   diffuse index   emission index   emission color   shininess
-sp 0,-5,40       25        255,255,255            			                  0.0              0.0                0               0                0,0,0            0
+sp 0,0,20       25        255,100,255            			                  0.0              0.0                0               0                0,0,0            0
 
 # Plane															  Material
 #  point    normal vector   color                                 specular index   reflective index   diffuse index   emission index   emission color   shininess

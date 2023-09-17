@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 21:04:34 by itan              #+#    #+#             */
-/*   Updated: 2023/09/11 15:02:17 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/17 16:05:42 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ t_vec3	sphere_intersect(t_sphere *sphere, t_ray *ray)
 	if (discriminant < 0)
 		return (vec3_new(0, 0, 0));
 	sqrtd = ft_sqrt(discriminant);
-	sols.z = 2.0f * abc.x;
-	sols.x = (-abc.y - sqrtd) / sols.z;
-	sols.y = (-abc.y + sqrtd) / sols.z;
+	sols.z = 1.0f / (2.0f * abc.x);
+	sols.x = (-abc.y - sqrtd) * sols.z;
+	sols.y = (-abc.y + sqrtd) * sols.z;
 	sols.z = 2;
 	if (sols.x > sols.y)
 	{

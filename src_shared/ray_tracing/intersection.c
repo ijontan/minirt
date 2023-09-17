@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 22:46:40 by itan              #+#    #+#             */
-/*   Updated: 2023/09/15 21:48:40 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/17 16:01:45 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,14 +117,18 @@ t_hit_info	intersect_list(t_minirt *minirt, t_ray *ray)
 	lst = minirt->objects;
 	prev_intersect = vec3_new(INFINITY, 0, 0);
 	intersect = vec3_new(INFINITY, 0, 0);
-	hit_info = (t_hit_info){0};
+	ft_memset(&hit_info, 0, sizeof(t_hit_info));
 	while (lst)
 	{
 		tmp = (t_object *)lst->content;
+		if (!bound_box_intersect(tmp->bounding_box, *ray))
+		{
+			lst = lst->next;
+			continue ;
+		}
 		intersect = (*intersect_ft[tmp->type])(tmp->object, ray);
 		if (intersect.z > 0 && intersect.x > 0 && (prev_intersect.z == 0
-				|| intersect.x < prev_intersect.x)
-			&& bound_box_intersect(tmp->bounding_box, *ray))
+				|| intersect.x < prev_intersect.x))
 		{
 			if (tmp->type == SPHERE)
 				hit_info.material = ((t_sphere *)tmp->object)->material;
@@ -157,7 +161,8 @@ t_hit_info	intersect_list(t_minirt *minirt, t_ray *ray)
 	else if (hit_info.obj_type == CYLINDER)
 	{
 		hit_info.normal = cylinder_normal((t_cylinder *)(hit_info.object->object),
-			hit_info.intersect_pt, prev_intersect.z);
+											hit_info.intersect_pt,
+											prev_intersect.z);
 	}
 	hit_info.normal = vec3_normalize(hit_info.normal);
 	return (hit_info);

@@ -50,6 +50,7 @@ void	parse_sphere(t_parse *p)
 	t_sphere	*sphere;
 
 	sphere = ft_calloc(1, sizeof(t_sphere));
+	ft_memset(sphere, 0, sizeof(t_sphere));
 	sphere->center = parse_coordinates(p->info[1], p);
 	sphere->radius = ft_atof(p->info[2], p) / 2;
 	if (sphere->radius <= 0.0)
@@ -70,6 +71,7 @@ void	parse_plane(t_parse *p)
 	t_plane	*plane;
 
 	plane = ft_calloc(1, sizeof(t_plane));
+	ft_memset(plane, 0, sizeof(t_plane));
 	plane->point_on_plane = parse_coordinates(p->info[1], p);
 	if (check_normalized(p->info[2], p))
 		plane->normalized_norm_vec = assign_norm_vec(p);
@@ -91,6 +93,7 @@ void	parse_cylinder(t_parse *p)
 	t_cylinder	*cylinder;
 
 	cylinder = ft_calloc(1, sizeof(t_cylinder));
+	ft_memset(cylinder, 0, sizeof(t_cylinder));
 	cylinder->center = parse_coordinates(p->info[1], p);
 	if (check_normalized(p->info[2], p))
 		cylinder->normalized_axis = assign_norm_vec(p);

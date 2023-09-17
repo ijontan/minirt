@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/09/17 13:51:52 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/17 15:56:37 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,17 +212,18 @@ void	ray_cast(t_minirt *minirt)
 	pixel_size = 6;
 	// printf("minirt->cam.origin: %f %f %f\n", minirt->cam.origin.x,
 	// 		minirt->cam.origin.y, minirt->cam.origin.z);
-	y = -1;
-	while (++y < 720)
+	y = 0;
+	while (y < 720)
 	{
-		x = -1;
-		while (++x < 1280)
+		x = 0;
+		while (x < 1280)
 		{
 			if ((x % pixel_size != 0 || y % pixel_size != 0))
 			{
 				++x;
 				continue ;
 			}
+			ft_memset(&ray, 0, sizeof(t_ray));
 			ray = ray_primary(&minirt->cam, (t_offset){.x = x, .y = y});
 			hit_info = intersect_list(minirt, &ray);
 			color = color_correct_new(0, 0, 0, 0);
@@ -245,7 +246,9 @@ void	ray_cast(t_minirt *minirt)
 			// 			+ j}, color_revert(color).as_int);
 			// 	}
 			// }
+			++x;
 		}
+		++y;
 	}
 }
 
