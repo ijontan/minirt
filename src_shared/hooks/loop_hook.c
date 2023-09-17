@@ -35,11 +35,11 @@ int	loop_hook(t_minirt *minirt)
 	if (minirt->key_events.holding_q)
 		minirt->cam.position = vec3_subtract(minirt->cam.position,
 			vec3_multiply(vec3_apply_rot(minirt->cam.up, minirt->cam.rotation),
-				0.5 / minirt->cam.fov));
+				2));
 	if (minirt->key_events.holding_e)
 		minirt->cam.position = vec3_add(minirt->cam.position,
 			vec3_multiply(vec3_apply_rot(minirt->cam.up, minirt->cam.rotation),
-				0.5 / minirt->cam.fov));
+				2));
 	// ray_cast(minirt);
 	thread_init(minirt);
 	mlx_put_image_to_window(minirt->mlx, minirt->win, minirt->image.img, 0, 0);
