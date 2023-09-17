@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 14:56:25 by itan              #+#    #+#             */
-/*   Updated: 2023/09/14 17:23:39 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/17 13:48:27 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ t_vec3	cylinder_normal(t_cylinder *cylinder, t_vec3 point, float type)
 	t_vec3	normal;
 	t_vec3	oc;
 	float	t;
-	
+
 	if (type == 3)
-		return cylinder->normalized_axis;
+		return (cylinder->normalized_axis);
 	else if (type == 4)
-		return vec3_multiply(cylinder->normalized_axis, -1);
+		return (vec3_multiply(cylinder->normalized_axis, -1));
 	oc = vec3_subtract(point, cylinder->center);
 	t = vec3_dot(oc, cylinder->normalized_axis);
 	normal = vec3_subtract(point, vec3_add(cylinder->center,
@@ -41,13 +41,16 @@ t_vec3	cylinder_normal(t_cylinder *cylinder, t_vec3 point, float type)
 // oi: origin (camera) to intersection
 // co: centre to origin (camera)
 // ci: centre to interesection
-static float ray_in_cylinder_bound(t_cylinder *cylinder, t_ray *ray, float t)
+static float	ray_in_cylinder_bound(t_cylinder *cylinder, t_ray *ray, float t)
 {
+	t_vec3	point;
 	t_vec3	ci;
 	float	distance;
 
-	ci = vec3_subtract(vec3_multiply(ray->direction, t), cylinder->center);
-	distance = vec3_length(cylinder->normalized_axis) * vec3_dot(cylinder->normalized_axis, ci);
+	point = vec3_add(ray->origin, vec3_multiply(ray->direction, t));
+	ci = vec3_subtract(point, cylinder->center);
+	distance = vec3_length(cylinder->normalized_axis)
+		* vec3_dot(cylinder->normalized_axis, ci);
 	if (distance < cylinder->height * -0.5 || distance > cylinder->height * 0.5)
 		return (distance);
 	return (0);
@@ -55,7 +58,7 @@ static float ray_in_cylinder_bound(t_cylinder *cylinder, t_ray *ray, float t)
 
 // op: origin to point on the plane
 // cp: centre of cylinder to point on the plane
-t_vec3 cylinder_caps_intersect(t_cylinder *cylinder, t_ray *ray, bool is_top)
+t_vec3	cylinder_caps_intersect(t_cylinder *cylinder, t_ray *ray, bool is_top)
 {
 	t_plane	cap_plane;
 	t_vec3	op;
@@ -66,17 +69,13 @@ t_vec3 cylinder_caps_intersect(t_cylinder *cylinder, t_ray *ray, bool is_top)
 		cp = vec3_multiply(cylinder->normalized_axis, cylinder->height * 0.5);
 	else
 		cp = vec3_multiply(cylinder->normalized_axis, cylinder->height * -0.5);
-		
 	// printf("cp: %f, %f, %f\n", cp.x, cp.y, cp.z);
-	
 	op = vec3_add(cylinder->center, cp);
-
 	if (is_top)
 		cp = vec3_multiply(cylinder->normalized_axis, -1);
 	else
 		cp = cylinder->normalized_axis;
-
-	cap_plane = (t_plane){.point_on_plane=op,.normalized_norm_vec=cp};
+	cap_plane = (t_plane){.point_on_plane = op, .normalized_norm_vec = cp};
 	sols = disk_intersect(&cap_plane, ray, cylinder->radius, op);
 	if (is_top && sols.z > 0)
 		sols.z = 3;
@@ -121,11 +120,10 @@ t_vec3	cylinder_intersect(t_cylinder *cylinder, t_ray *ray)
 		sols.x = sols.y;
 		sols.y = discriminant;
 	}
-	
 	// if distance == 0 means intersection hits the cylinder pipe
 	distance = ray_in_cylinder_bound(cylinder, ray, sols.x);
 	if (!distance)
-		return (sols); 
+		return (sols);
 	return (cylinder_caps_intersect(cylinder, ray, distance > 0));
 	distance = ray_in_cylinder_bound(cylinder, ray, sols.y);
 	if (!distance)

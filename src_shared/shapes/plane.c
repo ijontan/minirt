@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:39:47 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/14 15:30:42 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/17 13:50:04 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ t_vec3	disk_intersect(t_plane *plane, t_ray *ray, float radius, t_vec3 p0)
 	sols = plane_intersect(plane, ray);
 	if (!sols.x && !sols.y && !sols.z)
 		return (vec3_new(0, 0, 0));
-
-	p = vec3_multiply(ray->direction, sols.x);
+	p = vec3_add(ray->origin, vec3_multiply(ray->direction, sols.x));
 	len = vec3_length(vec3_subtract(p, p0));
 	if (len > radius)
 		return (vec3_new(0, 0, 0));

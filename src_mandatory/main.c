@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/09/15 23:04:01 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/17 13:51:52 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ t_color_c	get_color(t_minirt *rt, t_hit_info *hi)
 		dot_prod = 1;
 	// printf("dot_prod: %f\n", dot_prod);
 	tmp = color_scale(color_multiply(rt->light_source.material.color,
-			hi->material.color), dot_prod);
+										hi->material.color),
+						dot_prod);
 	ret = tmp;
 	dot_prod = vec3_dot(reflection(hi->pt_to_l, hi->normal), hi->pt_to_cam);
 	if (dot_prod < 0)
@@ -52,7 +53,7 @@ t_color_c	get_color(t_minirt *rt, t_hit_info *hi)
 	if (dot_prod > 1)
 		dot_prod = 1;
 	tmp = color_scale(color_correct_new(0, 1, 1, 1), hi->material.specular_i
-		* powf(dot_prod, hi->material.shininess));
+			* powf(dot_prod, hi->material.shininess));
 	// tmp = color_scale(hi->material.specular, hi->material.specular_i
 	// 	* powf(dot_prod, hi->material.shininess));
 	ret = color_add(ret, tmp);
@@ -73,14 +74,14 @@ void	set_pixel(t_minirt *minirt, t_hit_info hit_info, int x, int y)
 	{
 		color = hit_info.material.color;
 		put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
-			color_revert(color).as_int);
+				color_revert(color).as_int);
 		return ;
 	}
 	color.r = minirt->amb_light.color.r * minirt->amb_light.ratio;
 	color.g = minirt->amb_light.color.g * minirt->amb_light.ratio;
 	color.b = minirt->amb_light.color.b * minirt->amb_light.ratio;
 	put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
-		color_revert(color).as_int);
+			color_revert(color).as_int);
 }
 
 /*
@@ -117,9 +118,9 @@ void	*ray_cast_routine(void *data)
 	t_hit_info		hit_info;
 	t_thread_info	*info;
 	int				pixel_size;
-	int				i;
-	int				j;
 
+	// int				i;
+	// int				j;
 	pixel_size = 6;
 	info = (t_thread_info *)data;
 	y = info->start.y;
@@ -141,21 +142,21 @@ void	*ray_cast_routine(void *data)
 			{
 				color = get_color(info->minirt, &hit_info);
 				put_pixel(&info->minirt->image, (t_offset){.x = x, .y = y},
-					color_revert(color).as_int);
+						color_revert(color).as_int);
 			}
 			else
 				put_pixel(&info->minirt->image, (t_offset){.x = x, .y = y},
-					color_revert(info->minirt->amb_light.color).as_int);
-			i = -1;
-			while (info->minirt->moving && ++i < pixel_size && x + i < 1280)
-			{
-				j = -1;
-				while (++j < pixel_size && y + j < 720)
-				{
-					put_pixel(&info->minirt->image, (t_offset){.x = x + i,
-						.y = y + j}, color_revert(color).as_int);
-				}
-			}
+						color_revert(info->minirt->amb_light.color).as_int);
+			// i = -1;
+			// while (info->minirt->moving && ++i < pixel_size && x + i < 1280)
+			// {
+			// 	j = -1;
+			// 	while (++j < pixel_size && y + j < 720)
+			// 	{
+			// 		put_pixel(&info->minirt->image, (t_offset){.x = x + i,
+			// 			.y = y + j}, color_revert(color).as_int);
+			// 	}
+			// }
 			++x;
 		}
 		++y;
@@ -222,7 +223,6 @@ void	ray_cast(t_minirt *minirt)
 				++x;
 				continue ;
 			}
-			ft_memset(&ray, 0, sizeof(t_ray));
 			ray = ray_primary(&minirt->cam, (t_offset){.x = x, .y = y});
 			hit_info = intersect_list(minirt, &ray);
 			color = color_correct_new(0, 0, 0, 0);
@@ -230,11 +230,11 @@ void	ray_cast(t_minirt *minirt)
 			{
 				color = get_color(minirt, &hit_info);
 				put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
-					color_revert(color).as_int);
+						color_revert(color).as_int);
 			}
 			else
 				put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
-					color_revert(minirt->amb_light.color).as_int);
+						color_revert(minirt->amb_light.color).as_int);
 			// i = -1;
 			// while (minirt->moving && ++i < pixel_size && x + i < 1280)
 			// {
@@ -288,7 +288,7 @@ void	draw_scene(t_minirt *minirt)
 			}
 			color = color_scale(color, 1 / (float)cycle);
 			put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
-				color_revert(color).as_int);
+					color_revert(color).as_int);
 			++y;
 		}
 		++x;
@@ -308,7 +308,7 @@ static void	init_minirt(t_parse p)
 	// images
 	image.img = mlx_new_image(minirt.mlx, 1280, 720);
 	image.buffer = mlx_get_data_addr(image.img, &image.pixel_bits,
-		&image.line_bytes, &image.endian);
+			&image.line_bytes, &image.endian);
 	minirt.image = image;
 	// scene objects
 	minirt.amb_light = p.amb_light;
@@ -316,8 +316,8 @@ static void	init_minirt(t_parse p)
 	minirt.light_source = p.light_source;
 	minirt.objects = p.objects;
 	// rendering
-	// ray_cast(&minirt);
-	thread_init(&minirt);
+	ray_cast(&minirt);
+	// thread_init(&minirt);
 	// draw_scene(&minirt);
 	printf("\e[0;32mRendering done!!! ~~\n\e[0m");
 	// mlx rendering
@@ -330,6 +330,7 @@ int	main(int ac, char **av)
 {
 	t_parse	parse_info;
 
+	ft_memset(&parse_info, 0, sizeof(t_parse));
 	if (ac != 2)
 		return (printf("\e[0;31mError: argument error\nExpected input format: ./minirt ~.rt\e[0m"));
 	if (!parse_rt_file(av[1], &parse_info))

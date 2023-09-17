@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 02:39:58 by itan              #+#    #+#             */
-/*   Updated: 2023/09/15 20:34:04 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/17 13:10:45 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,20 @@ t_ray	ray_primary(t_cam *cam, t_offset offset)
 	{
 		div_min = 1.0f / (float)cam->vp_height;
 		pad = (cam->vp_width - cam->vp_height) * 0.5;
+		x = ((offset.x - pad) * div_min - 0.5) * cam->fov;
+		y = -((offset.y) * div_min - 0.5) * cam->fov;
 	}
 	else
 	{
 		div_min = 1.0f / (float)cam->vp_width;
 		pad = (cam->vp_height - cam->vp_width) * 0.5;
+		x = ((offset.x) * div_min - 0.5) * cam->fov;
+		y = -((offset.y - pad) * div_min - 0.5) * cam->fov;
 	}
-	x = ((offset.x - pad * (cam->vp_width > cam->vp_height)) * div_min
-		* cam->fov - 0.5);
-	y = -((offset.y + pad * (cam->vp_width < cam->vp_height)) * div_min
-		* cam->fov - 0.5);
-	screen_center = vec3_add(cam->origin, vec3_multiply(cam->direction, 1));
 	ray.origin = vec3_add(cam->origin, cam->position);
-	// problem here
-	ray.direction = vec3_add(screen_center, vec3_new(x, y, 0));
+	screen_center = vec3_add(cam->origin, vec3_multiply(cam->direction, 1));
+	ray.direction = vec3_add(screen_center, vec3_multiply(cam->right, -x));
+	ray.direction = vec3_add(ray.direction, vec3_multiply(cam->up, y));
 	ray.direction = vec3_apply_rot(ray.direction, cam->rotation);
 	ray.direction = vec3_normalize(ray.direction);
 	return (ray);
