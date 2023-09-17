@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:40:55 by itan              #+#    #+#             */
-/*   Updated: 2023/09/12 00:17:39 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/17 18:12:18 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,14 @@ t_color_c	ray_tracing(t_ray ray, t_minirt *minirt, unsigned int *state)
 			hit_info.d_diffuse = random_vec3_hs(hit_info.normal, state);
 			hit_info.d_diffuse = vec3_normalize(vec3_add(hit_info.d_diffuse,
 															hit_info.normal));
-			hit_info.d_specular = reflect(ray.direction, hit_info.normal);
 			is_specular = hit_info.material.specular_i > random_num(state);
 			if (is_specular)
+			{
+				hit_info.d_specular = reflect(ray.direction, hit_info.normal);
 				ray.direction = vec3_tween(hit_info.d_diffuse,
 											hit_info.d_specular,
 											hit_info.material.reflective_i);
+			}
 			else
 				ray.direction = hit_info.d_diffuse;
 			// ray.direction = random_vec3_hs(hit_info.normal, state);

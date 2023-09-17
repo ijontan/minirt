@@ -6,14 +6,14 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:54:03 by itan              #+#    #+#             */
-/*   Updated: 2023/08/28 22:32:19 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/17 18:02:49 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 /**
- * @brief random number between 0 and 1
+ * @brief random number between 0 and 1, pcg random algorithm
  * 
  * @param state 
  * @return float 
@@ -24,7 +24,7 @@ float	random_num(unsigned int *state)
 
 	*state = *state * 747796405 + 2891336453;
 	x = ((*state >> ((*state >> 28) + 4)) ^ *state) * 277803737;
-	return (((x >> 22) ^ x) / (float)4294967295.0);
+	return (((x >> 22) ^ x) / 4294967295.0f);
 }
 
 /**

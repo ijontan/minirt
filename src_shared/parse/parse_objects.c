@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_objects.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 17:14:41 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/13 15:51:34 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/17 18:52:46 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,20 @@ static void	parse_material(char *obj_type, int i, t_material *mt, t_parse *p)
 		mt->specular_i = ft_atof(p->info[i], p);
 		if (mt->specular_i < 0.0 || mt->specular_i > 1.0)
 			exit_parse(p->info, ft_strjoin(obj_type, "specular"), 'i');
-			
 		mt->reflective_i = ft_atof(p->info[++i], p);
 		if (mt->reflective_i < 0.0 || mt->reflective_i > 1.0)
 			exit_parse(p->info, ft_strjoin(obj_type, "reflective"), 'i');
-			
 		mt->diffuse_i = ft_atof(p->info[++i], p);
 		if (mt->diffuse_i < 0.0 || mt->diffuse_i > 1.0)
 			exit_parse(p->info, ft_strjoin(obj_type, "diffuse"), 'i');
-			
 		mt->emission_i = ft_atof(p->info[++i], p);
 		if (mt->emission_i < 0.0 || mt->emission_i > 1.0)
 			exit_parse(p->info, ft_strjoin(obj_type, "emission"), 'i');
-			
 		if (check_rgb(p->info[++i], p))
 			mt->emission = color_correct((t_color)color_new(0, p->rgb[0],
 						p->rgb[1], p->rgb[2]));
 		else
 			exit_parse(p->info, ft_strjoin(obj_type, "emission"), 'c');
-			
 		mt->shininess = ft_atof(p->info[++i], p);
 		if (mt->shininess < 0.0)
 			exit_parse(p->info, obj_type, 's');
@@ -60,9 +55,7 @@ void	parse_sphere(t_parse *p)
 					p->rgb[1], p->rgb[2]));
 	else
 		exit_parse(p->info, "Sphere", 'c');
-	
 	parse_material("Sphere", 4, &sphere->material, p);
-	
 	add_object(&p->objects, sphere, SPHERE);
 }
 
@@ -82,9 +75,7 @@ void	parse_plane(t_parse *p)
 			(t_color)color_new(0, p->rgb[0], p->rgb[1], p->rgb[2]));
 	else
 		exit_parse(p->info, "Plane", 'c');
-		
 	parse_material("Plane", 4, &plane->material, p);
-	
 	add_object(&p->objects, plane, PLANE);
 }
 
@@ -110,8 +101,6 @@ void	parse_cylinder(t_parse *p)
 			(t_color)color_new(0, p->rgb[0], p->rgb[1], p->rgb[2]));
 	else
 		exit_parse(p->info, "Cylinder", 'c');
-
 	parse_material("Cylinder", 6, &cylinder->material, p);
-
 	add_object(&p->objects, cylinder, CYLINDER);
 }

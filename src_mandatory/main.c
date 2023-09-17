@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/09/17 16:54:02 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/17 20:01:30 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,28 +34,31 @@ t_color_c	get_color(t_minirt *rt, t_hit_info *hi)
 
 	// t_vec3		reflected_ray;
 	hi->pt_to_l = vec3_subtract(rt->light_source.position, hi->intersect_pt);
-	hi->pt_to_cam = vec3_subtract(rt->cam.origin, hi->intersect_pt);
+	hi->pt_to_cam = vec3_subtract(vec3_add(rt->cam.origin, rt->cam.position),
+									hi->intersect_pt);
 	hi->pt_to_l = vec3_normalize(hi->pt_to_l);
 	hi->pt_to_cam = vec3_normalize(hi->pt_to_cam);
 	dot_prod = vec3_dot(hi->pt_to_l, hi->normal);
 	if (dot_prod < 0)
-		dot_prod = 0;
+	{
+		printf("dot_prod: %f\n", dot_prod);
+		dot_prod = -dot_prod;
+	}
 	if (dot_prod > 1)
 		dot_prod = 1;
-	// printf("dot_prod: %f\n", dot_prod);
 	tmp = color_scale(color_multiply(rt->light_source.material.color,
 										hi->material.color),
 						dot_prod);
 	ret = tmp;
 	dot_prod = vec3_dot(reflection(hi->pt_to_l, hi->normal), hi->pt_to_cam);
 	if (dot_prod < 0)
-		dot_prod = 0;
+		dot_prod = -dot_prod;
 	if (dot_prod > 1)
 		dot_prod = 1;
 	tmp = color_scale(color_correct_new(0, 1, 1, 1), hi->material.specular_i
 			* powf(dot_prod, hi->material.shininess));
 	// tmp = color_scale(hi->material.specular, hi->material.specular_i
-	// 	* powf(dot_prod, hi->material.shininess));
+	// 		* powf(dot_prod, hi->material.shininess));
 	ret = color_add(ret, tmp);
 	tmp = rt->amb_light.color;
 	tmp = color_scale(tmp, rt->amb_light.ratio);
@@ -118,9 +121,9 @@ void	*ray_cast_routine(void *data)
 	t_hit_info		hit_info;
 	t_thread_info	*info;
 	int				pixel_size;
+	int				i;
+	int				j;
 
-	// int				i;
-	// int				j;
 	pixel_size = 9;
 	info = (t_thread_info *)data;
 	y = info->start.y;
@@ -145,18 +148,20 @@ void	*ray_cast_routine(void *data)
 						color_revert(color).as_int);
 			}
 			else
+			{
 				put_pixel(&info->minirt->image, (t_offset){.x = x, .y = y},
 						color_revert(info->minirt->amb_light.color).as_int);
-			// i = -1;
-			// while (info->minirt->moving && ++i < pixel_size && x + i < 1280)
-			// {
-			// 	j = -1;
-			// 	while (++j < pixel_size && y + j < 720)
-			// 	{
-			// 		put_pixel(&info->minirt->image, (t_offset){.x = x + i,
-			// 			.y = y + j}, color_revert(color).as_int);
-			// 	}
-			// }
+			}
+			i = -1;
+			while (info->minirt->moving && ++i < pixel_size && x + i < 1280)
+			{
+				j = -1;
+				while (++j < pixel_size && y + j < 720)
+				{
+					put_pixel(&info->minirt->image, (t_offset){.x = x + i,
+							.y = y + j}, color_revert(color).as_int);
+				}
+			}
 			++x;
 		}
 		++y;
@@ -205,11 +210,11 @@ void	ray_cast(t_minirt *minirt)
 	t_ray		ray;
 	t_color_c	color;
 	t_hit_info	hit_info;
-	int			pixel_size;
 
+	// int			pixel_size;
 	// int			i;
 	// int			j;
-	pixel_size = 9;
+	// pixel_size = 9;
 	// printf("minirt->cam.origin: %f %f %f\n", minirt->cam.origin.x,
 	// 		minirt->cam.origin.y, minirt->cam.origin.z);
 	y = 0;
@@ -218,11 +223,11 @@ void	ray_cast(t_minirt *minirt)
 		x = 0;
 		while (x < 1280)
 		{
-			if ((x % pixel_size != 0 || y % pixel_size != 0))
-			{
-				++x;
-				continue ;
-			}
+			// if ((x % pixel_size != 0 || y % pixel_size != 0))
+			// {
+			// 	++x;
+			// 	continue ;
+			// }
 			ft_memset(&ray, 0, sizeof(t_ray));
 			ray = ray_primary(&minirt->cam, (t_offset){.x = x, .y = y});
 			hit_info = intersect_list(minirt, &ray);
@@ -278,13 +283,11 @@ void	draw_scene(t_minirt *minirt)
 			// color = color_add(color, incoming_light);
 			cycle = -1;
 			ray = ray_primary(&minirt->cam, (t_offset){.x = x, .y = y});
+			state = (unsigned int)((x + y * 1280));
 			while (++cycle < 10)
 			{
-				state = (unsigned int)((x + y * 1280 + cycle * 136274));
-				offset.x = random_num(&state) - 0.5;
-				offset.y = random_num(&state) - 0.5;
-				offset.z = random_num(&state) - 0.5;
-				offset = vec3_multiply(vec3_normalize(offset), 0.00015);
+				offset = vec3_multiply(random_vec3_hs(ray.direction, &state),
+										0.0005);
 				ray.direction = vec3_add(ray.direction, offset);
 				incoming_light = ray_tracing(ray, minirt, &state);
 				color = color_add(color, incoming_light);

@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 23:27:57 by itan              #+#    #+#             */
-/*   Updated: 2023/09/15 22:43:13 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/17 18:06:37 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,13 +138,13 @@ int					mouse_move_hook(int x, int y, t_minirt *minirt);
 int					loop_hook(t_minirt *minirt);
 float				random_num(unsigned int *state);
 float				normal_dist_random_num(unsigned int *state);
-t_vec3				random_vec3_hs(t_vec3 normal, unsigned int *state);
-
+t_vec3				random_vec3(unsigned int *state);
 t_vec3				random_vec3_hs(t_vec3 normal, unsigned int *state);
 
 t_hit_info			intersections(t_minirt *minirt, t_ray *ray);
 t_hit_info			intersect_list(t_minirt *minirt, t_ray *ray);
 
+t_color_c			get_color(t_minirt *rt, t_hit_info *hi);
 t_color_c			ray_tracing(t_ray ray, t_minirt *minirt,
 						unsigned int *state);
 
