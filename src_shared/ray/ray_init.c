@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 02:39:58 by itan              #+#    #+#             */
-/*   Updated: 2023/09/17 13:10:45 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/17 17:03:27 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,5 @@ t_ray	ray_primary(t_cam *cam, t_offset offset)
 	ray.direction = vec3_add(screen_center, vec3_multiply(cam->right, -x));
 	ray.direction = vec3_add(ray.direction, vec3_multiply(cam->up, y));
 	ray.direction = vec3_apply_rot(ray.direction, cam->rotation);
-	ray.direction = vec3_normalize(ray.direction);
 	return (ray);
 }

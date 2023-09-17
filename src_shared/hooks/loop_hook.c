@@ -19,19 +19,19 @@ int	loop_hook(t_minirt *minirt)
 	if (minirt->key_events.holding_w)
 		minirt->cam.position = vec3_add(minirt->cam.position,
 			vec3_multiply(vec3_apply_rot(minirt->cam.direction,
-					minirt->cam.rotation), 0.5 / minirt->cam.fov));
+					minirt->cam.rotation), 2));
 	if (minirt->key_events.holding_s)
 		minirt->cam.position = vec3_subtract(minirt->cam.position,
 			vec3_multiply(vec3_apply_rot(minirt->cam.direction,
-					minirt->cam.rotation), 0.5 / minirt->cam.fov));
+					minirt->cam.rotation), 2));
 	if (minirt->key_events.holding_a)
 		minirt->cam.position = vec3_add(minirt->cam.position,
 			vec3_multiply(vec3_apply_rot(minirt->cam.right,
-					minirt->cam.rotation), 0.5 / minirt->cam.fov));
+					minirt->cam.rotation), 2));
 	if (minirt->key_events.holding_d)
 		minirt->cam.position = vec3_subtract(minirt->cam.position,
 			vec3_multiply(vec3_apply_rot(minirt->cam.right,
-					minirt->cam.rotation), 0.5 / minirt->cam.fov));
+					minirt->cam.rotation), 2));
 	if (minirt->key_events.holding_q)
 		minirt->cam.position = vec3_subtract(minirt->cam.position,
 			vec3_multiply(vec3_apply_rot(minirt->cam.up, minirt->cam.rotation),

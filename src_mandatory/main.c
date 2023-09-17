@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/09/17 15:56:37 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/17 16:54:02 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	*ray_cast_routine(void *data)
 
 	// int				i;
 	// int				j;
-	pixel_size = 6;
+	pixel_size = 9;
 	info = (t_thread_info *)data;
 	y = info->start.y;
 	while (y < info->end.y)
@@ -209,7 +209,7 @@ void	ray_cast(t_minirt *minirt)
 
 	// int			i;
 	// int			j;
-	pixel_size = 6;
+	pixel_size = 9;
 	// printf("minirt->cam.origin: %f %f %f\n", minirt->cam.origin.x,
 	// 		minirt->cam.origin.y, minirt->cam.origin.z);
 	y = 0;
