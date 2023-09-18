@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/09/17 20:01:30 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/18 23:37:54 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,33 +30,36 @@ t_color_c	get_color(t_minirt *rt, t_hit_info *hi)
 {
 	t_color_c	ret;
 	t_color_c	tmp;
+	t_vec3		reflect;
 	float		dot_prod;
 
 	// t_vec3		reflected_ray;
 	hi->pt_to_l = vec3_subtract(rt->light_source.position, hi->intersect_pt);
 	hi->pt_to_cam = vec3_subtract(vec3_add(rt->cam.origin, rt->cam.position),
-									hi->intersect_pt);
+		hi->intersect_pt);
 	hi->pt_to_l = vec3_normalize(hi->pt_to_l);
 	hi->pt_to_cam = vec3_normalize(hi->pt_to_cam);
 	dot_prod = vec3_dot(hi->pt_to_l, hi->normal);
-	if (dot_prod < 0)
-	{
-		printf("dot_prod: %f\n", dot_prod);
-		dot_prod = -dot_prod;
-	}
+	// if (dot_prod < 0)
+	// {
+	// 	printf("dot_prod: %f\n", dot_prod);
+	// 	dot_prod = -dot_prod;
+	// }
 	if (dot_prod > 1)
 		dot_prod = 1;
 	tmp = color_scale(color_multiply(rt->light_source.material.color,
-										hi->material.color),
-						dot_prod);
+			hi->material.color), dot_prod);
 	ret = tmp;
-	dot_prod = vec3_dot(reflection(hi->pt_to_l, hi->normal), hi->pt_to_cam);
+	reflect = reflection(hi->pt_to_l, hi->normal);
+	dot_prod = vec3_dot(reflect, hi->pt_to_cam);
 	if (dot_prod < 0)
-		dot_prod = -dot_prod;
+		dot_prod = 0;
 	if (dot_prod > 1)
 		dot_prod = 1;
+	if (vec3_dot(hi->pt_to_l, hi->normal) <= 0)
+		dot_prod = 0;
 	tmp = color_scale(color_correct_new(0, 1, 1, 1), hi->material.specular_i
-			* powf(dot_prod, hi->material.shininess));
+		* powf(dot_prod, hi->material.shininess));
 	// tmp = color_scale(hi->material.specular, hi->material.specular_i
 	// 		* powf(dot_prod, hi->material.shininess));
 	ret = color_add(ret, tmp);
@@ -77,14 +80,14 @@ void	set_pixel(t_minirt *minirt, t_hit_info hit_info, int x, int y)
 	{
 		color = hit_info.material.color;
 		put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
-				color_revert(color).as_int);
+			color_revert(color).as_int);
 		return ;
 	}
 	color.r = minirt->amb_light.color.r * minirt->amb_light.ratio;
 	color.g = minirt->amb_light.color.g * minirt->amb_light.ratio;
 	color.b = minirt->amb_light.color.b * minirt->amb_light.ratio;
 	put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
-			color_revert(color).as_int);
+		color_revert(color).as_int);
 }
 
 /*
@@ -124,7 +127,7 @@ void	*ray_cast_routine(void *data)
 	int				i;
 	int				j;
 
-	pixel_size = 9;
+	pixel_size = 3;
 	info = (t_thread_info *)data;
 	y = info->start.y;
 	while (y < info->end.y)
@@ -145,12 +148,12 @@ void	*ray_cast_routine(void *data)
 			{
 				color = get_color(info->minirt, &hit_info);
 				put_pixel(&info->minirt->image, (t_offset){.x = x, .y = y},
-						color_revert(color).as_int);
+					color_revert(color).as_int);
 			}
 			else
 			{
 				put_pixel(&info->minirt->image, (t_offset){.x = x, .y = y},
-						color_revert(info->minirt->amb_light.color).as_int);
+					color_revert(info->minirt->amb_light.color).as_int);
 			}
 			i = -1;
 			while (info->minirt->moving && ++i < pixel_size && x + i < 1280)
@@ -159,7 +162,7 @@ void	*ray_cast_routine(void *data)
 				while (++j < pixel_size && y + j < 720)
 				{
 					put_pixel(&info->minirt->image, (t_offset){.x = x + i,
-							.y = y + j}, color_revert(color).as_int);
+						.y = y + j}, color_revert(color).as_int);
 				}
 			}
 			++x;
@@ -236,11 +239,11 @@ void	ray_cast(t_minirt *minirt)
 			{
 				color = get_color(minirt, &hit_info);
 				put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
-						color_revert(color).as_int);
+					color_revert(color).as_int);
 			}
 			else
 				put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
-						color_revert(minirt->amb_light.color).as_int);
+					color_revert(minirt->amb_light.color).as_int);
 			// i = -1;
 			// while (minirt->moving && ++i < pixel_size && x + i < 1280)
 			// {
@@ -287,14 +290,14 @@ void	draw_scene(t_minirt *minirt)
 			while (++cycle < 10)
 			{
 				offset = vec3_multiply(random_vec3_hs(ray.direction, &state),
-										0.0005);
+					0.0005);
 				ray.direction = vec3_add(ray.direction, offset);
 				incoming_light = ray_tracing(ray, minirt, &state);
 				color = color_add(color, incoming_light);
 			}
 			color = color_scale(color, 1 / (float)cycle);
 			put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
-					color_revert(color).as_int);
+				color_revert(color).as_int);
 			++y;
 		}
 		++x;
@@ -314,7 +317,7 @@ static void	init_minirt(t_parse p)
 	// images
 	image.img = mlx_new_image(minirt.mlx, 1280, 720);
 	image.buffer = mlx_get_data_addr(image.img, &image.pixel_bits,
-			&image.line_bytes, &image.endian);
+		&image.line_bytes, &image.endian);
 	minirt.image = image;
 	// scene objects
 	minirt.amb_light = p.amb_light;
@@ -322,8 +325,8 @@ static void	init_minirt(t_parse p)
 	minirt.light_source = p.light_source;
 	minirt.objects = p.objects;
 	// rendering
-	ray_cast(&minirt);
-	// thread_init(&minirt);
+	// ray_cast(&minirt);
+	thread_init(&minirt);
 	// draw_scene(&minirt);
 	printf("\e[0;32mRendering done!!! ~~\n\e[0m");
 	// mlx rendering
