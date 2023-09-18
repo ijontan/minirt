@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_hook.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 14:44:19 by itan              #+#    #+#             */
-/*   Updated: 2023/08/28 23:18:40 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/15 09:38:43 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,12 @@ int	mouse_move_hook(int x, int y, t_minirt *minirt)
 		// minirt->cam.direction.x = (float)out[0];
 		// minirt->cam.direction.y = (float)out[1];
 		// minirt->cam.direction.z = (float)out[2];
-		// image.img = mlx_new_image(minirt->mlx, 1280, 720);
-		// image.buffer = mlx_get_data_addr(image.img, &image.pixel_bits,
+		// image.image = mlx_new_image(minirt->mlx, 1280, 720);
+		// image.buffer = mlx_get_data_buffer(image.image, &image.pixel_bits,
 		// 	&image.line_bytes, &image.endian);
 		// draw_scene(&image, &minirt->cam, minirt->sphere, &minirt->light);
-		// mlx_put_image_to_window(minirt->mlx, minirt->win, image.img, 0, 0);
-		// mlx_destroy_image(minirt->mlx, image.img);
+		// mlx_put_image_to_window(minirt->mlx, minirt->win, image.image, 0, 0);
+		// mlx_destroy_image(minirt->mlx, image.image);
 	}
 	return (0);
 }
