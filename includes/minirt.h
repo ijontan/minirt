@@ -77,6 +77,7 @@ typedef struct s_vec3
 	float			z;
 }					t_vec3;
 
+t_vec3				vec3_apply_rot(t_vec3 vec, t_quaternion rot);
 t_vec3				vec3_new(float x, float y, float z);
 float				vec3_length(t_vec3 vec);
 t_vec3				vec3_normalize(t_vec3 vec);
@@ -143,11 +144,28 @@ typedef struct s_material
 
 /* ----------------------------------- cam ---------------------------------- */
 
+/**
+ * @brief Camera struct
+ *
+ * @param origin camera position
+ * @param direction camera direction or forward direction
+ * @param up up direction
+ * @param right right direction
+ * @param fov field of view
+ * @param vp_width viewport width
+ * @param vp_height viewport height
+ */
 typedef struct s_cam
 {
 	t_vec3			origin;
 	t_vec3			direction;
+	t_vec3			up;
+	t_vec3			right;
+	t_vec3			position;
+	t_quaternion	rotation;
 	float			fov;
+	int				vp_width;
+	int				vp_height;
 }					t_cam;
 
 void				cam_init(t_cam *cam);
@@ -164,7 +182,7 @@ typedef struct s_ray
 }					t_ray;
 
 t_ray				ray_init(t_vec3 origin, t_vec3 direction);
-t_ray				ray_primary(t_cam *cam, float x, float y);
+t_ray				ray_primary(t_cam *cam, t_offset offset);
 
 typedef struct s_amb_light
 {
@@ -304,6 +322,10 @@ typedef struct s_octree
 	t_list			*objects;
 	struct s_octree	**children;
 }					t_octree;
+
+t_bound_box			bound_box_new(t_vec3 min, t_vec3 max);
+t_bound_box			bound_box_expend(t_bound_box box, t_vec3 point);
+bool				bound_box_intersect(t_bound_box box, t_ray ray);
 
 /* -------------------------------------------------------------------------- */
 /*                                    Bonus                                   */
