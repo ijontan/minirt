@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/09/18 23:37:54 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/19 13:11:26 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ t_color_c	get_color(t_minirt *rt, t_hit_info *hi)
 	t_color_c	ret;
 	t_color_c	tmp;
 	t_vec3		reflect;
+	t_pt_light	*pt_light;
 	float		dot_prod;
 
 	// t_vec3		reflected_ray;
-	hi->pt_to_l = vec3_subtract(rt->light_source.position, hi->intersect_pt);
+	pt_light = (t_pt_light *)(rt->pt_lights->content);
+	hi->pt_to_l = vec3_subtract(pt_light->position, hi->intersect_pt);
 	hi->pt_to_cam = vec3_subtract(vec3_add(rt->cam.origin, rt->cam.position),
 		hi->intersect_pt);
 	hi->pt_to_l = vec3_normalize(hi->pt_to_l);
@@ -47,7 +49,8 @@ t_color_c	get_color(t_minirt *rt, t_hit_info *hi)
 	// }
 	if (dot_prod > 1)
 		dot_prod = 1;
-	tmp = color_scale(color_multiply(rt->light_source.material.color,
+	// printf("dot_prod: %f\n", dot_prod);
+	tmp = color_scale(color_multiply(pt_light->material.color,
 			hi->material.color), dot_prod);
 	ret = tmp;
 	reflect = reflection(hi->pt_to_l, hi->normal);
@@ -68,7 +71,7 @@ t_color_c	get_color(t_minirt *rt, t_hit_info *hi)
 	tmp = color_multiply(tmp, hi->material.color);
 	ret = color_add(ret, tmp);
 	// printf("ret: %f %f %f\n", ret.r, ret.g, ret.b);
-	// hi->pt_to_l = vec3_subtract(rt->light_source.position,hi->intersect_pt);
+	// hi->pt_to_l = vec3_subtract(pt_light->position,hi->intersect_pt);
 	return (color_clamp(ret));
 }
 
@@ -315,23 +318,28 @@ static void	init_minirt(t_parse p)
 	minirt.win = mlx_new_window(minirt.mlx, 1280, 720, "Hello world!");
 	init_hooks(&minirt);
 	// images
-	image.img = mlx_new_image(minirt.mlx, 1280, 720);
-	image.buffer = mlx_get_data_addr(image.img, &image.pixel_bits,
+	image.image = mlx_new_image(minirt.mlx, 1280, 720);
+	image.buffer = mlx_get_data_addr(image.image, &image.pixel_bits,
 		&image.line_bytes, &image.endian);
 	minirt.image = image;
 	// scene objects
 	minirt.amb_light = p.amb_light;
 	minirt.cam = p.camera;
-	minirt.light_source = p.light_source;
+	minirt.pt_lights = p.pt_lights;
 	minirt.objects = p.objects;
 	// rendering
 	// ray_cast(&minirt);
 	thread_init(&minirt);
 	// draw_scene(&minirt);
 	printf("\e[0;32mRendering done!!! ~~\n\e[0m");
+	// loop hooks
+	// render: found in the render dir
+	mlx_loop_hook(minirt.mlx, render, &minirt);
+	mlx_hook(minirt.win, 2, 1, key_down_hook, &minirt);
+	mlx_hook(minirt.win, 17, 1, x_button_exit, &minirt);
 	// mlx rendering
-	mlx_put_image_to_window(minirt.mlx, minirt.win, image.img, 0, 0);
-	// mlx_destroy_image(minirt.mlx, image.img);
+	mlx_put_image_to_window(minirt.mlx, minirt.win, image.image, 0, 0);
+	// mlx_destroy_image(minirt.mlx, image.image);
 	mlx_loop(minirt.mlx);
 }
 

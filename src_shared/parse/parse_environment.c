@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 16:16:39 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/13 10:49:17 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/15 12:02:39 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,20 @@ void parse_camera(t_parse *p)
 
 void parse_lighting(t_parse *p)
 {
-	p->light_source.position = parse_coordinates(p->info[1], p);
+	t_pt_light *pt_light;
+	
+	pt_light = ft_calloc(1, sizeof(t_pt_light));
+	pt_light->position = parse_coordinates(p->info[1], p);
 
-	p->light_source.ratio = ft_atof(p->info[2], p);
-	if (p->light_source.ratio < 0.0 || p->light_source.ratio > 1.0)
+	pt_light->ratio = ft_atof(p->info[2], p);
+	if (pt_light->ratio < 0.0 || pt_light->ratio > 1.0)
 		exit_parse(p->info, "Lighting", 'r');
 
 	if (check_rgb(p->info[3], p))
-		p->light_source.material.color = color_correct(\
+		pt_light->material.color = color_correct(\
 			(t_color)color_new(0, p->rgb[0], p->rgb[1], p->rgb[2]));
 	else
 		exit_parse(p->info, "Lighting", 'c');
+
+	add_object(&p->pt_lights, pt_light, AMB_LIGHT);
 }
