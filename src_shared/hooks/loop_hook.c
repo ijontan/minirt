@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 21:04:12 by itan              #+#    #+#             */
-/*   Updated: 2023/09/19 13:12:06 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/19 13:36:10 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ int	loop_hook(t_minirt *minirt)
 			vec3_multiply(vec3_apply_rot(minirt->cam.up, minirt->cam.rotation),
 				2));
 	// ray_cast(minirt);
-	thread_init(minirt);
-	mlx_put_image_to_window(minirt->mlx, minirt->win, minirt->image.img, 0, 0);
+	// thread_init(minirt);
+	// mlx_put_image_to_window(minirt->mlx, minirt->win, minirt->image.image, 0,
+	// 	0);
+	render(minirt);
 	// if (!minirt->key_events.holding_m_left)
 	// 	return (0);
 	// image.img = mlx_new_image(minirt->mlx, 1280, 720);

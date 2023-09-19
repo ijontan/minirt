@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 09:11:04 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/15 11:18:48 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/19 13:37:45 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
 #include <dirent.h>
 
-char **get_rt_files(int *num_of_files)
+char	**get_rt_files(int *num_of_files)
 {
 	struct dirent	**name_list;
 	char			**rt_files;
@@ -23,11 +22,11 @@ char **get_rt_files(int *num_of_files)
 	i = -1;
 	*num_of_files = scandir("rt_files/scenes", &name_list, NULL, NULL);
 	rt_files = (char **)malloc(*num_of_files * sizeof(char *));
-    if (*num_of_files < 0)
-        perror("scandir");
-    else 
+	if (*num_of_files < 0)
+		perror("scandir");
+	else
 	{
-        while (++i < *num_of_files) 
+		while (++i < *num_of_files)
 		{
 			rt_files[i] = ft_strdup(name_list[i]->d_name);
 			free(name_list[i]);
@@ -50,31 +49,30 @@ void	render_menu(t_minirt *minirt)
 	str = "minirt: ";
 	mlx_string_put(minirt->mlx, minirt->win, 20, 20, WHITE, str);
 	rt_files = get_rt_files(&num_of_files);
-
 	while (++i < num_of_files)
 		if (rt_files[i][0] != '.')
-			mlx_string_put(minirt->mlx, minirt->win, 40, 20 + (20 * j++), WHITE, rt_files[i]);
+			mlx_string_put(minirt->mlx, minirt->win, 40, 20 + (20 * j++), WHITE,
+				rt_files[i]);
 }
 
 int	render(t_minirt *minirt)
 {
-	static bool status;
-
-	minirt->image.image = mlx_new_image(minirt->mlx, \
-	WINDOW_WIDTH, WINDOW_HEIGHT);
-	minirt->image.buffer = mlx_get_data_addr(minirt->image.image, \
-	&minirt->image.pixel_bits, &minirt->image.line_bytes, &minirt->image.endian);
+	// static bool	status;
+	minirt->image.image = mlx_new_image(minirt->mlx, WINDOW_WIDTH,
+		WINDOW_HEIGHT);
+	minirt->image.buffer = mlx_get_data_addr(minirt->image.image,
+		&minirt->image.pixel_bits, &minirt->image.line_bytes,
+		&minirt->image.endian);
 	// mlx_clear_window(minirt->mlx, minirt->win);
-
-	if (!status)
-	{
-		ray_cast(minirt);
-		mlx_put_image_to_window(minirt->mlx, \
-		minirt->win, minirt->image.image, 0, 0);
-		render_menu(minirt);
-		status = true;
-	}
-
-	// mlx_destroy_image(minirt->mlx, minirt->image.image);
+	// if (!status)
+	// {
+	// ray_cast(minirt);
+	thread_init(minirt);
+	mlx_put_image_to_window(minirt->mlx, minirt->win, minirt->image.image, 0,
+		0);
+	render_menu(minirt);
+	// 	status = true;
+	// }
+	mlx_destroy_image(minirt->mlx, minirt->image.image);
 	return (0);
 }
