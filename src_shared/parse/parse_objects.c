@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 17:14:41 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/17 18:52:46 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/27 18:02:22 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ static void	parse_material(char *obj_type, int i, t_material *mt, t_parse *p)
 		mt->specular_i = ft_atof(p->info[i], p);
 		if (mt->specular_i < 0.0 || mt->specular_i > 1.0)
 			exit_parse(p->info, ft_strjoin(obj_type, "specular"), 'i');
+		if (check_rgb(p->info[++i], p))
+			mt->specular = color_correct((t_color)color_new(0, p->rgb[0],
+					p->rgb[1], p->rgb[2]));
+		else
+			exit_parse(p->info, ft_strjoin(obj_type, "specular"), 'c');
 		mt->reflective_i = ft_atof(p->info[++i], p);
 		if (mt->reflective_i < 0.0 || mt->reflective_i > 1.0)
 			exit_parse(p->info, ft_strjoin(obj_type, "reflective"), 'i');
@@ -31,7 +36,7 @@ static void	parse_material(char *obj_type, int i, t_material *mt, t_parse *p)
 			exit_parse(p->info, ft_strjoin(obj_type, "emission"), 'i');
 		if (check_rgb(p->info[++i], p))
 			mt->emission = color_correct((t_color)color_new(0, p->rgb[0],
-						p->rgb[1], p->rgb[2]));
+					p->rgb[1], p->rgb[2]));
 		else
 			exit_parse(p->info, ft_strjoin(obj_type, "emission"), 'c');
 		mt->shininess = ft_atof(p->info[++i], p);
@@ -52,7 +57,7 @@ void	parse_sphere(t_parse *p)
 		exit_parse(p->info, "Sphere", 'd');
 	if (check_rgb(p->info[3], p))
 		sphere->material.color = color_correct((t_color)color_new(0, p->rgb[0],
-					p->rgb[1], p->rgb[2]));
+				p->rgb[1], p->rgb[2]));
 	else
 		exit_parse(p->info, "Sphere", 'c');
 	parse_material("Sphere", 4, &sphere->material, p);
@@ -71,8 +76,8 @@ void	parse_plane(t_parse *p)
 	else
 		exit_parse(p->info, "Plane", 'n');
 	if (check_rgb(p->info[3], p))
-		plane->material.color = color_correct(
-			(t_color)color_new(0, p->rgb[0], p->rgb[1], p->rgb[2]));
+		plane->material.color = color_correct((t_color)color_new(0, p->rgb[0],
+				p->rgb[1], p->rgb[2]));
 	else
 		exit_parse(p->info, "Plane", 'c');
 	parse_material("Plane", 4, &plane->material, p);
@@ -97,8 +102,8 @@ void	parse_cylinder(t_parse *p)
 	if (cylinder->height <= 0.0)
 		exit_parse(p->info, "Cylinder", 'h');
 	if (check_rgb(p->info[5], p))
-		cylinder->material.color = color_correct(
-			(t_color)color_new(0, p->rgb[0], p->rgb[1], p->rgb[2]));
+		cylinder->material.color = color_correct((t_color)color_new(0,
+				p->rgb[0], p->rgb[1], p->rgb[2]));
 	else
 		exit_parse(p->info, "Cylinder", 'c');
 	parse_material("Cylinder", 6, &cylinder->material, p);

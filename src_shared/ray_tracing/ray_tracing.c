@@ -6,20 +6,23 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:40:55 by itan              #+#    #+#             */
-/*   Updated: 2023/09/17 18:12:18 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/27 17:42:32 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include <stdio.h>
 
+void	calculate_incoming(t_color_c *in_light, t_color_c rayColor, t_material *material,
+		t_minirt *minirt, t_hit_info *hit_info)
 // void	calculate_incoming(t_color_c *in_light, t_color_c rayColor,
-// 		t_minirt *minirt, t_hit_info *hit_info)
-void	calculate_incoming(t_color_c *in_light, t_color_c rayColor,
-		t_material *material)
+//		t_material *material)
 {
 	t_color_c	emitting;
 
-	emitting = material->emission;
+	emitting = get_color(minirt, hit_info);
+	emitting = color_add(material->emission, emitting);
+	printf("color: %f %f %f\n", emitting.r, emitting.g, emitting.b);
 	emitting = color_scale(emitting, material->emission_i);
 	// emitting = phong_reflection(minirt, hit_info);
 	emitting = color_multiply(emitting, rayColor);
@@ -81,8 +84,8 @@ t_color_c	ray_tracing(t_ray ray, t_minirt *minirt, unsigned int *state)
 			// 										hit_info.normal));
 			// ray->direction = vec3_normalize(vec3_cross(hit_info.normal,
 			// 		random_vec3_hs(hit_info.normal, state)));
-			calculate_incoming(&incoming_light, color, &hit_info.material);
-			// calculate_incoming(&incoming_light, color, minirt, &hit_info);
+			// calculate_incoming(&incoming_light, color, &hit_info.material);
+			calculate_incoming(&incoming_light, color,&hit_info.material, minirt, &hit_info);
 			color = color_multiply(color, color_tween(hit_info.material.color,
 						hit_info.material.specular, (double)is_specular));
 			// color = color_scale(color, 0.5f);

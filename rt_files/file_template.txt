@@ -14,13 +14,13 @@ L
 # Objects
 
 # Sphere															Material
-#	centre	diameter		color									specular index	reflective index	diffuse index	emission index	emission color	shininess
+#	centre	diameter		color									specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission_color	shininess
 sp
 
 # Plane																Material
-#	point	normal vector	color									specular index	reflective index	diffuse index	emission index	emission color	shininess
+#	point	normal vector	color									specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission_color	shininess
 pl
 
 # Cylinder															Material
-#	center	axis direction	diameter	height		color			specular index	reflective index	diffuse index	emission index	emission color	shininess
+#	center	axis direction	diameter	height		color			specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission_color	shininess
 cy
