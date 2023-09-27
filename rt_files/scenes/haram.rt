@@ -14,18 +14,18 @@ L 0,0,0          0         255,255,255
 # Objects
 
 # Sphere														  Material
-#	centre		diameter	color                                  specular index   reflective index   diffuse index   emission index   emission color   shininess
+#	centre		diameter	color                                  specular index   specular_color	reflective index   diffuse index   emission index   emission color   shininess
 sp	0,65,200	30			255,170,170
 sp	-10,-25,200	30			255,200,150
 sp	10,-25,200	30			255,200,150
 
 # Plane															  Material
-#	point		normal vector	color                             specular index   reflective index   diffuse index   emission index   emission color   shininess
-pl	0,100,200	0,1,0			255,255,255							0				0					0				1				255,255,255		0
+#	point		normal vector	color                             specular index   specular_color	reflective index   diffuse index   emission index   emission color   shininess
+pl	0,100,200	0,1,0			255,255,255							0				255,255,255		0					0				1				255,255,255		0
 pl	0,-40,200	0,-1,0			255,255,255
 pl	120,0,0		1,0,0			0,0,255
 pl	-120,0,0	-1,0,0			255,0,0
 
 # Cylinder														  Material
-#	center		axis direction	diameter	height	color         specular index   reflective index   diffuse index   emission index   emission color   shininess
+#	center		axis direction	diameter	height	color         specular index   specular_color	reflective index   diffuse index   emission index   emission color   shininess
 cy	0,25,200	0,1,0			30			80		255,200,150
