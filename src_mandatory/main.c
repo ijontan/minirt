@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/09/27 15:20:30 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/27 19:09:12 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void	*ray_cast_routine(void *data)
 	int				i;
 	int				j;
 
-	pixel_size = 3;
 	info = (t_thread_info *)data;
+	pixel_size = info->minirt->pixel_size;
 	y = info->start.y;
 	while (y < info->end.y)
 	{
@@ -253,6 +253,7 @@ static void	init_minirt(t_parse p)
 	minirt.mlx = mlx_init();
 	minirt.win = mlx_new_window(minirt.mlx, 1280, 720, "Hello world!");
 	init_hooks(&minirt);
+	minirt.pixel_size = 3;
 	// scene objects
 	minirt.amb_light = p.amb_light;
 	minirt.cam = p.camera;

@@ -6,7 +6,7 @@
 #    By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/18 20:55:16 by itan              #+#    #+#              #
-#    Updated: 2023/08/28 22:27:28 by itan             ###   ########.fr        #
+#    Updated: 2023/09/27 21:22:01 by itan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,13 +67,15 @@ DFLAGS	= -fsanitize=address -fdiagnostics-color=always -g3
 
 UNAME := $(shell uname)
 
+mlx		= ./includes/minilibx_opengl/libmlx.a
+
 ifeq ($(UNAME), Linux)
 MLXLIB	= -I /usr/local/include -L/usr/local/lib -lbsd -lmlx -lXext -lX11
 endif
 ifeq ($(UNAME), Darwin)
 INC += -I /usr/local/include 
 CFLAGS += -D __APPLE__
-MLXLIB	= -I /usr/local/include -L/usr/local/lib -lmlx -framework OpenGL -framework AppKit
+MLXLIB	= -I./includes/minilibx_opengl/ -L./includes/minilibx_opengl -lmlx -framework OpenGL -framework AppKit
 endif
 
 
@@ -159,28 +161,31 @@ $(DDIR)/%.o:	$(DDIR)/%.c
 				@printf "$(YELLOW)$(BRIGHT)Generating %25s\t$(NORMAL)%40s\r" "$(NAME) debug objects..." $@
 				@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
-$(NAME):	$(LIBDIR)/$(LIBNAME) $(MOBJ) 
+$(NAME):	$(mlx) $(LIBDIR)/$(LIBNAME) $(MOBJ) 
 			@printf "\n$(MAGENTA)$(BRIGHT)Compiling $(NAME)...          \n"
 			@$(CC) $(CFLAGS) $(MOBJ) $(INC) -o $(NAME) $(LIB) $(MLXLIB)
 			@printf "$(GREEN)COMPLETE!!\n\n"
 
-$(BNAME):	$(LIBDIR)/$(LIBNAME) $(BOBJ)
+$(BNAME):	$(mlx) $(LIBDIR)/$(LIBNAME) $(BOBJ)
 			@printf "\n$(MAGENTA)$(BRIGHT)Compiling $(BNAME)...          \n"
 			@$(CC) $(CFLAGS) $(BOBJ) $(INC) -o $(BNAME) $(LIB) $(MLXLIB)
 			@printf "$(GREEN)COMPLETE!!\n\n"
 
-$(DMNAME):	$(MSRC) $(DSRC) $(LIBDIR)/$(LIBNAME) $(HEADERS)
+$(DMNAME):	$(mlx) $(MSRC) $(DSRC) $(LIBDIR)/$(LIBNAME) $(HEADERS)
 			@printf "\n$(MAGENTA)Compiling $(DMNAME) for $(NAME)...          \n"
 			@$(CC) $(CFLAGS) $(DFLAGS) $(INC) $(MSRC) $(DSRC) -o $(DMNAME) $(LIB) $(MLXLIB)
 			@printf "$(GREEN)COMPLETE!!\n\n"
 
-$(DBNAME):	$(BSRC) $(DSRC) $(LIBDIR)/$(LIBNAME) $(HEADERS)
+$(DBNAME):	$(mlx) $(BSRC) $(DSRC) $(LIBDIR)/$(LIBNAME) $(HEADERS)
 			@printf "\n$(MAGENTA)Compiling $(DBNAME) for $(NAME)...          \n"
 			@$(CC) $(CFLAGS) $(DFLAGS) $(INC) $(BSRC) $(DSRC) -o $(DBNAME) $(LIB) $(MLXLIB)
 			@printf "$(GREEN)COMPLETE!!\n\n"
 
 $(LIBDIR)/$(LIBNAME):
 		@make -C $(LIBDIR) --no-print-directory
+
+$(mlx):
+		@make -C ./includes/minilibx_opengl --no-print-directory
 
 clean:
 		@printf "$(RED)$(BRIGHT)Removing $(NAME) objects...\n$(NORMAL)"

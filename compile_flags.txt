@@ -4,3 +4,4 @@
 -I./includes 
 -I./includes/libft/includes 
 -I/usr/local/include
+-I./includes/miniLibx_opengl/

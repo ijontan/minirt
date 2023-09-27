@@ -6,3 +6,4 @@ minirt_bonus
 minirt_bonus.dSYM
 *.out.dSYM
 *.log
+*.a

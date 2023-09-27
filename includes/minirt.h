@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                            :+:      :+:    :+:   */
+/*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/09/15 09:24:04 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/09/27 21:21:20 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include "libft.h"
 # include <fcntl.h>
 # include <math.h>
-# include <mlx.h>
+# include "./minilibx_opengl/mlx.h"
 # include <pthread.h>
 # include <stdio.h>
 
@@ -388,6 +388,7 @@ typedef struct s_minirt
 	t_mouse_events	mouse_events;
 	t_selections	selection;
 	pthread_t		*threads;
+	int 			pixel_size;
 	bool			moving;
 }					t_minirt;
 

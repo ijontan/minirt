@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 14:48:41 by itan              #+#    #+#             */
-/*   Updated: 2023/09/19 13:11:35 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/27 21:41:46 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ int	key_down_hook(int keycode, t_minirt *minirt)
 		minirt->win = NULL;
 		exit(EXIT_SUCCESS);
 	}
+	if (keycode == KEY_UP)
+		minirt->pixel_size += 1;
+	else if (keycode == KEY_DOWN)
+		minirt->pixel_size -= 1;
 	if (keycode == KEY_1)
 		minirt->key_events.holding_1 = true;
 	else if (keycode == KEY_2)
@@ -46,12 +50,25 @@ int	key_down_hook(int keycode, t_minirt *minirt)
 	else if (keycode == KEY_E)
 		minirt->key_events.holding_e = true;
 	else if (keycode == KEY_SP)
+	{
 		minirt->moving = !minirt->moving;
+		if (minirt->moving)
+		{
+			minirt->mouse_events.prev_x = 300;
+			minirt->mouse_events.prev_y = 300;
+			mlx_mouse_move(minirt->win, 300, 300);
+			mlx_mouse_hide();
+		}
+		else
+			mlx_mouse_show();
+		}
 	return (0);
 }
 
 int	key_up_hook(int keycode, t_minirt *minirt)
 {
+	if (!minirt->moving)
+		mlx_mouse_show();
 	if (keycode == KEY_1)
 		minirt->key_events.holding_1 = false;
 	else if (keycode == KEY_2)

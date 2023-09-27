@@ -6,10 +6,11 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 14:44:19 by itan              #+#    #+#             */
-/*   Updated: 2023/09/19 13:12:31 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/27 21:43:07 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minilibx_opengl/mlx.h"
 #include "minirt.h"
 #include <stdio.h>
 
@@ -25,8 +26,6 @@ void select_object(t_offset xy, t_minirt *minirt)
 
 int	mouse_down_hook(int button, int x, int y, t_minirt *minirt)
 {
-	minirt->mouse_events.prev_x = x;
-	minirt->mouse_events.prev_y = y;
 	if (button == M_CLK_L && !minirt->moving)
 		select_object((t_offset){.x = x, .y = y}, minirt);
 	if (button == M_CLK_L)
@@ -58,7 +57,7 @@ int	mouse_move_hook(int x, int y, t_minirt *minirt)
 	(void)y;
 	if (!minirt->moving)
 		return (0);
-	if (minirt->mouse_events.holding_m_left)
+	if (minirt->moving)
 	{
 		quaternion_y_rotation(-0.01 * (x - minirt->mouse_events.prev_x),
 			&rotation);
@@ -69,8 +68,9 @@ int	mouse_move_hook(int x, int y, t_minirt *minirt)
 		quaternion_multiply(&minirt->cam.rotation, &rotation,
 			&minirt->cam.rotation);
 		quaternion_normalize(&minirt->cam.rotation, &minirt->cam.rotation);
-		minirt->mouse_events.prev_x = x;
-		minirt->mouse_events.prev_y = y;
+		minirt->mouse_events.prev_x = 300;
+		minirt->mouse_events.prev_y = 300;
+		mlx_mouse_move(minirt->win, 300, 300);
 	}
 	return (0);
 }
