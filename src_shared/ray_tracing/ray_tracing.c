@@ -26,20 +26,6 @@ void	calculate_incoming(t_color_c *in_light, t_color_c rayColor,
 	*in_light = color_add(*in_light, emitting);
 }
 
-t_vec3	reflect(t_vec3 d_ray, t_vec3 normal)
-{
-	float	dot_prod;
-	t_vec3	d_specular;
-
-	dot_prod = vec3_dot(d_ray, normal) * 2;
-	d_specular = vec3_multiply(normal, dot_prod);
-	d_specular = vec3_subtract(d_ray, d_specular);
-	d_specular = vec3_normalize(d_specular);
-	if (vec3_dot(d_specular, normal) < 0.0f)
-		d_specular = vec3_multiply(d_specular, -1.0f);
-	return (d_specular);
-}
-
 t_color_c	get_env_light(t_ray *ray, bool is_env)
 {
 	float	t;
@@ -83,7 +69,7 @@ t_color_c	ray_tracing(t_ray ray, t_minirt *minirt, unsigned int *state)
 			is_specular = hit_info.material.specular_i > random_num(state);
 			if (is_specular)
 			{
-				hit_info.d_specular = reflect(ray.direction, hit_info.normal);
+				hit_info.d_specular = reflection(ray.direction, hit_info.normal);
 				ray.direction = vec3_tween(hit_info.d_diffuse,
 											hit_info.d_specular,
 											hit_info.material.reflective_i);

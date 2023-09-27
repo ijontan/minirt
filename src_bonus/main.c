@@ -57,43 +57,6 @@ t_vec3	reflection(t_vec3 d_ray, t_vec3 normal)
 	return (d_specular);
 }
 
-t_color_c	get_color(t_minirt *rt, t_hit_info *hi)
-{
-	t_color_c	ret;
-	t_color_c	tmp;
-	float		dot_prod;
-
-	// t_vec3		reflected_ray;
-	hi->pt_to_l = vec3_subtract(rt->light_source.position, hi->intersect_pt);
-	hi->pt_to_cam = vec3_subtract(rt->cam.origin, hi->intersect_pt);
-	hi->pt_to_l = vec3_normalize(hi->pt_to_l);
-	hi->pt_to_cam = vec3_normalize(hi->pt_to_cam);
-	dot_prod = vec3_dot(hi->pt_to_l, hi->normal);
-	if (dot_prod < 0)
-		dot_prod = 0;
-	if (dot_prod > 1)
-		dot_prod = 1;
-	// printf("dot_prod: %f\n", dot_prod);
-	tmp = color_scale(color_multiply(rt->light_source.material.color,
-			hi->material.color), dot_prod);
-	ret = tmp;
-	dot_prod = vec3_dot(reflection(hi->pt_to_l, hi->normal), hi->pt_to_cam);
-	if (dot_prod < 0)
-		dot_prod = 0;
-	if (dot_prod > 1)
-		dot_prod = 1;
-	tmp = color_scale(hi->material.specular, hi->material.specular_i
-		* powf(dot_prod, hi->material.shininess));
-	ret = color_add(ret, tmp);
-	tmp = rt->amb_light.color;
-	tmp = color_scale(tmp, rt->amb_light.ratio);
-	tmp = color_multiply(tmp, hi->material.color);
-	ret = color_add(ret, tmp);
-	// printf("ret: %f %f %f\n", ret.r, ret.g, ret.b);
-	// hi->pt_to_l = vec3_subtract(rt->light_source.position,hi->intersect_pt);
-	return (color_clamp(ret));
-}
-
 void	ray_cast(t_minirt *minirt)
 {
 	int			x;
@@ -192,9 +155,6 @@ static void	init_minirt(void)
 		&image.line_bytes, &image.endian);
 	minirt.image = image;
 	cam_init(&minirt.cam);
-	minirt.light_source.position = vec3_new(0, 50, 200);
-	minirt.light_source.material.color = color_correct_new(0, 1, 1, 1);
-	minirt.light_source.ratio = 0.1;
 	minirt.amb_light.color = color_correct_new(0, 1, 1, 1);
 	minirt.amb_light.ratio = 0.1;
 	minirt.objects = NULL;
