@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 14:48:41 by itan              #+#    #+#             */
-/*   Updated: 2023/09/27 21:41:46 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/27 21:56:01 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ int	key_down_hook(int keycode, t_minirt *minirt)
 		minirt->key_events.holding_a = true;
 	else if (keycode == KEY_D)
 		minirt->key_events.holding_d = true;
-	else if (keycode == KEY_Q)
-		minirt->key_events.holding_q = true;
-	else if (keycode == KEY_E)
-		minirt->key_events.holding_e = true;
+	else if (keycode == KEY_LSH)
+		minirt->key_events.holding_lsh = true;
 	else if (keycode == KEY_SP)
+		minirt->key_events.holding_sp = true;
+	else if (keycode == KEY_F)
 	{
 		minirt->moving = !minirt->moving;
 		if (minirt->moving)
@@ -67,8 +67,6 @@ int	key_down_hook(int keycode, t_minirt *minirt)
 
 int	key_up_hook(int keycode, t_minirt *minirt)
 {
-	if (!minirt->moving)
-		mlx_mouse_show();
 	if (keycode == KEY_1)
 		minirt->key_events.holding_1 = false;
 	else if (keycode == KEY_2)
@@ -83,9 +81,9 @@ int	key_up_hook(int keycode, t_minirt *minirt)
 		minirt->key_events.holding_a = false;
 	else if (keycode == KEY_D)
 		minirt->key_events.holding_d = false;
-	else if (keycode == KEY_Q)
-		minirt->key_events.holding_q = false;
-	else if (keycode == KEY_E)
-		minirt->key_events.holding_e = false;
+	else if (keycode == KEY_LSH)
+		minirt->key_events.holding_lsh = false;
+	else if (keycode == KEY_SP)
+		minirt->key_events.holding_sp = false;
 	return (0);
 }

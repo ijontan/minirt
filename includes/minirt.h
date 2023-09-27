@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/09/27 21:21:20 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/27 21:54:36 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -352,8 +352,8 @@ typedef struct s_key_events
 	bool			holding_a;
 	bool			holding_s;
 	bool			holding_d;
-	bool			holding_q;
-	bool			holding_e;
+	bool			holding_lsh;
+	bool			holding_sp;
 
 }					t_key_events;
 

@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 00:10:57 by itan              #+#    #+#             */
-/*   Updated: 2023/03/27 19:11:17 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/27 21:50:42 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,13 @@
 #  define KEY_SP 49
 #  define KEY_ESC 53
 #  define KEY_TAB 48
+#  define KEY_RET 36
+#  define KEY_DEL 51
+#  define KEY_BSP 117
+#  define KEY_LSH 257
+#  define KEY_RSH 258
+#  define KEY_LCT 256
+#  define KEY_RCT 269
 
 /* ---------------------------------- mouse --------------------------------- */
 #  define M_CLK_L 1

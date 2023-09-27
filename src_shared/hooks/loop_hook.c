@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 21:04:12 by itan              #+#    #+#             */
-/*   Updated: 2023/09/19 13:36:10 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/27 21:55:09 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ int	loop_hook(t_minirt *minirt)
 		minirt->cam.position = vec3_subtract(minirt->cam.position,
 			vec3_multiply(vec3_apply_rot(minirt->cam.right,
 					minirt->cam.rotation), 2));
-	if (minirt->key_events.holding_q)
+	if (minirt->key_events.holding_lsh)
 		minirt->cam.position = vec3_subtract(minirt->cam.position,
 			vec3_multiply(vec3_apply_rot(minirt->cam.up, minirt->cam.rotation),
 				2));
-	if (minirt->key_events.holding_e)
+	if (minirt->key_events.holding_sp)
 		minirt->cam.position = vec3_add(minirt->cam.position,
 			vec3_multiply(vec3_apply_rot(minirt->cam.up, minirt->cam.rotation),
 				2));
