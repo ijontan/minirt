@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/09/19 13:08:19 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/27 22:21:54 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,6 @@ void	gradient(t_image *image)
 		}
 		y++;
 	}
-}
-
-t_vec3	reflection(t_vec3 d_ray, t_vec3 normal)
-{
-	float	dot_prod;
-	t_vec3	d_specular;
-
-	dot_prod = vec3_dot(d_ray, normal) * 2;
-	d_specular = vec3_multiply(normal, dot_prod);
-	d_specular = vec3_subtract(d_ray, d_specular);
-	d_specular = vec3_normalize(d_specular);
-	if (vec3_dot(d_specular, normal) < 0.0f)
-		d_specular = vec3_multiply(d_specular, -1.0f);
-	return (d_specular);
 }
 
 void	ray_cast(t_minirt *minirt)
