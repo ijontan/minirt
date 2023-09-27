@@ -1,0 +1,6 @@
+-Wall 
+-Werror 
+-Wextra 
+-I./includes 
+-I./includes/libft/includes 
+-I/usr/local/include

@@ -365,6 +365,11 @@ typedef struct s_mouse_events
 	int				prev_y;
 }					t_mouse_events;
 
+typedef struct s_selections
+{
+	t_object		*selected;
+}					t_selections;
+
 typedef struct s_minirt
 {
 	void			*mlx;
@@ -380,6 +385,7 @@ typedef struct s_minirt
 	t_list			*objects;
 	t_key_events	key_events;
 	t_mouse_events	mouse_events;
+	t_selections	selection;
 	pthread_t		*threads;
 	bool			moving;
 }					t_minirt;

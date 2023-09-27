@@ -13,10 +13,22 @@
 #include "minirt.h"
 #include <stdio.h>
 
+void select_object(t_offset xy, t_minirt *minirt)
+{
+	t_ray		ray;
+	t_hit_info	info;
+
+	ray = ray_primary(&minirt->cam, xy);
+	info = intersect_list(minirt, &ray);
+	minirt->selection.selected = info.object;
+}
+
 int	mouse_down_hook(int button, int x, int y, t_minirt *minirt)
 {
 	minirt->mouse_events.prev_x = x;
 	minirt->mouse_events.prev_y = y;
+	if (button == M_CLK_L && !minirt->moving)
+		select_object((t_offset){.x = x, .y = y}, minirt);
 	if (button == M_CLK_L)
 		minirt->mouse_events.holding_m_left = true;
 	else if (button == M_CLK_R)
