@@ -77,6 +77,7 @@ typedef struct s_vec3
 	float			z;
 }					t_vec3;
 
+t_vec3				reflection(t_vec3 d_ray, t_vec3 normal);
 t_vec3				vec3_apply_rot(t_vec3 vec, t_quaternion rot);
 t_vec3				vec3_new(float x, float y, float z);
 float				vec3_length(t_vec3 vec);
@@ -456,5 +457,6 @@ int					render(t_minirt *minirt);
 void				ray_cast(t_minirt *minirt);
 void				draw_scene(t_minirt *minirt);
 void				thread_init(t_minirt *minirt);
+t_color_c			get_color(t_minirt *rt, t_hit_info *hi);
 
 #endif
