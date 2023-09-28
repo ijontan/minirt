@@ -9,14 +9,16 @@ C  0,0,0     0,0,1       100
 # Point light
 # position      ratio     color
 L 0,50,20       1       255,255,255
-L 0,-50,20       1       255,255,255
+L 0,-50,20       1       100,255,255
+L 0,-50,20       1       100,255,255
+L 0,-50,20       1       100,255,255
 
 # __________________________________________________________________________________________________________________________________________________________________
 # Objects
 
 # Sphere														  Material
 #  centre        diameter  color                                  specular index   specular_color	reflective index   diffuse index   emission index   emission color   shininess
-sp 0,0,20       25        255,100,255            			       0.0             255,255,255		 0.0                0               0                0,0,0            0
+sp 0,0,20       25        255,100,255            			       1             255,255,255		 1.0                1               0                0,0,0            0
 
 # Plane															  Material
 #  point    normal vector   color                                 specular index   specular_color	reflective index   diffuse index   emission index   emission color   shininess
