@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/09/27 22:58:28 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/28 22:36:24 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	draw_scene(t_minirt *minirt)
 			cycle = -1;
 			ray = ray_primary(&minirt->cam, (t_offset){.x = x, .y = y});
 			state = (unsigned int)((x + y * 1280));
-			while (++cycle < 5)
+			while (++cycle < 1)
 			{
 				offset = vec3_multiply(random_vec3_hs(ray.direction, &state),
 					0.0005);
@@ -162,7 +162,7 @@ static void	init_minirt(t_parse p)
 	minirt.objects = p.objects;
 	// rendering
 	// render(&minirt);
-	render(&minirt, &thread_init);
+	render(&minirt, &draw_scene);
 	printf("\e[0;32mRendering done!!! ~~\n\e[0m");
 	// loop hooks
 	// render: found in the render dir

@@ -8,7 +8,9 @@ C  0,0,0     0,0,1       100
 
 # Point light
 # position      ratio     color
-L -20,20,20       0.01       255,255,255
+L -20,20,20       0.02       255,255,255
+L 20,-20,20       0.01       255,0,255
+L 20,20,40       0.01       0,255,255
 
 # __________________________________________________________________________________________________________________________________________________________________
 # Objects
@@ -24,7 +26,7 @@ sp -5,5,20       2.5       255,100,100
 sp 2,7,20        1         100,100,100
 sp -2,7,20       1         100,100,100
 # nose
-sp 0,5.5,20      0.8       255,200,0                                0.0             255,255,255		 0.0                 0               1.0               255,255,255       0
+sp 0,5.5,20      0.8       255,200,0                                0.0             255,255,255		 0.0                 0               0.0               255,255,255       0
 # smile
 sp 1.6,4,20      0.8       100,100,100
 sp 0.8,3.5,20    0.8       100,100,100
@@ -40,7 +42,7 @@ sp 0,-6,20       1         100,100,100
 
 # Plane															  Material
 #  point    normal vector   color                                 specular index  specular_color	 reflective index   diffuse index   emission index   emission color   shininess
-pl 0,50,0     0,1,0          125,50,255                            0              255,255,255		  1.0                  0.01             1.0             255,255,255       100                                
+pl 0,50,0     0,1,0          125,50,255                            0              255,255,255		  1.0                  0.01             0.0             255,255,255       100                                
 
 # Cylinder														  Material
 #  center      axis direction   diameter   height   color         specular index  specular_color	 reflective index   diffuse index   emission index   emission color   shininess

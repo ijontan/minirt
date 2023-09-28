@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:40:55 by itan              #+#    #+#             */
-/*   Updated: 2023/09/28 20:44:31 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/28 22:42:42 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,17 @@ bool check_l_block(t_hit_info *hi, t_minirt *rt)
 	return (true);
 }
 
-t_color_c	get_color(t_minirt *rt, t_hit_info *hi)
+t_color_c	get_lights_color(t_minirt *rt, t_hit_info *hi)
 {
 	t_color_c	ret;
 	t_color_c	tmp;
+	t_list 		*tmp_list;
 	t_vec3		reflect;
 	t_pt_light	*pt_light;
-	t_list 		*tmp_list;
 	float		dot_prod;
-
-	// t_vec3		reflected_ray;
+	
 	hi->pt_to_cam = vec3_subtract(vec3_add(rt->cam.origin, rt->cam.position),
-		hi->intersect_pt);
+	hi->intersect_pt);
 	hi->pt_to_cam = vec3_normalize(hi->pt_to_cam);
 	tmp_list = rt->pt_lights;
 	ret = color_correct_new(0, 0, 0, 0);
@@ -74,6 +73,17 @@ t_color_c	get_color(t_minirt *rt, t_hit_info *hi)
 		ret = color_add(ret, tmp);
 		tmp_list = tmp_list->next;
 	}
+	return (ret);
+}
+
+t_color_c	get_color(t_minirt *rt, t_hit_info *hi)
+{
+	t_color_c	ret;
+	t_color_c	tmp;
+
+	// t_vec3		reflected_ray;
+
+	ret = get_lights_color(rt, hi);
 	tmp = rt->amb_light.color;
 	tmp = color_scale(tmp, rt->amb_light.ratio);
 	tmp = color_multiply(tmp, hi->material.color);

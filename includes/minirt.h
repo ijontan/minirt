@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/09/27 22:40:25 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/28 21:15:44 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -459,5 +459,6 @@ void				ray_cast(t_minirt *minirt);
 void				draw_scene(t_minirt *minirt);
 void				thread_init(t_minirt *minirt);
 t_color_c			get_color(t_minirt *rt, t_hit_info *hi);
+t_color_c			get_lights_color(t_minirt *rt, t_hit_info *hi);
 
 #endif
