@@ -21,13 +21,14 @@ sp	-50,0,200	50			0,180,255								1				200,230,255		0					0				0				0,0,0			20
 sp	0,0,200 	50		   	0,210,255								1				255,255,255		0					0				0				0,0,0			30
 sp	50,0,200	50			0,240,255								1				255,255,255		0					0				0				0,0,0			40
 sp	100,0,200	50			0,255,255								1				255,255,255		0					0				0				0,0,0			50
+sp	60,100,200	70			0,0,0									0				0,0,0			0					0				1				255,255,0			50
 
 # Plane																Material
 #	point		normal vector	color								specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission color	shininess
-pl	0,100,200	0,1,0			255,255,255							0				255,255,255		0					0				1				255,255,255		30
+# pl	0,100,200	0,1,0			255,255,255							0				255,255,255		0					0				1				255,255,255		30
 pl	0,-40,200	0,-1,0			255,255,255							0				255,255,255		0					0				0				0,0,0			30
 pl	120,0,0		1,0,0			0,0,255								0				255,255,255		0					0				0				0,0,0			30
-pl	-120,0,0	-1,0,0			255,0,0								0				255,255,255		0					0				0				0,0,0			30
+# pl	-120,0,0	-1,0,0			255,0,0								0				255,255,255		0					0				0				0,0,0			30
 
 # Cylinder															Material
 #	center		axis direction	diameter	height	color			specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission color	shininess

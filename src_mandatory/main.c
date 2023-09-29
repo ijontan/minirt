@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/09/28 22:36:24 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/29 13:48:40 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	draw_scene(t_minirt *minirt)
 	unsigned int	state;
 	t_ray			ray;
 	t_color_c		color;
-	t_vec3			offset;
+	// t_vec3			offset;
 	t_color_c		incoming_light;
 
 	x = 0;
@@ -128,11 +128,11 @@ void	draw_scene(t_minirt *minirt)
 			cycle = -1;
 			ray = ray_primary(&minirt->cam, (t_offset){.x = x, .y = y});
 			state = (unsigned int)((x + y * 1280));
-			while (++cycle < 1)
+			while (++cycle < 10)
 			{
-				offset = vec3_multiply(random_vec3_hs(ray.direction, &state),
-					0.0005);
-				ray.direction = vec3_add(ray.direction, offset);
+				// offset = vec3_multiply(random_vec3_hs(ray.direction, &state),
+				// 	0.0005);
+				// ray.direction = vec3_add(ray.direction, offset);
 				incoming_light = ray_tracing(ray, minirt, &state);
 				color = color_add(color, incoming_light);
 			}
