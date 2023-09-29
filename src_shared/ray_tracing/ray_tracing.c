@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:40:55 by itan              #+#    #+#             */
-/*   Updated: 2023/09/29 13:28:21 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/29 16:06:24 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	calculate_incoming(t_color_c *in_light, t_color_c *rayColor, t_material *ma
 	emitting = color_multiply(point_color, *rayColor);
 	emitting = color_scale(emitting, 0.5f);
 	*in_light = color_add(*in_light, emitting);
-	*rayColor = color_add(*rayColor, point_color);
+	*rayColor = color_multiply(*rayColor, point_color);
 	(void)rt;
 	(void)hi;
 }
@@ -98,7 +98,7 @@ t_color_c	ray_tracing(t_ray ray, t_minirt *minirt, unsigned int *state)
 			color = color_multiply(color, hit_info.material.color);
 			// color = color_multiply(color, color_tween(hit_info.material.color,
 			// 			hit_info.material.specular, (double)is_specular));
-			color = color_scale(color, 0.5f);
+			// color = color_scale(color, 0.5f);
 		}
 		else
 		{

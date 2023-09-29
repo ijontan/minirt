@@ -1,16 +1,26 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/09/29 17:56:08 by itan             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
-#include "minirt.h"
+extern "C" {
+	#include "minirt.h"
+}
+#include <chrono>
+#include <iostream>
+#include <map>
+#include <string>
+
+
+std::map<std::string, double>	m;
+std::map<std::string, double>	m_count;
+
+template <typename Ret, class... Args>
+Ret	func_profile(std::string name,  Ret (*f)(...), Args... args)
+{
+	auto start = std::chrono::steady_clock::now();
+	Ret ret = (*f)(args...);
+	auto elapsed = std::chrono::steady_clock::now() - start;
+	m[name] += std::chrono::duration_cast<std::chrono::nanoseconds>(elapsed).count();
+	m_count[name] += 1;
+	return (ret);
+}
 
 void	set_pixel(t_minirt *minirt, t_hit_info hit_info, int x, int y)
 {
@@ -74,11 +84,14 @@ void	ray_cast(t_minirt *minirt)
 			// }
 			ft_memset(&ray, 0, sizeof(t_ray));
 			ray = ray_primary(&minirt->cam, (t_offset){.x = x, .y = y});
-			hit_info = intersect_list(minirt, &ray);
+			// hit_info = intersect_list(minirt, &ray);
+			hit_info = func_profile<t_hit_info>("intersect_list", (t_hit_info (*)(...))&intersect_list, minirt, &ray);
 			color = color_correct_new(0, 0, 0, 0);
+			// color = func_profile<t_color_c>("color_correct_new", (t_color_c (*)(...))&color_correct_new, 0, 0, 0, 0);
 			if (hit_info.hit)
 			{
 				color = get_color(minirt, &hit_info);
+				// color = func_profile<t_color_c>("get_color", (t_color_c (*)(...))&get_color, minirt, &hit_info);
 				put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
 					color_revert(color).as_int);
 			}
@@ -109,9 +122,9 @@ void	draw_scene(t_minirt *minirt)
 	unsigned int	state;
 	t_ray			ray;
 	t_color_c		color;
-	// t_vec3			offset;
 	t_color_c		incoming_light;
 
+	// t_vec3			offset;
 	x = 0;
 	while (x < 1280)
 	{
@@ -133,7 +146,8 @@ void	draw_scene(t_minirt *minirt)
 				// offset = vec3_multiply(random_vec3_hs(ray.direction, &state),
 				// 	0.0005);
 				// ray.direction = vec3_add(ray.direction, offset);
-				incoming_light = ray_tracing(ray, minirt, &state);
+				// incoming_light = ray_tracing(ray, minirt, &state);
+				incoming_light = func_profile<t_color_c>("ray_tracing", (t_color_c (*)(...))&ray_tracing, ray, minirt, &state);
 				color = color_add(color, incoming_light);
 			}
 			color = color_scale(color, 1 / (float)cycle);
@@ -145,7 +159,16 @@ void	draw_scene(t_minirt *minirt)
 	}
 }
 
- void	init_minirt(t_parse p)
+void print_profile(){
+	for (auto it = m.begin(); it != m.end(); ++it)
+	{
+		std::cout << it->first << " total => " << it->second;
+		std::cout << " calls => " << m_count[it->first];
+		std::cout << " average => " << it->second / m_count[it->first] << '\n';
+	}
+}
+
+void	init_minirt(t_parse p)
 {
 	t_minirt	minirt;
 
@@ -162,6 +185,7 @@ void	draw_scene(t_minirt *minirt)
 	minirt.objects = p.objects;
 	// rendering
 	// render(&minirt);
+	// func_profile((auto (*)(...))&render, &minirt, &draw_scene);
 	render(&minirt, &draw_scene);
 	printf("\e[0;32mRendering done!!! ~~\n\e[0m");
 	// loop hooks
@@ -170,15 +194,11 @@ void	draw_scene(t_minirt *minirt)
 	// mlx_hook(minirt.win, 2, 1, key_down_hook, &minirt);
 	// mlx_hook(minirt.win, 17, 1, x_button_exit, &minirt);
 	// mlx rendering
+	print_profile();
 	mlx_loop(minirt.mlx);
 }
 
-void a(int a, int b)
-{
-	printf("a: %d %d\n", a, b);
-}
-
-int	main(int ac, char **av)
+int	main(int ac, char *av[])
 {
 	t_parse	parse_info;
 
@@ -189,6 +209,20 @@ int	main(int ac, char **av)
 		return (1);
 	printf("\e[0;32mParsing done!!! ~~\n\e[0m");
 	init_minirt(parse_info);
+	unsigned int state = 2;
+	t_vec3 v = t_vec3{.x = 0, .y = 0, .z = 0};
+	t_vec3 tmp;
+	int n = 1000000;
+
+	for (int i = 0; i < n; i++)
+	{
+		tmp = func_profile<t_vec3>("random_hs", (t_vec3 (*)(...))&random_vec3_hs, (t_vec3){.x=0, .y=0, .z=1}, &state);
+		// std::cout << "tmp: " << tmp.x << " " << tmp.y << " " << tmp.z << '\n';
+		v = vec3_add(v, tmp);
+	}
+	v = vec3_multiply(v, 1 / (float)n);
+	std::cout << "v: " << v.x << " " << v.y << " " << v.z << '\n';
+	print_profile();
 	(void)ac;
 	(void)av;
 	return (0);

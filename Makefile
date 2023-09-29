@@ -6,31 +6,37 @@
 #    By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/18 20:55:16 by itan              #+#    #+#              #
-#    Updated: 2023/09/27 21:22:01 by itan             ###   ########.fr        #
+#    Updated: 2023/09/29 19:08:42 by itan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minirt
 BNAME	= minirt_bonus
+TNAME	= test.out
 
 MSRC_DIR	= src_mandatory
 BSRC_DIR	= src_bonus
 SSRC_DIR	= src_shared
+TSRC_DIR	= src_test
 
 OBJ_DIR	= obj
 
 MOBJ_DIRS	= $(addprefix $(OBJ_DIR)/, $(shell find $(MSRC_DIR) -type d))
 BOBJ_DIRS	= $(addprefix $(OBJ_DIR)/, $(shell find $(BSRC_DIR) -type d))
 SOBJ_DIRS	= $(addprefix $(OBJ_DIR)/, $(shell find $(SSRC_DIR) -type d))
+TOBJ_DIRS	= $(addprefix $(OBJ_DIR)/, $(shell find $(TSRC_DIR) -type d))
 
 Msrc	= $(shell find $(MSRC_DIR) -name '*.c')
 Bsrc 	= $(shell find $(BSRC_DIR) -name '*.c')	
 Ssrc	= $(shell find $(SSRC_DIR) -name '*.c')
+TsrcCpp	= $(shell find $(TSRC_DIR) -name '*.cpp')
+Tsrc	= $(shell find $(TSRC_DIR) -name '*.c')
 
 BUILD_TYPE	= A
 
 m::		BUILD_TYPE = M
 b::		BUILD_TYPE = B
+t::		BUILD_TYPE = T
 
 # this is for mirroring the out dir and src dir
 ifeq ($(BUILD_TYPE), M)
@@ -47,6 +53,8 @@ MSRC		= $(Msrc) $(Ssrc)
 BSRC		= $(Bsrc) $(Ssrc)
 MOBJ		= $(addprefix $(OBJ_DIR)/, $(MSRC:.c=.o))
 BOBJ		= $(addprefix $(OBJ_DIR)/, $(BSRC:.c=.o))
+TSRC		= $(TsrcCpp) $(Tsrc) $(Ssrc)
+TOBJ		= $(addprefix $(OBJ_DIR)/, $(Ssrc:.c=.o)) $(addprefix $(OBJ_DIR)/, $(Tsrc:.c=.o)) $(addprefix $(OBJ_DIR)/, $(TsrcCpp:.cpp=.o))
 endif
 
 AR		= ar -rcs
@@ -137,6 +145,8 @@ m::		$(NAME)
 b::		$(BNAME)
 all::	$(NAME) $(BNAME)
 
+t::		$(TNAME)
+
 dm::	debug $(DMNAME)
 db::	debug $(DBNAME)
 da::	debug $(DMNAME) $(DBNAME)
@@ -155,6 +165,11 @@ $(OBJ_DIR)/%.o:	%.c $(HEADERS)
 				@mkdir -p $(OBJ_DIRS)
 				@printf "$(YELLOW)$(BRIGHT)Generating %25s\t$(NORMAL)%40s\r" "$(NAME) src objects..." $@
 				@$(CC) $(CFLAGS) $(INC) -c $< -o $@
+
+$(TOBJ_DIRS)/%.o:	$(TSRC_DIR)/%.cpp $(HEADERS)
+				@mkdir -p $(TOBJ_DIRS)
+				@printf "$(YELLOW)$(BRIGHT)Generating %25s\t$(NORMAL)%40s\r" "$(NAME) src objects..." $@
+				@g++ -std=c++14 $(INC) -c $< -o $@
 
 $(DDIR)/%.o:	$(DDIR)/%.c
 				@mkdir -p $(DDIR)
@@ -179,6 +194,11 @@ $(DMNAME):	$(mlx) $(MSRC) $(DSRC) $(LIBDIR)/$(LIBNAME) $(HEADERS)
 $(DBNAME):	$(mlx) $(BSRC) $(DSRC) $(LIBDIR)/$(LIBNAME) $(HEADERS)
 			@printf "\n$(MAGENTA)Compiling $(DBNAME) for $(NAME)...          \n"
 			@$(CC) $(CFLAGS) $(DFLAGS) $(INC) $(BSRC) $(DSRC) -o $(DBNAME) $(LIB) $(MLXLIB)
+			@printf "$(GREEN)COMPLETE!!\n\n"
+
+$(TNAME):	$(mlx) $(LIBDIR)/$(LIBNAME) $(TOBJ) 
+			@printf "\n$(MAGENTA)Compiling $(TNAME) for $(NAME)...          \n"
+			@g++ -std=c++14 $(TOBJ) $(INC) -o $(TNAME) $(LIB) $(MLXLIB)
 			@printf "$(GREEN)COMPLETE!!\n\n"
 
 $(LIBDIR)/$(LIBNAME):

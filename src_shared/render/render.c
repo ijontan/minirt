@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 09:11:04 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/27 22:41:54 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/29 21:50:31 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,21 +55,17 @@ void	render_menu(t_minirt *minirt)
 				rt_files[i]);
 }
 
-int	render(t_minirt *minirt, void (*draw_scene)(t_minirt *minirt))
+int	render(t_minirt *minirt, void (*draw_func)(t_minirt *minirt))
 {
 	// static bool	status;
-	minirt->image.image = mlx_new_image(minirt->mlx, WINDOW_WIDTH,
-		WINDOW_HEIGHT);
-	minirt->image.buffer = mlx_get_data_addr(minirt->image.image,
-		&minirt->image.pixel_bits, &minirt->image.line_bytes,
-		&minirt->image.endian);
+	minirt->image = create_image(minirt);
 	// mlx_clear_window(minirt->mlx, minirt->win);
 	// if (!status)
 	// {
 	// ray_cast(minirt);
 	// thread_init(minirt);
 	// draw_scene(minirt);
-	draw_scene(minirt);
+	draw_func(minirt);
 	mlx_put_image_to_window(minirt->mlx, minirt->win, minirt->image.image, 0,
 		0);
 	render_menu(minirt);

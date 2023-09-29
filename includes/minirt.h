@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/09/28 21:15:44 by itan             ###   ########.fr       */
+/*   Updated: 2023/09/29 21:53:48 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -375,14 +375,13 @@ typedef struct s_minirt
 {
 	void			*mlx;
 	void			*win;
+	void			*win2;
 	t_image			image;
+	t_image			image2;
 
 	t_amb_light		amb_light;
 	t_cam			cam;
 	t_list			*pt_lights;
-	t_sphere		sphere;
-	t_plane			plane;
-	t_cylinder		cylinder;
 	t_list			*objects;
 	t_key_events	key_events;
 	t_mouse_events	mouse_events;
@@ -454,11 +453,14 @@ t_color_c			get_color(t_minirt *rt, t_hit_info *hi);
 t_color_c			ray_tracing(t_ray ray, t_minirt *minirt,
 						unsigned int *state);
 
-int					render(t_minirt *minirt, void (*draw_scene)(t_minirt *minirt));
+int					render(t_minirt *minirt, void (*draw_func)(t_minirt *minirt));
+void				render_gi(t_minirt *rt);
 void				ray_cast(t_minirt *minirt);
 void				draw_scene(t_minirt *minirt);
 void				thread_init(t_minirt *minirt);
 t_color_c			get_color(t_minirt *rt, t_hit_info *hi);
 t_color_c			get_lights_color(t_minirt *rt, t_hit_info *hi);
+t_image				create_image(t_minirt *rt);
+
 
 #endif
