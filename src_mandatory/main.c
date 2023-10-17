@@ -6,12 +6,15 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/09/29 17:56:08 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/02 16:49:54 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minirt.h"
 
+t_ht *ht_value = 0;
+t_ht *ht_count = 0;
 void	set_pixel(t_minirt *minirt, t_hit_info hit_info, int x, int y)
 {
 	t_color_c	color;
@@ -143,6 +146,7 @@ void	draw_scene(t_minirt *minirt)
 		}
 		++x;
 	}
+	print_profile();
 }
 
  void	init_minirt(t_parse p)

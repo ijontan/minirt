@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 14:48:41 by itan              #+#    #+#             */
-/*   Updated: 2023/09/27 21:56:01 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/02 19:15:30 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	key_down_hook(int keycode, t_minirt *minirt)
 		minirt->key_events.holding_a = true;
 	else if (keycode == KEY_D)
 		minirt->key_events.holding_d = true;
+	else if (keycode == KEY_R)
+		render_gi(minirt);
 	else if (keycode == KEY_LSH)
 		minirt->key_events.holding_lsh = true;
 	else if (keycode == KEY_SP)

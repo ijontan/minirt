@@ -7,7 +7,8 @@ extern "C" {
 #include <map>
 #include <string>
 
-
+t_ht *ht_value = 0;
+t_ht *ht_count = 0;
 std::map<std::string, double>	m;
 std::map<std::string, double>	m_count;
 
@@ -141,7 +142,7 @@ void	draw_scene(t_minirt *minirt)
 			cycle = -1;
 			ray = ray_primary(&minirt->cam, (t_offset){.x = x, .y = y});
 			state = (unsigned int)((x + y * 1280));
-			while (++cycle < 10)
+			while (++cycle < 5)
 			{
 				// offset = vec3_multiply(random_vec3_hs(ray.direction, &state),
 				// 	0.0005);
@@ -159,12 +160,12 @@ void	draw_scene(t_minirt *minirt)
 	}
 }
 
-void print_profile(){
+void print_profiles(){
 	for (auto it = m.begin(); it != m.end(); ++it)
 	{
-		std::cout << it->first << " total => " << it->second;
-		std::cout << " calls => " << m_count[it->first];
-		std::cout << " average => " << it->second / m_count[it->first] << '\n';
+		std::cout << it->first << "= total: " << it->second;
+		std::cout << " calls: " << m_count[it->first];
+		std::cout << " average: " << it->second / m_count[it->first] << '\n';
 	}
 }
 
@@ -194,7 +195,7 @@ void	init_minirt(t_parse p)
 	// mlx_hook(minirt.win, 2, 1, key_down_hook, &minirt);
 	// mlx_hook(minirt.win, 17, 1, x_button_exit, &minirt);
 	// mlx rendering
-	print_profile();
+	print_profiles();
 	mlx_loop(minirt.mlx);
 }
 
@@ -220,6 +221,7 @@ int	main(int ac, char *av[])
 		// std::cout << "tmp: " << tmp.x << " " << tmp.y << " " << tmp.z << '\n';
 		v = vec3_add(v, tmp);
 	}
+	
 	v = vec3_multiply(v, 1 / (float)n);
 	std::cout << "v: " << v.x << " " << v.y << " " << v.z << '\n';
 	print_profile();

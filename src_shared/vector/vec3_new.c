@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 21:17:37 by itan              #+#    #+#             */
-/*   Updated: 2023/09/29 23:15:12 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/02 18:48:48 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ t_vec3	random_vec3(unsigned int *state)
 {
 	t_vec3	vec;
 
-	vec.x = normal_dist_random_num(state) - 0.5;
-	vec.y = normal_dist_random_num(state) - 0.5;
-	vec.z = normal_dist_random_num(state) - 0.5;
+	vec.x = random_num(state) - 0.5;
+	vec.y = random_num(state) - 0.5;
+	vec.z = random_num(state) - 0.5;
 	return (vec3_normalize(vec));
 }
 

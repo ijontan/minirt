@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:40:55 by itan              #+#    #+#             */
-/*   Updated: 2023/09/29 16:06:24 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/02 19:09:35 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_color_c	ray_tracing(t_ray ray, t_minirt *minirt, unsigned int *state)
 	t_color_c	color;
 	t_color_c	incoming_light;
 	bool		is_env;
-	// bool		is_specular;
+	bool		is_specular;
 
 	is_env = true;
 	incoming_light = color_correct_new(0, 0, 0, 0);
@@ -78,21 +78,21 @@ t_color_c	ray_tracing(t_ray ray, t_minirt *minirt, unsigned int *state)
 			hit_info.d_diffuse = random_vec3_hs(hit_info.normal, state);
 			hit_info.d_diffuse = vec3_normalize(vec3_add(hit_info.d_diffuse,
 															hit_info.normal));
-			// is_specular = hit_info.material.specular_i > random_num(state);
-			// if (is_specular)
-			// {
-			// 	hit_info.d_specular = reflection(ray.direction, hit_info.normal);
-			// 	ray.direction = vec3_tween(hit_info.d_diffuse,
-			// 								hit_info.d_specular,
-			// 								hit_info.material.reflective_i);
-			// }
-			// else
+			is_specular = hit_info.material.specular_i > random_num(state);
+			if (is_specular)
+			{
+				hit_info.d_specular = reflection(ray.direction, hit_info.normal);
+				ray.direction = vec3_tween(hit_info.d_diffuse,
+											hit_info.d_specular,
+											hit_info.material.reflective_i);
+			}
+			else
 				ray.direction = hit_info.d_diffuse;
-			// ray.direction = random_vec3_hs(hit_info.normal, state);
-			// ray.direction = vec3_normalize(vec3_add(ray.direction,
-			// 										hit_info.normal));
-			// ray->direction = vec3_normalize(vec3_cross(hit_info.normal,
-			// 		random_vec3_hs(hit_info.normal, state)));
+			ray.direction = random_vec3_hs(hit_info.normal, state);
+			ray.direction = vec3_normalize(vec3_add(ray.direction,
+													hit_info.normal));
+			//ray->direction = vec3_normalize(vec3_cross(hit_info.normal,
+			//		random_vec3_hs(hit_info.normal, state)));
 			calculate_incoming(&incoming_light, &color, &hit_info.material, minirt, &hit_info);
 			//calculate_incoming(&incoming_light, color,&hit_info.material, minirt, &hit_info);
 			color = color_multiply(color, hit_info.material.color);

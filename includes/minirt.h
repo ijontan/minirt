@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/09/29 21:53:48 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/02 16:10:41 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include "./minilibx_opengl/mlx.h"
 # include <pthread.h>
 # include <stdio.h>
+# include "profiler.h"
 
 // positions
 # define WINDOW_WIDTH 1920

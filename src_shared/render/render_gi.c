@@ -6,7 +6,7 @@
 /*   By: itan <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 14:05:15 by itan              #+#    #+#             */
-/*   Updated: 2023/09/29 21:59:49 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/02 19:14:53 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void render_gi(t_minirt *rt)
 	pthread_t	thread;
 
 	rt->win2 = mlx_new_window(rt->mlx, rt->cam.vp_width, rt->cam.vp_height, "Render!");
-	pthread_create(&thread, NULL, render_gi_routine, rt);	
+	pthread_create(&thread, NULL, render_gi_routine, rt);
+	pthread_detach(thread);
 }
 
