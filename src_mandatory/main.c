@@ -146,7 +146,6 @@ void	draw_scene(t_minirt *minirt)
 		}
 		++x;
 	}
-	print_profile();
 }
 
  void	init_minirt(t_parse p)
@@ -166,7 +165,7 @@ void	draw_scene(t_minirt *minirt)
 	minirt.objects = p.objects;
 	// rendering
 	// render(&minirt);
-	render(&minirt, &draw_scene);
+	render(&minirt, &ray_cast);
 	printf("\e[0;32mRendering done!!! ~~\n\e[0m");
 	// loop hooks
 	// render: found in the render dir

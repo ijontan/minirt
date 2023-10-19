@@ -6,7 +6,7 @@
 #    By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/18 20:55:16 by itan              #+#    #+#              #
-#    Updated: 2023/09/29 19:08:42 by itan             ###   ########.fr        #
+#    Updated: 2023/10/17 19:03:42 by itan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,7 @@ DFLAGS	= -fsanitize=address -fdiagnostics-color=always -g3
 
 UNAME := $(shell uname)
 
-mlx		= ./includes/minilibx_opengl/libmlx.a
+mlxlib		= ./includes/minilibx_opengl/libmlx.a
 
 ifeq ($(UNAME), Linux)
 MLXLIB	= -I /usr/local/include -L/usr/local/lib -lbsd -lmlx -lXext -lX11
@@ -84,6 +84,7 @@ ifeq ($(UNAME), Darwin)
 INC += -I /usr/local/include 
 CFLAGS += -D __APPLE__
 MLXLIB	= -I./includes/minilibx_opengl/ -L./includes/minilibx_opengl -lmlx -framework OpenGL -framework AppKit
+mlx = $(mlxlib)
 endif
 
 

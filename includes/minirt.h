@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/10/02 16:10:41 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/17 18:54:21 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # include "./minilibx_opengl/mlx.h"
 # include <pthread.h>
 # include <stdio.h>
-# include "profiler.h"
 
 // positions
 # define WINDOW_WIDTH 1920
@@ -463,5 +462,11 @@ t_color_c			get_color(t_minirt *rt, t_hit_info *hi);
 t_color_c			get_lights_color(t_minirt *rt, t_hit_info *hi);
 t_image				create_image(t_minirt *rt);
 
+
+/* ------------------------------- mouse_util ------------------------------- */
+
+void mouse_hide(t_minirt *minirt);
+void mouse_show(t_minirt *minirt);
+void mouse_move(t_minirt *minirt, int x, int y);
 
 #endif

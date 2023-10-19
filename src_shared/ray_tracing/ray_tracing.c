@@ -61,10 +61,10 @@ t_color_c	ray_tracing(t_ray ray, t_minirt *minirt, unsigned int *state)
 	t_hit_info	hit_info;
 	t_color_c	color;
 	t_color_c	incoming_light;
-	bool		is_env;
+	// bool		is_env;
 	bool		is_specular;
 
-	is_env = true;
+	// is_env = true;
 	incoming_light = color_correct_new(0, 0, 0, 0);
 	color = color_correct_new(0, 1.0f, 1.0f, 1.0f);
 	i = -1;
@@ -73,7 +73,7 @@ t_color_c	ray_tracing(t_ray ray, t_minirt *minirt, unsigned int *state)
 		hit_info = intersect_list(minirt, &ray);
 		if (hit_info.hit)
 		{
-			is_env = false;
+			// is_env = false;
 			ray.origin = hit_info.intersect_pt;
 			hit_info.d_diffuse = random_vec3_hs(hit_info.normal, state);
 			hit_info.d_diffuse = vec3_normalize(vec3_add(hit_info.d_diffuse,
