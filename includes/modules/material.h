@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mouse_move.c                                       :+:      :+:    :+:   */
+/*   material.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 18:35:36 by itan              #+#    #+#             */
-/*   Updated: 2023/10/22 14:10:17 by itan             ###   ########.fr       */
+/*   Created: 2023/10/22 14:21:14 by itan              #+#    #+#             */
+/*   Updated: 2023/10/22 14:45:44 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#ifndef MATERIAL_H
+# define MATERIAL_H
+# include "color.h"
 
-#if defined(__APPLE__)
+/* -------------------------------- material -------------------------------- */
 
-void	mouse_move(t_minirt *minirt, int x, int y)
+typedef struct s_material
 {
-	mlx_mouse_move(minirt->win, x, y);
-}
-#else
+	t_color_c	color;
+	t_color_c	emission;
+	t_color_c	specular;
+	float		diffuse_i;
+	float		specular_i;
+	float		reflective_i;
+	float		shininess;
+	float		emission_i;
+}				t_material;
 
-void	mouse_move(t_minirt *minirt, int x, int y)
-{
-	printf("mouse move: %d %d\n", x, y);
-	mlx_mouse_move(minirt->mlx, minirt->win, x, y);
-}
 #endif

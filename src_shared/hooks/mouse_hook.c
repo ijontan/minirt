@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 14:44:19 by itan              #+#    #+#             */
-/*   Updated: 2023/10/22 13:16:43 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/22 14:13:16 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minirt.h"
 #include <stdio.h>
 
-void select_object(t_offset xy, t_minirt *minirt)
+void	select_object(t_offset xy, t_minirt *minirt)
 {
 	t_ray		ray;
 	t_hit_info	info;
@@ -68,9 +68,9 @@ int	mouse_move_hook(int x, int y, t_minirt *minirt)
 		quaternion_multiply(&minirt->cam.rotation, &rotation,
 			&minirt->cam.rotation);
 		quaternion_normalize(&minirt->cam.rotation, &minirt->cam.rotation);
-		minirt->mouse_events.prev_x = 300;
-		minirt->mouse_events.prev_y = 300;
-		mouse_move(minirt, 300, 300);
+		minirt->mouse_events.prev_x = x;
+		minirt->mouse_events.prev_y = y;
+		// mouse_move(minirt, 300, 300);
 	}
 	return (0);
 }

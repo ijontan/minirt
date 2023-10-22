@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mouse_move.c                                       :+:      :+:    :+:   */
+/*   share.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 18:35:36 by itan              #+#    #+#             */
-/*   Updated: 2023/10/22 14:10:17 by itan             ###   ########.fr       */
+/*   Created: 2023/10/22 14:15:45 by itan              #+#    #+#             */
+/*   Updated: 2023/10/22 14:47:37 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#ifndef SHARE_H
+# define SHARE_H
 
-#if defined(__APPLE__)
+# include "modules/bounding_box.h"
+# include "modules/cam.h"
+# include "modules/color.h"
+# include "modules/image.h"
+# include "modules/material.h"
+# include "modules/ray.h"
+# include "modules/shapes.h"
+# include "modules/vec3.h"
 
-void	mouse_move(t_minirt *minirt, int x, int y)
-{
-	mlx_mouse_move(minirt->win, x, y);
-}
-#else
-
-void	mouse_move(t_minirt *minirt, int x, int y)
-{
-	printf("mouse move: %d %d\n", x, y);
-	mlx_mouse_move(minirt->mlx, minirt->win, x, y);
-}
 #endif

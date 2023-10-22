@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/10/22 13:14:10 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/22 14:40:34 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 # define MINIRT_H
 
 # if defined(__APPLE__)
-#  include <key_macos.h>
 #  include "./minilibx_opengl/mlx.h"
+#  include <key_macos.h>
 # else
 #  include <key_linux.h>
 #  include <mlx.h>
 # endif
 
 # include "libft.h"
+# include "share.h"
 # include <fcntl.h>
 # include <math.h>
 # include <pthread.h>
@@ -47,145 +48,6 @@
 /*                                  Mandatory                                 */
 /* -------------------------------------------------------------------------- */
 
-/* ---------------------------------- image --------------------------------- */
-typedef struct s_image
-{
-	void			*image;
-	int				pixel_bits;
-	int				line_bytes;
-	int				endian;
-	char			*buffer;
-}					t_image;
-
-typedef union u_offset
-{
-	int				xy[2];
-	struct
-	{
-		int			x;
-		int			y;
-	};
-}					t_offset;
-
-void				put_pixel(t_image *image, t_offset offset,
-						unsigned int color);
-
-/* ---------------------------------- vec3 ---------------------------------- */
-typedef struct s_vec3
-{
-	float			x;
-	float			y;
-	float			z;
-}					t_vec3;
-
-t_vec3				reflection(t_vec3 d_ray, t_vec3 normal);
-t_vec3				vec3_apply_rot(t_vec3 vec, t_quaternion rot);
-t_vec3				vec3_new(float x, float y, float z);
-float				vec3_length(t_vec3 vec);
-t_vec3				vec3_normalize(t_vec3 vec);
-t_vec3				vec3_cross(t_vec3 vec1, t_vec3 vec2);
-float				vec3_dot(t_vec3 vec1, t_vec3 vec2);
-t_vec3				vec3_tween(t_vec3 vec1, t_vec3 vec2, float t);
-t_vec3				vec3_add(t_vec3 vec1, t_vec3 vec2);
-t_vec3				vec3_subtract(t_vec3 vec1, t_vec3 vec2);
-t_vec3				vec3_multiply(t_vec3 vec, float scale);
-t_vec3				vec3_divide(t_vec3 vec, float scale);
-
-/* ---------------------------------- color --------------------------------- */
-
-typedef struct s_rgba
-{
-	unsigned char	b;
-	unsigned char	g;
-	unsigned char	r;
-	unsigned char	a;
-}					t_rgba;
-
-typedef union u_color
-{
-	unsigned int	as_int;
-	t_rgba			rgba;
-}					t_color;
-
-/**
- * @brief Color with correction and in float
- *
- */
-typedef struct s_color_c
-{
-	float			b;
-	float			g;
-	float			r;
-	float			a;
-}					t_color_c;
-
-t_color_c			color_correct_new(float a, float r, float g, float b);
-t_color_c			color_clamp(t_color_c color);
-t_color_c			color_multiply(t_color_c color1, t_color_c color2);
-t_color_c			color_scale(t_color_c color, float scale);
-t_color_c			color_add(t_color_c color1, t_color_c color2);
-t_color_c			color_average(t_color_c color1, t_color_c color2);
-t_rgba				color_new(char a, char r, char g, char b);
-t_color_c			color_tween(t_color_c color1, t_color_c color2, double t);
-t_color_c			color_correct(t_color color);
-t_color				color_revert(t_color_c color_c);
-
-/* -------------------------------- material -------------------------------- */
-
-typedef struct s_material
-{
-	t_color_c		color;
-	t_color_c		emission;
-	t_color_c		specular;
-	float			diffuse_i;
-	float			specular_i;
-	float			reflective_i;
-	float			shininess;
-	float			emission_i;
-}					t_material;
-
-/* ----------------------------------- cam ---------------------------------- */
-
-/**
- * @brief Camera struct
- *
- * @param origin camera position
- * @param direction camera direction or forward direction
- * @param up up direction
- * @param right right direction
- * @param fov field of view
- * @param vp_width viewport width
- * @param vp_height viewport height
- */
-typedef struct s_cam
-{
-	t_vec3			origin;
-	t_vec3			direction;
-	t_vec3			up;
-	t_vec3			right;
-	t_vec3			position;
-	t_quaternion	rotation;
-	float			fov;
-	int				vp_width;
-	int				vp_height;
-}					t_cam;
-
-void				cam_init(t_cam *cam);
-
-/* ----------------------------------- ray ---------------------------------- */
-
-typedef struct s_ray
-{
-	t_vec3			origin;
-	t_vec3			direction;
-	t_vec3			inverse_direction;
-	float			intensity;
-	t_color_c		color;
-}					t_ray;
-
-t_ray				ray_init(t_vec3 origin, t_vec3 direction);
-t_ray				ray_primary(t_cam *cam, t_offset offset);
-
 typedef struct s_amb_light
 {
 	float			ratio;
@@ -200,44 +62,6 @@ typedef struct s_pt_light
 }					t_pt_light;
 
 /* ---------------------------------- shape --------------------------------- */
-
-typedef struct s_sphere
-{
-	t_vec3			center;
-	float			radius;
-	t_color_c		color;
-	t_material		material;
-}					t_sphere;
-
-t_sphere			sphere_new(t_vec3 center, float radius,
-						t_material material);
-t_vec3				sphere_normal(t_sphere *sphere, t_vec3 point);
-t_vec3				sphere_intersect(t_sphere *sphere, t_ray *ray);
-
-typedef struct s_plane
-{
-	t_vec3			point_on_plane;
-	t_vec3			normalized_norm_vec;
-	t_material		material;
-}					t_plane;
-
-t_plane				plane_new(t_vec3 point, t_vec3 dir, t_material material);
-t_vec3				disk_intersect(t_plane *plane, t_ray *ray, float radius,
-						t_vec3 p0);
-t_vec3				plane_intersect(t_plane *plane, t_ray *ray);
-
-typedef struct s_cylinder
-{
-	t_vec3			center;
-	t_vec3			normalized_axis;
-	float			radius;
-	float			height;
-	t_material		material;
-}					t_cylinder;
-
-t_vec3				cylinder_intersect(t_cylinder *cylinder, t_ray *ray);
-t_vec3				cylinder_normal(t_cylinder *cylinder, t_vec3 point,
-						float type);
 
 /* ---------------------------------- parse --------------------------------- */
 
@@ -301,22 +125,9 @@ bool				valid_triplet(char *s);
 
 /* --------------------------------- octree --------------------------------- */
 
-typedef struct s_bound_box
-{
-	t_vec3			min;
-	t_vec3			max;
-}					t_bound_box;
-
 # define OCTREE_MAX_DEPTH 10
 # define OCTREE_MAX_OBJECTS 10
 # define OCTREE_MAX_NODE 8
-
-typedef struct s_object
-{
-	void			*object;
-	unsigned char	type;
-	t_bound_box		bounding_box;
-}					t_object;
 
 typedef struct s_octree
 {
@@ -324,10 +135,6 @@ typedef struct s_octree
 	t_list			*objects;
 	struct s_octree	**children;
 }					t_octree;
-
-t_bound_box			bound_box_new(t_vec3 min, t_vec3 max);
-t_bound_box			bound_box_expend(t_bound_box box, t_vec3 point);
-bool				bound_box_intersect(t_bound_box box, t_ray ray);
 
 /* -------------------------------------------------------------------------- */
 /*                                    Bonus                                   */
@@ -388,7 +195,7 @@ typedef struct s_minirt
 	t_mouse_events	mouse_events;
 	t_selections	selection;
 	pthread_t		*threads;
-	int 			pixel_size;
+	int				pixel_size;
 	bool			moving;
 }					t_minirt;
 
@@ -454,7 +261,8 @@ t_color_c			get_color(t_minirt *rt, t_hit_info *hi);
 t_color_c			ray_tracing(t_ray ray, t_minirt *minirt,
 						unsigned int *state);
 
-int					render(t_minirt *minirt, void (*draw_func)(t_minirt *minirt));
+int					render(t_minirt *minirt,
+						void (*draw_func)(t_minirt *minirt));
 void				render_gi(t_minirt *rt);
 void				ray_cast(t_minirt *minirt);
 void				draw_scene(t_minirt *minirt);
@@ -463,11 +271,10 @@ t_color_c			get_color(t_minirt *rt, t_hit_info *hi);
 t_color_c			get_lights_color(t_minirt *rt, t_hit_info *hi);
 t_image				create_image(t_minirt *rt);
 
-
 /* ------------------------------- mouse_util ------------------------------- */
 
-void mouse_hide(t_minirt *minirt);
-void mouse_show(t_minirt *minirt);
-void mouse_move(t_minirt *minirt, int x, int y);
+void				mouse_hide(t_minirt *minirt);
+void				mouse_show(t_minirt *minirt);
+void				mouse_move(t_minirt *minirt, int x, int y);
 
 #endif

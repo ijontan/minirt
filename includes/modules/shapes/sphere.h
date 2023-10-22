@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mouse_move.c                                       :+:      :+:    :+:   */
+/*   sphere.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 18:35:36 by itan              #+#    #+#             */
-/*   Updated: 2023/10/22 14:10:17 by itan             ###   ########.fr       */
+/*   Created: 2023/10/22 14:34:34 by itan              #+#    #+#             */
+/*   Updated: 2023/10/22 14:49:07 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#ifndef SPHERE_H
+# define SPHERE_H
 
-#if defined(__APPLE__)
+# include "../material.h"
+# include "../ray.h"
+# include "../vec3.h"
 
-void	mouse_move(t_minirt *minirt, int x, int y)
+typedef struct s_sphere
 {
-	mlx_mouse_move(minirt->win, x, y);
-}
-#else
+	t_vec3		center;
+	float		radius;
+	t_color_c	color;
+	t_material	material;
+}				t_sphere;
 
-void	mouse_move(t_minirt *minirt, int x, int y)
-{
-	printf("mouse move: %d %d\n", x, y);
-	mlx_mouse_move(minirt->mlx, minirt->win, x, y);
-}
+t_sphere		sphere_new(t_vec3 center, float radius, t_material material);
+t_vec3			sphere_normal(t_sphere *sphere, t_vec3 point);
+t_vec3			sphere_intersect(t_sphere *sphere, t_ray *ray);
+
 #endif

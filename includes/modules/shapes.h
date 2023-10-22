@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mouse_move.c                                       :+:      :+:    :+:   */
+/*   shapes.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 18:35:36 by itan              #+#    #+#             */
-/*   Updated: 2023/10/22 14:10:17 by itan             ###   ########.fr       */
+/*   Created: 2023/10/22 14:37:08 by itan              #+#    #+#             */
+/*   Updated: 2023/10/22 14:45:01 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#ifndef SHAPES_H
+# define SHAPES_H
 
-#if defined(__APPLE__)
+# include "shapes/cylinder.h"
+# include "shapes/plane.h"
+# include "shapes/sphere.h"
 
-void	mouse_move(t_minirt *minirt, int x, int y)
-{
-	mlx_mouse_move(minirt->win, x, y);
-}
-#else
-
-void	mouse_move(t_minirt *minirt, int x, int y)
-{
-	printf("mouse move: %d %d\n", x, y);
-	mlx_mouse_move(minirt->mlx, minirt->win, x, y);
-}
 #endif

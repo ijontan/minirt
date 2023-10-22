@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 00:32:55 by itan              #+#    #+#             */
-/*   Updated: 2023/09/11 15:42:25 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/22 14:50:16 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 /**
  * @brief new bounding box
- * 
- * @param min 
- * @param max 
- * @return t_bound_box 
+ *
+ * @param min
+ * @param max
+ * @return t_bound_box
  */
 t_bound_box	bound_box_new(t_vec3 min, t_vec3 max)
 {
@@ -44,21 +44,19 @@ float	float_max(float a, float b)
 
 /**
  * @brief expend a bounding box to include a point
- * 
- * @param box 
- * @param point 
- * @return t_bound_box 
+ *
+ * @param box
+ * @param point
+ * @return t_bound_box
  */
 t_bound_box	bound_box_expend(t_bound_box box, t_vec3 point)
 {
 	t_bound_box	new_box;
 
-	new_box.min = vec3_new(float_min(box.min.x, point.x),
-							float_min(box.min.y, point.y),
-							float_min(box.min.z, point.z));
-	new_box.max = vec3_new(float_max(box.max.x, point.x),
-							float_max(box.max.y, point.y),
-							float_max(box.max.z, point.z));
+	new_box.min = vec3_new(float_min(box.min.x, point.x), float_min(box.min.y,
+				point.y), float_min(box.min.z, point.z));
+	new_box.max = vec3_new(float_max(box.max.x, point.x), float_max(box.max.y,
+				point.y), float_max(box.max.z, point.z));
 	return (new_box);
 }
 
@@ -76,11 +74,11 @@ static void	ft_swap_min(float *a, float *b)
 
 /**
  * @brief find the intersection between a ray and a bounding box
- * 
- * @param box 
- * @param ray 
- * @return true 
- * @return false 
+ *
+ * @param box
+ * @param ray
+ * @return true
+ * @return false
  */
 bool	bound_box_intersect(t_bound_box box, t_ray ray)
 {

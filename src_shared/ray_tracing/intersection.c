@@ -115,8 +115,8 @@ t_hit_info	intersect_list(t_minirt *minirt, t_ray *ray)
 		(t_ft_intersect)&cylinder_intersect,
 	};
 	lst = minirt->objects;
-	prev_intersect = vec3_new(INFINITY, 0, 0);
-	intersect = vec3_new(INFINITY, 0, 0);
+	ft_memset(&prev_intersect, 0, sizeof(t_vec3));
+	ft_memset(&intersect, 0, sizeof(t_vec3));
 	ft_memset(&hit_info, 0, sizeof(t_hit_info));
 	while (lst)
 	{

@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mouse_move.c                                       :+:      :+:    :+:   */
+/*   image.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 18:35:36 by itan              #+#    #+#             */
-/*   Updated: 2023/10/22 14:10:17 by itan             ###   ########.fr       */
+/*   Created: 2023/10/22 14:32:04 by itan              #+#    #+#             */
+/*   Updated: 2023/10/22 14:45:56 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
-
-#if defined(__APPLE__)
-
-void	mouse_move(t_minirt *minirt, int x, int y)
+#ifndef IMAGE_H
+# define IMAGE_H
+/* ---------------------------------- image --------------------------------- */
+typedef struct s_image
 {
-	mlx_mouse_move(minirt->win, x, y);
-}
-#else
+	void	*image;
+	int		pixel_bits;
+	int		line_bytes;
+	int		endian;
+	char	*buffer;
+}			t_image;
 
-void	mouse_move(t_minirt *minirt, int x, int y)
+typedef union u_offset
 {
-	printf("mouse move: %d %d\n", x, y);
-	mlx_mouse_move(minirt->mlx, minirt->win, x, y);
-}
+	int		xy[2];
+	struct
+	{
+		int	x;
+		int	y;
+	};
+}			t_offset;
+
+void		put_pixel(t_image *image, t_offset offset, unsigned int color);
+
 #endif
