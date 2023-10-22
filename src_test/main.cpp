@@ -224,7 +224,7 @@ int	main(int ac, char *av[])
 	
 	v = vec3_multiply(v, 1 / (float)n);
 	std::cout << "v: " << v.x << " " << v.y << " " << v.z << '\n';
-	print_profile();
+	print_profiles();
 	(void)ac;
 	(void)av;
 	return (0);

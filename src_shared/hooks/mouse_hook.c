@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 14:44:19 by itan              #+#    #+#             */
-/*   Updated: 2023/09/27 21:43:07 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/22 13:16:43 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	mouse_move_hook(int x, int y, t_minirt *minirt)
 		quaternion_normalize(&minirt->cam.rotation, &minirt->cam.rotation);
 		minirt->mouse_events.prev_x = 300;
 		minirt->mouse_events.prev_y = 300;
-		mlx_mouse_move(minirt->win, 300, 300);
+		mouse_move(minirt, 300, 300);
 	}
 	return (0);
 }

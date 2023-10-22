@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/10/17 18:54:21 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/22 13:14:10 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,15 @@
 
 # if defined(__APPLE__)
 #  include <key_macos.h>
+#  include "./minilibx_opengl/mlx.h"
 # else
 #  include <key_linux.h>
+#  include <mlx.h>
 # endif
 
 # include "libft.h"
 # include <fcntl.h>
 # include <math.h>
-# include "./minilibx_opengl/mlx.h"
 # include <pthread.h>
 # include <stdio.h>
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:52:31 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/15 11:50:45 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/10/22 13:20:25 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ static bool	parse_line(char *line, t_parse *p)
 	}
 	if (!ft_strncmp(p->info[0], "#", ft_strlen(p->info[0])) \
 	|| !ft_strncmp(p->info[0], "\n", ft_strlen(p->info[0])))
+	{
+		free_2darray(p->info);
 		return (true);
+	}
 	else
 		printf("\e[0;31mError: Unknown object \e[0m%s\n", p->info[0]);
 	free_2darray(p->info);
