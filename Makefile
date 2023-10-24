@@ -6,7 +6,7 @@
 #    By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/18 20:55:16 by itan              #+#    #+#              #
-#    Updated: 2023/10/17 19:03:42 by itan             ###   ########.fr        #
+#    Updated: 2023/10/24 13:35:27 by itan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,6 @@ Msrc	= $(shell find $(MSRC_DIR) -name '*.c')
 Bsrc 	= $(shell find $(BSRC_DIR) -name '*.c')	
 Ssrc	= $(shell find $(SSRC_DIR) -name '*.c')
 TsrcCpp	= $(shell find $(TSRC_DIR) -name '*.cpp')
-Tsrc	= $(shell find $(TSRC_DIR) -name '*.c')
 
 BUILD_TYPE	= A
 
@@ -53,8 +52,10 @@ MSRC		= $(Msrc) $(Ssrc)
 BSRC		= $(Bsrc) $(Ssrc)
 MOBJ		= $(addprefix $(OBJ_DIR)/, $(MSRC:.c=.o))
 BOBJ		= $(addprefix $(OBJ_DIR)/, $(BSRC:.c=.o))
-TSRC		= $(TsrcCpp) $(Tsrc) $(Ssrc)
-TOBJ		= $(addprefix $(OBJ_DIR)/, $(Ssrc:.c=.o)) $(addprefix $(OBJ_DIR)/, $(Tsrc:.c=.o)) $(addprefix $(OBJ_DIR)/, $(TsrcCpp:.cpp=.o))
+TSRC		= $(TsrcCpp)
+TSSRC		= $(addprefix $(TSRC_DIR)/, $(Ssrc:.c=.cpp))
+TSSRC_DIR	= $(addprefix $(TSRC_DIR)/, $(shell find $(SSRC_DIR) -type d))
+TOBJ		= $(addprefix $(OBJ_DIR)/, $(TsrcCpp:.cpp=.o))
 endif
 
 AR		= ar -rcs
@@ -167,6 +168,12 @@ $(OBJ_DIR)/%.o:	%.c $(HEADERS)
 				@printf "$(YELLOW)$(BRIGHT)Generating %25s\t$(NORMAL)%40s\r" "$(NAME) src objects..." $@
 				@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
+$(TSRC_DIR)/%.cpp: %.c
+				@mkdir -p $(TSSRC_DIR)
+				@cp $< $@
+
+tocpp::	$(TSSRC)
+
 $(TOBJ_DIRS)/%.o:	$(TSRC_DIR)/%.cpp $(HEADERS)
 				@mkdir -p $(TOBJ_DIRS)
 				@printf "$(YELLOW)$(BRIGHT)Generating %25s\t$(NORMAL)%40s\r" "$(NAME) src objects..." $@
@@ -203,6 +210,7 @@ $(TNAME):	$(mlx) $(LIBDIR)/$(LIBNAME) $(TOBJ)
 			@printf "$(GREEN)COMPLETE!!\n\n"
 
 $(LIBDIR)/$(LIBNAME):
+		@git submodule update --init --recursive
 		@make -C $(LIBDIR) --no-print-directory
 
 $(mlx):

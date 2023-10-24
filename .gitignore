@@ -7,3 +7,4 @@ minirt_bonus.dSYM
 *.out.dSYM
 *.log
 *.a
+src_test/src_shared/
