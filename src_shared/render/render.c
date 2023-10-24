@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 09:11:04 by rsoo              #+#    #+#             */
-/*   Updated: 2023/10/22 13:22:25 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/25 01:29:26 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**get_rt_files(int *num_of_files)
 
 	i = -1;
 	*num_of_files = scandir("rt_files/scenes", &name_list, NULL, NULL);
-	rt_files = (char **)malloc(*num_of_files * sizeof(char *));
+	rt_files = (char **)ft_calloc(*num_of_files + 1, sizeof(char *));
 	if (*num_of_files < 0)
 		perror("scandir");
 	else
@@ -53,6 +53,7 @@ void	render_menu(t_minirt *minirt)
 		if (rt_files[i][0] != '.')
 			mlx_string_put(minirt->mlx, minirt->win, 40, 20 + (20 * j++), WHITE,
 				rt_files[i]);
+	free_2darray(rt_files);
 }
 
 int	render(t_minirt *minirt, void (*draw_func)(t_minirt *minirt))

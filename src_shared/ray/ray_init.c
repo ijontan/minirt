@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 02:39:58 by itan              #+#    #+#             */
-/*   Updated: 2023/10/25 01:01:57 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/25 01:30:58 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_ray	ray_primary(t_cam *cam, t_offset offset)
 	int				pad;
 	t_quaternion	rotation;
 
+	ft_bzero(&ray, sizeof(t_ray));
 	if (cam->vp_width > cam->vp_height)
 	{
 		div_min = 1.0f / (float)cam->vp_height;

@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 22:46:40 by itan              #+#    #+#             */
-/*   Updated: 2023/10/25 00:53:34 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/25 02:09:37 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ t_hit_info	intersect_list(t_minirt *minirt, t_ray *ray)
 	{
 		hit_info.normal = ((t_plane *)(hit_info.object->object))->normalized_norm_vec;
 		hit_info.normal = vec3_multiply(hit_info.normal, -1);
-		hit_info.normal = vec3_normalize(hit_info.normal);
 	}
 	else if (hit_info.obj_type == CYLINDER)
 	{

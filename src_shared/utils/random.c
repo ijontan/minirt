@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:54:03 by itan              #+#    #+#             */
-/*   Updated: 2023/09/29 23:12:08 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/25 02:40:43 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 /**
  * @brief random number between 0 and 1, pcg random algorithm
- * 
- * @param state 
- * @return float 
+ *
+ * @param state
+ * @return float
  */
 float	random_num(unsigned int *state)
 {
@@ -30,9 +30,9 @@ float	random_num(unsigned int *state)
 
 /**
  * @brief normally distributed random number
- * 
- * @param state 
- * @return float 
+ *
+ * @param state
+ * @return float
  */
 float	normal_dist_random_num(unsigned int *state)
 {
@@ -42,6 +42,6 @@ float	normal_dist_random_num(unsigned int *state)
 
 	u1 = random_num(state);
 	u2 = random_num(state);
-	r = ft_sqrt(-2.0 * log(u1)) * ft_cos(PI_2 * u2);
+	r = sqrt(-2.0 * log(u1)) * ft_cos(PI_2 * u2);
 	return (r);
 }

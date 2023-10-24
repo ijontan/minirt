@@ -43,10 +43,10 @@ t_color	color_revert(t_color_c color_c)
 	t_color	color;
 
 	color.rgba = (t_rgba){
-		ft_sqrt(color_c.b * CHAR_SQ),
-		ft_sqrt(color_c.g * CHAR_SQ),
-		ft_sqrt(color_c.r * CHAR_SQ),
-		ft_sqrt(color_c.a * CHAR_SQ),
+		sqrt(color_c.b * CHAR_SQ),
+		sqrt(color_c.g * CHAR_SQ),
+		sqrt(color_c.r * CHAR_SQ),
+		sqrt(color_c.a * CHAR_SQ),
 	};
 	return (color);
 }

@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:40:55 by itan              #+#    #+#             */
-/*   Updated: 2023/10/25 00:38:27 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/25 01:50:15 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,20 @@ t_color_c	get_lights_color(t_minirt *rt, t_hit_info *hi)
 		hi->pt_to_l = vec3_subtract(pt_light->position, hi->intersect_pt);
 		if (!check_l_block(hi, rt))
 		{
+			// ret = color_correct_new(0, 1, 1, 0);
 			tmp_list = tmp_list->next;
 			continue ;
 		}
 		hi->pt_to_l = vec3_normalize(hi->pt_to_l);
 		dot_prod = vec3_dot(hi->pt_to_l, hi->normal);
 		if (dot_prod > 1)
-			dot_prod = 1;
+			dot_prod = 0;
 		tmp = color_scale(color_multiply(pt_light->material.color,
 					hi->material.color), dot_prod);
 		ret = color_add(ret, tmp);
 		reflect = reflection(hi->pt_to_l, hi->normal);
 		dot_prod = vec3_dot(reflect, hi->pt_to_cam);
-		if (dot_prod < 0)
+		if (dot_prod <= 0)
 			dot_prod = 0;
 		if (dot_prod > 1)
 			dot_prod = 1;

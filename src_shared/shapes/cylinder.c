@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 14:56:25 by itan              #+#    #+#             */
-/*   Updated: 2023/09/17 16:05:48 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/25 02:40:43 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 /**
  * @brief get the normal of a cylinder
- * 
- * @param cylinder 
- * @param point 
- * @return t_vec3 
+ *
+ * @param cylinder
+ * @param point
+ * @return t_vec3
  */
 t_vec3	cylinder_normal(t_cylinder *cylinder, t_vec3 point, float type)
 {
@@ -86,9 +86,9 @@ t_vec3	cylinder_caps_intersect(t_cylinder *cylinder, t_ray *ray, bool is_top)
 
 /**
  * @brief find the intersection of a ray and a cylinder
- * 
- * @param cylinder 
- * @param ray 
+ *
+ * @param cylinder
+ * @param ray
  * @return t_vec3
  */
 t_vec3	cylinder_intersect(t_cylinder *cylinder, t_ray *ray)
@@ -102,14 +102,14 @@ t_vec3	cylinder_intersect(t_cylinder *cylinder, t_ray *ray)
 
 	ray2.direction = vec3_cross(ray->direction, cylinder->normalized_axis);
 	oc = vec3_cross(vec3_subtract(ray->origin, cylinder->center),
-					cylinder->normalized_axis);
+			cylinder->normalized_axis);
 	abc.x = vec3_dot(ray2.direction, ray2.direction);
 	abc.y = 2.0f * vec3_dot(oc, ray2.direction);
 	abc.z = vec3_dot(oc, oc) - cylinder->radius * cylinder->radius;
 	discriminant = abc.y * abc.y - 4.0f * abc.x * abc.z;
 	if (discriminant < 0)
 		return (vec3_new(0, 0, 0));
-	discriminant = ft_sqrt(discriminant);
+	discriminant = sqrtf(discriminant);
 	sols.z = 1.0f / (2.0f * abc.x);
 	sols.x = (-abc.y - discriminant) * sols.z;
 	sols.y = (-abc.y + discriminant) * sols.z;
@@ -157,7 +157,7 @@ t_vec3	cylinder_intersect(t_cylinder *cylinder, t_ray *ray)
 
 // 	if (discriminant < 0)
 // 		return (vec3_new(0, 0, 0));
-// 	sqrtd = ft_sqrt(discriminant);
+// 	sqrtd = sqrt(discriminant);
 // 	t1 = (-abc.y - sqrtd) / (2.0f * abc.x);
 // 	t2 = (-abc.y + sqrtd) / (2.0f * abc.x);
 // 	sol1 = vec3_add(ray->origin, vec3_multiply(ray->direction, t1));

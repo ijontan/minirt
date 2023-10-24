@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 21:04:34 by itan              #+#    #+#             */
-/*   Updated: 2023/09/17 16:05:42 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/25 02:40:43 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ t_sphere	sphere_new(t_vec3 center, float radius, t_material material)
 
 /**
  * @brief normal of a sphere at a point
- * 
- * @param sphere 
- * @param point 
- * @return t_vec3 
+ *
+ * @param sphere
+ * @param point
+ * @return t_vec3
  */
 t_vec3	sphere_normal(t_sphere *sphere, t_vec3 point)
 {
@@ -36,9 +36,9 @@ t_vec3	sphere_normal(t_sphere *sphere, t_vec3 point)
 
 /**
  * @brief find the intersection of a ray and a sphere
- * 
- * @param sphere 
- * @param ray 
+ *
+ * @param sphere
+ * @param ray
  * @return t_vec3, x is the first intersection, y is the second,
 	z is a bool to indicate if there is an intersection
  */
@@ -57,7 +57,7 @@ t_vec3	sphere_intersect(t_sphere *sphere, t_ray *ray)
 	discriminant = abc.y * abc.y - 4.0f * abc.x * abc.z;
 	if (discriminant < 0)
 		return (vec3_new(0, 0, 0));
-	sqrtd = ft_sqrt(discriminant);
+	sqrtd = sqrt(discriminant);
 	sols.z = 1.0f / (2.0f * abc.x);
 	sols.x = (-abc.y - sqrtd) * sols.z;
 	sols.y = (-abc.y + sqrtd) * sols.z;
@@ -89,7 +89,7 @@ t_vec3	sphere_intersect(t_sphere *sphere, t_ray *ray)
 // 	discriminant = abc.y * abc.y - 4.0f * abc.x * abc.z;
 // 	if (discriminant < 0)
 // 		return (vec3_new(0, 0, 0));
-// 	sqrtd = ft_sqrt(discriminant);
+// 	sqrtd = sqrt(discriminant);
 // 	t1 = (-abc.y - sqrtd) / (2.0f * abc.x);
 // 	t2 = (-abc.y + sqrtd) / (2.0f * abc.x);
 // 	sol1 = vec3_add(ray->origin, vec3_multiply(ray->direction, t1));

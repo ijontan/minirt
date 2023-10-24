@@ -60,7 +60,7 @@ endif
 
 AR		= ar -rcs
 CC		= gcc
-CFLAGS	= -Wall -Werror -Wextra
+CFLAGS	= -Wall -Werror -Wextra -ffast-math
 RM		= rm -f
 HEADERS	= $(shell find includes -type f -name '*.h')
 INC		= $(addprefix -I , $(shell find includes -type d -name includes))

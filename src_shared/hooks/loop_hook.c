@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 21:04:12 by itan              #+#    #+#             */
-/*   Updated: 2023/10/25 01:01:18 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/25 01:11:51 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	loop_hook(t_minirt *minirt)
 	// mlx_put_image_to_window(minirt->mlx, minirt->win, minirt->image.image, 0,
 	// 	0);
 	render(minirt, &thread_init);
+	// render(minirt, &ray_cast);
 	// if (!minirt->key_events.holding_m_left)
 	// 	return (0);
 	// image.img = mlx_new_image(minirt->mlx, 1280, 720);

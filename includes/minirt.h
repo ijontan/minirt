@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/10/25 00:25:27 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/25 01:38:28 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,9 +218,9 @@ cylinder: obj_type = 3
  */
 typedef enum e_obj_type
 {
-	SPHERE,
-	PLANE,
-	CYLINDER,
+	SPHERE = 0,
+	PLANE = 1,
+	CYLINDER = 2,
 	AMB_LIGHT,
 	CAM,
 	LIGHT
