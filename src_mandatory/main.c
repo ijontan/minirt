@@ -6,15 +6,15 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/10/02 16:49:54 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/25 00:26:41 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minirt.h"
 
-t_ht *ht_value = 0;
-t_ht *ht_count = 0;
+t_ht	*ht_value = 0;
+t_ht	*ht_count = 0;
 void	set_pixel(t_minirt *minirt, t_hit_info hit_info, int x, int y)
 {
 	t_color_c	color;
@@ -112,9 +112,9 @@ void	draw_scene(t_minirt *minirt)
 	unsigned int	state;
 	t_ray			ray;
 	t_color_c		color;
-	// t_vec3			offset;
 	t_color_c		incoming_light;
 
+	// t_vec3			offset;
 	x = 0;
 	while (x < 1280)
 	{
@@ -148,7 +148,7 @@ void	draw_scene(t_minirt *minirt)
 	}
 }
 
- void	init_minirt(t_parse p)
+void	init_minirt(t_parse p)
 {
 	t_minirt	minirt;
 
@@ -163,6 +163,7 @@ void	draw_scene(t_minirt *minirt)
 	minirt.cam = p.camera;
 	minirt.pt_lights = p.pt_lights;
 	minirt.objects = p.objects;
+	minirt.outline_color = color_correct_new(0, 1, 1, 0);
 	// rendering
 	// render(&minirt);
 	render(&minirt, &ray_cast);
@@ -176,7 +177,7 @@ void	draw_scene(t_minirt *minirt)
 	mlx_loop(minirt.mlx);
 }
 
-void a(int a, int b)
+void	a(int a, int b)
 {
 	printf("a: %d %d\n", a, b);
 }

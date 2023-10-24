@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:40:55 by itan              #+#    #+#             */
-/*   Updated: 2023/09/28 22:42:42 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/25 00:38:27 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ t_color_c	get_lights_color(t_minirt *rt, t_hit_info *hi)
 	hi->pt_to_cam = vec3_normalize(hi->pt_to_cam);
 	tmp_list = rt->pt_lights;
 	ret = color_correct_new(0, 0, 0, 0);
+	// dot_prod = vec3_dot(hi->pt_to_cam, hi->normal);
+	// if (dot_prod > 0 && dot_prod < 0.5)
+	// 	return (rt->outline_color);
 	while (tmp_list)
 	{
 		pt_light = (t_pt_light *)(tmp_list->content);
@@ -65,7 +68,8 @@ t_color_c	get_lights_color(t_minirt *rt, t_hit_info *hi)
 			dot_prod = 1;
 		if (vec3_dot(hi->pt_to_l, hi->normal) <= 0)
 			dot_prod = 0;
-		// tmp = color_scale(color_correct_new(0, 1, 1, 1), hi->material.specular_i
+		// tmp = color_scale(color_correct_new(0, 1, 1, 1),
+		// hi->material.specular_i
 		// 	* powf(dot_prod, hi->material.shininess));
 		tmp = color_multiply(hi->material.specular, pt_light->material.color);
 		tmp = color_scale(tmp, hi->material.specular_i * powf(dot_prod,

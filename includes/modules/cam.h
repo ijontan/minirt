@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 14:31:04 by itan              #+#    #+#             */
-/*   Updated: 2023/10/22 14:46:28 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/25 00:43:21 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ typedef struct s_cam
 	t_vec3			up;
 	t_vec3			right;
 	t_vec3			position;
-	t_quaternion	rotation;
+	t_quaternion	rotation_h;
+	t_quaternion	rotation_v;
 	float			fov;
 	int				vp_width;
 	int				vp_height;

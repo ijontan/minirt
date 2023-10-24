@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 14:44:19 by itan              #+#    #+#             */
-/*   Updated: 2023/10/22 14:13:16 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/25 01:01:43 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,14 @@ int	mouse_move_hook(int x, int y, t_minirt *minirt)
 	{
 		quaternion_y_rotation(-0.01 * (x - minirt->mouse_events.prev_x),
 			&rotation);
-		quaternion_multiply(&minirt->cam.rotation, &rotation,
-			&minirt->cam.rotation);
+		quaternion_multiply(&minirt->cam.rotation_h, &rotation,
+			&minirt->cam.rotation_h);
 		quaternion_x_rotation(-(y - minirt->mouse_events.prev_y) * 0.01,
 			&rotation);
-		quaternion_multiply(&minirt->cam.rotation, &rotation,
-			&minirt->cam.rotation);
-		quaternion_normalize(&minirt->cam.rotation, &minirt->cam.rotation);
+		quaternion_multiply(&minirt->cam.rotation_v, &rotation,
+			&minirt->cam.rotation_v);
+		quaternion_normalize(&minirt->cam.rotation_v, &minirt->cam.rotation_v);
+		quaternion_normalize(&minirt->cam.rotation_h, &minirt->cam.rotation_h);
 		minirt->mouse_events.prev_x = x;
 		minirt->mouse_events.prev_y = y;
 		// mouse_move(minirt, 300, 300);

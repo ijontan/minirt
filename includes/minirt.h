@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/10/22 14:40:34 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/25 00:25:27 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,7 @@ typedef struct s_minirt
 	t_key_events	key_events;
 	t_mouse_events	mouse_events;
 	t_selections	selection;
+	t_color_c		outline_color;
 	pthread_t		*threads;
 	int				pixel_size;
 	bool			moving;

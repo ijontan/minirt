@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 16:16:39 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/19 13:25:19 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/25 00:53:48 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	parse_ambient_lighting(t_parse *p)
 		exit_parse(p->info, "Ambient lighting", 'r');
 	if (check_rgb(p->info[2], p))
 		p->amb_light.color = color_correct((t_color)color_new(0, p->rgb[0],
-				p->rgb[1], p->rgb[2]));
+					p->rgb[1], p->rgb[2]));
 	else
 		exit_parse(p->info, "Ambient lighting", 'c');
 }
@@ -39,7 +39,8 @@ void	parse_camera(t_parse *p)
 	p->camera.up = vec3_cross(p->camera.right, p->camera.direction);
 	p->camera.vp_height = 720;
 	p->camera.vp_width = 1280;
-	p->camera.rotation = quaternion_create_id();
+	p->camera.rotation_h = quaternion_create_id();
+	p->camera.rotation_v = quaternion_create_id();
 	p->camera.position = vec3_new(0, 0, 0);
 	p->camera.fov = ft_atof(p->info[3], p);
 	if (p->camera.fov < 0.0 || p->camera.fov > 180.0)
@@ -58,7 +59,7 @@ void	parse_lighting(t_parse *p)
 		exit_parse(p->info, "Lighting", 'r');
 	if (check_rgb(p->info[3], p))
 		pt_light->material.color = color_correct((t_color)color_new(0,
-				p->rgb[0], p->rgb[1], p->rgb[2]));
+					p->rgb[0], p->rgb[1], p->rgb[2]));
 	else
 		exit_parse(p->info, "Lighting", 'c');
 	ft_lstadd_front(&p->pt_lights, ft_lstnew(pt_light));

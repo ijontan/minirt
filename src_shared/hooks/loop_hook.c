@@ -6,40 +6,45 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 21:04:12 by itan              #+#    #+#             */
-/*   Updated: 2023/09/27 22:41:27 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/25 01:01:18 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+static t_vec3	transforms(t_vec3 position, t_vec3 direction,
+		t_quaternion rotation, float speed)
+{
+	t_vec3	ret;
+
+	ret = vec3_apply_rot(direction, rotation);
+	ret = vec3_multiply(ret, speed);
+	ret = vec3_add(position, ret);
+	return (ret);
+}
 
 int	loop_hook(t_minirt *minirt)
 {
 	if (!minirt->moving)
 		return (0);
 	if (minirt->key_events.holding_w)
-		minirt->cam.position = vec3_add(minirt->cam.position,
-			vec3_multiply(vec3_apply_rot(minirt->cam.direction,
-					minirt->cam.rotation), 2));
+		minirt->cam.position = transforms(minirt->cam.position,
+				minirt->cam.direction, minirt->cam.rotation_h, 2);
 	if (minirt->key_events.holding_s)
-		minirt->cam.position = vec3_subtract(minirt->cam.position,
-			vec3_multiply(vec3_apply_rot(minirt->cam.direction,
-					minirt->cam.rotation), 2));
+		minirt->cam.position = transforms(minirt->cam.position,
+				minirt->cam.direction, minirt->cam.rotation_h, -2);
 	if (minirt->key_events.holding_a)
-		minirt->cam.position = vec3_add(minirt->cam.position,
-			vec3_multiply(vec3_apply_rot(minirt->cam.right,
-					minirt->cam.rotation), 2));
+		minirt->cam.position = transforms(minirt->cam.position,
+				minirt->cam.right, minirt->cam.rotation_h, 2);
 	if (minirt->key_events.holding_d)
-		minirt->cam.position = vec3_subtract(minirt->cam.position,
-			vec3_multiply(vec3_apply_rot(minirt->cam.right,
-					minirt->cam.rotation), 2));
+		minirt->cam.position = transforms(minirt->cam.position,
+				minirt->cam.right, minirt->cam.rotation_h, -2);
 	if (minirt->key_events.holding_lsh)
-		minirt->cam.position = vec3_subtract(minirt->cam.position,
-			vec3_multiply(vec3_apply_rot(minirt->cam.up, minirt->cam.rotation),
-				2));
+		minirt->cam.position = transforms(minirt->cam.position, minirt->cam.up,
+				minirt->cam.rotation_h, -2);
 	if (minirt->key_events.holding_sp)
-		minirt->cam.position = vec3_add(minirt->cam.position,
-			vec3_multiply(vec3_apply_rot(minirt->cam.up, minirt->cam.rotation),
-				2));
+		minirt->cam.position = transforms(minirt->cam.position, minirt->cam.up,
+				minirt->cam.rotation_h, 2);
 	// ray_cast(minirt);
 	// thread_init(minirt);
 	// mlx_put_image_to_window(minirt->mlx, minirt->win, minirt->image.image, 0,
