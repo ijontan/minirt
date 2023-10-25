@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 14:48:41 by itan              #+#    #+#             */
-/*   Updated: 2023/10/17 18:45:19 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/25 16:31:29 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,15 @@ int	key_down_hook(int keycode, t_minirt *minirt)
 		minirt->moving = !minirt->moving;
 		if (minirt->moving)
 		{
-			minirt->mouse_events.prev_x = 300;
-			minirt->mouse_events.prev_y = 300;
-			mouse_move(minirt, minirt->cam.vp_width * 0.5, minirt->cam.vp_height * 0.5);
+			// minirt->mouse_events.prev_x = 300;
+			// minirt->mouse_events.prev_y = 300;
+			mouse_move(minirt, minirt->cam.vp_width * 0.5, minirt->cam.vp_height
+				* 0.5);
 			mouse_hide(minirt);
 		}
 		else
 			mouse_show(minirt);
-		}
+	}
 	return (0);
 }
 

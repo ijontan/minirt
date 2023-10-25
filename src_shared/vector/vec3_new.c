@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 21:17:37 by itan              #+#    #+#             */
-/*   Updated: 2023/10/02 18:48:48 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/25 15:52:13 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 /**
  * @brief create a new vector
- * 
- * @param x 
- * @param y 
- * @param z 
- * @return t_vec3 
+ *
+ * @param x
+ * @param y
+ * @param z
+ * @return t_vec3
  */
 t_vec3	vec3_new(float x, float y, float z)
 {
@@ -27,26 +27,26 @@ t_vec3	vec3_new(float x, float y, float z)
 
 /**
  * @brief random vector to any direction
- * 
- * @param state 
- * @return t_vec3 
+ *
+ * @param state
+ * @return t_vec3
  */
 t_vec3	random_vec3(unsigned int *state)
 {
 	t_vec3	vec;
 
-	vec.x = random_num(state) - 0.5;
-	vec.y = random_num(state) - 0.5;
-	vec.z = random_num(state) - 0.5;
+	vec.x = normal_dist_random_num(state) - 0.5;
+	vec.y = normal_dist_random_num(state) - 0.5;
+	vec.z = normal_dist_random_num(state) - 0.5;
 	return (vec3_normalize(vec));
 }
 
 /**
  * @brief random vector to a hemisphere
- *  
- * @param normal 
- * @param state 
- * @return t_vec3 
+ *
+ * @param normal
+ * @param state
+ * @return t_vec3
  */
 t_vec3	random_vec3_hs(t_vec3 normal, unsigned int *state)
 {

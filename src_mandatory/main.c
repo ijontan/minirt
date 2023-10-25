@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/10/25 00:26:41 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/25 15:38:51 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ void	init_minirt(t_parse p)
 	minirt.outline_color = color_correct_new(0, 1, 1, 0);
 	// rendering
 	// render(&minirt);
-	render(&minirt, &ray_cast);
+	render(&minirt, &thread_raytrace);
 	printf("\e[0;32mRendering done!!! ~~\n\e[0m");
 	// loop hooks
 	// render: found in the render dir

@@ -33,7 +33,7 @@ void	calculate_incoming(t_color_c *in_light, t_color_c *rayColor, t_material *ma
 	emitting = color_multiply(point_color, *rayColor);
 	emitting = color_scale(emitting, 0.5f);
 	*in_light = color_add(*in_light, emitting);
-	*rayColor = color_multiply(*rayColor, point_color);
+	*rayColor = color_add(*rayColor, point_color);
 	(void)rt;
 	(void)hi;
 }
@@ -68,7 +68,7 @@ t_color_c	ray_tracing(t_ray ray, t_minirt *minirt, unsigned int *state)
 	incoming_light = color_correct_new(0, 0, 0, 0);
 	color = color_correct_new(0, 1.0f, 1.0f, 1.0f);
 	i = -1;
-	while (++i < 3)
+	while (++i < 5)
 	{
 		hit_info = intersect_list(minirt, &ray);
 		if (hit_info.hit)
@@ -96,8 +96,8 @@ t_color_c	ray_tracing(t_ray ray, t_minirt *minirt, unsigned int *state)
 			calculate_incoming(&incoming_light, &color, &hit_info.material, minirt, &hit_info);
 			//calculate_incoming(&incoming_light, color,&hit_info.material, minirt, &hit_info);
 			color = color_multiply(color, hit_info.material.color);
-			// color = color_multiply(color, color_tween(hit_info.material.color,
-			// 			hit_info.material.specular, (double)is_specular));
+			color = color_multiply(color, color_tween(hit_info.material.color,
+						hit_info.material.specular, (double)is_specular));
 			// color = color_scale(color, 0.5f);
 		}
 		else
