@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 18:03:48 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/13 14:37:19 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/10/03 13:10:42 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ void	exit_parse(char **info, char *s, char c)
 			printf("normalized normal vector ");
 		else if (!ft_strncmp(s, "Cylinder", ft_strlen(s)))
 			printf("normalized vector of axis of cylinder");
+		else if (!ft_strncmp(s, "Cone", ft_strlen(s)))
+			printf("normalized vector of axis of cone ");
 		printf("out of range [-1, 1]\e[0m\n");
 	}
 	exit(EXIT_FAILURE);

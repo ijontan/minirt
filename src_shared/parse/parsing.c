@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:52:31 by rsoo              #+#    #+#             */
-/*   Updated: 2023/10/22 13:20:25 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/26 21:02:43 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static bool	parse_line(char *line, t_parse *p)
 
 	p->info = ft_split_nsep(line, (char *[]){" ", "\t", 0});
 	i = -1;
-	while (++i < 6)
+	while (++i < 7)
 	{
 		if (!ft_strncmp(p->info[0], p->obj_type[i], ft_strlen(p->info[0])))
 		{
@@ -72,18 +72,21 @@ static void	init_parsing(t_parse *p)
 	p->obj_type[3] = "sp";
 	p->obj_type[4] = "pl";
 	p->obj_type[5] = "cy";
+	p->obj_type[6] = "co";
 	p->func_ptr[0] = parse_ambient_lighting;
 	p->func_ptr[1] = parse_camera;
 	p->func_ptr[2] = parse_lighting;
 	p->func_ptr[3] = parse_sphere;
 	p->func_ptr[4] = parse_plane;
 	p->func_ptr[5] = parse_cylinder;
+	p->func_ptr[6] = parse_cone;
 	p->obj_code[0] = AMB_LIGHT;
 	p->obj_code[1] = CAM;
 	p->obj_code[2] = LIGHT;
 	p->obj_code[3] = SPHERE;
 	p->obj_code[4] = PLANE;
 	p->obj_code[5] = CYLINDER;
+	p->obj_code[6] = CONE;
 }
 
 bool	parse_rt_file(char *infile, t_parse *parse_info)

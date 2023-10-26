@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_objects.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 17:14:41 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/27 18:02:22 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/03 13:16:15 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	parse_plane(t_parse *p)
 	plane = ft_calloc(1, sizeof(t_plane));
 	ft_memset(plane, 0, sizeof(t_plane));
 	plane->point_on_plane = parse_coordinates(p->info[1], p);
-	if (check_normalized(p->info[2], p))
+	if (check_norm_vec_range(p->info[2], p))
 		plane->normalized_norm_vec = assign_norm_vec(p);
 	else
 		exit_parse(p->info, "Plane", 'n');
@@ -91,7 +91,7 @@ void	parse_cylinder(t_parse *p)
 	cylinder = ft_calloc(1, sizeof(t_cylinder));
 	ft_memset(cylinder, 0, sizeof(t_cylinder));
 	cylinder->center = parse_coordinates(p->info[1], p);
-	if (check_normalized(p->info[2], p))
+	if (check_norm_vec_range(p->info[2], p))
 		cylinder->normalized_axis = assign_norm_vec(p);
 	else
 		exit_parse(p->info, "Cylinder", 'n');
@@ -108,4 +108,32 @@ void	parse_cylinder(t_parse *p)
 		exit_parse(p->info, "Cylinder", 'c');
 	parse_material("Cylinder", 6, &cylinder->material, p);
 	add_object(&p->objects, cylinder, CYLINDER);
+}
+
+void	parse_cone(t_parse *p)
+{
+	t_cone	*cone;
+
+	cone = ft_calloc(1, sizeof(t_cone));
+	ft_memset(cone, 0, sizeof(t_cone));
+	cone->tip = parse_coordinates(p->info[1], p);
+	if (check_norm_vec_range(p->info[2], p))
+		cone->normalized_axis = assign_norm_vec(p);
+	else
+		exit_parse(p->info, "Cone", 'n');
+	cone->radius = ft_atof(p->info[3], p) / 2;
+	if (cone->radius <= 0.0)
+		exit_parse(p->info, "Cone", 'd');
+	cone->height = ft_atof(p->info[4], p);
+	if (cone->height <= 0.0)
+		exit_parse(p->info, "Cone", 'h');
+	if (check_rgb(p->info[5], p))
+		cone->material.color = color_correct((t_color)color_new(0,
+				p->rgb[0], p->rgb[1], p->rgb[2]));
+	else
+		exit_parse(p->info, "Cone", 'c');
+	parse_material("Cone", 6, &cone->material, p);
+	cone->angle = ft_atan(cone->radius / cone->height);
+	cone->cos_squared = ft_power(ft_cos(cone->angle), 2);
+	add_object(&p->objects, cone, CONE);
 }

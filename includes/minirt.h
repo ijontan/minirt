@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/10/25 15:30:31 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/26 21:15:46 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@
 # define PINK 0xFF00FF
 # define PURPLE 0x7800FF
 
+// useful numbers
+// - number of objects + env objects
+# define PARSE_NUM 7
+
 /* -------------------------------------------------------------------------- */
 /*                                  Mandatory                                 */
 /* -------------------------------------------------------------------------- */
@@ -77,9 +81,9 @@ typedef struct s_atof
 typedef struct s_parse
 {
 	int				infile_fd;
-	char			*obj_type[6];
-	void			(*func_ptr[6])(struct s_parse *);
-	int				obj_code[6];
+	char			*obj_type[PARSE_NUM];
+	void			(*func_ptr[PARSE_NUM])(struct s_parse *);
+	int				obj_code[PARSE_NUM];
 	char			**info;
 	int				rgb[3];
 	float			coords[3];
@@ -103,6 +107,7 @@ void				add_object(t_list **objects, void *object,
 void				parse_sphere(t_parse *p);
 void				parse_plane(t_parse *p);
 void				parse_cylinder(t_parse *p);
+void				parse_cone(t_parse *p);
 
 // parse_environment.c
 void				parse_ambient_lighting(t_parse *p);
@@ -111,7 +116,7 @@ void				parse_lighting(t_parse *p);
 
 // parse_attr.c
 bool				check_rgb(char *s, t_parse *p);
-bool				check_normalized(char *s, t_parse *p);
+bool				check_norm_vec_range(char *s, t_parse *p);
 t_vec3				assign_norm_vec(t_parse *p);
 t_vec3				parse_coordinates(char *s, t_parse *p);
 
@@ -221,6 +226,7 @@ typedef enum e_obj_type
 	SPHERE = 0,
 	PLANE = 1,
 	CYLINDER = 2,
+	CONE = 3,
 	AMB_LIGHT,
 	CAM,
 	LIGHT

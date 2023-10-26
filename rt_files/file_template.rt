@@ -24,3 +24,7 @@ pl
 # Cylinder															Material
 #	center	axis direction	diameter	height		color			specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission_color	shininess
 cy
+
+# Cone																Material
+#	tip		axis direction	diameter	height		color			specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission_color	shininess
+co

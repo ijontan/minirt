@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bounding_box.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 00:32:55 by itan              #+#    #+#             */
-/*   Updated: 2023/10/22 14:50:16 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/26 21:01:21 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ float	float_max(float a, float b)
  * @param point
  * @return t_bound_box
  */
-t_bound_box	bound_box_expend(t_bound_box box, t_vec3 point)
+t_bound_box	bound_box_expand(t_bound_box box, t_vec3 point)
 {
 	t_bound_box	new_box;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_environment.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 16:16:39 by rsoo              #+#    #+#             */
-/*   Updated: 2023/10/25 00:53:48 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/26 21:02:27 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	parse_ambient_lighting(t_parse *p)
 void	parse_camera(t_parse *p)
 {
 	p->camera.origin = parse_coordinates(p->info[1], p);
-	if (check_normalized(p->info[2], p))
+	if (check_norm_vec_range(p->info[2], p))
 		p->camera.direction = assign_norm_vec(p);
 	else
 		exit_parse(p->info, "Camera", 'n');

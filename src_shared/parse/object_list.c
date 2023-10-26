@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:22:28 by itan              #+#    #+#             */
-/*   Updated: 2023/09/19 13:12:55 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/03 14:15:07 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,20 @@ t_bound_box	get_cylinder_bound(t_cylinder *cylinder)
 	return (bound_box);
 }
 
+t_bound_box	get_cone_bound(t_cone *cone)
+{
+	t_bound_box	bound_box;
+	t_vec3		vec3;
+
+	vec3 = vec3_multiply(cone->normalized_axis, cone->height * 0.5
+		+ cone->radius * 2);
+	bound_box.min = vec3_subtract(cone->tip, vec3);
+	bound_box.max = vec3_add(cone->tip, vec3);
+	bound_box.min = vec3_new(-INFINITY, -INFINITY, -INFINITY);
+	bound_box.max = vec3_new(INFINITY, INFINITY, INFINITY);
+	return (bound_box);
+}
+
 void	add_object(t_list **objects, void *object, unsigned char type)
 {
 	t_object	*obj;
@@ -62,6 +76,8 @@ void	add_object(t_list **objects, void *object, unsigned char type)
 		obj->bounding_box = get_plane_bound(object);
 	else if (type == CYLINDER)
 		obj->bounding_box = get_cylinder_bound(object);
+	else if (type == CONE)
+		obj->bounding_box = get_cone_bound(object);
 	ft_lstadd_front(objects, ft_lstnew(obj));
 }
 

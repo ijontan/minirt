@@ -1,21 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shapes.h                                           :+:      :+:    :+:   */
+/*   cone.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/22 14:37:08 by itan              #+#    #+#             */
-/*   Updated: 2023/10/26 21:13:28 by rsoo             ###   ########.fr       */
+/*   Created: 2023/10/26 21:11:10 by rsoo              #+#    #+#             */
+/*   Updated: 2023/10/26 21:12:54 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHAPES_H
-# define SHAPES_H
+#ifndef CONE_H
+# define CONE_H
 
-# include "shapes/cylinder.h"
-# include "shapes/plane.h"
-# include "shapes/sphere.h"
-# include "shapes/cone.h"
+# include "../material.h"
+# include "../ray.h"
+# include "../vec3.h"
+
+typedef struct s_cone
+{
+	t_vec3			tip;
+	t_vec3			normalized_axis;
+	float			diameter;
+	float			height;
+	float			radius;
+	float			angle;
+	float			cos_squared;
+	t_material		material;
+}				t_cone;
+
+t_vec3				cone_intersect(t_cone *cone, t_ray *ray);
+t_vec3				cone_normal(t_cone *cone, t_vec3 point);
 
 #endif

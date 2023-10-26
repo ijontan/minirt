@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 20:20:11 by rsoo              #+#    #+#             */
-/*   Updated: 2023/09/14 17:26:47 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/10/02 11:20:33 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ bool	check_rgb(char *s, t_parse *p)
 	return (true);
 }
 
-bool	check_normalized(char *s, t_parse *p)
+bool	check_norm_vec_range(char *s, t_parse *p)
 {
 	char	**comp;
 	int		i;
