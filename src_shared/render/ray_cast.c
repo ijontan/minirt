@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:01:48 by itan              #+#    #+#             */
-/*   Updated: 2023/10/26 15:26:00 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/27 05:43:39 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	ray_cast(t_minirt *minirt)
 			if (hit_info.hit)
 				color = get_color(minirt, &hit_info);
 			else
-				color = minirt->amb_light.color;
+				color = color_scale(minirt->amb_light.color,
+						minirt->amb_light.ratio);
 			put_pixel(&minirt->image, xy, color_revert(color).as_int);
 		}
 	}

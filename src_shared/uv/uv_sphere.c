@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 01:52:10 by itan              #+#    #+#             */
-/*   Updated: 2023/10/27 04:43:47 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/27 05:52:38 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ t_offset	uv_sphere(t_vec3 point, t_offset size)
 	(void)size;
 	theta = acos(-point.y);
 	phi = atan2(-point.z, point.x) + M_PI;
-	return ((t_offset){.x = size.x * phi * PI_DIV2, .y = size.y * theta
-		* PI_DIV});
+	return ((t_offset){.x = (int)(size.x * phi * PI_DIV2), .y = (int)(size.y
+			* theta * PI_DIV)});
 }

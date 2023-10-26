@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 22:46:40 by itan              #+#    #+#             */
-/*   Updated: 2023/10/27 05:09:46 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/27 05:52:59 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,13 @@ t_hit_info	intersect_list(t_minirt *minirt, t_ray *ray)
 			hit_info.material.color = get_pixel_color(hit_info.material.texture,
 					uv_sphere(hit_info.normal,
 						hit_info.material.texture->size));
-		// if (hit_info.material.norm_map)
-		// 	hit_info.normal = get_pixel_vec3(hit_info.material.norm_map,
-		// 			uv_sphere(hit_info.normal,
-		// 				hit_info.material.norm_map->size));
+		if (hit_info.material.norm_map)
+			intersect = get_pixel_vec3(hit_info.material.norm_map,
+					uv_sphere(hit_info.normal,
+						hit_info.material.norm_map->size));
+		hit_info.normal = (t_vec3){.x = hit_info.normal.x * intersect.x,
+			.y = hit_info.normal.y * intersect.y, .z = hit_info.normal.z
+			* intersect.z};
 		// hit_info.normal = vec3_normalize(hit_info.normal);
 	}
 	else if (hit_info.obj_type == PLANE)
