@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/09/27 22:21:54 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/26 17:48:32 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,85 +43,6 @@ void	gradient(t_image *image)
 	}
 }
 
-void	ray_cast(t_minirt *minirt)
-{
-	int			x;
-	int			y;
-	t_ray		ray;
-	t_color_c	color;
-	t_hit_info	hit_info;
-
-	// printf("minirt->cam.origin: %f %f %f\n", minirt->cam.origin.x,
-	// 		minirt->cam.origin.y, minirt->cam.origin.z);
-	x = 0;
-	while (x < 1280)
-	{
-		y = 0;
-		while (y < 720)
-		{
-			ft_memset(&ray, 0, sizeof(t_ray));
-			ray = ray_primary(&minirt->cam, (t_offset){.x = x, .y = y});
-			hit_info = intersect_list(minirt, &ray);
-			color = color_correct_new(0, 0, 0, 0);
-			if (hit_info.hit)
-			{
-				color = hit_info.material.color;
-				color = get_color(minirt, &hit_info);
-				put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
-					color_revert(color).as_int);
-			}
-			++y;
-		}
-		++x;
-	}
-}
-
-void	draw_scene(t_minirt *minirt)
-{
-	int				x;
-	int				y;
-	int				cycle;
-	unsigned int	state;
-	t_ray			ray;
-	t_color_c		color;
-	t_vec3			offset;
-	t_color_c		incoming_light;
-
-	x = 0;
-	while (x < 1280)
-	{
-		y = 0;
-		while (y < 720)
-		{
-			color = color_correct_new(0, 0, 0, 0);
-			// incoming_light = color_correct_new(0, 0, 0, 0);
-			// color = ray_tracing(&ray, minirt, &state);
-			// incoming_light = ray_tracing(&ray, minirt, &state);
-			// color = color_add(color, incoming_light);
-			// incoming_light = ray_tracing(&ray, minirt, &state);
-			// color = color_add(color, incoming_light);
-			cycle = -1;
-			ray = ray_primary(&minirt->cam, (t_offset){.x = x, .y = y});
-			while (++cycle < 5)
-			{
-				state = (unsigned int)((x + y * 1280 + cycle * 136274));
-				offset.x = random_num(&state) - 0.5;
-				offset.y = random_num(&state) - 0.5;
-				offset.z = random_num(&state) - 0.5;
-				offset = vec3_multiply(vec3_normalize(offset), 0.00015);
-				ray.direction = vec3_add(ray.direction, offset);
-				incoming_light = ray_tracing(ray, minirt, &state);
-				color = color_add(color, incoming_light);
-			}
-			color = color_scale(color, 1 / (float)cycle);
-			put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
-				color_revert(color).as_int);
-			++y;
-		}
-		++x;
-	}
-}
-
 static void	init_minirt(void)
 {
 	t_image		image;
@@ -138,7 +59,7 @@ static void	init_minirt(void)
 	// images
 	image.image = mlx_new_image(minirt.mlx, 1280, 720);
 	image.buffer = mlx_get_data_addr(image.image, &image.pixel_bits,
-		&image.line_bytes, &image.endian);
+			&image.line_bytes, &image.endian);
 	minirt.image = image;
 	cam_init(&minirt.cam);
 	minirt.amb_light.color = color_correct_new(0, 1, 1, 1);

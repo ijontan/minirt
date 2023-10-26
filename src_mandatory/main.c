@@ -6,32 +6,11 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/10/25 15:38:51 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/26 20:21:00 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "minirt.h"
-
-t_ht	*ht_value = 0;
-t_ht	*ht_count = 0;
-void	set_pixel(t_minirt *minirt, t_hit_info hit_info, int x, int y)
-{
-	t_color_c	color;
-
-	if (hit_info.hit)
-	{
-		color = hit_info.material.color;
-		put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
-			color_revert(color).as_int);
-		return ;
-	}
-	color.r = minirt->amb_light.color.r * minirt->amb_light.ratio;
-	color.g = minirt->amb_light.color.g * minirt->amb_light.ratio;
-	color.b = minirt->amb_light.color.b * minirt->amb_light.ratio;
-	put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
-		color_revert(color).as_int);
-}
 
 /*
 perfect reflection: vector that represents the reflection of an incident ray
@@ -50,104 +29,6 @@ amb_color: the color of the object after ambient light is applied (object color
 
 */
 
-void	ray_cast(t_minirt *minirt)
-{
-	int			x;
-	int			y;
-	t_ray		ray;
-	t_color_c	color;
-	t_hit_info	hit_info;
-
-	// int			pixel_size;
-	// int			i;
-	// int			j;
-	// pixel_size = 9;
-	// printf("minirt->cam.origin: %f %f %f\n", minirt->cam.origin.x,
-	// 		minirt->cam.origin.y, minirt->cam.origin.z);
-	y = 0;
-	while (y < 720)
-	{
-		x = 0;
-		while (x < 1280)
-		{
-			// if ((x % pixel_size != 0 || y % pixel_size != 0))
-			// {
-			// 	++x;
-			// 	continue ;
-			// }
-			ft_memset(&ray, 0, sizeof(t_ray));
-			ray = ray_primary(&minirt->cam, (t_offset){.x = x, .y = y});
-			hit_info = intersect_list(minirt, &ray);
-			color = color_correct_new(0, 0, 0, 0);
-			if (hit_info.hit)
-			{
-				color = get_color(minirt, &hit_info);
-				put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
-					color_revert(color).as_int);
-			}
-			else
-				put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
-					color_revert(minirt->amb_light.color).as_int);
-			// i = -1;
-			// while (minirt->moving && ++i < pixel_size && x + i < 1280)
-			// {
-			// 	j = -1;
-			// 	while (++j < pixel_size && y + j < 720)
-			// 	{
-			// 		put_pixel(&minirt->image, (t_offset){.x = x + i, .y = y
-			// 			+ j}, color_revert(color).as_int);
-			// 	}
-			// }
-			++x;
-		}
-		++y;
-	}
-}
-
-void	draw_scene(t_minirt *minirt)
-{
-	int				x;
-	int				y;
-	int				cycle;
-	unsigned int	state;
-	t_ray			ray;
-	t_color_c		color;
-	t_color_c		incoming_light;
-
-	// t_vec3			offset;
-	x = 0;
-	while (x < 1280)
-	{
-		y = 0;
-		while (y < 720)
-		{
-			color = color_correct_new(0, 0, 0, 0);
-			// incoming_light = color_correct_new(0, 0, 0, 0);
-			// color = ray_tracing(&ray, minirt, &state);
-			// incoming_light = ray_tracing(&ray, minirt, &state);
-			// color = color_add(color, incoming_light);
-			// incoming_light = ray_tracing(&ray, minirt, &state);
-			// color = color_add(color, incoming_light);
-			cycle = -1;
-			ray = ray_primary(&minirt->cam, (t_offset){.x = x, .y = y});
-			state = (unsigned int)((x + y * 1280));
-			while (++cycle < 10)
-			{
-				// offset = vec3_multiply(random_vec3_hs(ray.direction, &state),
-				// 	0.0005);
-				// ray.direction = vec3_add(ray.direction, offset);
-				incoming_light = ray_tracing(ray, minirt, &state);
-				color = color_add(color, incoming_light);
-			}
-			color = color_scale(color, 1 / (float)cycle);
-			put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
-				color_revert(color).as_int);
-			++y;
-		}
-		++x;
-	}
-}
-
 void	init_minirt(t_parse p)
 {
 	t_minirt	minirt;
@@ -158,28 +39,14 @@ void	init_minirt(t_parse p)
 	minirt.win = mlx_new_window(minirt.mlx, 1280, 720, "Hello world!");
 	init_hooks(&minirt);
 	minirt.pixel_size = 3;
-	// scene objects
 	minirt.amb_light = p.amb_light;
 	minirt.cam = p.camera;
 	minirt.pt_lights = p.pt_lights;
 	minirt.objects = p.objects;
 	minirt.outline_color = color_correct_new(0, 1, 1, 0);
-	// rendering
-	// render(&minirt);
-	render(&minirt, &thread_raytrace);
+	render(&minirt, &thread_init);
 	printf("\e[0;32mRendering done!!! ~~\n\e[0m");
-	// loop hooks
-	// render: found in the render dir
-	// mlx_loop_hook(minirt.mlx, render, &minirt);
-	// mlx_hook(minirt.win, 2, 1, key_down_hook, &minirt);
-	// mlx_hook(minirt.win, 17, 1, x_button_exit, &minirt);
-	// mlx rendering
 	mlx_loop(minirt.mlx);
-}
-
-void	a(int a, int b)
-{
-	printf("a: %d %d\n", a, b);
 }
 
 int	main(int ac, char **av)

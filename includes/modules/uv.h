@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   uv_sphere.c                                        :+:      :+:    :+:   */
+/*   uv.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/11 01:52:10 by itan              #+#    #+#             */
-/*   Updated: 2023/10/26 17:45:34 by itan             ###   ########.fr       */
+/*   Created: 2023/10/26 17:42:50 by itan              #+#    #+#             */
+/*   Updated: 2023/10/26 17:45:55 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#ifndef UV_H
+# define UV_H
+# include "image.h"
+# include "vec3.h"
 
-#define PI_DIV 0.31830988618
-#define PI_DIV2 0.15915494309
+t_offset	uv_sphere(t_vec3 point, t_offset size);
 
-t_offset	uv_sphere(t_vec3 point, t_offset size)
-{
-	float	theta;
-	float	phi;
-
-	(void)size;
-	theta = ft_acos(-point.y);
-	phi = ft_atan2(-point.z, point.x) + M_PI;
-	return ((t_offset){.x = phi * PI_DIV2, .y = theta * PI_DIV});
-}
+#endif
