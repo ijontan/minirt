@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 22:46:40 by itan              #+#    #+#             */
-/*   Updated: 2023/10/26 21:02:58 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/10/26 21:23:39 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_hit_info	intersect_list(t_minirt *minirt, t_ray *ray)
 			else if (tmp->type == CYLINDER)
 				hit_info.material = ((t_cylinder *)tmp->object)->material;
 			else if (tmp->type == CONE) {
-				printf("cone intersected\n");
+				// printf("cone intersected\n");
 				hit_info.material = ((t_cone *)tmp->object)->material;
 			}
 			prev_intersect = intersect;
@@ -70,7 +70,7 @@ t_hit_info	intersect_list(t_minirt *minirt, t_ray *ray)
 	}
 	if (hit_info.hit == false)
 	{
-		printf("no hit\n");
+		// printf("no hit\n");
 		return (hit_info);
 	}
 	hit_info.intersect_pt = vec3_multiply(ray->direction, prev_intersect.x);

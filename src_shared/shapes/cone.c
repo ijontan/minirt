@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:17:20 by rsoo              #+#    #+#             */
-/*   Updated: 2023/10/03 14:44:17 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/10/26 21:24:04 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ t_vec3	cone_intersect(t_cone *cone, t_ray *ray)
 	// printf("a %f, b %f, c %f\n", abc.x, abc.y, abc.z);
 
 	discriminant = abc.y * abc.y - 4.0f * abc.x * abc.z;
-	printf("disc %f\n", discriminant);
+	// printf("disc %f\n", discriminant);
 	if (discriminant < 0)
 		return (vec3_new(0, 0, 0));
 	sqrtd = ft_sqrt(discriminant);
 	sols.z = 1.0f / (2.0f * abc.x);
 	sols.x = (-abc.y - sqrtd) * sols.z;
 	sols.y = (-abc.y + sqrtd) * sols.z;
-	printf("t1 %f, t2 %f\n", sols.x, sols.y);
+	// printf("t1 %f, t2 %f\n", sols.x, sols.y);
 	sols.z = 2;
 	if (sols.x > sols.y)
 	{

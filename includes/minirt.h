@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/10/26 21:15:46 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/10/26 21:51:06 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define MID_Y 540
 
 // colors
+# define BLACK 0x000000
 # define WHITE 0xFFFFFF
 # define BLUE 0x0000FF
 # define GREEN 0x00FF00
