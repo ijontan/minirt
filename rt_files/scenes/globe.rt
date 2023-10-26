@@ -1,0 +1,19 @@
+# Ambient light
+# ratio		color
+A 0.1		255,255,255
+
+# Camera
+# position	direction	field of view
+C 0,0,0		0,0,1		80
+
+# Point light
+# position		ratio		color
+L 0,400,50		1			255,255,255
+L 0,400,100		1			255,0,255
+
+# __________________________________________________________________________________________________________________________________________________________________
+# Objects
+
+# Sphere															Material
+#	centre		diameter	color									specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission color	shininess   textuere                    norm_map
+sp	0,0,200	    200			255,255,255								1				255,255,255		1					0				0				0,0,0			10          rt_files/textures/earth.xpm rt_files/textures/earth_norm.xpm

@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 22:46:40 by itan              #+#    #+#             */
-/*   Updated: 2023/10/25 02:09:37 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/27 05:09:46 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,18 +71,29 @@ t_hit_info	intersect_list(t_minirt *minirt, t_ray *ray)
 	{
 		hit_info.normal = ((t_sphere *)(hit_info.object->object))->center;
 		hit_info.normal = vec3_subtract(hit_info.intersect_pt, hit_info.normal);
+		hit_info.normal = vec3_normalize(hit_info.normal);
+		if (hit_info.material.texture)
+			hit_info.material.color = get_pixel_color(hit_info.material.texture,
+					uv_sphere(hit_info.normal,
+						hit_info.material.texture->size));
+		// if (hit_info.material.norm_map)
+		// 	hit_info.normal = get_pixel_vec3(hit_info.material.norm_map,
+		// 			uv_sphere(hit_info.normal,
+		// 				hit_info.material.norm_map->size));
+		// hit_info.normal = vec3_normalize(hit_info.normal);
 	}
 	else if (hit_info.obj_type == PLANE)
 	{
 		hit_info.normal = ((t_plane *)(hit_info.object->object))->normalized_norm_vec;
 		hit_info.normal = vec3_multiply(hit_info.normal, -1);
+		hit_info.normal = vec3_normalize(hit_info.normal);
 	}
 	else if (hit_info.obj_type == CYLINDER)
 	{
 		hit_info.normal = cylinder_normal((t_cylinder *)(hit_info.object->object),
 				hit_info.intersect_pt, prev_intersect.z);
+		hit_info.normal = vec3_normalize(hit_info.normal);
 	}
-	hit_info.normal = vec3_normalize(hit_info.normal);
 	return (hit_info);
 }
 

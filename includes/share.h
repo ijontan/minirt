@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 14:15:45 by itan              #+#    #+#             */
-/*   Updated: 2023/10/22 14:47:37 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/27 04:32:12 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "modules/material.h"
 # include "modules/ray.h"
 # include "modules/shapes.h"
+# include "modules/uv.h"
 # include "modules/vec3.h"
 
 #endif

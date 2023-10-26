@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/10/25 15:30:31 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/27 04:08:51 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,6 +272,7 @@ void				thread_raytrace(t_minirt *minirt);
 t_color_c			get_color(t_minirt *rt, t_hit_info *hi);
 t_color_c			get_lights_color(t_minirt *rt, t_hit_info *hi);
 t_image				create_image(t_minirt *rt);
+t_image				load_image(t_minirt *rt, char *path);
 
 /* ------------------------------- mouse_util ------------------------------- */
 
