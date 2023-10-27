@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 09:11:04 by rsoo              #+#    #+#             */
-/*   Updated: 2023/10/26 22:07:30 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/10/27 18:36:47 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,22 @@ void	render_menu(t_minirt *minirt)
 			// printf("putting pixels\n");
 		}
 	}
-
-	mlx_string_put(minirt->mlx, minirt->win, 20, 20, FONT_COLOR, "w: move forward");
-	mlx_string_put(minirt->mlx, minirt->win, 20, 40, FONT_COLOR, "s: move backward");
-	mlx_string_put(minirt->mlx, minirt->win, 20, 60, FONT_COLOR, "a: move left");
-	mlx_string_put(minirt->mlx, minirt->win, 20, 80, FONT_COLOR, "d: move right");
-	mlx_string_put(minirt->mlx, minirt->win, 20, 100, FONT_COLOR, "space: move up");
-	mlx_string_put(minirt->mlx, minirt->win, 20, 120, FONT_COLOR, "shift: move down");
-	mlx_string_put(minirt->mlx, minirt->win, 20, 140, FONT_COLOR, "r: render scene");
-	mlx_string_put(minirt->mlx, minirt->win, 20, 160, FONT_COLOR, "f: toggle mode (flying / edit)");
+	mlx_string_put(minirt->mlx, minirt->win, 20, 20, FONT_COLOR,
+		"w: move forward");
+	mlx_string_put(minirt->mlx, minirt->win, 20, 40, FONT_COLOR,
+		"s: move backward");
+	mlx_string_put(minirt->mlx, minirt->win, 20, 60, FONT_COLOR,
+		"a: move left");
+	mlx_string_put(minirt->mlx, minirt->win, 20, 80, FONT_COLOR,
+		"d: move right");
+	mlx_string_put(minirt->mlx, minirt->win, 20, 100, FONT_COLOR,
+		"space: move up");
+	mlx_string_put(minirt->mlx, minirt->win, 20, 120, FONT_COLOR,
+		"shift: move down");
+	mlx_string_put(minirt->mlx, minirt->win, 20, 140, FONT_COLOR,
+		"r: render scene");
+	mlx_string_put(minirt->mlx, minirt->win, 20, 160, FONT_COLOR,
+		"f: toggle mode (flying / edit)");
 	mlx_string_put(minirt->mlx, minirt->win, 20, 180, FONT_COLOR, "esc: exit");
 	i = -1;
 	j = 1;
@@ -74,16 +81,16 @@ void	render_menu(t_minirt *minirt)
 	rt_files = get_rt_files(&num_of_files);
 	while (++i < num_of_files)
 		if (rt_files[i][0] != '.')
-			mlx_string_put(minirt->mlx, minirt->win, 40, 240 + (20 * j++), FONT_COLOR,
-				rt_files[i]);
-	
+			mlx_string_put(minirt->mlx, minirt->win, 40, 240 + (20 * j++),
+				FONT_COLOR, rt_files[i]);
 	free_2darray(rt_files);
 }
 
 int	render(t_minirt *minirt, void (*draw_func)(t_minirt *minirt))
 {
 	// static bool	status;
-	minirt->image = create_image(minirt);
+	minirt->image = create_image(minirt, (t_offset){.x = minirt->cam.vp_width,
+			.y = minirt->cam.vp_height});
 	// mlx_clear_window(minirt->mlx, minirt->win);
 	// if (!status)
 	// {

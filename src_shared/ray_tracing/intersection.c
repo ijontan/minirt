@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersection.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 22:46:40 by itan              #+#    #+#             */
-/*   Updated: 2023/10/27 13:56:18 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/10/27 20:42:42 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ t_hit_info	intersect_list(t_minirt *minirt, t_ray *ray)
 				hit_info.material = ((t_plane *)tmp->object)->material;
 			else if (tmp->type == CYLINDER)
 				hit_info.material = ((t_cylinder *)tmp->object)->material;
-			else if (tmp->type == CONE) {
+			else if (tmp->type == CONE)
+			{
 				// printf("cone intersected\n");
 				hit_info.material = ((t_cone *)tmp->object)->material;
 			}
@@ -84,14 +85,20 @@ t_hit_info	intersect_list(t_minirt *minirt, t_ray *ray)
 			hit_info.material.color = get_pixel_color(hit_info.material.texture,
 					uv_sphere(hit_info.normal,
 						hit_info.material.texture->size));
+		if (hit_info.material.specular_map)
+			hit_info.material.specular = get_pixel_color(hit_info.material.specular_map,
+					uv_sphere(hit_info.normal,
+						hit_info.material.norm_map->size));
 		if (hit_info.material.norm_map)
+		{
 			intersect = get_pixel_vec3(hit_info.material.norm_map,
 					uv_sphere(hit_info.normal,
 						hit_info.material.norm_map->size));
-		hit_info.normal = (t_vec3){.x = hit_info.normal.x * intersect.x,
-			.y = hit_info.normal.y * intersect.y, .z = hit_info.normal.z
-			* intersect.z};
-		// hit_info.normal = vec3_normalize(hit_info.normal);
+			hit_info.normal = (t_vec3){.x = hit_info.normal.x * intersect.x,
+				.y = hit_info.normal.y * intersect.y, .z = hit_info.normal.z
+				* intersect.z};
+			hit_info.normal = vec3_normalize(hit_info.normal);
+		}
 	}
 	else if (hit_info.obj_type == PLANE)
 	{

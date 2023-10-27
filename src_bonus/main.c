@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/10/27 05:39:09 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/27 16:03:17 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ void	load_texture(t_minirt *rt, void *content)
 		*img = load_image(rt, "rt_files/textures/earth_norm.xpm");
 		mt->norm_map = img;
 	}
+	img = ft_calloc(1, sizeof(t_image));
+	*img = load_image(rt, "rt_files/textures/earth_spec.xpm");
+	mt->specular_map = img;
 }
 
 void	init_minirt(t_parse p)

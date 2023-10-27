@@ -65,6 +65,7 @@ t_vec3	cone_intersect(t_cone *cone, t_ray *ray)
 
 // 	// if (cone->angle <= 0 || cone->angle >= M_PI * 0.5)
 // 	// 	return (vec3_new(0, 0, 0));
+/*
 // 	abc.x = cone->angle;
 // 	abc.x = ft_power(ray->direction.x, 2) + \
 // 			ft_power(ray->direction.y, 2) - \
@@ -76,6 +77,7 @@ t_vec3	cone_intersect(t_cone *cone, t_ray *ray)
 // 			ft_power(ray->origin.y, 2) - \
 // 			ft_power(ray->origin.z, 2);
 // 	// printf("a %f, b %f, c %f\n\n", abc.x, abc.y, abc.z);
+*/
 
 // 	discriminant = abc.y * abc.y - 4.0f * abc.x * abc.z;
 // 	// printf("disc %f\n", discriminant);

@@ -8,14 +8,12 @@ C 0,0,0		0,0,1		80
 
 # Point light
 # position		ratio		color
-L 400,0,0		1			255,255,255
-L 300,-30,0		1			255,255,255
-L 0,0,0		1			255,255,255
-L 400,0,50		1			255,0,255
+L -2000,0,-500		1			255,255,255
+
 
 # __________________________________________________________________________________________________________________________________________________________________
 # Objects
 
 # Sphere															Material
 #	centre		diameter	color									specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission color	shininess   textuere                    norm_map
-sp	0,0,200	    200			255,255,255								1				255,255,255		1					0				0				0,0,0			10          rt_files/textures/earth.xpm rt_files/textures/earth_norm.xpm
+sp	0,0,200	    200			255,255,255								1				255,255,255		0					0				0				0,0,0			100          rt_files/textures/earth.xpm rt_files/textures/earth_norm.xpm
