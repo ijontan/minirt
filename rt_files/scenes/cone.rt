@@ -24,4 +24,4 @@ sp	0,0,100	50	0,150,0											1				255,255,255		1					0				0				0,0,0			10
 
 # Cone																Material
 #	tip			axis direction	diameter	height		color		specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission_color	shininess
-co  0,20,200 	0,-1,0			30			10			0,255,255
+co  0,0,200 	0,0,1			10			20			0,255,255

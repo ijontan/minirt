@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_objects.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 17:14:41 by rsoo              #+#    #+#             */
-/*   Updated: 2023/10/27 13:51:09 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/10/27 21:44:01 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,12 +131,13 @@ void	parse_cone(t_parse *p)
 	if (cone->height <= 0.0)
 		exit_parse(p->info, "Cone", 'h');
 	if (check_rgb(p->info[5], p))
-		cone->material.color = color_correct((t_color)color_new(0,
-				p->rgb[0], p->rgb[1], p->rgb[2]));
+		cone->material.color = color_correct((t_color)color_new(0, p->rgb[0],
+					p->rgb[1], p->rgb[2]));
 	else
 		exit_parse(p->info, "Cone", 'c');
 	parse_material("Cone", 6, &cone->material, p);
-	cone->angle = ft_atan(cone->radius / cone->height);
-	cone->cos_squared = ft_power(ft_cos(cone->angle), 2);
+	cone->angle = atan(cone->radius / cone->height);
+	printf("angle %f\n", cone->angle);
+	cone->cos_squared = ft_power(cos(cone->angle), 2);
 	add_object(&p->objects, cone, CONE);
 }
