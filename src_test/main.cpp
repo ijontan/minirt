@@ -132,6 +132,7 @@ void	draw_scene(t_minirt *minirt)
 		y = 0;
 		while (y < 720)
 		{
+			printf("x: %d, y: %d\n", x, y);
 			color = color_correct_new(0, 0, 0, 0);
 			// incoming_light = color_correct_new(0, 0, 0, 0);
 			// color = ray_tracing(&ray, minirt, &state);

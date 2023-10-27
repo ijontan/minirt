@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 14:56:25 by itan              #+#    #+#             */
-/*   Updated: 2023/10/25 02:40:43 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/27 12:58:23 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,36 +133,3 @@ t_vec3	cylinder_intersect(t_cylinder *cylinder, t_ray *ray)
 		return (sols);
 	}
 }
-
-// t_vec3	cylinder_intersect(t_cylinder *cylinder, t_ray *ray)
-// {
-// 	t_vec3	oc;
-// 	t_vec3	abc;
-// 	float	discriminant;
-// 	float	sqrtd;
-// 	t_ray	ray2;
-// 	float	t1;
-// 	float	t2;
-// 	t_vec3	sol1;
-// 	t_vec3	sol2;
-
-// 	ray2.direction = vec3_cross(ray->direction, cylinder->normalized_axis);
-// 	oc = vec3_cross(vec3_subtract(ray->origin, cylinder->center),
-// 		cylinder->normalized_axis);
-// 	abc.x = vec3_dot(ray2.direction, ray2.direction);
-// 	abc.y = 2.0f * vec3_dot(oc, ray2.direction);
-// 	abc.z = vec3_dot(oc, oc) - cylinder->radius * cylinder->radius;
-
-// 	discriminant = abc.y * abc.y - 4.0f * abc.x * abc.z;
-
-// 	if (discriminant < 0)
-// 		return (vec3_new(0, 0, 0));
-// 	sqrtd = sqrt(discriminant);
-// 	t1 = (-abc.y - sqrtd) / (2.0f * abc.x);
-// 	t2 = (-abc.y + sqrtd) / (2.0f * abc.x);
-// 	sol1 = vec3_add(ray->origin, vec3_multiply(ray->direction, t1));
-// 	sol2 = vec3_add(ray->origin, vec3_multiply(ray->direction, t2));
-// 	if (sol1.z < sol2.z)
-// 		return (sol1);
-// 	return (sol2);
-// }

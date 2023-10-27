@@ -15,13 +15,13 @@ L 0,0,160		1			255,255,255
 # Objects
 
 # Plane																Material
-#	point	normal vector	color									specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission_color	shininess
-# pl	0,-40,200	0,-1,0			255,255,255							0				255,255,255		0					0				0				0,0,0			30
-# pl	120,0,0		1,0,0			0,0,255								0				255,255,255		0					0				0				0,0,0			30
+#	point		normal vector	color								specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission_color	shininess
+pl	0,-40,200	0,-1,0			255,255,255							0				255,255,255		0					0				0				0,0,0			30
+pl	120,0,0		1,0,0			0,0,255								0				255,255,255		0					0				0				0,0,0			30
 
 # Sphere
-# sp	-100,0,200	50			0,150,255								1				255,255,255		1					0				0				0,0,0			10
+sp	0,0,100	50	0,150,0											1				255,255,255		1					0				0				0,0,0			10
 
 # Cone																Material
-#	tip		axis direction	diameter	height		color			specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission_color	shininess
-co  0,20,100 	0,1,0			30			10			255,0,100
+#	tip			axis direction	diameter	height		color		specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission_color	shininess
+co  0,20,200 	0,-1,0			30			10			0,255,255

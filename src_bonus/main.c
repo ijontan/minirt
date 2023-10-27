@@ -5,222 +5,100 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/25 00:21:09 by itan              #+#    #+#             */
-/*   Updated: 2023/10/26 17:48:32 by itan             ###   ########.fr       */
+/*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
+/*   Updated: 2023/10/27 05:39:09 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <stdio.h>
 
-void	gradient(t_image *image)
+/*
+perfect reflection: vector that represents the reflection of an incident ray
+(d - 2(d.n)n) where d is the intersection vector and n is the surface normal
+
+dot_prod: represents cos(theta), with range: 0.0 - 1.0
+
+amb_color: the color of the object after ambient light is applied (object color
+		* amb_light color)
+
+- ambient: if the cos(theta) is < 0, meaning theta is obtuse,
+	then apply the ambient light
+- specular: if the cos(theta) is 0.5 < <= 1.0,
+	color tween from obj color to a bright color
+- diffuse: if the cos(theta) is <= 0.5, color tween from dark color to obj color
+
+*/
+
+void	list_iter(t_list *lst, t_minirt *rt, void (*f)(t_minirt *, void *))
 {
-	int			x;
-	int			y;
-	t_color_c	start_color;
-	t_color_c	end_color;
-	t_color_c	color;
-	double		opacity2;
-
-	// double		opacity;
-	start_color = color_correct((t_color)color_new(0, 0xf, 0xff, 0x00));
-	end_color = color_correct((t_color)color_new(0, 0x00, 0xff, 0xff));
-	color = color_tween(start_color, end_color, 0.5);
-	y = 0;
-	while (y < 720)
+	while (lst)
 	{
-		opacity2 = (double)y / (double)720;
-		x = 0;
-		while (x < 1280)
-		{
-			// opacity = (double)x / 1280;
-			color = color_tween(start_color, end_color, opacity2);
-			put_pixel(image, (t_offset){.x = x, .y = y},
-				color_revert(color).as_int);
-			x++;
-		}
-		y++;
+		f(rt, lst->content);
+		lst = lst->next;
 	}
 }
 
-static void	init_minirt(void)
+void	load_texture(t_minirt *rt, void *content)
 {
-	t_image		image;
-	t_minirt	minirt;
-	t_sphere	*sphere;
-	t_plane		*plane;
-	t_cylinder	*cylinder;
+	t_object	*obj;
+	t_material	*mt;
+	t_image		*img;
 
-	// double		x;
-	// mlx and win
+	obj = (t_object *)content;
+	if (obj->type == SPHERE)
+		mt = &((t_sphere *)obj->object)->material;
+	else if (obj->type == PLANE)
+		mt = &((t_plane *)obj->object)->material;
+	else if (obj->type == CYLINDER)
+		mt = &((t_cylinder *)obj->object)->material;
+	else
+		return ;
+	if (mt->texture_path)
+	{
+		img = ft_calloc(1, sizeof(t_image));
+		*img = load_image(rt, "rt_files/textures/earth.xpm");
+		mt->texture = img;
+	}
+	if (mt->norm_map_path)
+	{
+		img = ft_calloc(1, sizeof(t_image));
+		*img = load_image(rt, "rt_files/textures/earth_norm.xpm");
+		mt->norm_map = img;
+	}
+}
+
+void	init_minirt(t_parse p)
+{
+	t_minirt	minirt;
+
 	ft_memset(&minirt, 0, sizeof(t_minirt));
 	minirt.mlx = mlx_init();
 	minirt.win = mlx_new_window(minirt.mlx, 1280, 720, "Hello world!");
-	// images
-	image.image = mlx_new_image(minirt.mlx, 1280, 720);
-	image.buffer = mlx_get_data_addr(image.image, &image.pixel_bits,
-			&image.line_bytes, &image.endian);
-	minirt.image = image;
-	cam_init(&minirt.cam);
-	minirt.amb_light.color = color_correct_new(0, 1, 1, 1);
-	minirt.amb_light.ratio = 0.1;
-	minirt.objects = NULL;
-	// for (size_t i = 0; i < 5; i++)
-	// {
-	// 	x = (double)i / 4;
-	// 	sphere = malloc(sizeof(t_sphere));
-	// 	sphere->center = vec3_new(bazier_curves_1d_linear(x, (double[2]){-100,
-	// 			100}), 0, 200);
-	// 	sphere->radius = 20 * x + 20;
-	// 	ft_memset(&sphere->material, 0, sizeof(t_material));
-	// 	sphere->material.color = color_tween(color_correct_new(0, 1, 1, 0),
-	// 		color_correct_new(0, 0, 1, 1), x);
-	// 	// sphere->material.color = color_correct_new(0, 1, 1, 1);
-	// 	sphere->material.specular_i = 1;
-	// 	sphere->material.specular = color_tween(color_correct_new(0, 1, 1, 0),
-	// 		color_correct_new(0, 0, 1, 1), x);
-	// 	sphere->material.reflective_i = 1;
-	// 	sphere->material.emission = color_correct_new(0, 0, 0, 0);
-	// 	sphere->material.emission_i = 0;
-	// 	sphere->material.diffuse_i = 1;
-	// 	sphere->material.shininess = 30;
-	// 	add_object(&minirt.objects, sphere, 0);
-	// }
-	// {
-	// 	sphere = malloc(sizeof(t_sphere));
-	// 	sphere->center = vec3_new(0, 300, 200);
-	// 	sphere->radius = 60;
-	// 	sphere->material.color = color_correct_new(0, 0, 0, 0);
-	// 	sphere->material.specular_i = 0;
-	// 	sphere->material.reflective_i = 0;
-	// 	sphere->material.emission = color_correct_new(0, 1, 1, 1);
-	// 	sphere->material.emission_i = 1;
-	// 	add_object(&minirt.objects, sphere, 0);
-	// }
-	{
-		plane = malloc(sizeof(t_plane));
-		plane->point_on_plane = vec3_new(0, 100, 200);
-		plane->normalized_norm_vec = vec3_new(0, 1, 0);
-		plane->material.color = color_correct_new(0, 1, 1, 1);
-		plane->material.specular_i = 0;
-		plane->material.reflective_i = 0;
-		plane->material.emission = color_correct_new(0, 1, 1, 1);
-		plane->material.emission_i = 1;
-		add_object(&minirt.objects, plane, 1);
-	}
-	{
-		plane = malloc(sizeof(t_plane));
-		plane->point_on_plane = vec3_new(0, -40, 200);
-		plane->normalized_norm_vec = vec3_new(0, -1, 0);
-		plane->material.color = color_correct_new(0, 1, 1, 1);
-		plane->material.specular_i = 0;
-		plane->material.reflective_i = 0;
-		plane->material.emission = color_correct_new(0, 0, 0, 0);
-		plane->material.emission_i = 0;
-		add_object(&minirt.objects, plane, 1);
-	}
-	{
-		plane = malloc(sizeof(t_plane));
-		plane->point_on_plane = vec3_new(120, 0, 0);
-		plane->normalized_norm_vec = vec3_new(1, 0, 0);
-		plane->material.color = color_correct_new(0, 0, 0, 1);
-		plane->material.specular_i = 0;
-		plane->material.reflective_i = 0;
-		plane->material.emission = color_correct_new(0, 0, 0, 0);
-		plane->material.emission_i = 0;
-		add_object(&minirt.objects, plane, 1);
-	}
-	{
-		plane = malloc(sizeof(t_plane));
-		plane->point_on_plane = vec3_new(-120, 0, 0);
-		plane->normalized_norm_vec = vec3_new(-1, 0, 0);
-		plane->material.color = color_correct_new(0, 1, 0, 0);
-		plane->material.specular_i = 0;
-		plane->material.reflective_i = 0;
-		plane->material.emission = color_correct_new(0, 0, 0, 0);
-		plane->material.emission_i = 0;
-		add_object(&minirt.objects, plane, 1);
-	}
-	{
-		cylinder = malloc(sizeof(t_cylinder));
-		cylinder->center = vec3_new(0, 30, 200);
-		cylinder->height = 80;
-		cylinder->radius = 15;
-		cylinder->normalized_axis = vec3_new(0, 1, 0);
-		cylinder->material.color = color_correct_new(0, 1, 0.8, 0.6);
-		cylinder->material.specular_i = 0;
-		cylinder->material.reflective_i = 1;
-		cylinder->material.emission = color_correct_new(0, 0, 0, 0);
-		cylinder->material.emission_i = 0;
-		add_object(&minirt.objects, cylinder, 2);
-	}
-	{
-		sphere = malloc(sizeof(t_sphere));
-		sphere->center = vec3_new(0, 70, 200);
-		sphere->radius = 15;
-		sphere->material.color = color_correct_new(0, 1, 0.8, 0.6);
-		sphere->material.specular_i = 0;
-		sphere->material.reflective_i = 1;
-		sphere->material.emission = color_correct_new(0, 0, 0, 0);
-		sphere->material.emission_i = 0;
-		add_object(&minirt.objects, sphere, 0);
-	}
-	{
-		sphere = malloc(sizeof(t_sphere));
-		sphere->center = vec3_new(-10, -25, 200);
-		sphere->radius = 20;
-		sphere->material.color = color_correct_new(0, 1, 0.8, 0.6);
-		sphere->material.specular_i = 0;
-		sphere->material.reflective_i = 1;
-		sphere->material.emission = color_correct_new(0, 0, 0, 0);
-		sphere->material.emission_i = 0;
-		add_object(&minirt.objects, sphere, 0);
-	}
-	{
-		sphere = malloc(sizeof(t_sphere));
-		sphere->center = vec3_new(10, -25, 200);
-		sphere->radius = 20;
-		sphere->material.color = color_correct_new(0, 1, 0.8, 0.6);
-		sphere->material.specular_i = 0;
-		sphere->material.reflective_i = 1;
-		sphere->material.emission = color_correct_new(0, 0, 0, 0);
-		sphere->material.emission_i = 0;
-		add_object(&minirt.objects, sphere, 0);
-	}
-	// {
-	// 	plane = malloc(sizeof(t_plane));
-	// 	plane->point_on_plane = vec3_new(0, 0, 400);
-	// 	plane->normalized_norm_vec = vec3_new(0, 0, 1);
-	// 	plane->material.color = color_correct_new(0, 0, 1, 0);
-	// 	plane->material.specular_i = 0;
-	// 	plane->material.emission = color_correct_new(0, 0, 0, 0);
-	// 	plane->material.emission_i = 0;
-	// 	add_object(&minirt.objects, plane, 1);
-	// }
-	// {
-	// 	plane = malloc(sizeof(t_plane));
-	// 	plane->point_on_plane = vec3_new(0, 0, -10);
-	// 	plane->normalized_norm_vec = vec3_new(0, 0, 1);
-	// 	plane->material.color = color_correct_new(0, 1, 1, 1);
-	// 	plane->material.specular_i = 0;
-	// 	plane->material.emission = color_correct_new(0, 0, 0, 0);
-	// 	plane->material.emission_i = 0;
-	// 	add_object(&minirt.objects, plane, 1);
-	// }
-	// rendering
-	// ray_cast(&minirt);
-	draw_scene(&minirt);
+	init_hooks(&minirt);
+	minirt.pixel_size = 3;
+	minirt.amb_light = p.amb_light;
+	minirt.cam = p.camera;
+	minirt.pt_lights = p.pt_lights;
+	minirt.objects = p.objects;
+	minirt.outline_color = color_correct_new(0, 1, 1, 0);
+	list_iter(minirt.objects, &minirt, &load_texture);
+	render(&minirt, &ray_cast);
 	printf("\e[0;32mRendering done!!! ~~\n\e[0m");
-	// mlx rendering
-	mlx_put_image_to_window(minirt.mlx, minirt.win, image.image, 0, 0);
-	mlx_destroy_image(minirt.mlx, image.image);
 	mlx_loop(minirt.mlx);
 }
 
 int	main(int ac, char **av)
 {
+	t_parse	parse_info;
+
+	ft_memset(&parse_info, 0, sizeof(t_parse));
+	if (ac != 2)
+		return (printf("\e[0;31mError: argument error\nExpected input format: ./minirt ~.rt\e[0m"));
+	if (!parse_rt_file(av[1], &parse_info))
+		return (1);
+	printf("\e[0;32mParsing done!!! ~~\n\e[0m");
+	init_minirt(parse_info);
 	(void)ac;
 	(void)av;
-	init_minirt();
 	return (0);
 }

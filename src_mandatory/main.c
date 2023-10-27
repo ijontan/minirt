@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/10/26 21:10:38 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/10/27 13:52:11 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	init_minirt(t_parse p)
 	minirt.pt_lights = p.pt_lights;
 	minirt.objects = p.objects;
 	minirt.outline_color = color_correct_new(0, 1, 1, 0);
-	render(&minirt, &thread_init);
+	render(&minirt, &ray_cast);
 	printf("\e[0;32mRendering done!!! ~~\n\e[0m");
 	mlx_loop(minirt.mlx);
 }
