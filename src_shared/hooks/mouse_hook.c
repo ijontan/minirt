@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 14:44:19 by itan              #+#    #+#             */
-/*   Updated: 2023/10/25 01:01:43 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/28 05:45:14 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	select_object(t_offset xy, t_minirt *minirt)
 	ray = ray_primary(&minirt->cam, xy);
 	info = intersect_list(minirt, &ray);
 	minirt->selection.selected = info.object;
+	render(minirt, &thread_init);
 }
 
 int	mouse_down_hook(int button, int x, int y, t_minirt *minirt)
@@ -57,7 +58,7 @@ int	mouse_move_hook(int x, int y, t_minirt *minirt)
 	(void)y;
 	if (!minirt->moving)
 		return (0);
-	if (minirt->moving)
+	if (minirt->moving && minirt->mouse_events.prev_x != -1)
 	{
 		quaternion_y_rotation(-0.01 * (x - minirt->mouse_events.prev_x),
 			&rotation);
@@ -72,6 +73,11 @@ int	mouse_move_hook(int x, int y, t_minirt *minirt)
 		minirt->mouse_events.prev_x = x;
 		minirt->mouse_events.prev_y = y;
 		// mouse_move(minirt, 300, 300);
+	}
+	if (minirt->mouse_events.prev_x == -1)
+	{
+		minirt->mouse_events.prev_x = x;
+		minirt->mouse_events.prev_y = y;
 	}
 	return (0);
 }

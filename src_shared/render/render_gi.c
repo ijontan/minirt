@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 14:05:15 by itan              #+#    #+#             */
-/*   Updated: 2023/10/25 15:38:34 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/28 05:35:23 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,5 @@ void	render_gi(t_minirt *rt)
 {
 	render(rt, thread_raytrace);
 	rt->moving = false;
+	rt->selection.selected = NULL;
 }

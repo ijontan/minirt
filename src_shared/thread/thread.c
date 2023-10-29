@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 22:20:30 by itan              #+#    #+#             */
-/*   Updated: 2023/10/25 15:41:52 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/28 05:16:02 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	*ray_cast_routine(void *data)
 					color_revert(info->minirt->amb_light.color).as_int);
 			}
 			i = -1;
-			while (info->minirt->moving && ++i < pixel_size && x + i < 1280)
+			while (++i < pixel_size && x + i < 1280)
 			{
 				j = -1;
 				while (++j < pixel_size && y + j < 720)

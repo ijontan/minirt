@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 14:48:41 by itan              #+#    #+#             */
-/*   Updated: 2023/10/25 16:31:29 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/28 05:38:26 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,15 @@ int	key_down_hook(int keycode, t_minirt *minirt)
 		exit(EXIT_SUCCESS);
 	}
 	if (keycode == KEY_UP)
+	{
 		minirt->pixel_size += 1;
-	else if (keycode == KEY_DOWN)
+		render(minirt, &thread_init);
+	}
+	else if (keycode == KEY_DOWN && minirt->pixel_size > 1)
+	{
 		minirt->pixel_size -= 1;
+		render(minirt, &thread_init);
+	}
 	if (keycode == KEY_1)
 		minirt->key_events.holding_1 = true;
 	else if (keycode == KEY_2)
@@ -54,16 +60,20 @@ int	key_down_hook(int keycode, t_minirt *minirt)
 	else if (keycode == KEY_F)
 	{
 		minirt->moving = !minirt->moving;
+		minirt->selection.selected = NULL;
 		if (minirt->moving)
 		{
-			// minirt->mouse_events.prev_x = 300;
+			minirt->mouse_events.prev_x = -1;
 			// minirt->mouse_events.prev_y = 300;
 			mouse_move(minirt, minirt->cam.vp_width * 0.5, minirt->cam.vp_height
 				* 0.5);
 			mouse_hide(minirt);
 		}
 		else
+		{
+			minirt->mouse_events.prev_x = -1;
 			mouse_show(minirt);
+		}
 	}
 	return (0);
 }

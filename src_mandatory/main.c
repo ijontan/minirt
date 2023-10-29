@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/10/27 13:52:11 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/10/28 05:33:15 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	init_minirt(t_parse p)
 	minirt.cam = p.camera;
 	minirt.pt_lights = p.pt_lights;
 	minirt.objects = p.objects;
-	minirt.outline_color = color_correct_new(0, 1, 1, 0);
+	minirt.outline_color = color_correct_new(0, 1, 1, 0.5);
 	render(&minirt, &ray_cast);
 	printf("\e[0;32mRendering done!!! ~~\n\e[0m");
 	mlx_loop(minirt.mlx);

@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 09:11:04 by rsoo              #+#    #+#             */
-/*   Updated: 2023/10/27 18:36:47 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/28 23:24:47 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,18 @@ void	render_menu(t_minirt *minirt)
 	int		num_of_files;
 	int		i;
 	int		j;
+	t_image	bg;
 
-	i = -1;
+	bg = create_image(minirt, (t_offset){.x = 250, .y = WINDOW_HEIGHT});
 	j = -1;
 	while (++j < WINDOW_HEIGHT)
 	{
 		i = -1;
 		while (++i < 250)
-		{
-			mlx_pixel_put(minirt->mlx, minirt->win, i, j, WHITE);
-			// printf("putting pixels\n");
-		}
+			put_pixel(&bg, (t_offset){.x = i, .y = j}, 0x40ffffff);
 	}
+	mlx_put_image_to_window(minirt->mlx, minirt->win, bg.image, 0, 0);
+	mlx_destroy_image(minirt->mlx, bg.image);
 	mlx_string_put(minirt->mlx, minirt->win, 20, 20, FONT_COLOR,
 		"w: move forward");
 	mlx_string_put(minirt->mlx, minirt->win, 20, 40, FONT_COLOR,
