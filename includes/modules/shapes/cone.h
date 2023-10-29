@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 21:11:10 by rsoo              #+#    #+#             */
-/*   Updated: 2023/10/26 21:12:54 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/10/29 17:05:31 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@
 
 typedef struct s_cone
 {
-	t_vec3			tip;
-	t_vec3			normalized_axis;
-	float			diameter;
-	float			height;
-	float			radius;
-	float			angle;
-	float			cos_squared;
-	t_material		material;
+	t_vec3		tip;
+	t_vec3		normalized_axis;
+	float		diameter;
+	float		height;
+	float		radius;
+	float		angle;
+	float		cos_squared;
+	t_material	material;
 }				t_cone;
 
-t_vec3				cone_intersect(t_cone *cone, t_ray *ray);
-t_vec3				cone_normal(t_cone *cone, t_vec3 point);
+t_vec3			cone_intersect(t_cone *cone, t_ray *ray);
+t_vec3			cone_normal(t_cone *cone, t_vec3 point, float type);
 
 #endif

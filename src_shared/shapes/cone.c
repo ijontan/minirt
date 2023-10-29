@@ -6,23 +6,75 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:17:20 by rsoo              #+#    #+#             */
-/*   Updated: 2023/10/28 04:53:06 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/29 17:51:14 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_vec3	cone_normal(t_cone *cone, t_vec3 point)
+t_vec3	cone_normal(t_cone *cone, t_vec3 point, float type)
 {
 	t_vec3	normal;
 	t_vec3	co;
 	float	m;
 
+	if (type == 3)
+		return (cone->normalized_axis);
 	co = vec3_subtract(point, cone->tip);
 	m = vec3_dot(co, cone->normalized_axis);
 	normal = vec3_subtract(co, vec3_multiply(cone->normalized_axis, m));
 	normal = vec3_normalize(normal);
 	return (normal);
+}
+
+// t_vec3	cone_intersect(t_cone *cone, t_ray *ray)
+// {
+// 	t_vec3	abc;
+// 	t_vec3	co;
+// 	float	discriminant;
+// 	float	sqrtd;
+// 	t_vec3	sols;
+
+// 	co = vec3_subtract(ray->origin, cone->tip);
+// 	abc.x = vec3_dot(ray->direction, cone->normalized_axis)
+// 		* vec3_dot(ray->direction, cone->normalized_axis)
+// 		- vec3_dot(ray->direction, ray->direction) * cone->cos_squared;
+// 	abc.y = 2.0f * (vec3_dot(ray->direction, cone->normalized_axis)
+// 			* vec3_dot(co, cone->normalized_axis) - vec3_dot(ray->direction, co)
+// 			* cone->cos_squared);
+// 	abc.z = vec3_dot(co, cone->normalized_axis) * vec3_dot(co,
+// 			cone->normalized_axis) - vec3_dot(co, co) * cone->cos_squared;
+// 	discriminant = abc.y * abc.y - 4.0f * abc.x * abc.z;
+// 	if (discriminant < 0)
+// 		return (vec3_new(0, 0, 0));
+// 	sqrtd = ft_sqrt(discriminant);
+// 	sols.z = 1.0f / (2.0f * abc.x);
+// 	sols.x = (-abc.y - sqrtd) * sols.z;
+// 	sols.y = (-abc.y + sqrtd) * sols.z;
+// 	sols.z = 2;
+// 	if (sols.x > sols.y)
+// 	{
+// 		sqrtd = sols.x;
+// 		sols.x = sols.y;
+// 		sols.y = sqrtd;
+// 	}
+// 	return (sols);
+// }
+
+t_vec3	cone_cap_intersect(t_cone *cone, t_ray *ray)
+{
+	t_plane	cap_plane;
+	t_vec3	op;
+	t_vec3	cp;
+	t_vec3	sols;
+
+	cp = vec3_multiply(cone->normalized_axis, cone->height);
+	op = vec3_add(cone->tip, cp);
+	cp = vec3_multiply(cone->normalized_axis, -1);
+	cap_plane = (t_plane){.point_on_plane = op, .normalized_norm_vec = cp};
+	sols = disk_intersect(&cap_plane, ray, cone->radius, op);
+	sols.z = 3;
+	return (sols);
 }
 
 t_vec3	cone_intersect(t_cone *cone, t_ray *ray)
@@ -34,12 +86,13 @@ t_vec3	cone_intersect(t_cone *cone, t_ray *ray)
 	t_vec3	sols;
 
 	co = vec3_subtract(ray->origin, cone->tip);
-	sols.x = vec3_dot(ray->direction, cone->normalized_axis);
-	sols.y = vec3_dot(co, cone->normalized_axis);
-	abc.x = ft_power(sols.x, 2) - cone->cos_squared;
-	abc.y = (sols.x * sols.y - vec3_dot(ray->direction, co) * cone->cos_squared)
-		* 2.0f;
-	abc.z = ft_power(sols.y, 2) - vec3_dot(co, co) * cone->cos_squared;
+	sols.x = vec3_dot(ray->direction, cone->normalized_axis); // d.v
+	sols.y = vec3_dot(co, cone->normalized_axis);             // co.v
+	abc.x = ft_power(sols.x, 2) - vec3_dot(ray->direction, ray->direction)
+		* cone->cos_squared;
+	abc.y = (sols.x * sols.y - (vec3_dot(ray->direction, co)
+				* cone->cos_squared)) * 2.0f;
+	abc.z = ft_power(sols.y, 2) - (vec3_dot(co, co) * cone->cos_squared);
 	discriminant = abc.y * abc.y - 4.0f * abc.x * abc.z;
 	if (discriminant < 0)
 		return (vec3_new(0, 0, 0));
@@ -48,15 +101,28 @@ t_vec3	cone_intersect(t_cone *cone, t_ray *ray)
 	sols.x = (-abc.y - sqrtd) * sols.z;
 	sols.y = (-abc.y + sqrtd) * sols.z;
 	sols.z = 2;
-	if (sols.x > sols.y)
+	if (sols.x > sols.y || sols.x < 0)
 	{
 		sqrtd = sols.x;
 		sols.x = sols.y;
 		sols.y = sqrtd;
 	}
 	abc = vec3_add(ray->origin, vec3_multiply(ray->direction, sols.x));
-	if (vec3_dot(vec3_subtract(abc, cone->tip), cone->normalized_axis) < 0)
+	sqrtd = vec3_dot(vec3_subtract(abc, cone->tip), cone->normalized_axis);
+	if (sqrtd < 0)
+	{
+		discriminant = vec3_dot(ray->direction, cone->normalized_axis)
+			/ vec3_length(ray->direction);
+		abc = vec3_add(ray->origin, vec3_multiply(ray->direction, sols.y));
+		sqrtd = vec3_dot(vec3_subtract(abc, cone->tip), cone->normalized_axis);
+		if (discriminant > sqrt(cone->cos_squared) && sqrtd < cone->height)
+			return (vec3_new(sols.y, sols.x, sols.z));
 		return (vec3_new(0, 0, 0));
+	}
+	discriminant = vec3_dot(vec3_multiply(ray->direction, -1),
+			cone->normalized_axis) / vec3_length(ray->direction);
+	if (sqrtd > cone->height || discriminant > sqrt(cone->cos_squared))
+		return (cone_cap_intersect(cone, ray));
 	return (sols);
 }
 

@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 22:46:40 by itan              #+#    #+#             */
-/*   Updated: 2023/10/27 21:06:31 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/29 17:05:58 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ t_hit_info	intersect_list(t_minirt *minirt, t_ray *ray)
 	else if (hit_info.obj_type == CONE)
 	{
 		hit_info.normal = cone_normal((t_cone *)(hit_info.object->object),
-				hit_info.intersect_pt);
+				hit_info.intersect_pt, prev_intersect.z);
 		hit_info.normal = vec3_normalize(hit_info.normal);
 	}
 	return (hit_info);
