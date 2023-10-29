@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:22:28 by itan              #+#    #+#             */
-/*   Updated: 2023/10/03 14:15:07 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/10/29 19:23:26 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ t_bound_box	get_sphere_bound(t_sphere *sphere)
 	t_bound_box	bound_box;
 
 	bound_box.min = vec3_subtract(sphere->center, vec3_new(sphere->radius,
-			sphere->radius, sphere->radius));
+				sphere->radius, sphere->radius));
 	bound_box.max = vec3_add(sphere->center, vec3_new(sphere->radius,
-			sphere->radius, sphere->radius));
+				sphere->radius, sphere->radius));
 	return (bound_box);
 }
 
@@ -36,28 +36,52 @@ t_bound_box	get_plane_bound(t_plane *plane)
 t_bound_box	get_cylinder_bound(t_cylinder *cylinder)
 {
 	t_bound_box	bound_box;
+	t_vec3		a;
 	t_vec3		vec3;
+	t_vec3		tmp;
 
-	vec3 = vec3_multiply(cylinder->normalized_axis, cylinder->height * 0.5
-		+ cylinder->radius * 2);
-	bound_box.min = vec3_subtract(cylinder->center, vec3);
-	bound_box.max = vec3_add(cylinder->center, vec3);
-	bound_box.min = vec3_new(-INFINITY, -INFINITY, -INFINITY);
-	bound_box.max = vec3_new(INFINITY, INFINITY, INFINITY);
+	a = vec3_multiply(cylinder->normalized_axis, cylinder->height * 0.5);
+	vec3.x = cylinder->radius * sqrt(1 - cylinder->normalized_axis.x
+			* cylinder->normalized_axis.x);
+	vec3.y = cylinder->radius * sqrt(1 - cylinder->normalized_axis.y
+			* cylinder->normalized_axis.y);
+	vec3.z = cylinder->radius * sqrt(1 - cylinder->normalized_axis.z
+			* cylinder->normalized_axis.z);
+	bound_box.min = cylinder->center;
+	bound_box.max = cylinder->center;
+	tmp = vec3_subtract(cylinder->center, vec3_add(a, vec3));
+	bound_box = bound_box_expand(bound_box, tmp);
+	tmp = vec3_add(cylinder->center, vec3_add(a, vec3));
+	bound_box = bound_box_expand(bound_box, tmp);
+	tmp = vec3_subtract(cylinder->center, vec3_subtract(a, vec3));
+	bound_box = bound_box_expand(bound_box, tmp);
+	tmp = vec3_add(cylinder->center, vec3_subtract(a, vec3));
+	bound_box = bound_box_expand(bound_box, tmp);
 	return (bound_box);
 }
+// bound_box.min = vec3_new(-INFINITY, -INFINITY, -INFINITY);
+// bound_box.max = vec3_new(INFINITY, INFINITY, INFINITY);
 
 t_bound_box	get_cone_bound(t_cone *cone)
 {
 	t_bound_box	bound_box;
+	t_vec3		a;
 	t_vec3		vec3;
+	t_vec3		tmp;
 
-	vec3 = vec3_multiply(cone->normalized_axis, cone->height * 0.5
-		+ cone->radius * 2);
-	bound_box.min = vec3_subtract(cone->tip, vec3);
-	bound_box.max = vec3_add(cone->tip, vec3);
-	bound_box.min = vec3_new(-INFINITY, -INFINITY, -INFINITY);
-	bound_box.max = vec3_new(INFINITY, INFINITY, INFINITY);
+	a = vec3_multiply(cone->normalized_axis, cone->height);
+	vec3.x = cone->radius * sqrt(1 - cone->normalized_axis.x
+			* cone->normalized_axis.x);
+	vec3.y = cone->radius * sqrt(1 - cone->normalized_axis.y
+			* cone->normalized_axis.y);
+	vec3.z = cone->radius * sqrt(1 - cone->normalized_axis.z
+			* cone->normalized_axis.z);
+	bound_box.min = cone->tip;
+	bound_box.max = cone->tip;
+	tmp = vec3_add(cone->tip, vec3_add(a, vec3));
+	bound_box = bound_box_expand(bound_box, tmp);
+	tmp = vec3_add(cone->tip, vec3_subtract(a, vec3));
+	bound_box = bound_box_expand(bound_box, tmp);
 	return (bound_box);
 }
 

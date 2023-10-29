@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:17:20 by rsoo              #+#    #+#             */
-/*   Updated: 2023/10/29 17:51:14 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/29 18:46:19 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_vec3	cone_normal(t_cone *cone, t_vec3 point, float type)
 		return (cone->normalized_axis);
 	co = vec3_subtract(point, cone->tip);
 	m = vec3_dot(co, cone->normalized_axis);
-	normal = vec3_subtract(co, vec3_multiply(cone->normalized_axis, m));
+	normal = vec3_subtract(co, vec3_multiply(cone->normalized_axis, m + 2));
 	normal = vec3_normalize(normal);
 	return (normal);
 }
@@ -92,7 +92,7 @@ t_vec3	cone_intersect(t_cone *cone, t_ray *ray)
 		* cone->cos_squared;
 	abc.y = (sols.x * sols.y - (vec3_dot(ray->direction, co)
 				* cone->cos_squared)) * 2.0f;
-	abc.z = ft_power(sols.y, 2) - (vec3_dot(co, co) * cone->cos_squared);
+	abc.z = ft_power(sols.y, 2) - (vec3_dot(co, co) * cone->cos_squared) - 10;
 	discriminant = abc.y * abc.y - 4.0f * abc.x * abc.z;
 	if (discriminant < 0)
 		return (vec3_new(0, 0, 0));
