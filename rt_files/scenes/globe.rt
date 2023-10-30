@@ -15,5 +15,5 @@ L -2000,0,-500		1			255,255,255
 # Objects
 
 # Sphere															Material
-#	centre		diameter	color									specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission color	shininess   textuere                    norm_map
-sp	0,0,200	    200			255,255,255								1				255,255,255		0					0				0				0,0,0			100          rt_files/textures/earth.xpm rt_files/textures/earth_norm.xpm
+#	centre		diameter	color									specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission color	shininess   textuere                          norm_map                       spec_map
+sp	0,0,200	    200			255,255,255								1				255,255,255		0					0				0				0,0,0			100          rt_files/textures/earth.xpm    rt_files/textures/earth_norm.xpm rt_files/textures/earth_spec.xpm 

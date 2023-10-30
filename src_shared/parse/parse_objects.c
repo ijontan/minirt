@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 17:14:41 by rsoo              #+#    #+#             */
-/*   Updated: 2023/10/27 21:44:01 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/30 15:25:12 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,24 @@ static void	parse_material(char *obj_type, int i, t_material *mt, t_parse *p)
 		if (mt->shininess < 0.0)
 			exit_parse(p->info, obj_type, 's');
 		if (p->info[++i])
+		{
 			mt->texture_path = ft_strdup(p->info[i]);
+			printf("texture path: %s\n", mt->texture_path);
+		}
 		else
 			return ;
 		if (p->info[++i])
+		{
 			mt->norm_map_path = ft_strdup(p->info[i]);
+			printf("normal path: %s\n", mt->norm_map_path);
+		}
+		else
+			return ;
+		if (p->info[++i])
+		{
+			mt->spec_map_path = ft_strdup(p->info[i]);
+			printf("specular path: %s\n", mt->spec_map_path);
+		}
 	}
 }
 

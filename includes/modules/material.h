@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 14:21:14 by itan              #+#    #+#             */
-/*   Updated: 2023/10/27 16:01:29 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/30 15:24:43 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct s_material
 {
 	char		*texture_path;
 	char		*norm_map_path;
+	char		*spec_map_path;
 	t_image		*texture;
 	t_image		*norm_map;
 	t_image		*specular_map;
