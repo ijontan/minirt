@@ -3,56 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 09:11:04 by rsoo              #+#    #+#             */
-/*   Updated: 2023/10/28 23:24:47 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/30 23:38:40 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <dirent.h>
 
 #define FONT_COLOR BLACK
 
-char	**get_rt_files(int *num_of_files)
+void render_loading_overlay(char *str, t_minirt *minirt)
 {
-	struct dirent	**name_list;
-	char			**rt_files;
-	int				i;
+	t_image	bg;
+	int x;
+	int y;
 
-	i = -1;
-	*num_of_files = scandir("rt_files/scenes", &name_list, NULL, NULL);
-	rt_files = (char **)ft_calloc(*num_of_files + 1, sizeof(char *));
-	if (*num_of_files < 0)
-		perror("scandir");
-	else
+	bg = create_image(minirt, (t_offset){.x = OVERLAY_WIDTH, .y = OVERLAY_HEIGHT});
+	y = OVERLAY_START_Y;
+	while (++y < OVERLAY_END_Y)
 	{
-		while (++i < *num_of_files)
-		{
-			rt_files[i] = ft_strdup(name_list[i]->d_name);
-			free(name_list[i]);
-		}
-		free(name_list);
+		x = OVERLAY_START_X;
+		while (++x < OVERLAY_END_X)
+			put_pixel(&bg, (t_offset){.x = x, .y = y}, 0x40ffffff);
 	}
-	return (rt_files);
+	printf("%s\n", str);
 }
 
 void	render_menu(t_minirt *minirt)
 {
-	char	*str;
-	char	**rt_files;
-	int		num_of_files;
 	int		i;
 	int		j;
 	t_image	bg;
 
-	bg = create_image(minirt, (t_offset){.x = 250, .y = WINDOW_HEIGHT});
+	bg = create_image(minirt, (t_offset){.x = MENU_WIDTH, .y = WINDOW_HEIGHT});
 	j = -1;
 	while (++j < WINDOW_HEIGHT)
 	{
 		i = -1;
-		while (++i < 250)
+		while (++i < MENU_WIDTH)
 			put_pixel(&bg, (t_offset){.x = i, .y = j}, 0x40ffffff);
 	}
 	mlx_put_image_to_window(minirt->mlx, minirt->win, bg.image, 0, 0);
@@ -76,14 +66,13 @@ void	render_menu(t_minirt *minirt)
 	mlx_string_put(minirt->mlx, minirt->win, 20, 180, FONT_COLOR, "esc: exit");
 	i = -1;
 	j = 1;
-	str = "scenes: ";
-	mlx_string_put(minirt->mlx, minirt->win, 20, 240, FONT_COLOR, str);
-	rt_files = get_rt_files(&num_of_files);
-	while (++i < num_of_files)
-		if (rt_files[i][0] != '.')
-			mlx_string_put(minirt->mlx, minirt->win, 40, 240 + (20 * j++),
-				FONT_COLOR, rt_files[i]);
-	free_2darray(rt_files);
+
+	mlx_string_put(minirt->mlx, minirt->win, MENU_START_X, SCENES_START_Y, FONT_COLOR, "Select a scene: ");
+	while (++i < minirt->file_num)
+		if (minirt->rt_files[i].name[0] != '.')
+			mlx_string_put(minirt->mlx, minirt->win, 40, SCENES_START_Y + (20 * j++),
+				FONT_COLOR, minirt->rt_files[i].name);
+	// free(minirt->rt_files);
 }
 
 int	render(t_minirt *minirt, void (*draw_func)(t_minirt *minirt))

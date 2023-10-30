@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/10/28 05:11:31 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/30 23:39:07 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,22 @@
 # define WINDOW_HEIGHT 1080
 # define MID_X 960
 # define MID_Y 540
+# define SCENES_START_Y 240 // defines the starting Y coordinate of the scenes section of the menu
+# define SCENES_START_X 40
+# define MENU_START_X 20
+# define MENU_WIDTH 250
+# define CHAR_WIDTH 7
+# define CHAR_HEIGHT 25
+
+# define OVERLAY_WIDTH 200
+# define OVERLAY_HEIGHT 200
+# define OVERLAY_START_X MID_X - (OVERLAY_WIDTH * 0.5)
+# define OVERLAY_START_Y MID_Y - (OVERLAY_HEIGHT * 0.5)
+# define OVERLAY_END_X MID_X + (OVERLAY_WIDTH * 0.5)
+# define OVERLAY_END_Y MID_Y + (OVERLAY_HEIGHT * 0.5)
+
+
+# define RT_FILE_DIR "rt_files/scenes/"
 
 // colors
 # define BLACK 0x000000
@@ -65,8 +81,6 @@ typedef struct s_pt_light
 	float			ratio;
 	t_material material; // bonus
 }					t_pt_light;
-
-/* ---------------------------------- shape --------------------------------- */
 
 /* ---------------------------------- parse --------------------------------- */
 
@@ -168,7 +182,6 @@ typedef struct s_key_events
 	bool			holding_d;
 	bool			holding_lsh;
 	bool			holding_sp;
-
 }					t_key_events;
 
 typedef struct s_mouse_events
@@ -184,6 +197,19 @@ typedef struct s_selections
 {
 	t_object		*selected;
 }					t_selections;
+
+typedef struct s_vec2
+{
+	int x;
+	int y;
+} 				t_vec2;
+
+typedef struct s_file
+{
+	char	*name;
+	t_vec2	top_left;
+	t_vec2	bottom_right;
+}				t_file;
 
 typedef struct s_minirt
 {
@@ -204,13 +230,9 @@ typedef struct s_minirt
 	pthread_t		*threads;
 	int				pixel_size;
 	bool			moving;
+	t_file			*rt_files;
+	int				file_num;
 }					t_minirt;
-
-/*
-sphere: obj_type = 1
-plane: obj_type = 2
-cylinder: obj_type = 3
-*/
 
 /**
  * @brief type of object
@@ -248,6 +270,7 @@ typedef struct s_hit_info
 }					t_hit_info;
 
 void				draw_scene(t_minirt *minirt);
+void 				start_minirt(char *file_path, t_minirt *minirt);
 
 void				init_hooks(t_minirt *minirt);
 int					x_button_exit(int keycode, t_minirt *minirt);
@@ -271,6 +294,7 @@ t_color_c			ray_tracing(t_ray ray, t_minirt *minirt,
 
 int					render(t_minirt *minirt,
 						void (*draw_func)(t_minirt *minirt));
+void 				render_loading_overlay(char *str, t_minirt *minirt);
 void				render_gi(t_minirt *rt);
 void				ray_cast(t_minirt *minirt);
 void				draw_scene(t_minirt *minirt);

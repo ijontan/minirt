@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_hook.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 14:44:19 by itan              #+#    #+#             */
-/*   Updated: 2023/10/28 05:45:14 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/30 23:16:09 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,33 @@ void	select_object(t_offset xy, t_minirt *minirt)
 	render(minirt, &thread_init);
 }
 
+int in_rt_file_position(int x, int y, t_minirt *minirt)
+{
+	int i;
+
+	i = -1;
+	while (++i < minirt->file_num)
+		if (minirt->rt_files[i].top_left.y <= y && \
+			y <= minirt->rt_files[i].bottom_right.y && \
+			minirt->rt_files[i].top_left.x <= x && \
+			x <= minirt->rt_files[i].bottom_right.x)
+			return i;
+	return -1;
+}
+
 int	mouse_down_hook(int button, int x, int y, t_minirt *minirt)
 {
+	int file_ind;
+
 	if (button == M_CLK_L && !minirt->moving)
 		select_object((t_offset){.x = x, .y = y}, minirt);
-	if (button == M_CLK_L)
-		minirt->mouse_events.holding_m_left = true;
+	if (button == M_CLK_L && x < MENU_WIDTH)
+	{
+		file_ind = in_rt_file_position(x, y, minirt);
+		// printf("pressed: %d, %d\n", x, y);
+		if (file_ind > -1)
+			start_minirt(minirt->rt_files[file_ind].name, minirt);
+	}
 	else if (button == M_CLK_R)
 		minirt->mouse_events.holding_m_right = true;
 	else if (button == M_CLK_M)
