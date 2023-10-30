@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:52:31 by rsoo              #+#    #+#             */
-/*   Updated: 2023/10/26 21:02:43 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/10/30 17:54:40 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,13 @@ static bool	parse_line(char *line, t_parse *p)
 {
 	int	i;
 
-	p->info = ft_split_nsep(line, (char *[]){" ", "\t", 0});
+	p->info = ft_split_nsep(line, (char *[]){" ", "\t", "\n", 0});
 	i = -1;
+	if (!ft_strncmp(p->info[0], "#", ft_strlen(p->info[0])))
+	{
+		free_2darray(p->info);
+		return (true);
+	}
 	while (++i < 7)
 	{
 		if (!ft_strncmp(p->info[0], p->obj_type[i], ft_strlen(p->info[0])))
@@ -36,14 +41,7 @@ static bool	parse_line(char *line, t_parse *p)
 			return (true);
 		}
 	}
-	if (!ft_strncmp(p->info[0], "#", ft_strlen(p->info[0])) \
-	|| !ft_strncmp(p->info[0], "\n", ft_strlen(p->info[0])))
-	{
-		free_2darray(p->info);
-		return (true);
-	}
-	else
-		printf("\e[0;31mError: Unknown object \e[0m%s\n", p->info[0]);
+	printf("\e[0;31mError: Unknown object \e[0m%s\n", p->info[0]);
 	free_2darray(p->info);
 	return (false);
 }
