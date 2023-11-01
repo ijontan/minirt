@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 22:46:40 by itan              #+#    #+#             */
-/*   Updated: 2023/10/29 17:05:58 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/02 00:05:54 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,6 @@ t_hit_info	intersect_list(t_minirt *minirt, t_ray *ray)
 		if (intersect.z > 0 && intersect.x > 0 && (prev_intersect.z == 0
 				|| intersect.x < prev_intersect.x))
 		{
-			if (tmp->type == SPHERE)
-				hit_info.material = ((t_sphere *)tmp->object)->material;
-			else if (tmp->type == PLANE)
-				hit_info.material = ((t_plane *)tmp->object)->material;
-			else if (tmp->type == CYLINDER)
-				hit_info.material = ((t_cylinder *)tmp->object)->material;
-			else if (tmp->type == CONE)
-			{
-				// printf("cone intersected\n");
-				hit_info.material = ((t_cone *)tmp->object)->material;
-			}
 			prev_intersect = intersect;
 			hit_info.obj_type = tmp->type;
 			hit_info.hit = true;
@@ -69,15 +58,21 @@ t_hit_info	intersect_list(t_minirt *minirt, t_ray *ray)
 		}
 		lst = lst->next;
 	}
-	if (hit_info.hit == false)
+	if (minirt->selection.translation_plane)
 	{
-		// printf("no hit\n");
-		return (hit_info);
+		intersect = (*intersect_ft[PLANE])(minirt->selection.translation_plane,
+				ray);
+		if (intersect.z > 0 && intersect.x > 0 && (prev_intersect.z == 0
+				|| intersect.x < prev_intersect.x))
+			hit_info.hit_selection_plane = true;
 	}
+	if (hit_info.hit == false)
+		return (hit_info);
 	hit_info.intersect_pt = vec3_multiply(ray->direction, prev_intersect.x);
 	hit_info.intersect_pt = vec3_add(ray->origin, hit_info.intersect_pt);
 	if (hit_info.obj_type == SPHERE)
 	{
+		hit_info.material = ((t_sphere *)hit_info.object->object)->material;
 		hit_info.normal = ((t_sphere *)(hit_info.object->object))->center;
 		hit_info.normal = vec3_subtract(hit_info.intersect_pt, hit_info.normal);
 		hit_info.normal = vec3_normalize(hit_info.normal);
@@ -102,18 +97,22 @@ t_hit_info	intersect_list(t_minirt *minirt, t_ray *ray)
 	}
 	else if (hit_info.obj_type == PLANE)
 	{
+		hit_info.material = ((t_plane *)hit_info.object->object)->material;
 		hit_info.normal = ((t_plane *)(hit_info.object->object))->normalized_norm_vec;
-		hit_info.normal = vec3_multiply(hit_info.normal, -1);
+		if (vec3_dot(ray->direction, hit_info.normal) > 0)
+			hit_info.normal = vec3_multiply(hit_info.normal, -1);
 		hit_info.normal = vec3_normalize(hit_info.normal);
 	}
 	else if (hit_info.obj_type == CYLINDER)
 	{
+		hit_info.material = ((t_cylinder *)hit_info.object->object)->material;
 		hit_info.normal = cylinder_normal((t_cylinder *)(hit_info.object->object),
 				hit_info.intersect_pt, prev_intersect.z);
 		hit_info.normal = vec3_normalize(hit_info.normal);
 	}
 	else if (hit_info.obj_type == CONE)
 	{
+		hit_info.material = ((t_cone *)hit_info.object->object)->material;
 		hit_info.normal = cone_normal((t_cone *)(hit_info.object->object),
 				hit_info.intersect_pt, prev_intersect.z);
 		hit_info.normal = vec3_normalize(hit_info.normal);

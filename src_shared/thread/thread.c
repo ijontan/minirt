@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 22:20:30 by itan              #+#    #+#             */
-/*   Updated: 2023/10/28 05:16:02 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/01 23:25:34 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,15 @@ void	*ray_cast_routine(void *data)
 			hit_info = intersect_list(info->minirt, &ray);
 			color = color_correct_new(0, 0, 0, 0);
 			if (hit_info.hit)
-			{
 				color = get_color(info->minirt, &hit_info);
-				put_pixel(&info->minirt->image, (t_offset){.x = x, .y = y},
-					color_revert(color).as_int);
-			}
 			else
-			{
-				put_pixel(&info->minirt->image, (t_offset){.x = x, .y = y},
-					color_revert(info->minirt->amb_light.color).as_int);
-			}
+				color = color_scale(info->minirt->amb_light.color,
+						info->minirt->amb_light.ratio);
+			if (hit_info.hit_selection_plane)
+				color = color_add(color, info->minirt->selection.plane_color);
+			color = color_clamp(color);
+			put_pixel(&info->minirt->image, (t_offset){.x = x, .y = y},
+				color_revert(color).as_int);
 			i = -1;
 			while (++i < pixel_size && x + i < 1280)
 			{

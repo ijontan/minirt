@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/10/28 05:11:31 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/02 00:14:50 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,9 @@ typedef struct s_key_events
 	bool			holding_a;
 	bool			holding_s;
 	bool			holding_d;
+	bool			holding_z;
+	bool			holding_x;
+	bool			holding_c;
 	bool			holding_lsh;
 	bool			holding_sp;
 
@@ -183,15 +186,16 @@ typedef struct s_mouse_events
 typedef struct s_selections
 {
 	t_object		*selected;
+	t_plane			*translation_plane;
+	t_color_c		plane_color;
+	t_color_c		outline_color;
 }					t_selections;
 
 typedef struct s_minirt
 {
 	void			*mlx;
 	void			*win;
-	void			*win2;
 	t_image			image;
-	t_image			image2;
 
 	t_amb_light		amb_light;
 	t_cam			cam;
@@ -200,7 +204,6 @@ typedef struct s_minirt
 	t_key_events	key_events;
 	t_mouse_events	mouse_events;
 	t_selections	selection;
-	t_color_c		outline_color;
 	pthread_t		*threads;
 	int				pixel_size;
 	bool			moving;
@@ -245,6 +248,7 @@ typedef struct s_hit_info
 	t_object		*object;
 	t_obj_type		obj_type;
 	bool			hit;
+	bool			hit_selection_plane;
 }					t_hit_info;
 
 void				draw_scene(t_minirt *minirt);
@@ -280,6 +284,8 @@ t_color_c			get_color(t_minirt *rt, t_hit_info *hi);
 t_color_c			get_lights_color(t_minirt *rt, t_hit_info *hi);
 t_image				create_image(t_minirt *rt, t_offset size);
 t_image				load_image(t_minirt *rt, char *path);
+void				add_translation_plane(t_minirt *rt);
+void				remove_translation_plane(t_minirt *rt);
 
 /* ------------------------------- mouse_util ------------------------------- */
 

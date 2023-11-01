@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 21:04:12 by itan              #+#    #+#             */
-/*   Updated: 2023/10/28 06:01:55 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/02 00:30:43 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static t_vec3	transforms(t_vec3 position, t_vec3 direction,
 
 int	loop_hook(t_minirt *minirt)
 {
+	add_translation_plane(minirt);
+	remove_translation_plane(minirt);
 	if (!minirt->moving)
 		return (0);
 	if (minirt->key_events.holding_w)

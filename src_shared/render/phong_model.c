@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:40:55 by itan              #+#    #+#             */
-/*   Updated: 2023/10/28 05:29:01 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/01 22:33:23 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_color_c	get_lights_color(t_minirt *rt, t_hit_info *hi)
 	{
 		dot_prod = vec3_dot(hi->pt_to_cam, hi->normal);
 		if (dot_prod > 0 && dot_prod < 0.4)
-			return (rt->outline_color);
+			return (rt->selection.outline_color);
 	}
 	while (tmp_list)
 	{

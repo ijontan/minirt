@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/10/30 15:26:54 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/01 22:34:29 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	init_minirt(t_parse p)
 	minirt.cam = p.camera;
 	minirt.pt_lights = p.pt_lights;
 	minirt.objects = p.objects;
-	minirt.outline_color = color_correct_new(0, 1, 1, 0);
+	minirt.selection.outline_color = color_correct_new(0, 1, 1, 0);
 	list_iter(minirt.objects, &minirt, &load_texture);
 	render(&minirt, &ray_cast);
 	printf("\e[0;32mRendering done!!! ~~\n\e[0m");

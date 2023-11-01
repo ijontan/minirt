@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 14:48:41 by itan              #+#    #+#             */
-/*   Updated: 2023/10/28 05:38:26 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/02 00:31:55 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,12 @@ int	key_down_hook(int keycode, t_minirt *minirt)
 		minirt->key_events.holding_d = true;
 	else if (keycode == KEY_R)
 		render_gi(minirt);
+	else if (keycode == KEY_Z)
+		minirt->key_events.holding_z = true;
+	else if (keycode == KEY_X)
+		minirt->key_events.holding_x = true;
+	else if (keycode == KEY_C)
+		minirt->key_events.holding_c = true;
 	else if (keycode == KEY_LSH)
 		minirt->key_events.holding_lsh = true;
 	else if (keycode == KEY_SP)
@@ -94,6 +100,12 @@ int	key_up_hook(int keycode, t_minirt *minirt)
 		minirt->key_events.holding_a = false;
 	else if (keycode == KEY_D)
 		minirt->key_events.holding_d = false;
+	else if (keycode == KEY_Z)
+		minirt->key_events.holding_z = false;
+	else if (keycode == KEY_X)
+		minirt->key_events.holding_x = false;
+	else if (keycode == KEY_C)
+		minirt->key_events.holding_c = false;
 	else if (keycode == KEY_LSH)
 		minirt->key_events.holding_lsh = false;
 	else if (keycode == KEY_SP)
