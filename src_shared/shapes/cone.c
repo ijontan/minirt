@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:17:20 by rsoo              #+#    #+#             */
-/*   Updated: 2023/10/30 16:25:19 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/02 16:06:57 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,9 @@ t_vec3	cone_cap_intersect(t_cone *cone, t_ray *ray)
 	cp = vec3_multiply(cone->normalized_axis, cone->height);
 	op = vec3_add(cone->tip, cp);
 	cp = vec3_multiply(cone->normalized_axis, -1);
-	cap_plane = (t_plane){.point_on_plane = op, .normalized_norm_vec = cp};
-	sols = disk_intersect(&cap_plane, ray, cone->radius, op);
+	cap_plane = (t_plane){.point_on_plane = op, .normalized_norm_vec = cp,
+		.r = cone->radius};
+	sols = disk_intersect(&cap_plane, ray);
 	sols.z = 3;
 	return (sols);
 }

@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 14:44:19 by itan              #+#    #+#             */
-/*   Updated: 2023/10/28 05:45:14 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/02 14:45:59 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	select_object(t_offset xy, t_minirt *minirt)
 
 int	mouse_down_hook(int button, int x, int y, t_minirt *minirt)
 {
-	if (button == M_CLK_L && !minirt->moving)
+	if (button == M_CLK_L && !minirt->moving
+		&& !minirt->selection.translation_plane)
 		select_object((t_offset){.x = x, .y = y}, minirt);
 	if (button == M_CLK_L)
 		minirt->mouse_events.holding_m_left = true;
@@ -53,31 +54,7 @@ int	mouse_up_hook(int button, int x, int y, t_minirt *minirt)
 
 int	mouse_move_hook(int x, int y, t_minirt *minirt)
 {
-	t_quaternion	rotation;
-
-	(void)y;
-	if (!minirt->moving)
-		return (0);
-	if (minirt->moving && minirt->mouse_events.prev_x != -1)
-	{
-		quaternion_y_rotation(-0.01 * (x - minirt->mouse_events.prev_x),
-			&rotation);
-		quaternion_multiply(&minirt->cam.rotation_h, &rotation,
-			&minirt->cam.rotation_h);
-		quaternion_x_rotation(-(y - minirt->mouse_events.prev_y) * 0.01,
-			&rotation);
-		quaternion_multiply(&minirt->cam.rotation_v, &rotation,
-			&minirt->cam.rotation_v);
-		quaternion_normalize(&minirt->cam.rotation_v, &minirt->cam.rotation_v);
-		quaternion_normalize(&minirt->cam.rotation_h, &minirt->cam.rotation_h);
-		minirt->mouse_events.prev_x = x;
-		minirt->mouse_events.prev_y = y;
-		// mouse_move(minirt, 300, 300);
-	}
-	if (minirt->mouse_events.prev_x == -1)
-	{
-		minirt->mouse_events.prev_x = x;
-		minirt->mouse_events.prev_y = y;
-	}
+	translate_objects(x, y, minirt);
+	rotate_cam(x, y, minirt);
 	return (0);
 }

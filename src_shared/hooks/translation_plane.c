@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 00:13:01 by itan              #+#    #+#             */
-/*   Updated: 2023/11/02 14:18:53 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/02 14:54:35 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	add_translation_plane(t_minirt *rt)
 	else if (rt->key_events.holding_c)
 		plane->normalized_norm_vec = (t_vec3){.x = value.x, .y = 0, .z = 0};
 	rt->selection.translation_plane = plane;
-	render(rt, &thread_init);
 }
 
 void	remove_translation_plane(t_minirt *rt)

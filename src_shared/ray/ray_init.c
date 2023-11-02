@@ -48,5 +48,6 @@ t_ray	ray_primary(t_cam *cam, t_offset offset)
 	ray.direction = vec3_add(ray.direction, vec3_multiply(cam->up, y));
 	quaternion_multiply(&cam->rotation_h, &cam->rotation_v, &rotation);
 	ray.direction = vec3_apply_rot(ray.direction, rotation);
+	ray.direction = vec3_normalize(ray.direction);
 	return (ray);
 }

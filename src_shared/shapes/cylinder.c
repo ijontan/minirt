@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 14:56:25 by itan              #+#    #+#             */
-/*   Updated: 2023/10/27 12:58:23 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/02 16:05:50 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,9 @@ t_vec3	cylinder_caps_intersect(t_cylinder *cylinder, t_ray *ray, bool is_top)
 		cp = vec3_multiply(cylinder->normalized_axis, -1);
 	else
 		cp = cylinder->normalized_axis;
-	cap_plane = (t_plane){.point_on_plane = op, .normalized_norm_vec = cp};
-	sols = disk_intersect(&cap_plane, ray, cylinder->radius, op);
+	cap_plane = (t_plane){.point_on_plane = op, .normalized_norm_vec = cp,
+		.r = cylinder->radius};
+	sols = disk_intersect(&cap_plane, ray);
 	if (is_top && sols.z > 0)
 		sols.z = 3;
 	else if (sols.z > 0)

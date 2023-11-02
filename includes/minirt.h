@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/02 00:14:50 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/02 16:02:14 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,7 @@ typedef struct s_selections
 	t_plane			*translation_plane;
 	t_color_c		plane_color;
 	t_color_c		outline_color;
+	t_quaternion	rotation;
 }					t_selections;
 
 typedef struct s_minirt
@@ -284,8 +285,12 @@ t_color_c			get_color(t_minirt *rt, t_hit_info *hi);
 t_color_c			get_lights_color(t_minirt *rt, t_hit_info *hi);
 t_image				create_image(t_minirt *rt, t_offset size);
 t_image				load_image(t_minirt *rt, char *path);
+
+/* ---------------------------------- hooks --------------------------------- */
 void				add_translation_plane(t_minirt *rt);
 void				remove_translation_plane(t_minirt *rt);
+void				translate_objects(int x, int y, t_minirt *minirt);
+void				rotate_cam(int x, int y, t_minirt *minirt);
 
 /* ------------------------------- mouse_util ------------------------------- */
 
