@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 22:46:40 by itan              #+#    #+#             */
-/*   Updated: 2023/11/02 00:05:54 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/02 20:45:27 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,14 @@ t_hit_info	intersect_list(t_minirt *minirt, t_ray *ray)
 		if (intersect.z > 0 && intersect.x > 0 && (prev_intersect.z == 0
 				|| intersect.x < prev_intersect.x))
 			hit_info.hit_selection_plane = true;
+	}
+	if (minirt->selection.rotation_plane)
+	{
+		intersect = sc_interesect(minirt->selection.rotation_plane, ray,
+				minirt->selection.rotation_start, minirt->selection.angle);
+		if (intersect.z > 0 && intersect.x > 0 && (prev_intersect.z == 0
+				|| intersect.x < prev_intersect.x))
+			hit_info.hit_rotation_plane = true;
 	}
 	if (hit_info.hit == false)
 		return (hit_info);

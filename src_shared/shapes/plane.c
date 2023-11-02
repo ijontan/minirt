@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:39:47 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/02 16:12:59 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/03 01:22:47 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ t_vec3	sc_interesect(t_plane *plane, t_ray *ray, t_vec3 start, float angle)
 	len = vec3_length(vec3_subtract(p, plane->point_on_plane));
 	if (len > plane->r)
 		return (vec3_new(0, 0, 0));
-	p_angle = acos(vec3_dot(vec3_normalize(vec3_subtract(p,
-						plane->point_on_plane)), vec3_normalize(start)));
-	if (p_angle > angle)
+	p_angle = vec3_dot(vec3_normalize(vec3_subtract(p, plane->point_on_plane)),
+			vec3_normalize(start));
+	if (p_angle < cos(angle))
 		return (vec3_new(0, 0, 0));
 	return (vec3_new(sols.x, 0, 2));
 }

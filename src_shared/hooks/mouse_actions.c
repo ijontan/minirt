@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:31:12 by itan              #+#    #+#             */
-/*   Updated: 2023/11/02 15:54:56 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/03 01:26:24 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	translate_objects(int x, int y, t_minirt *minirt)
 		((t_cylinder *)(object->object))->center = point;
 	else if (object->type == CONE)
 		((t_cone *)(object->object))->tip = point;
+	minirt->selection.translation_plane->point_on_plane = point;
 	if (object->type == PLANE)
 		object->bounding_box = get_plane_bound(object->object);
 	else if (object->type == SPHERE)
@@ -46,10 +47,58 @@ void	translate_objects(int x, int y, t_minirt *minirt)
 		object->bounding_box = get_cone_bound(object->object);
 }
 
-// void rotate_objects(int x, int y, t_minirt*minirt)
-// {
+void	init_rotation(t_offset xy, t_minirt *minirt)
+{
+	t_ray		ray;
+	t_vec3		intersect;
+	t_vec3		point;
+	t_bound_box	bb;
+	float		len;
 
-// }
+	ray = ray_primary(&minirt->cam, xy);
+	intersect = plane_intersect(minirt->selection.translation_plane, &ray);
+	if (intersect.z <= 0 && intersect.x <= 0)
+		return ;
+	point = vec3_add(ray.origin, vec3_multiply(ray.direction, intersect.x));
+	minirt->selection.rotation_plane = malloc(sizeof(t_plane));
+	ft_memcpy(minirt->selection.rotation_plane,
+		minirt->selection.translation_plane, sizeof(t_plane));
+	bb = minirt->selection.selected->bounding_box;
+	len = vec3_length(vec3_subtract(bb.max, bb.min));
+	minirt->selection.rotation_plane->r = len * 0.5;
+	minirt->selection.rotation_start = vec3_normalize(vec3_subtract(point,
+				minirt->selection.rotation_plane->point_on_plane));
+	minirt->selection.angle = 0;
+}
+
+void	stop_rotation(t_minirt *minirt)
+{
+	free(minirt->selection.rotation_plane);
+	minirt->selection.rotation_plane = NULL;
+	minirt->selection.rotation_start = (t_vec3){0, 0, 0};
+	minirt->selection.angle = 0;
+}
+
+void	calc_rotation(t_offset xy, t_minirt *minirt)
+{
+	t_vec3	rotation_end;
+	t_vec3	intersect;
+	t_ray	ray;
+
+	if (!minirt->selection.rotation_plane
+		|| !minirt->selection.translation_plane)
+		return ;
+	ray = ray_primary(&minirt->cam, xy);
+	intersect = plane_intersect(minirt->selection.translation_plane, &ray);
+	if (intersect.z <= 0 && intersect.x <= 0)
+		return ;
+	rotation_end = vec3_add(ray.origin, vec3_multiply(ray.direction,
+				intersect.x));
+	rotation_end = vec3_normalize(vec3_subtract(rotation_end,
+				minirt->selection.rotation_plane->point_on_plane));
+	minirt->selection.angle = acosf(vec3_dot(minirt->selection.rotation_start,
+				rotation_end));
+}
 
 void	rotate_cam(int x, int y, t_minirt *minirt)
 {

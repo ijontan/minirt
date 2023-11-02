@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/02 16:02:14 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/03 01:26:08 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,9 @@ typedef struct s_selections
 {
 	t_object		*selected;
 	t_plane			*translation_plane;
+	t_plane			*rotation_plane;
+	t_vec3			rotation_start;
+	float			angle;
 	t_color_c		plane_color;
 	t_color_c		outline_color;
 	t_quaternion	rotation;
@@ -250,6 +253,7 @@ typedef struct s_hit_info
 	t_obj_type		obj_type;
 	bool			hit;
 	bool			hit_selection_plane;
+	bool			hit_rotation_plane;
 }					t_hit_info;
 
 void				draw_scene(t_minirt *minirt);
@@ -290,6 +294,9 @@ t_image				load_image(t_minirt *rt, char *path);
 void				add_translation_plane(t_minirt *rt);
 void				remove_translation_plane(t_minirt *rt);
 void				translate_objects(int x, int y, t_minirt *minirt);
+void				init_rotation(t_offset xy, t_minirt *minirt);
+void				stop_rotation(t_minirt *minirt);
+void				calc_rotation(t_offset xy, t_minirt *minirt);
 void				rotate_cam(int x, int y, t_minirt *minirt);
 
 /* ------------------------------- mouse_util ------------------------------- */
