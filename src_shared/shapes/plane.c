@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:39:47 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/02 00:04:31 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/02 11:06:16 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,11 @@ t_vec3	plane_intersect(t_plane *plane, t_ray *ray)
 
 	denom = vec3_dot(plane->normalized_norm_vec,
 			vec3_normalize(ray->direction));
-	if (ft_abs(denom) > 1e-4)
+	if (denom > 1e-4)
 	{
 		p0_l0 = vec3_subtract(plane->point_on_plane, ray->origin);
 		t = vec3_dot(p0_l0, plane->normalized_norm_vec) / denom;
 		return (vec3_new(t, 0, 2));
 	}
-	// else if (denom < 1e-5)
-	// 	return (vec3_new(1, 0, 1));
 	return (vec3_new(0, 0, 0));
 }
