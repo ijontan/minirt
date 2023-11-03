@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/11/03 09:52:13 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/03 10:39:41 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void start_minirt(t_minirt *minirt)
 	if (!parse_rt_file(minirt->rt_file_path, &parse_info))
 		return ;
 	printf("\e[0;32mParsing done!!! ~~\n\e[0m");
+	if (minirt->render_status == RENDER_NEW_SCENE)
+		free_minirt(minirt);
 	minirt->pixel_size = 3;
 	minirt->amb_light = parse_info.amb_light;
 	minirt->cam = parse_info.camera;

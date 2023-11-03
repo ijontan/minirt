@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_objects.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 17:14:41 by rsoo              #+#    #+#             */
-/*   Updated: 2023/10/30 15:25:12 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/03 10:53:38 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,6 @@ void	parse_cone(t_parse *p)
 		exit_parse(p->info, "Cone", 'c');
 	parse_material("Cone", 6, &cone->material, p);
 	cone->angle = atan(cone->radius / cone->height);
-	printf("angle %f\n", cone->angle);
 	cone->cos_squared = ft_power(cos(cone->angle), 2);
 	add_object(&p->objects, cone, CONE);
 }

@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/03 10:18:57 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/03 11:31:37 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define WINDOW_HEIGHT 720
 # define MID_X (WINDOW_WIDTH * 0.5)
 # define MID_Y (WINDOW_HEIGHT * 0.5)
-# define SCENES_START_Y 240 // defines the starting Y coordinate of the scenes section of the menu
+# define SCENES_START_Y 360 // defines the starting Y coordinate of the scenes section of the menu
 # define SCENES_START_X 40
 # define MENU_START_X 20
 # define MENU_WIDTH 250
@@ -234,6 +234,7 @@ typedef struct s_minirt
 	int				render_status;
 	int				file_ind;
 	char			*rt_file_path;
+	char			*overlay_msg;
 }					t_minirt;
 
 /**
@@ -316,5 +317,9 @@ t_image				load_image(t_minirt *rt, char *path);
 void				mouse_hide(t_minirt *minirt);
 void				mouse_show(t_minirt *minirt);
 void				mouse_move(t_minirt *minirt, int x, int y);
+
+/* ------------------------------- freeing_utils ----------------------------- */
+
+void 				free_minirt(t_minirt *minirt);
 
 #endif

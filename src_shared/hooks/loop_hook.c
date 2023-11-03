@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 21:04:12 by itan              #+#    #+#             */
-/*   Updated: 2023/11/03 10:05:06 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/03 11:37:41 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ void render_new_scene(t_minirt *minirt)
 	if (minirt->render_status == RENDER_NEW_SCENE)
 	{
 		start_minirt(minirt);
+		minirt->render_status = RENDER_DONE;
+	}
+	else if (minirt->render_status == RENDER_CURRENT_SCENE)
+	{
+		render_gi(minirt);
 		minirt->render_status = RENDER_DONE;
 	}
 }

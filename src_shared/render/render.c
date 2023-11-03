@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 09:11:04 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/03 10:20:29 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/03 11:31:37 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,13 @@ void render_loading_overlay(t_minirt *minirt)
 	t_image	overlay_img;
 	int i;
 	int j;
-	char *str;
 	int overlay_len;
 	int overlay_start_x;
 	int overlay_start_y;
 
 	overlay_img = create_image(minirt, (t_offset){.x = WINDOW_WIDTH, .y = WINDOW_HEIGHT});
 
-	str = ft_strjoin("Rendering ", minirt->rt_file_path);
-	overlay_len = ft_strlen(str) * CHAR_WIDTH + 20;
+	overlay_len = ft_strlen(minirt->overlay_msg) * CHAR_WIDTH + 20;
 	overlay_start_x = MID_X - overlay_len * 0.5;
 	overlay_start_y = MID_X + overlay_len * 0.5;
 	j = OVERLAY_START_Y;
@@ -41,8 +39,7 @@ void render_loading_overlay(t_minirt *minirt)
 	mlx_put_image_to_window(minirt->mlx, minirt->win, overlay_img.image, 0, 0);
 	mlx_destroy_image(minirt->mlx, overlay_img.image);
 
-	mlx_string_put(minirt->mlx, minirt->win, overlay_start_x + 10, OVERLAY_START_Y + 23, FONT_COLOR, str);
-	free(str);
+	mlx_string_put(minirt->mlx, minirt->win, overlay_start_x + 10, OVERLAY_START_Y + 23, FONT_COLOR, minirt->overlay_msg);
 	printf("render overlay done\n");
 }
 
@@ -79,7 +76,11 @@ void	render_menu(t_minirt *minirt)
 		"r: render scene");
 	mlx_string_put(minirt->mlx, minirt->win, 20, 160, FONT_COLOR,
 		"f: toggle mode (flying / edit)");
-	mlx_string_put(minirt->mlx, minirt->win, 20, 180, FONT_COLOR, "esc: exit");
+	mlx_string_put(minirt->mlx, minirt->win, 20, 180, FONT_COLOR,
+		"up: increase pixel size");
+	mlx_string_put(minirt->mlx, minirt->win, 20, 200, FONT_COLOR,
+		"down: decrease pixel size");
+	mlx_string_put(minirt->mlx, minirt->win, 20, 220, FONT_COLOR, "esc: exit");
 	i = -1;
 	j = 1;
 

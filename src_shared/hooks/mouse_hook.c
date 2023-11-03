@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 14:44:19 by itan              #+#    #+#             */
-/*   Updated: 2023/11/03 10:22:27 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/03 11:31:37 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ int	mouse_down_hook(int button, int x, int y, t_minirt *minirt)
 		{
 			minirt->render_status = RENDER_NEW_SCENE;
 			minirt->rt_file_path = minirt->rt_files[minirt->file_ind].name;
+			minirt->overlay_msg = ft_strjoin("Rendering ", minirt->rt_file_path);
 			render_loading_overlay(minirt);
+			free(minirt->overlay_msg);
 		}
 	}
 	else if (button == M_CLK_R)
