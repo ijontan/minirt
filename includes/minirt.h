@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/10/30 23:39:07 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/03 10:18:57 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@
 # include <stdio.h>
 
 // positions
-# define WINDOW_WIDTH 1920
-# define WINDOW_HEIGHT 1080
-# define MID_X 960
-# define MID_Y 540
+# define WINDOW_WIDTH 1280
+# define WINDOW_HEIGHT 720
+# define MID_X (WINDOW_WIDTH * 0.5)
+# define MID_Y (WINDOW_HEIGHT * 0.5)
 # define SCENES_START_Y 240 // defines the starting Y coordinate of the scenes section of the menu
 # define SCENES_START_X 40
 # define MENU_START_X 20
@@ -40,14 +40,15 @@
 # define CHAR_WIDTH 7
 # define CHAR_HEIGHT 25
 
-# define OVERLAY_WIDTH 200
-# define OVERLAY_HEIGHT 200
-# define OVERLAY_START_X MID_X - (OVERLAY_WIDTH * 0.5)
-# define OVERLAY_START_Y MID_Y - (OVERLAY_HEIGHT * 0.5)
-# define OVERLAY_END_X MID_X + (OVERLAY_WIDTH * 0.5)
-# define OVERLAY_END_Y MID_Y + (OVERLAY_HEIGHT * 0.5)
+// overlay positions
+# define OVERLAY_WIDTH 400
+# define OVERLAY_HEIGHT 35
+// # define OVERLAY_START_X (MID_X - (OVERLAY_WIDTH * 0.5))
+// # define OVERLAY_END_X (MID_X + (OVERLAY_WIDTH * 0.5))
+# define OVERLAY_START_Y (MID_Y - (OVERLAY_HEIGHT * 0.5))
+# define OVERLAY_END_Y (MID_Y + (OVERLAY_HEIGHT * 0.5))
 
-
+// paths
 # define RT_FILE_DIR "rt_files/scenes/"
 
 // colors
@@ -143,19 +144,6 @@ void				check_line_format(int type, t_parse *p);
 bool				valid_float(char *s);
 bool				valid_triplet(char *s);
 
-/* --------------------------------- octree --------------------------------- */
-
-# define OCTREE_MAX_DEPTH 10
-# define OCTREE_MAX_OBJECTS 10
-# define OCTREE_MAX_NODE 8
-
-typedef struct s_octree
-{
-	t_bound_box		bounding_box;
-	t_list			*objects;
-	struct s_octree	**children;
-}					t_octree;
-
 /* -------------------------------------------------------------------------- */
 /*                                    Bonus                                   */
 /* -------------------------------------------------------------------------- */
@@ -211,6 +199,15 @@ typedef struct s_file
 	t_vec2	bottom_right;
 }				t_file;
 
+typedef enum e_render_status
+{
+	RENDER_FIRST_SCENE,
+	RENDER_NEW_SCENE,
+	RENDER_CURRENT_SCENE,
+	RENDERING,
+	RENDER_DONE
+}			t_render_status;
+
 typedef struct s_minirt
 {
 	void			*mlx;
@@ -230,8 +227,13 @@ typedef struct s_minirt
 	pthread_t		*threads;
 	int				pixel_size;
 	bool			moving;
+
 	t_file			*rt_files;
 	int				file_num;
+
+	int				render_status;
+	int				file_ind;
+	char			*rt_file_path;
 }					t_minirt;
 
 /**
@@ -270,7 +272,7 @@ typedef struct s_hit_info
 }					t_hit_info;
 
 void				draw_scene(t_minirt *minirt);
-void 				start_minirt(char *file_path, t_minirt *minirt);
+void 				start_minirt(t_minirt *minirt);
 
 void				init_hooks(t_minirt *minirt);
 int					x_button_exit(int keycode, t_minirt *minirt);
@@ -292,10 +294,14 @@ t_color_c			get_color(t_minirt *rt, t_hit_info *hi);
 t_color_c			ray_tracing(t_ray ray, t_minirt *minirt,
 						unsigned int *state);
 
+// rendering
 int					render(t_minirt *minirt,
 						void (*draw_func)(t_minirt *minirt));
-void 				render_loading_overlay(char *str, t_minirt *minirt);
+void 				render_loading_overlay(t_minirt *minirt);
 void				render_gi(t_minirt *rt);
+void 				render_loading_overlay(t_minirt *minirt);
+void				render_menu(t_minirt *minirt);
+
 void				ray_cast(t_minirt *minirt);
 void				draw_scene(t_minirt *minirt);
 void				thread_init(t_minirt *minirt);

@@ -6,29 +6,44 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 09:11:04 by rsoo              #+#    #+#             */
-/*   Updated: 2023/10/30 23:38:40 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/03 10:20:29 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-#define FONT_COLOR BLACK
+# define FONT_COLOR BLACK
 
-void render_loading_overlay(char *str, t_minirt *minirt)
+void render_loading_overlay(t_minirt *minirt)
 {
-	t_image	bg;
-	int x;
-	int y;
+	t_image	overlay_img;
+	int i;
+	int j;
+	char *str;
+	int overlay_len;
+	int overlay_start_x;
+	int overlay_start_y;
 
-	bg = create_image(minirt, (t_offset){.x = OVERLAY_WIDTH, .y = OVERLAY_HEIGHT});
-	y = OVERLAY_START_Y;
-	while (++y < OVERLAY_END_Y)
+	overlay_img = create_image(minirt, (t_offset){.x = WINDOW_WIDTH, .y = WINDOW_HEIGHT});
+
+	str = ft_strjoin("Rendering ", minirt->rt_file_path);
+	overlay_len = ft_strlen(str) * CHAR_WIDTH + 20;
+	overlay_start_x = MID_X - overlay_len * 0.5;
+	overlay_start_y = MID_X + overlay_len * 0.5;
+	j = OVERLAY_START_Y;
+	while (++j < OVERLAY_END_Y)
 	{
-		x = OVERLAY_START_X;
-		while (++x < OVERLAY_END_X)
-			put_pixel(&bg, (t_offset){.x = x, .y = y}, 0x40ffffff);
+		i = overlay_start_x;
+		while (++i < overlay_start_y)
+			put_pixel(&overlay_img, (t_offset){.x = i, .y = j}, 0x00ffffff);
 	}
-	printf("%s\n", str);
+
+	mlx_put_image_to_window(minirt->mlx, minirt->win, overlay_img.image, 0, 0);
+	mlx_destroy_image(minirt->mlx, overlay_img.image);
+
+	mlx_string_put(minirt->mlx, minirt->win, overlay_start_x + 10, OVERLAY_START_Y + 23, FONT_COLOR, str);
+	free(str);
+	printf("render overlay done\n");
 }
 
 void	render_menu(t_minirt *minirt)
@@ -47,6 +62,7 @@ void	render_menu(t_minirt *minirt)
 	}
 	mlx_put_image_to_window(minirt->mlx, minirt->win, bg.image, 0, 0);
 	mlx_destroy_image(minirt->mlx, bg.image);
+
 	mlx_string_put(minirt->mlx, minirt->win, 20, 20, FONT_COLOR,
 		"w: move forward");
 	mlx_string_put(minirt->mlx, minirt->win, 20, 40, FONT_COLOR,
@@ -72,26 +88,33 @@ void	render_menu(t_minirt *minirt)
 		if (minirt->rt_files[i].name[0] != '.')
 			mlx_string_put(minirt->mlx, minirt->win, 40, SCENES_START_Y + (20 * j++),
 				FONT_COLOR, minirt->rt_files[i].name);
-	// free(minirt->rt_files);
 }
 
+// static bool	status;
+// mlx_clear_window(minirt->mlx, minirt->win);
+// if (!status)
+// {
+// ray_cast(minirt);
+// thread_init(minirt);
+// draw_scene(minirt);
+// 	status = true;
+// }
 int	render(t_minirt *minirt, void (*draw_func)(t_minirt *minirt))
 {
-	// static bool	status;
 	minirt->image = create_image(minirt, (t_offset){.x = minirt->cam.vp_width,
 			.y = minirt->cam.vp_height});
-	// mlx_clear_window(minirt->mlx, minirt->win);
-	// if (!status)
-	// {
-	// ray_cast(minirt);
-	// thread_init(minirt);
-	// draw_scene(minirt);
 	draw_func(minirt);
-	mlx_put_image_to_window(minirt->mlx, minirt->win, minirt->image.image, 0,
-		0);
+	mlx_put_image_to_window(minirt->mlx, minirt->win, minirt->image.image, 0, 0);
+
 	render_menu(minirt);
-	// 	status = true;
-	// }
+
 	mlx_destroy_image(minirt->mlx, minirt->image.image);
 	return (0);
 }
+
+/*
+1. create image
+2. function
+3. put image to window
+4. destroy
+*/

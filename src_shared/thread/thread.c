@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   thread.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 22:20:30 by itan              #+#    #+#             */
-/*   Updated: 2023/10/28 05:16:02 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/31 16:32:56 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ void	*ray_cast_routine(void *data)
 					color_revert(info->minirt->amb_light.color).as_int);
 			}
 			i = -1;
-			while (++i < pixel_size && x + i < 1280)
+			while (++i < pixel_size && x + i < WINDOW_WIDTH)
 			{
 				j = -1;
-				while (++j < pixel_size && y + j < 720)
+				while (++j < pixel_size && y + j < WINDOW_HEIGHT)
 				{
 					put_pixel(&info->minirt->image, (t_offset){.x = x + i,
 						.y = y + j}, color_revert(color).as_int);
@@ -86,19 +86,19 @@ void	thread_init(t_minirt *minirt)
 	i = -1;
 	minirt->threads = ft_calloc(7, sizeof(pthread_t));
 	info = ft_calloc(7, sizeof(t_thread_info));
-	size.x = 1280 / 7;
-	size.y = 720 / 7;
+	size.x = WINDOW_WIDTH / 7;
+	size.y = WINDOW_HEIGHT / 7;
 	while (++i < 7)
 	{
 		info[i].minirt = minirt;
 		info[i].start.x = 0;
 		info[i].start.y = i * size.y;
-		info[i].end.x = 1280;
+		info[i].end.x = WINDOW_WIDTH;
 		info[i].end.y = (i + 1) * size.y;
 		if (i == 6)
 		{
-			info[i].end.x = 1280;
-			info[i].end.y = 720;
+			info[i].end.x = WINDOW_WIDTH;
+			info[i].end.y = WINDOW_HEIGHT;
 		}
 		pthread_create(&minirt->threads[i], NULL, &ray_cast_routine, &info[i]);
 	}
@@ -132,7 +132,7 @@ void	*ray_trace_routine(void *data)
 			color = color_correct_new(0, 0, 0, 0);
 			cycle = -1;
 			ray = ray_primary(&info->minirt->cam, (t_offset){.x = x, .y = y});
-			state = (unsigned int)((x + y * 1280));
+			state = (unsigned int)((x + y * WINDOW_WIDTH));
 			while (++cycle < 30)
 			{
 				incoming_light = ray_tracing(ray, info->minirt, &state);
@@ -157,19 +157,19 @@ void	thread_raytrace(t_minirt *minirt)
 	i = -1;
 	minirt->threads = ft_calloc(16, sizeof(pthread_t));
 	info = ft_calloc(7, sizeof(t_thread_info));
-	size.x = 1280 / 7;
-	size.y = 720 / 7;
+	size.x = WINDOW_WIDTH / 7;
+	size.y = WINDOW_HEIGHT / 7;
 	while (++i < 7)
 	{
 		info[i].minirt = minirt;
 		info[i].start.x = 0;
 		info[i].start.y = i * size.y;
-		info[i].end.x = 1280;
+		info[i].end.x = WINDOW_WIDTH;
 		info[i].end.y = (i + 1) * size.y;
 		if (i == 6)
 		{
-			info[i].end.x = 1280;
-			info[i].end.y = 720;
+			info[i].end.x = WINDOW_WIDTH;
+			info[i].end.y = WINDOW_HEIGHT;
 		}
 		pthread_create(&minirt->threads[i], NULL, &ray_trace_routine, &info[i]);
 	}

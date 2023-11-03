@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_cast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:01:48 by itan              #+#    #+#             */
-/*   Updated: 2023/10/28 05:10:31 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/31 16:31:32 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	ray_cast(t_minirt *minirt)
 	t_hit_info	hit_info;
 
 	xy.y = -1;
-	while (++xy.y < 720)
+	while (++xy.y < WINDOW_HEIGHT)
 	{
 		xy.x = -1;
-		while (++xy.x < 1280)
+		while (++xy.x < WINDOW_WIDTH)
 		{
 			ray = ray_primary(&minirt->cam, xy);
 			hit_info = intersect_list(minirt, &ray);

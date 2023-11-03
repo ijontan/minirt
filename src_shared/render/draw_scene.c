@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_scene.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 14:57:08 by itan              #+#    #+#             */
-/*   Updated: 2023/10/26 15:01:00 by itan             ###   ########.fr       */
+/*   Updated: 2023/10/31 16:34:13 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ void	draw_scene(t_minirt *minirt)
 	t_color_c		incoming_light;
 
 	y = 0;
-	while (y < 720)
+	while (y < WINDOW_HEIGHT)
 	{
 		x = 0;
-		while (x < 1280)
+		while (x < WINDOW_WIDTH)
 		{
 			color = color_correct_new(0, 0, 0, 0);
 			cycle = -1;
 			ray = ray_primary(&minirt->cam, (t_offset){.x = x, .y = y});
-			state = (unsigned int)((x + y * 1280));
+			state = (unsigned int)((x + y * WINDOW_WIDTH));
 			while (++cycle < 10)
 			{
 				incoming_light = ray_tracing(ray, minirt, &state);

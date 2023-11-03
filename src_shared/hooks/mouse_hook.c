@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 14:44:19 by itan              #+#    #+#             */
-/*   Updated: 2023/10/30 23:16:09 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/03 10:22:27 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,17 @@ int in_rt_file_position(int x, int y, t_minirt *minirt)
 
 int	mouse_down_hook(int button, int x, int y, t_minirt *minirt)
 {
-	int file_ind;
-
 	if (button == M_CLK_L && !minirt->moving)
 		select_object((t_offset){.x = x, .y = y}, minirt);
 	if (button == M_CLK_L && x < MENU_WIDTH)
 	{
-		file_ind = in_rt_file_position(x, y, minirt);
-		// printf("pressed: %d, %d\n", x, y);
-		if (file_ind > -1)
-			start_minirt(minirt->rt_files[file_ind].name, minirt);
+		minirt->file_ind = in_rt_file_position(x, y, minirt);
+		if (minirt->file_ind > -1)
+		{
+			minirt->render_status = RENDER_NEW_SCENE;
+			minirt->rt_file_path = minirt->rt_files[minirt->file_ind].name;
+			render_loading_overlay(minirt);
+		}
 	}
 	else if (button == M_CLK_R)
 		minirt->mouse_events.holding_m_right = true;
