@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 14:35:41 by itan              #+#    #+#             */
-/*   Updated: 2023/11/02 20:43:26 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/03 01:38:16 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@
 
 typedef struct s_plane
 {
-	t_vec3		point_on_plane;
-	t_vec3		normalized_norm_vec;
+	t_vec3		center;
+	t_vec3		normal;
+	t_vec3		rot_normal;
 	t_material	material;
 	float		r;
 }				t_plane;

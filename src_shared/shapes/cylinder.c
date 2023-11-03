@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 14:56:25 by itan              #+#    #+#             */
-/*   Updated: 2023/11/02 16:05:50 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/03 02:15:22 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ t_vec3	cylinder_normal(t_cylinder *cylinder, t_vec3 point, float type)
 	float	t;
 
 	if (type == 3)
-		return (cylinder->normalized_axis);
+		return (cylinder->rot_axis);
 	else if (type == 4)
-		return (vec3_multiply(cylinder->normalized_axis, -1));
+		return (vec3_multiply(cylinder->rot_axis, -1));
 	oc = vec3_subtract(point, cylinder->center);
-	t = vec3_dot(oc, cylinder->normalized_axis);
+	t = vec3_dot(oc, cylinder->rot_axis);
 	normal = vec3_subtract(point, vec3_add(cylinder->center,
-				vec3_multiply(cylinder->normalized_axis, t)));
+				vec3_multiply(cylinder->rot_axis, t)));
 	if (type == 5)
 		normal = vec3_multiply(normal, -1);
 	return (vec3_normalize(normal));
@@ -49,8 +49,8 @@ static float	ray_in_cylinder_bound(t_cylinder *cylinder, t_ray *ray, float t)
 
 	point = vec3_add(ray->origin, vec3_multiply(ray->direction, t));
 	ci = vec3_subtract(point, cylinder->center);
-	distance = vec3_length(cylinder->normalized_axis)
-		* vec3_dot(cylinder->normalized_axis, ci);
+	distance = vec3_length(cylinder->rot_axis) * vec3_dot(cylinder->rot_axis,
+			ci);
 	if (distance < cylinder->height * -0.5 || distance > cylinder->height * 0.5)
 		return (distance);
 	return (0);
@@ -66,16 +66,16 @@ t_vec3	cylinder_caps_intersect(t_cylinder *cylinder, t_ray *ray, bool is_top)
 	t_vec3	sols;
 
 	if (is_top)
-		cp = vec3_multiply(cylinder->normalized_axis, cylinder->height * 0.5);
+		cp = vec3_multiply(cylinder->rot_axis, cylinder->height * 0.5);
 	else
-		cp = vec3_multiply(cylinder->normalized_axis, cylinder->height * -0.5);
+		cp = vec3_multiply(cylinder->rot_axis, cylinder->height * -0.5);
 	// printf("cp: %f, %f, %f\n", cp.x, cp.y, cp.z);
 	op = vec3_add(cylinder->center, cp);
 	if (is_top)
-		cp = vec3_multiply(cylinder->normalized_axis, -1);
+		cp = vec3_multiply(cylinder->rot_axis, -1);
 	else
-		cp = cylinder->normalized_axis;
-	cap_plane = (t_plane){.point_on_plane = op, .normalized_norm_vec = cp,
+		cp = cylinder->rot_axis;
+	cap_plane = (t_plane){.center = op, .rot_normal = cp,
 		.r = cylinder->radius};
 	sols = disk_intersect(&cap_plane, ray);
 	if (is_top && sols.z > 0)
@@ -101,9 +101,9 @@ t_vec3	cylinder_intersect(t_cylinder *cylinder, t_ray *ray)
 	t_vec3	sols;
 	float	distance;
 
-	ray2.direction = vec3_cross(ray->direction, cylinder->normalized_axis);
+	ray2.direction = vec3_cross(ray->direction, cylinder->rot_axis);
 	oc = vec3_cross(vec3_subtract(ray->origin, cylinder->center),
-			cylinder->normalized_axis);
+			cylinder->rot_axis);
 	abc.x = vec3_dot(ray2.direction, ray2.direction);
 	abc.y = 2.0f * vec3_dot(oc, ray2.direction);
 	abc.z = vec3_dot(oc, oc) - cylinder->radius * cylinder->radius;

@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:22:28 by itan              #+#    #+#             */
-/*   Updated: 2023/10/29 19:23:26 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/03 17:09:43 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ t_bound_box	get_cylinder_bound(t_cylinder *cylinder)
 	t_vec3		vec3;
 	t_vec3		tmp;
 
-	a = vec3_multiply(cylinder->normalized_axis, cylinder->height * 0.5);
-	vec3.x = cylinder->radius * sqrt(1 - cylinder->normalized_axis.x
-			* cylinder->normalized_axis.x);
-	vec3.y = cylinder->radius * sqrt(1 - cylinder->normalized_axis.y
-			* cylinder->normalized_axis.y);
-	vec3.z = cylinder->radius * sqrt(1 - cylinder->normalized_axis.z
-			* cylinder->normalized_axis.z);
+	a = vec3_multiply(cylinder->rot_axis, cylinder->height * 0.5);
+	vec3.x = cylinder->radius * sqrt(1 - cylinder->rot_axis.x
+			* cylinder->rot_axis.x);
+	vec3.y = cylinder->radius * sqrt(1 - cylinder->rot_axis.y
+			* cylinder->rot_axis.y);
+	vec3.z = cylinder->radius * sqrt(1 - cylinder->rot_axis.z
+			* cylinder->rot_axis.z);
 	bound_box.min = cylinder->center;
 	bound_box.max = cylinder->center;
 	tmp = vec3_subtract(cylinder->center, vec3_add(a, vec3));
@@ -69,13 +69,10 @@ t_bound_box	get_cone_bound(t_cone *cone)
 	t_vec3		vec3;
 	t_vec3		tmp;
 
-	a = vec3_multiply(cone->normalized_axis, cone->height);
-	vec3.x = cone->radius * sqrt(1 - cone->normalized_axis.x
-			* cone->normalized_axis.x);
-	vec3.y = cone->radius * sqrt(1 - cone->normalized_axis.y
-			* cone->normalized_axis.y);
-	vec3.z = cone->radius * sqrt(1 - cone->normalized_axis.z
-			* cone->normalized_axis.z);
+	a = vec3_multiply(cone->rot_axis, cone->height);
+	vec3.x = cone->radius * sqrt(1 - cone->rot_axis.x * cone->rot_axis.x);
+	vec3.y = cone->radius * sqrt(1 - cone->rot_axis.y * cone->rot_axis.y);
+	vec3.z = cone->radius * sqrt(1 - cone->rot_axis.z * cone->rot_axis.z);
 	bound_box.min = cone->tip;
 	bound_box.max = cone->tip;
 	tmp = vec3_add(cone->tip, vec3_add(a, vec3));
@@ -94,14 +91,9 @@ void	add_object(t_list **objects, void *object, unsigned char type)
 		return ;
 	obj->object = object;
 	obj->type = type;
-	if (type == SPHERE)
-		obj->bounding_box = get_sphere_bound(object);
-	else if (type == PLANE)
-		obj->bounding_box = get_plane_bound(object);
-	else if (type == CYLINDER)
-		obj->bounding_box = get_cylinder_bound(object);
-	else if (type == CONE)
-		obj->bounding_box = get_cone_bound(object);
+	obj->rotation = quaternion_create_id();
+	obj->tmp_rotation = quaternion_create_id();
+	get_bound(obj);
 	ft_lstadd_front(objects, ft_lstnew(obj));
 }
 

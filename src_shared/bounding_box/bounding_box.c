@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bounding_box.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 00:32:55 by itan              #+#    #+#             */
-/*   Updated: 2023/10/26 21:01:21 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/03 17:07:13 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,22 @@ bool	bound_box_intersect(t_bound_box box, t_ray ray)
 	ft_swap_min(&tmin.z, &tmax.z);
 	return (tmin.x <= tmax.y && tmin.y <= tmax.x && tmin.x <= tmax.z
 		&& tmin.z <= tmax.x && tmin.y <= tmax.z && tmin.z <= tmax.y);
+}
+
+t_bound_box	get_bound(t_object *obj)
+{
+	void			*object;
+	unsigned char	type;
+
+	object = obj->object;
+	type = obj->type;
+	if (type == SPHERE)
+		obj->bounding_box = get_sphere_bound(object);
+	else if (type == PLANE)
+		obj->bounding_box = get_plane_bound(object);
+	else if (type == CYLINDER)
+		obj->bounding_box = get_cylinder_bound(object);
+	else if (type == CONE)
+		obj->bounding_box = get_cone_bound(object);
+	return (obj->bounding_box);
 }

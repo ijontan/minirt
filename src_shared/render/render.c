@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 09:11:04 by rsoo              #+#    #+#             */
-/*   Updated: 2023/10/28 23:24:47 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/03 01:55:34 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	render(t_minirt *minirt, void (*draw_func)(t_minirt *minirt))
 	// ray_cast(minirt);
 	// thread_init(minirt);
 	// draw_scene(minirt);
+	ft_lstiter(minirt->objects, apply_rot);
 	draw_func(minirt);
 	mlx_put_image_to_window(minirt->mlx, minirt->win, minirt->image.image, 0,
 		0);

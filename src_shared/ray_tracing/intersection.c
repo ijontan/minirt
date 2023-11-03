@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 22:46:40 by itan              #+#    #+#             */
-/*   Updated: 2023/11/02 20:45:27 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/03 01:36:32 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ t_hit_info	intersect_list(t_minirt *minirt, t_ray *ray)
 	else if (hit_info.obj_type == PLANE)
 	{
 		hit_info.material = ((t_plane *)hit_info.object->object)->material;
-		hit_info.normal = ((t_plane *)(hit_info.object->object))->normalized_norm_vec;
+		hit_info.normal = ((t_plane *)(hit_info.object->object))->rot_normal;
 		if (vec3_dot(ray->direction, hit_info.normal) > 0)
 			hit_info.normal = vec3_multiply(hit_info.normal, -1);
 		hit_info.normal = vec3_normalize(hit_info.normal);

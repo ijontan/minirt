@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 00:13:01 by itan              #+#    #+#             */
-/*   Updated: 2023/11/02 14:54:35 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/03 02:11:34 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static t_vec3	get_trnslt_pl_pt(t_minirt *rt)
 
 	ret = (t_vec3){.x = 0, .y = 0, .z = 0};
 	if (rt->selection.selected->type == PLANE)
-		ret = ((t_plane *)(rt->selection.selected->object))->point_on_plane;
+		ret = ((t_plane *)(rt->selection.selected->object))->center;
 	else if (rt->selection.selected->type == SPHERE)
 		ret = ((t_sphere *)(rt->selection.selected->object))->center;
 	else if (rt->selection.selected->type == CYLINDER)
@@ -39,19 +39,19 @@ void	add_translation_plane(t_minirt *rt)
 		|| rt->selection.translation_plane)
 		return ;
 	plane = ft_calloc(1, sizeof(t_plane));
-	plane->point_on_plane = get_trnslt_pl_pt(rt);
-	if (plane->point_on_plane.x < rt->cam.origin.x + rt->cam.position.x)
+	plane->center = get_trnslt_pl_pt(rt);
+	if (plane->center.x < rt->cam.origin.x + rt->cam.position.x)
 		value.x = -1;
-	if (plane->point_on_plane.y < rt->cam.origin.y + rt->cam.position.y)
+	if (plane->center.y < rt->cam.origin.y + rt->cam.position.y)
 		value.y = -1;
-	if (plane->point_on_plane.z < rt->cam.origin.x + rt->cam.position.z)
+	if (plane->center.z < rt->cam.origin.x + rt->cam.position.z)
 		value.z = -1;
 	if (rt->key_events.holding_z)
-		plane->normalized_norm_vec = (t_vec3){.x = 0, .y = value.y, .z = 0};
+		plane->rot_normal = (t_vec3){.x = 0, .y = value.y, .z = 0};
 	else if (rt->key_events.holding_x)
-		plane->normalized_norm_vec = (t_vec3){.x = 0, .y = 0, .z = value.z};
+		plane->rot_normal = (t_vec3){.x = 0, .y = 0, .z = value.z};
 	else if (rt->key_events.holding_c)
-		plane->normalized_norm_vec = (t_vec3){.x = value.x, .y = 0, .z = 0};
+		plane->rot_normal = (t_vec3){.x = value.x, .y = 0, .z = 0};
 	rt->selection.translation_plane = plane;
 }
 

@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 17:14:41 by rsoo              #+#    #+#             */
-/*   Updated: 2023/10/30 15:25:12 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/03 02:46:01 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ void	parse_plane(t_parse *p)
 	t_plane	*plane;
 
 	plane = ft_calloc(1, sizeof(t_plane));
-	plane->point_on_plane = parse_coordinates(p->info[1], p);
+	plane->center = parse_coordinates(p->info[1], p);
 	if (check_norm_vec_range(p->info[2], p))
-		plane->normalized_norm_vec = assign_norm_vec(p);
+		plane->normal = assign_norm_vec(p);
 	else
 		exit_parse(p->info, "Plane", 'n');
 	if (check_rgb(p->info[3], p))
@@ -108,9 +108,10 @@ void	parse_cylinder(t_parse *p)
 	cylinder = ft_calloc(1, sizeof(t_cylinder));
 	cylinder->center = parse_coordinates(p->info[1], p);
 	if (check_norm_vec_range(p->info[2], p))
-		cylinder->normalized_axis = assign_norm_vec(p);
+		cylinder->norm_axis = assign_norm_vec(p);
 	else
 		exit_parse(p->info, "Cylinder", 'n');
+	cylinder->rot_axis = cylinder->norm_axis;
 	cylinder->radius = ft_atof(p->info[3], p) / 2;
 	if (cylinder->radius <= 0.0)
 		exit_parse(p->info, "Cylinder", 'd');
@@ -134,9 +135,10 @@ void	parse_cone(t_parse *p)
 	ft_memset(cone, 0, sizeof(t_cone));
 	cone->tip = parse_coordinates(p->info[1], p);
 	if (check_norm_vec_range(p->info[2], p))
-		cone->normalized_axis = assign_norm_vec(p);
+		cone->norm_axis = assign_norm_vec(p);
 	else
 		exit_parse(p->info, "Cone", 'n');
+	cone->rot_axis = cone->norm_axis;
 	cone->radius = ft_atof(p->info[3], p) / 2;
 	if (cone->radius <= 0.0)
 		exit_parse(p->info, "Cone", 'd');

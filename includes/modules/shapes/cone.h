@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 21:11:10 by rsoo              #+#    #+#             */
-/*   Updated: 2023/10/29 17:05:31 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/03 01:40:27 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 typedef struct s_cone
 {
 	t_vec3		tip;
-	t_vec3		normalized_axis;
+	t_vec3		norm_axis;
+	t_vec3		rot_axis;
 	float		diameter;
 	float		height;
 	float		radius;

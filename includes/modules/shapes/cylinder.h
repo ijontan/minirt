@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 14:36:37 by itan              #+#    #+#             */
-/*   Updated: 2023/10/22 14:48:42 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/03 01:38:48 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 typedef struct s_cylinder
 {
 	t_vec3		center;
-	t_vec3		normalized_axis;
+	t_vec3		norm_axis;
+	t_vec3		rot_axis;
 	float		radius;
 	float		height;
 	t_material	material;
