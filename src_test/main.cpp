@@ -73,10 +73,10 @@ void	ray_cast(t_minirt *minirt)
 	// printf("minirt->cam.origin: %f %f %f\n", minirt->cam.origin.x,
 	// 		minirt->cam.origin.y, minirt->cam.origin.z);
 	y = 0;
-	while (y < 720)
+	while (y < WINDOW_HEIGHT)
 	{
 		x = 0;
-		while (x < 1280)
+		while (x < WINDOW_WIDTH)
 		{
 			// if ((x % pixel_size != 0 || y % pixel_size != 0))
 			// {
@@ -100,10 +100,10 @@ void	ray_cast(t_minirt *minirt)
 				put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
 					color_revert(minirt->amb_light.color).as_int);
 			// i = -1;
-			// while (minirt->moving && ++i < pixel_size && x + i < 1280)
+			// while (minirt->moving && ++i < pixel_size && x + i < WINDOW_WIDTH)
 			// {
 			// 	j = -1;
-			// 	while (++j < pixel_size && y + j < 720)
+			// 	while (++j < pixel_size && y + j < WINDOW_HEIGHT)
 			// 	{
 			// 		put_pixel(&minirt->image, (t_offset){.x = x + i, .y = y
 			// 			+ j}, color_revert(color).as_int);
@@ -127,10 +127,10 @@ void	draw_scene(t_minirt *minirt)
 
 	// t_vec3			offset;
 	x = 0;
-	while (x < 1280)
+	while (x < WINDOW_WIDTH)
 	{
 		y = 0;
-		while (y < 720)
+		while (y < WINDOW_HEIGHT)
 		{
 			printf("x: %d, y: %d\n", x, y);
 			color = color_correct_new(0, 0, 0, 0);
@@ -142,7 +142,7 @@ void	draw_scene(t_minirt *minirt)
 			// color = color_add(color, incoming_light);
 			cycle = -1;
 			ray = ray_primary(&minirt->cam, (t_offset){.x = x, .y = y});
-			state = (unsigned int)((x + y * 1280));
+			state = (unsigned int)((x + y * WINDOW_WIDTH));
 			while (++cycle < 5)
 			{
 				// offset = vec3_multiply(random_vec3_hs(ray.direction, &state),
@@ -177,7 +177,7 @@ void	init_minirt(t_parse p)
 	// mlx and win
 	ft_memset(&minirt, 0, sizeof(t_minirt));
 	minirt.mlx = mlx_init();
-	minirt.win = mlx_new_window(minirt.mlx, 1280, 720, "Hello world!");
+	minirt.win = mlx_new_window(minirt.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Hello world!");
 	init_hooks(&minirt);
 	minirt.pixel_size = 3;
 	// scene objects

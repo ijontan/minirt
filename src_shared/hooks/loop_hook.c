@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 21:04:12 by itan              #+#    #+#             */
-/*   Updated: 2023/11/02 14:55:01 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/04 12:02:36 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,23 @@ static t_vec3	transforms(t_vec3 position, t_vec3 direction,
 	return (ret);
 }
 
+void	render_new_scene(t_minirt *minirt)
+{
+	if (minirt->render_status == RENDER_NEW_SCENE)
+	{
+		start_minirt(minirt);
+		minirt->render_status = RENDER_DONE;
+	}
+	else if (minirt->render_status == RENDER_CURRENT_SCENE)
+	{
+		render_gi(minirt);
+		minirt->render_status = RENDER_DONE;
+	}
+}
+
 int	loop_hook(t_minirt *minirt)
 {
+	render_new_scene(minirt);
 	add_translation_plane(minirt);
 	remove_translation_plane(minirt);
 	if (minirt->selection.translation_plane)
@@ -49,15 +64,22 @@ int	loop_hook(t_minirt *minirt)
 	if (minirt->key_events.holding_sp)
 		minirt->cam.position = transforms(minirt->cam.position, minirt->cam.up,
 				minirt->cam.rotation_h, 2);
+	// if (minirt->render_status == RENDER_NEW_SCENE)
+	// {
+	// 	printf("Rendering overlay");
+	// 	render_loading_overlay(minirt);
+	// 	minirt->render_status = RENDERING;
+	// }
+	render(minirt, &thread_init);
+	// if (minirt->render_status == RENDER_)
 	// ray_cast(minirt);
 	// thread_init(minirt);
 	// mlx_put_image_to_window(minirt->mlx, minirt->win, minirt->image.image, 0,
 	// 	0);
-	render(minirt, &thread_init);
 	// render(minirt, &ray_cast);
 	// if (!minirt->key_events.holding_m_left)
 	// 	return (0);
-	// image.img = mlx_new_image(minirt->mlx, 1280, 720);
+	// image.img = mlx_new_image(minirt->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	// image.buffer = mlx_get_data_addr(image.img, &image.pixel_bits,
 	// 	&image.line_bytes, &image.endian);
 	// draw_scene(&image, &minirt->cam, minirt->sphere);

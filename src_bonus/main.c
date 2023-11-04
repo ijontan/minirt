@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/11/01 22:34:29 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/04 11:57:45 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void	init_minirt(t_parse p)
 
 	ft_memset(&minirt, 0, sizeof(t_minirt));
 	minirt.mlx = mlx_init();
-	minirt.win = mlx_new_window(minirt.mlx, 1280, 720, "Hello world!");
+	minirt.win = mlx_new_window(minirt.mlx, WINDOW_WIDTH, WINDOW_HEIGHT,
+			"Hello world!");
 	init_hooks(&minirt);
 	minirt.pixel_size = 3;
 	minirt.amb_light = p.amb_light;

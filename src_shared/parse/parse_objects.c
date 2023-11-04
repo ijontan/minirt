@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 17:14:41 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/03 02:46:01 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/04 12:04:58 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,6 @@ void	parse_cone(t_parse *p)
 		exit_parse(p->info, "Cone", 'c');
 	parse_material("Cone", 6, &cone->material, p);
 	cone->angle = atan(cone->radius / cone->height);
-	printf("angle %f\n", cone->angle);
 	cone->cos_squared = ft_power(cos(cone->angle), 2);
 	add_object(&p->objects, cone, CONE);
 }

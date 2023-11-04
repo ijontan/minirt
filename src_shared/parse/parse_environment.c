@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 16:16:39 by rsoo              #+#    #+#             */
-/*   Updated: 2023/10/26 21:02:27 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/10/31 16:34:13 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	parse_camera(t_parse *p)
 	p->camera.right = vec3_cross(p->camera.direction, vec3_new(0, 1, 0));
 	p->camera.right = vec3_normalize(p->camera.right);
 	p->camera.up = vec3_cross(p->camera.right, p->camera.direction);
-	p->camera.vp_height = 720;
-	p->camera.vp_width = 1280;
+	p->camera.vp_height = WINDOW_HEIGHT;
+	p->camera.vp_width = WINDOW_WIDTH;
 	p->camera.rotation_h = quaternion_create_id();
 	p->camera.rotation_v = quaternion_create_id();
 	p->camera.position = vec3_new(0, 0, 0);

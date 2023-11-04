@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 14:48:41 by itan              #+#    #+#             */
-/*   Updated: 2023/11/02 00:31:55 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/04 12:01:09 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ int	key_down_hook(int keycode, t_minirt *minirt)
 {
 	if (keycode == KEY_ESC)
 	{
-		mlx_destroy_window(minirt->mlx, minirt->win);
-		minirt->win = NULL;
+		free_minirt(minirt);
 		exit(EXIT_SUCCESS);
 	}
 	if (keycode == KEY_UP)
@@ -52,7 +51,11 @@ int	key_down_hook(int keycode, t_minirt *minirt)
 	else if (keycode == KEY_D)
 		minirt->key_events.holding_d = true;
 	else if (keycode == KEY_R)
-		render_gi(minirt);
+	{
+		minirt->render_status = RENDER_CURRENT_SCENE;
+		minirt->overlay_msg = "Rendering current scene";
+		render_loading_overlay(minirt);
+	}
 	else if (keycode == KEY_Z)
 		minirt->key_events.holding_z = true;
 	else if (keycode == KEY_X)

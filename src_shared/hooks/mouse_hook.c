@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 14:44:19 by itan              #+#    #+#             */
-/*   Updated: 2023/11/03 01:25:18 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/04 12:04:35 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,20 @@ void	select_object(t_offset xy, t_minirt *minirt)
 	render(minirt, &thread_init);
 }
 
+int	in_rt_file_position(int x, int y, t_minirt *minirt)
+{
+	int	i;
+
+	i = -1;
+	while (++i < minirt->file_num)
+		if (minirt->rt_files[i].top_left.y <= y
+			&& y <= minirt->rt_files[i].bottom_right.y
+			&& minirt->rt_files[i].top_left.x <= x
+			&& x <= minirt->rt_files[i].bottom_right.x)
+			return (i);
+	return (-1);
+}
+
 int	mouse_down_hook(int button, int x, int y, t_minirt *minirt)
 {
 	if (button == M_CLK_L && !minirt->moving
@@ -32,6 +46,19 @@ int	mouse_down_hook(int button, int x, int y, t_minirt *minirt)
 		select_object((t_offset){.x = x, .y = y}, minirt);
 	if (button == M_CLK_R && minirt->selection.translation_plane)
 		init_rotation((t_offset){.x = x, .y = y}, minirt);
+	if (button == M_CLK_L && x < MENU_WIDTH)
+	{
+		minirt->file_ind = in_rt_file_position(x, y, minirt);
+		if (minirt->file_ind > -1)
+		{
+			minirt->render_status = RENDER_NEW_SCENE;
+			minirt->rt_file_path = minirt->rt_files[minirt->file_ind].name;
+			minirt->overlay_msg = ft_strjoin("Rendering ",
+					minirt->rt_file_path);
+			render_loading_overlay(minirt);
+			free(minirt->overlay_msg);
+		}
+	}
 	if (button == M_CLK_L)
 		minirt->mouse_events.holding_m_left = true;
 	else if (button == M_CLK_R)
