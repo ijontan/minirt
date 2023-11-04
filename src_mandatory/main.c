@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/11/04 12:00:19 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/04 12:11:05 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	start_minirt(t_minirt *minirt)
 	minirt->cam = parse_info.camera;
 	minirt->pt_lights = parse_info.pt_lights;
 	minirt->objects = parse_info.objects;
-	minirt->outline_color = color_correct_new(0, 1, 1, 0.5);
 	render(minirt, &ray_cast);
 	printf("\e[0;32mRendering done!!! ~~\n\e[0m");
 }
@@ -92,7 +91,7 @@ int	main(int ac, char **av)
 	minirt.win = mlx_new_window(minirt.mlx, WINDOW_WIDTH, WINDOW_HEIGHT,
 			"Hello world!");
 	init_hooks(&minirt);
-	// getfilesminirt.selection.outline_color = color_correct_new(0, 1, 1, 0.5);
+	minirt.selection.outline_color = color_correct_new(0, 1, 1, 0.5);
 	minirt.selection.plane_color = color_correct_new(0, 0.4, 0.4, 0.2);
 	minirt.rt_files = get_files(&minirt.file_num, "rt_files/scenes");
 	assign_file_positions(minirt.rt_files, minirt.file_num);
