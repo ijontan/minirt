@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/04 11:57:34 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/05 01:56:35 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define MID_X (WINDOW_WIDTH * 0.5)
 # define MID_Y (WINDOW_HEIGHT * 0.5)
 # define SCENES_START_Y 360
-	// defines the starting Y coordinate of the scenes section of the menu
+// defines the starting Y coordinate of the scenes section of the menu
 # define SCENES_START_X 40
 # define MENU_START_X 20
 # define MENU_WIDTH 250
@@ -165,6 +165,19 @@ typedef struct s_key_events
 	bool			holding_1;
 	bool			holding_2;
 	bool			holding_3;
+	bool			holding_4;
+	bool			holding_5;
+	bool			holding_6;
+	bool			holding_7;
+	bool			holding_8;
+	bool			holding_9;
+	bool			holding_0;
+	bool			holding_up;
+	bool			holding_down;
+	bool			holding_left;
+	bool			holding_right;
+	bool			holding_q;
+	bool			holding_e;
 	bool			holding_w;
 	bool			holding_a;
 	bool			holding_s;
@@ -185,6 +198,19 @@ typedef struct s_mouse_events
 	int				prev_y;
 }					t_mouse_events;
 
+typedef enum e_material_f
+{
+	NOT_SELECTED,
+	MATERIAL_COLOR,
+	EMISSION_COLOR,
+	SPECULAR_COLOR,
+	DIFFUSE_INTENSITY,
+	SPECULAR_INTENSITY,
+	REFLECTIVE_INTENSITY,
+	EMISSION_INTENSITY,
+	SHININESS
+}					t_material_f;
+
 typedef struct s_selections
 {
 	t_object		*selected;
@@ -195,6 +221,7 @@ typedef struct s_selections
 	t_color_c		plane_color;
 	t_color_c		outline_color;
 	t_quaternion	rotation;
+	t_material_f	selected_material_field;
 }					t_selections;
 
 typedef struct s_vec2
@@ -323,6 +350,7 @@ t_image				create_image(t_minirt *rt, t_offset size);
 t_image				load_image(t_minirt *rt, char *path);
 
 /* ---------------------------------- hooks --------------------------------- */
+void				update_selected_material(int keycode, t_minirt *minirt);
 void				add_translation_plane(t_minirt *rt);
 void				remove_translation_plane(t_minirt *rt);
 void				translate_objects(int x, int y, t_minirt *minirt);

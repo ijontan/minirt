@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 22:20:30 by itan              #+#    #+#             */
-/*   Updated: 2023/11/04 12:06:20 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/04 21:25:38 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,26 +85,21 @@ void	thread_init(t_minirt *minirt)
 	t_offset		size;
 
 	i = -1;
-	minirt->threads = ft_calloc(7, sizeof(pthread_t));
-	info = ft_calloc(7, sizeof(t_thread_info));
-	size.x = WINDOW_WIDTH / 7;
-	size.y = WINDOW_HEIGHT / 7;
-	while (++i < 7)
+	minirt->threads = ft_calloc(16, sizeof(pthread_t));
+	info = ft_calloc(16, sizeof(t_thread_info));
+	size.x = WINDOW_WIDTH / 16;
+	size.y = WINDOW_HEIGHT / 16;
+	while (++i < 16)
 	{
 		info[i].minirt = minirt;
 		info[i].start.x = 0;
 		info[i].start.y = i * size.y;
 		info[i].end.x = WINDOW_WIDTH;
 		info[i].end.y = (i + 1) * size.y;
-		if (i == 6)
-		{
-			info[i].end.x = WINDOW_WIDTH;
-			info[i].end.y = WINDOW_HEIGHT;
-		}
 		pthread_create(&minirt->threads[i], NULL, &ray_cast_routine, &info[i]);
 	}
 	i = -1;
-	while (++i < 7)
+	while (++i < 16)
 	{
 		pthread_join(minirt->threads[i], NULL);
 	}
@@ -146,6 +141,7 @@ void	*ray_trace_routine(void *data)
 		}
 		++y;
 	}
+	printf("start: %.5d, end: %.5d\n", info->start.y, info->end.y);
 	return (NULL);
 }
 
@@ -157,25 +153,20 @@ void	thread_raytrace(t_minirt *minirt)
 
 	i = -1;
 	minirt->threads = ft_calloc(16, sizeof(pthread_t));
-	info = ft_calloc(7, sizeof(t_thread_info));
-	size.x = WINDOW_WIDTH / 7;
-	size.y = WINDOW_HEIGHT / 7;
-	while (++i < 7)
+	info = ft_calloc(16, sizeof(t_thread_info));
+	size.x = WINDOW_WIDTH / 16;
+	size.y = WINDOW_HEIGHT / 16;
+	while (++i < 16)
 	{
 		info[i].minirt = minirt;
 		info[i].start.x = 0;
 		info[i].start.y = i * size.y;
 		info[i].end.x = WINDOW_WIDTH;
 		info[i].end.y = (i + 1) * size.y;
-		if (i == 6)
-		{
-			info[i].end.x = WINDOW_WIDTH;
-			info[i].end.y = WINDOW_HEIGHT;
-		}
 		pthread_create(&minirt->threads[i], NULL, &ray_trace_routine, &info[i]);
 	}
 	i = -1;
-	while (++i < 7)
+	while (++i < 16)
 	{
 		pthread_join(minirt->threads[i], NULL);
 	}
