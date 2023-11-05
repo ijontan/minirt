@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/11/04 12:14:38 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/05 22:35:21 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ void	start_minirt(t_minirt *minirt)
 	printf("\e[0;32mParsing done!!! ~~\n\e[0m");
 	if (minirt->render_status == RENDER_NEW_SCENE)
 		free_minirt(minirt);
-	minirt->pixel_size = 3;
 	minirt->amb_light = parse_info.amb_light;
 	minirt->cam = parse_info.camera;
 	minirt->pt_lights = parse_info.pt_lights;
@@ -129,6 +128,7 @@ int	main(int ac, char **av)
 		return (printf("\e[0;31mError: argument error\nExpected input format: ./minirt ~.rt\e[0m"));
 	// mlx and win
 	ft_memset(&minirt, 0, sizeof(t_minirt));
+	minirt.pixel_size = 1;
 	minirt.mlx = mlx_init();
 	minirt.win = mlx_new_window(minirt.mlx, WINDOW_WIDTH, WINDOW_HEIGHT,
 			"Hello world!");

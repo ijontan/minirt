@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/05 22:17:47 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/05 22:27:39 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,7 +243,9 @@ typedef enum e_render_status
 	RENDER_NEW_SCENE,
 	RENDER_CURRENT_SCENE,
 	RENDERING,
-	RENDER_DONE
+	RENDER_DONE,
+	RENDER_START_ANIMATION,
+	RENDER_END_ANIMATION
 }					t_render_status;
 
 typedef struct s_minirt

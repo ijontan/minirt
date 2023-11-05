@@ -51,11 +51,11 @@ int	mouse_down_hook(int button, int x, int y, t_minirt *minirt)
 		minirt->file_ind = in_rt_file_position(x, y, minirt);
 		if (minirt->file_ind > -1)
 		{
-			minirt->render_status = RENDER_NEW_SCENE;
+			minirt->render_status = RENDER_START_ANIMATION;
 			minirt->rt_file_path = minirt->rt_files[minirt->file_ind].name;
 			minirt->overlay_msg = ft_strjoin("Rendering ",
 					minirt->rt_file_path);
-			render_loading_overlay(minirt);
+			// render_loading_overlay(minirt);
 			free(minirt->overlay_msg);
 		}
 	}
