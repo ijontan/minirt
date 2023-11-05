@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/05 01:56:35 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/05 22:17:47 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -350,7 +350,9 @@ t_image				create_image(t_minirt *rt, t_offset size);
 t_image				load_image(t_minirt *rt, char *path);
 
 /* ---------------------------------- hooks --------------------------------- */
-void				update_selected_material(int keycode, t_minirt *minirt);
+void				update_selected_material(t_minirt *minirt);
+void				key_holding_down(int keycode, t_minirt *minirt);
+void				key_holding_up(int keycode, t_minirt *minirt);
 void				add_translation_plane(t_minirt *rt);
 void				remove_translation_plane(t_minirt *rt);
 void				translate_objects(int x, int y, t_minirt *minirt);
@@ -365,7 +367,7 @@ void				mouse_hide(t_minirt *minirt);
 void				mouse_show(t_minirt *minirt);
 void				mouse_move(t_minirt *minirt, int x, int y);
 
-/* ------------------------------- freeing_utils ----------------------------- */
+/* ------------------------------ freeing_utils ----------------------------- */
 
 void				free_minirt(t_minirt *minirt);
 

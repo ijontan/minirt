@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 21:04:12 by itan              #+#    #+#             */
-/*   Updated: 2023/11/04 13:43:12 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/05 22:00:04 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	fly_mode_movement(t_minirt *minirt)
 
 int	loop_hook(t_minirt *minirt)
 {
+	update_selected_material(minirt);
 	render_new_scene(minirt);
 	add_translation_plane(minirt);
 	remove_translation_plane(minirt);
