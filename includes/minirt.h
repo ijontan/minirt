@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/06 13:45:58 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/06 18:12:02 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # define MENU_WIDTH 250
 # define CHAR_WIDTH 7
 # define CHAR_HEIGHT 25
+# define OBJ_MENU_START_X 1050
 
 // overlay positions
 # define OVERLAY_WIDTH 400
@@ -241,7 +242,8 @@ typedef struct s_file
 
 typedef struct s_overlay
 {
-	char	*msg;
+	int		obj_type;
+	char	*msg; 
 	int		len;
 	int		midpoint;
 	int		start_x;
@@ -287,8 +289,10 @@ typedef struct s_minirt
 	int				file_ind;
 	char			*rt_file_path;
 
+	char			*msg;
 	t_overlay		cam_pos_overlay;
 	t_overlay		loading_overlay;
+	t_overlay		selected_obj_overlay;
 }					t_minirt;
 
 /**
@@ -358,10 +362,19 @@ void				render_loading_overlay(t_minirt *minirt);
 void				render_gi(t_minirt *rt);
 void				render_loading_overlay(t_minirt *minirt);
 void				render_menu(t_minirt *minirt);
+void				render_obj_menu(t_minirt *minirt);
+void 				put_obj_menu_str(t_minirt *minirt);
+char				*create_vec3_str(char *title, t_vec3 coords);
+char				*create_vec3_str_brac(char *title, t_vec3 coords);
 
 void				render_loading_overlay(t_minirt *minirt);
 void				render_cam_pos_overlay(t_minirt *minirt);
 void 				put_cam_pos_str(t_minirt *minirt);
+
+void 				put_sphere_info(t_minirt *minirt);
+void 				put_plane_info(t_minirt *minirt);
+void 				put_cylinder_info(t_minirt *minirt);
+void 				put_cone_info(t_minirt *minirt);
 
 void				ray_cast(t_minirt *minirt);
 void				draw_scene(t_minirt *minirt);

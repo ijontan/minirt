@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 09:11:04 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/06 14:08:32 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/06 18:10:20 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,24 +73,20 @@ int	render(t_minirt *minirt, void (*draw_func)(t_minirt *minirt))
 	ft_lstiter(minirt->objects, apply_rot);
 
 	draw_func(minirt);
-
-	if (minirt->render_status == FLOATING_MODE)
-		render_cam_pos_overlay(minirt);
+	
+	render_cam_pos_overlay(minirt);
 	render_menu(minirt);
+	if (minirt->selection.selected)
+		render_obj_menu(minirt);
 
 	mlx_put_image_to_window(minirt->mlx, minirt->win, minirt->image.image, 0,
 		0);
 
-	if (minirt->render_status == FLOATING_MODE)
-		put_cam_pos_str(minirt);
+	// if (minirt->render_status == FLOATING_MODE || minirt->render_status == RESET_CAM_ANIMATION || minirt->render_status == RESET_CAM_DONE)
+	put_cam_pos_str(minirt);
 	put_menu_str(minirt);
+	if (minirt->selection.selected)
+		put_obj_menu_str(minirt);
 	mlx_destroy_image(minirt->mlx, minirt->image.image);
 	return (0);
 }
-
-/*
-1. create image
-2. function
-3. put image to window
-4. destroy
-*/

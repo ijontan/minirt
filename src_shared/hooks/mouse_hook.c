@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 14:44:19 by itan              #+#    #+#             */
-/*   Updated: 2023/11/06 10:49:51 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/06 16:56:00 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ int	mouse_down_hook(int button, int x, int y, t_minirt *minirt)
 		{
 			minirt->render_status = RENDER_START_ANIMATION;
 			minirt->rt_file_path = minirt->rt_files[minirt->file_ind].name;
-			minirt->loading_overlay.msg = ft_strjoin("Rendering ",
-					minirt->rt_file_path);
+			// minirt->loading_overlay.msg = ft_strjoin("Rendering ",
+			// 		minirt->rt_file_path);
 			free(minirt->loading_overlay.msg);
 		}
 	}

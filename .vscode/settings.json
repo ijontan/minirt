@@ -1,12 +1,13 @@
 {
   "files.associations": {
-    "*.h": "cpp",
-    "*.c": "c",
-    "__locale": "c",
-    "ios": "c",
-    "__node_handle": "c",
-    "random": "c",
-    "ratio": "c"
-  },
+	"*.h": "cpp",
+	"*.c": "c",
+	"__locale": "c",
+	"ios": "c",
+	"__node_handle": "c",
+	"random": "c",
+	"ratio": "c",
+	"tuple": "c"
+},
   "C_Cpp.errorSquiggles": "disabled"
 }
