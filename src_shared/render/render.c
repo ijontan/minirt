@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 09:11:04 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/06 11:01:33 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/06 14:08:32 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,12 @@ void put_menu_str(t_minirt *minirt)
 	mlx_string_put(minirt->mlx, minirt->win, 20, 160, FONT_COLOR,
 		"f: toggle mode (flying / edit)");
 	mlx_string_put(minirt->mlx, minirt->win, 20, 180, FONT_COLOR,
-		"up: increase pixel size");
+		"o: reset camera position");
 	mlx_string_put(minirt->mlx, minirt->win, 20, 200, FONT_COLOR,
+		"up: increase pixel size");
+	mlx_string_put(minirt->mlx, minirt->win, 20, 220, FONT_COLOR,
 		"down: decrease pixel size");
-	mlx_string_put(minirt->mlx, minirt->win, 20, 220, FONT_COLOR, "esc: exit");
+	mlx_string_put(minirt->mlx, minirt->win, 20, 240, FONT_COLOR, "esc: exit");
 	mlx_string_put(minirt->mlx, minirt->win, MENU_START_X, SCENES_START_Y,
 		FONT_COLOR, "Select a scene: ");
 	while (++i < minirt->file_num)

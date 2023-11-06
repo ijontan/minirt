@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/06 11:01:43 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/06 13:45:58 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,6 +259,8 @@ typedef enum e_render_status
 	RENDER_END_ANIMATION,
 	FLOATING_MODE,
 	NON_FLOATING_MODE,
+	RESET_CAM_ANIMATION,
+	RESET_CAM_DONE,
 }					t_render_status;
 
 typedef struct s_minirt
@@ -381,6 +383,7 @@ void				init_rotation(t_offset xy, t_minirt *minirt);
 void				stop_rotation(t_minirt *minirt);
 void				calc_rotation(t_offset xy, t_minirt *minirt);
 void				rotate_cam(int x, int y, t_minirt *minirt);
+void 				reset_cam_animation(t_minirt *minirt);
 
 /* ------------------------------- mouse_util ------------------------------- */
 

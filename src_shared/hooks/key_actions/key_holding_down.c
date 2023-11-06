@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 22:07:04 by itan              #+#    #+#             */
-/*   Updated: 2023/11/06 11:32:07 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/06 11:40:11 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,11 @@ void	keydown_char(int keycode, t_minirt *minirt)
 		minirt->key_events.holding_x = true;
 	else if (keycode == KEY_C)
 		minirt->key_events.holding_c = true;
-	// else if (keycode == KEY_O)
-	// 	if (minirt->cam.position.x || minirt->cam.position.y || \
-	// 	minirt->cam.position.z || minirt->cam.direction.x != 0 \
-	// 	|| minirt->cam.direction.y != 0 || minirt->cam.direction.z != 1)
-	// 		reset_cam_position(minirt);
+	else if (keycode == KEY_O)
+		if (minirt->cam.position.x || minirt->cam.position.y || \
+		minirt->cam.position.z || minirt->cam.direction.x != 0 \
+		|| minirt->cam.direction.y != 0 || minirt->cam.direction.z != 1)
+			minirt->render_status = RESET_CAM_ANIMATION;
 }
 
 void	keydown_others(int keycode, t_minirt *minirt)

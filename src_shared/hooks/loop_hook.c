@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 21:04:12 by itan              #+#    #+#             */
-/*   Updated: 2023/11/06 09:42:07 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/06 13:42:38 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,7 @@ int	loop_hook(t_minirt *minirt)
 	if (minirt->selection.translation_plane)
 		render(minirt, thread_init);
 	fly_mode_movement(minirt);
+	if (minirt->render_status == RESET_CAM_ANIMATION)
+		reset_cam_animation(minirt);
 	return (0);
 }

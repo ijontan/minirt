@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 08:53:24 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/06 10:52:38 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/06 13:50:28 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ void	render_cam_pos_overlay(t_minirt *minirt)
 		while (++i < minirt->cam_pos_overlay.end_x)
 			put_pixel(&minirt->image, (t_offset){.x = i, .y = j}, 0x40ffffff);
 	}
-	printf("render camera position overlay done\n");
+	// printf("render camera position overlay done\n");
 }
 
 void put_cam_pos_str(t_minirt *minirt)
 {
-	printf("%s", minirt->cam_pos_overlay.msg);
+	// printf("%s", minirt->cam_pos_overlay.msg);
 	mlx_string_put(minirt->mlx, minirt->win, minirt->cam_pos_overlay.start_x + 10,
 		OVERLAY_START_Y + 23 + 300, FONT_COLOR, minirt->cam_pos_overlay.msg);
 
