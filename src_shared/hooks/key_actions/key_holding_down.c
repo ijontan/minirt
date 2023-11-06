@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_holding_down.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 22:07:04 by itan              #+#    #+#             */
-/*   Updated: 2023/11/05 22:12:12 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/06 11:32:07 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,11 @@ void	keydown_char(int keycode, t_minirt *minirt)
 		minirt->key_events.holding_x = true;
 	else if (keycode == KEY_C)
 		minirt->key_events.holding_c = true;
+	// else if (keycode == KEY_O)
+	// 	if (minirt->cam.position.x || minirt->cam.position.y || \
+	// 	minirt->cam.position.z || minirt->cam.direction.x != 0 \
+	// 	|| minirt->cam.direction.y != 0 || minirt->cam.direction.z != 1)
+	// 		reset_cam_position(minirt);
 }
 
 void	keydown_others(int keycode, t_minirt *minirt)
@@ -79,7 +84,7 @@ void	keydown_others(int keycode, t_minirt *minirt)
 	else if (keycode == KEY_R)
 	{
 		minirt->render_status = RENDER_CURRENT_SCENE;
-		minirt->overlay_msg = "Rendering current scene";
+		minirt->loading_overlay.msg = "Rendering current scene";
 		render_loading_overlay(minirt);
 	}
 	else if (keycode == KEY_F)
@@ -88,6 +93,7 @@ void	keydown_others(int keycode, t_minirt *minirt)
 		minirt->selection.selected = NULL;
 		if (minirt->moving)
 		{
+			minirt->render_status = FLOATING_MODE;
 			minirt->mouse_events.prev_x = -1;
 			// minirt->mouse_events.prev_y = 300;
 			mouse_move(minirt, minirt->cam.vp_width * 0.5, minirt->cam.vp_height
@@ -96,6 +102,8 @@ void	keydown_others(int keycode, t_minirt *minirt)
 		}
 		else
 		{
+			minirt->render_status = NON_FLOATING_MODE;
+			render(minirt, &thread_init);
 			minirt->mouse_events.prev_x = -1;
 			mouse_show(minirt);
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 09:11:04 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/04 12:05:56 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/06 11:01:33 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,50 +14,27 @@
 
 #define FONT_COLOR BLACK
 
-void	render_loading_overlay(t_minirt *minirt)
-{
-	t_image	overlay_img;
-	int		i;
-	int		j;
-	int		overlay_len;
-	int		overlay_start_x;
-	int		overlay_start_y;
-
-	overlay_img = create_image(minirt, (t_offset){.x = WINDOW_WIDTH,
-			.y = WINDOW_HEIGHT});
-	overlay_len = ft_strlen(minirt->overlay_msg) * CHAR_WIDTH + 20;
-	overlay_start_x = MID_X - overlay_len * 0.5;
-	overlay_start_y = MID_X + overlay_len * 0.5;
-	j = OVERLAY_START_Y;
-	while (++j < OVERLAY_END_Y)
-	{
-		i = overlay_start_x;
-		while (++i < overlay_start_y)
-			put_pixel(&overlay_img, (t_offset){.x = i, .y = j}, 0x00ffffff);
-	}
-	mlx_put_image_to_window(minirt->mlx, minirt->win, overlay_img.image, 0, 0);
-	mlx_destroy_image(minirt->mlx, overlay_img.image);
-	mlx_string_put(minirt->mlx, minirt->win, overlay_start_x + 10,
-		OVERLAY_START_Y + 23, FONT_COLOR, minirt->overlay_msg);
-	printf("render overlay done\n");
-}
-
 void	render_menu(t_minirt *minirt)
 {
 	int		i;
 	int		j;
-	t_image	bg;
 
-	bg = create_image(minirt, (t_offset){.x = MENU_WIDTH, .y = WINDOW_HEIGHT});
 	j = -1;
 	while (++j < WINDOW_HEIGHT)
 	{
 		i = -1;
 		while (++i < MENU_WIDTH)
-			put_pixel(&bg, (t_offset){.x = i, .y = j}, 0x40ffffff);
+			put_pixel(&minirt->image, (t_offset){.x = i, .y = j}, 0x40ffffff);
 	}
-	mlx_put_image_to_window(minirt->mlx, minirt->win, bg.image, 0, 0);
-	mlx_destroy_image(minirt->mlx, bg.image);
+}
+
+void put_menu_str(t_minirt *minirt)
+{
+	int i;
+	int j;
+	
+	i = -1;
+	j = 1;
 	mlx_string_put(minirt->mlx, minirt->win, 20, 20, FONT_COLOR,
 		"w: move forward");
 	mlx_string_put(minirt->mlx, minirt->win, 20, 40, FONT_COLOR,
@@ -79,8 +56,6 @@ void	render_menu(t_minirt *minirt)
 	mlx_string_put(minirt->mlx, minirt->win, 20, 200, FONT_COLOR,
 		"down: decrease pixel size");
 	mlx_string_put(minirt->mlx, minirt->win, 20, 220, FONT_COLOR, "esc: exit");
-	i = -1;
-	j = 1;
 	mlx_string_put(minirt->mlx, minirt->win, MENU_START_X, SCENES_START_Y,
 		FONT_COLOR, "Select a scene: ");
 	while (++i < minirt->file_num)
@@ -89,24 +64,24 @@ void	render_menu(t_minirt *minirt)
 					* j++), FONT_COLOR, minirt->rt_files[i].name);
 }
 
-// static bool	status;
-// mlx_clear_window(minirt->mlx, minirt->win);
-// if (!status)
-// {
-// ray_cast(minirt);
-// thread_init(minirt);
-// draw_scene(minirt);
-// 	status = true;
-// }
 int	render(t_minirt *minirt, void (*draw_func)(t_minirt *minirt))
 {
 	minirt->image = create_image(minirt, (t_offset){.x = minirt->cam.vp_width,
 			.y = minirt->cam.vp_height});
 	ft_lstiter(minirt->objects, apply_rot);
+
 	draw_func(minirt);
+
+	if (minirt->render_status == FLOATING_MODE)
+		render_cam_pos_overlay(minirt);
+	render_menu(minirt);
+
 	mlx_put_image_to_window(minirt->mlx, minirt->win, minirt->image.image, 0,
 		0);
-	render_menu(minirt);
+
+	if (minirt->render_status == FLOATING_MODE)
+		put_cam_pos_str(minirt);
+	put_menu_str(minirt);
 	mlx_destroy_image(minirt->mlx, minirt->image.image);
 	return (0);
 }
