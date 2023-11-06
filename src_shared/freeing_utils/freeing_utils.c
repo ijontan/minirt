@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 10:39:51 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/06 14:17:29 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/06 15:22:26 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,17 @@ void	del_obj(void *content)
 
 void	free_minirt(t_minirt *minirt)
 {
+	int	i;
+
 	ft_lstclear(&minirt->pt_lights, del_light);
 	ft_lstclear(&minirt->objects, del_obj);
-	if (minirt->render_status == RENDER_DONE)
+	if (minirt->render_status != RENDER_NEW_SCENE)
 	{
 		mlx_destroy_window(minirt->mlx, minirt->win);
 		minirt->win = NULL;
+		i = -1;
+		while (++i < minirt->file_num)
+			free(minirt->rt_files[i].name);
 		free(minirt->rt_files);
 	}
 }

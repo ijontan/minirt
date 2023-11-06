@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 21:04:12 by itan              #+#    #+#             */
-/*   Updated: 2023/11/05 22:42:51 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/06 15:27:33 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,43 +23,37 @@ static t_vec3	transforms(t_vec3 position, t_vec3 direction,
 	return (ret);
 }
 
+void	end_pixelate(void *rt)
+{
+	t_minirt	*minirt;
+
+	minirt = (t_minirt *)rt;
+	if (minirt->render_status == RENDER_START_ANIMATION)
+		minirt->render_status = RENDER_NEW_SCENE;
+	if (minirt->render_status == RENDER_END_ANIMATION)
+		minirt->render_status = RENDER_DONE;
+}
+
 void	render_new_scene(t_minirt *minirt)
 {
-	static unsigned int	frame;
-	float				t;
+	static t_animations	animation;
 
-	t = (float)frame / 50;
 	if (minirt->render_status == RENDER_START_ANIMATION)
 	{
-		if (frame < 50)
-		{
-			minirt->pixel_size = bazier_curves_1d_quadratic(t, (double [3]){1,
-					10, 40});
-			render(minirt, &thread_init);
-			frame++;
-		}
-		else
-		{
-			minirt->render_status = RENDER_NEW_SCENE;
-			frame = 0;
-		}
+		animation.frame_max = 50;
+		handle_animation(minirt, &animation, NULL, end_pixelate);
+		minirt->pixel_size = bazier_curves_1d_quadratic(animation.t,
+				(double[3]){2, 10, 40});
+		render(minirt, &thread_init);
 	}
 	if (minirt->render_status == RENDER_END_ANIMATION)
 	{
-		if (frame < 50)
-		{
-			minirt->pixel_size = bazier_curves_1d_quadratic(t, (double [3]){40,
-					10, 1});
-			if (minirt->pixel_size < 1)
-				minirt->pixel_size = 1;
-			render(minirt, &thread_init);
-			frame++;
-		}
-		else
-		{
-			minirt->render_status = RENDER_DONE;
-			frame = 0;
-		}
+		handle_animation(minirt, &animation, NULL, end_pixelate);
+		minirt->pixel_size = bazier_curves_1d_quadratic(animation.t,
+				(double[3]){40, 10, 2});
+		if (minirt->pixel_size < 1)
+			minirt->pixel_size = 1;
+		render(minirt, &thread_init);
 	}
 	if (minirt->render_status == RENDER_NEW_SCENE)
 	{
