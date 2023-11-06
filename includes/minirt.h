@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/05 22:27:39 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/06 13:45:58 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 // positions
 # define WINDOW_WIDTH 1280
 # define WINDOW_HEIGHT 720
-# define MID_X (WINDOW_WIDTH * 0.5)
-# define MID_Y (WINDOW_HEIGHT * 0.5)
+# define MID_X 640
+# define MID_Y 360
 # define SCENES_START_Y 360
 // defines the starting Y coordinate of the scenes section of the menu
 # define SCENES_START_X 40
@@ -43,11 +43,13 @@
 
 // overlay positions
 # define OVERLAY_WIDTH 400
-# define OVERLAY_HEIGHT 35
+# define OVERLAY_HEIGHT 40
 // # define OVERLAY_START_X (MID_X - (OVERLAY_WIDTH * 0.5))
 // # define OVERLAY_END_X (MID_X + (OVERLAY_WIDTH * 0.5))
-# define OVERLAY_START_Y (MID_Y - (OVERLAY_HEIGHT * 0.5))
-# define OVERLAY_END_Y (MID_Y + (OVERLAY_HEIGHT * 0.5))
+// # define OVERLAY_START_Y (MID_Y - (OVERLAY_HEIGHT * 0.5))
+// # define OVERLAY_END_Y (MID_Y + (OVERLAY_HEIGHT * 0.5))
+# define OVERLAY_START_Y 340
+# define OVERLAY_END_Y 380
 
 // paths
 # define RT_FILE_DIR "rt_files/scenes/"
@@ -237,6 +239,15 @@ typedef struct s_file
 	t_vec2			bottom_right;
 }					t_file;
 
+typedef struct s_overlay
+{
+	char	*msg;
+	int		len;
+	int		midpoint;
+	int		start_x;
+	int		end_x;
+}				t_overlay;
+
 typedef enum e_render_status
 {
 	RENDER_FIRST_SCENE,
@@ -245,7 +256,11 @@ typedef enum e_render_status
 	RENDERING,
 	RENDER_DONE,
 	RENDER_START_ANIMATION,
-	RENDER_END_ANIMATION
+	RENDER_END_ANIMATION,
+	FLOATING_MODE,
+	NON_FLOATING_MODE,
+	RESET_CAM_ANIMATION,
+	RESET_CAM_DONE,
 }					t_render_status;
 
 typedef struct s_minirt
@@ -271,7 +286,9 @@ typedef struct s_minirt
 	int				render_status;
 	int				file_ind;
 	char			*rt_file_path;
-	char			*overlay_msg;
+
+	t_overlay		cam_pos_overlay;
+	t_overlay		loading_overlay;
 }					t_minirt;
 
 /**
@@ -342,6 +359,10 @@ void				render_gi(t_minirt *rt);
 void				render_loading_overlay(t_minirt *minirt);
 void				render_menu(t_minirt *minirt);
 
+void				render_loading_overlay(t_minirt *minirt);
+void				render_cam_pos_overlay(t_minirt *minirt);
+void 				put_cam_pos_str(t_minirt *minirt);
+
 void				ray_cast(t_minirt *minirt);
 void				draw_scene(t_minirt *minirt);
 void				thread_init(t_minirt *minirt);
@@ -362,6 +383,7 @@ void				init_rotation(t_offset xy, t_minirt *minirt);
 void				stop_rotation(t_minirt *minirt);
 void				calc_rotation(t_offset xy, t_minirt *minirt);
 void				rotate_cam(int x, int y, t_minirt *minirt);
+void 				reset_cam_animation(t_minirt *minirt);
 
 /* ------------------------------- mouse_util ------------------------------- */
 
