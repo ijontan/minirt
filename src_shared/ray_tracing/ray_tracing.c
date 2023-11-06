@@ -68,7 +68,7 @@ t_color_c	ray_tracing(t_ray ray, t_minirt *minirt, unsigned int *state)
 	incoming_light = color_correct_new(0, 0, 0, 0);
 	color = color_correct_new(0, 1.0f, 1.0f, 1.0f);
 	i = -1;
-	while (++i < 5)
+	while (++i < 3)
 	{
 		hit_info = intersect_list(minirt, &ray);
 		if (hit_info.hit)

@@ -20,7 +20,7 @@ L 0,0,160		1			255,255,255
 # pl	120,0,0		1,0,0			0,0,255								0				255,255,255		0					0				0				0,0,0			30
 
 # Sphere
-sp	0,0,100	50	0,150,0											1				255,255,255		1					0				0				0,0,0			10
+sp	0,0,100	50	0,150,0											1				255,255,255		1					1				0				0,0,0			10
 
 # Cone																Material
 #	tip			axis direction	diameter	height		color		specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission_color	shininess

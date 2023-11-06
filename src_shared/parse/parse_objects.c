@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 17:14:41 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/04 12:04:58 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/07 02:32:11 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 static void	parse_material(char *obj_type, int i, t_material *mt, t_parse *p)
 {
+	mt->diffuse_i = 1.0f;
+	mt->shininess = 2.0f;
 	if (p->info[i] && ft_strncmp(p->info[i], "\n", ft_strlen(p->info[i])))
 	{
 		mt->specular_i = ft_atof(p->info[i], p);
@@ -132,7 +134,6 @@ void	parse_cone(t_parse *p)
 	t_cone	*cone;
 
 	cone = ft_calloc(1, sizeof(t_cone));
-	ft_memset(cone, 0, sizeof(t_cone));
 	cone->tip = parse_coordinates(p->info[1], p);
 	if (check_norm_vec_range(p->info[2], p))
 		cone->norm_axis = assign_norm_vec(p);

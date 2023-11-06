@@ -126,7 +126,7 @@ void	*ray_trace_routine(void *data)
 			cycle = -1;
 			ray = ray_primary(&info->minirt->cam, (t_offset){.x = x, .y = y});
 			state = (unsigned int)((x + y * WINDOW_WIDTH));
-			while (++cycle < 30)
+			while (++cycle < 20)
 			{
 				incoming_light = ray_tracing(ray, info->minirt, &state);
 				color = color_add(color, incoming_light);

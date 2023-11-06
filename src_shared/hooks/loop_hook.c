@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 21:04:12 by itan              #+#    #+#             */
-/*   Updated: 2023/11/07 00:53:45 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/07 02:00:53 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ void	render_new_scene(t_minirt *minirt)
 		animation.frame_max = 50;
 		handle_animation(minirt, &animation, NULL, end_pixelate);
 		minirt->pixel_size = bazier_curves_1d_quadratic(animation.t,
-				(double[3]){2, 10, 40});
+				(double[3]){4, 10, 40});
 		render(minirt, &thread_init);
 	}
 	if (minirt->render_status == RENDER_END_ANIMATION)
 	{
 		handle_animation(minirt, &animation, NULL, end_pixelate);
 		minirt->pixel_size = bazier_curves_1d_quadratic(animation.t,
-				(double[3]){40, 10, 2});
+				(double[3]){40, 10, 4});
 		if (minirt->pixel_size < 1)
 			minirt->pixel_size = 1;
 		render(minirt, &thread_init);

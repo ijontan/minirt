@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/06 20:46:05 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/07 01:36:23 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -347,6 +347,7 @@ float				random_num(unsigned int *state);
 float				normal_dist_random_num(unsigned int *state);
 t_vec3				random_vec3(unsigned int *state);
 t_vec3				random_vec3_hs(t_vec3 normal, unsigned int *state);
+float				float_clamp(float value, float min, float max);
 
 t_hit_info			intersections(t_minirt *minirt, t_ray *ray);
 t_hit_info			intersect_list(t_minirt *minirt, t_ray *ray);
