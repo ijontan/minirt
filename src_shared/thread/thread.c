@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 22:20:30 by itan              #+#    #+#             */
-/*   Updated: 2023/11/04 21:25:38 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/06 12:44:20 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,6 @@ void	*ray_cast_routine(void *data)
 			color = color_correct_new(0, 0, 0, 0);
 			if (hit_info.hit)
 				color = get_color(info->minirt, &hit_info);
-			else
-				color = color_scale(info->minirt->amb_light.color,
-						info->minirt->amb_light.ratio);
 			if (hit_info.hit_selection_plane)
 				color = color_add(color, info->minirt->selection.plane_color);
 			if (hit_info.hit_rotation_plane)

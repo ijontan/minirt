@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 14:56:25 by itan              #+#    #+#             */
-/*   Updated: 2023/11/03 02:15:22 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/06 12:19:40 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ static float	ray_in_cylinder_bound(t_cylinder *cylinder, t_ray *ray, float t)
 
 	point = vec3_add(ray->origin, vec3_multiply(ray->direction, t));
 	ci = vec3_subtract(point, cylinder->center);
-	distance = vec3_length(cylinder->rot_axis) * vec3_dot(cylinder->rot_axis,
-			ci);
+	distance = vec3_dot(cylinder->rot_axis, ci);
 	if (distance < cylinder->height * -0.5 || distance > cylinder->height * 0.5)
 		return (distance);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:40:55 by itan              #+#    #+#             */
-/*   Updated: 2023/11/01 22:33:23 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/06 12:31:44 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ bool	check_l_block(t_hit_info *hi, t_minirt *rt)
 	float		dist;
 
 	ray.origin = hi->intersect_pt;
-	ray.direction = hi->pt_to_l;
+	ray.direction = vec3_normalize(hi->pt_to_l);
 	hi2 = intersect_list(rt, &ray);
-	dist = vec3_length(vec3_subtract(hi->intersect_pt, hi2.intersect_pt));
-	if (hi2.hit && dist > 0 && dist < vec3_length(hi->pt_to_l))
+	dist = vec3_length(vec3_subtract(ray.origin, hi2.intersect_pt));
+	if (hi2.hit && dist < vec3_length(hi->pt_to_l))
 		return (false);
 	return (true);
 }
@@ -72,9 +72,6 @@ t_color_c	get_lights_color(t_minirt *rt, t_hit_info *hi)
 			dot_prod = 1;
 		if (vec3_dot(hi->pt_to_l, hi->normal) <= 0)
 			dot_prod = 0;
-		// tmp = color_scale(color_correct_new(0, 1, 1, 1),
-		// hi->material.specular_i
-		// 	* powf(dot_prod, hi->material.shininess));
 		tmp = color_multiply(hi->material.specular, pt_light->material.color);
 		tmp = color_scale(tmp, hi->material.specular_i * powf(dot_prod,
 					hi->material.shininess));

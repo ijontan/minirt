@@ -39,9 +39,6 @@ void	ray_cast(t_minirt *minirt)
 			color = color_correct_new(0, 0, 0, 0);
 			if (hit_info.hit)
 				color = get_color(minirt, &hit_info);
-			else
-				color = color_scale(minirt->amb_light.color,
-						minirt->amb_light.ratio);
 			if (hit_info.hit_selection_plane)
 				color = color_add(color, minirt->selection.plane_color);
 			if (hit_info.hit_rotation_plane)
