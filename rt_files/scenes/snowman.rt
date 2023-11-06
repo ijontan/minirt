@@ -4,7 +4,7 @@ A  1.0    100,100,100
 
 # Camera
 # position   direction   field of view
-C  0,0,0     0,0,1       100
+C  0,0,0     0,0,1       50
 
 # Point light
 # position      ratio     color

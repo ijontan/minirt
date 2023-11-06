@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/06 18:12:02 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/06 20:46:05 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include <stdio.h>
 
 // positions
-# define WINDOW_WIDTH 1280
+# define WINDOW_WIDTH 1580
 # define WINDOW_HEIGHT 720
 # define MID_X 640
 # define MID_Y 360
@@ -242,13 +242,13 @@ typedef struct s_file
 
 typedef struct s_overlay
 {
-	int		obj_type;
-	char	*msg; 
-	int		len;
-	int		midpoint;
-	int		start_x;
-	int		end_x;
-}				t_overlay;
+	int				obj_type;
+	char			*msg;
+	int				len;
+	int				midpoint;
+	int				start_x;
+	int				end_x;
+}					t_overlay;
 
 typedef enum e_render_status
 {
@@ -363,18 +363,18 @@ void				render_gi(t_minirt *rt);
 void				render_loading_overlay(t_minirt *minirt);
 void				render_menu(t_minirt *minirt);
 void				render_obj_menu(t_minirt *minirt);
-void 				put_obj_menu_str(t_minirt *minirt);
+void				put_obj_menu_str(t_minirt *minirt);
 char				*create_vec3_str(char *title, t_vec3 coords);
 char				*create_vec3_str_brac(char *title, t_vec3 coords);
 
 void				render_loading_overlay(t_minirt *minirt);
 void				render_cam_pos_overlay(t_minirt *minirt);
-void 				put_cam_pos_str(t_minirt *minirt);
+void				put_cam_pos_str(t_minirt *minirt);
 
-void 				put_sphere_info(t_minirt *minirt);
-void 				put_plane_info(t_minirt *minirt);
-void 				put_cylinder_info(t_minirt *minirt);
-void 				put_cone_info(t_minirt *minirt);
+void				put_sphere_info(t_minirt *minirt);
+void				put_plane_info(t_minirt *minirt);
+void				put_cylinder_info(t_minirt *minirt);
+void				put_cone_info(t_minirt *minirt);
 
 void				ray_cast(t_minirt *minirt);
 void				draw_scene(t_minirt *minirt);
@@ -385,6 +385,7 @@ t_color_c			get_lights_color(t_minirt *rt, t_hit_info *hi);
 t_image				create_image(t_minirt *rt, t_offset size);
 t_image				load_image(t_minirt *rt, char *path);
 
+char				*ft_ftoa(double num, int precision);
 /* ---------------------------------- hooks --------------------------------- */
 void				update_selected_material(t_minirt *minirt);
 void				key_holding_down(int keycode, t_minirt *minirt);
@@ -396,7 +397,7 @@ void				init_rotation(t_offset xy, t_minirt *minirt);
 void				stop_rotation(t_minirt *minirt);
 void				calc_rotation(t_offset xy, t_minirt *minirt);
 void				rotate_cam(int x, int y, t_minirt *minirt);
-void 				reset_cam_animation(t_minirt *minirt);
+void				reset_cam_animation(t_minirt *minirt);
 
 /* ------------------------------- mouse_util ------------------------------- */
 
