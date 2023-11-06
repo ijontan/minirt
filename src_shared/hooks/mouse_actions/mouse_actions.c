@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:31:12 by itan              #+#    #+#             */
-/*   Updated: 2023/11/03 17:13:01 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/06 20:59:39 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	calc_rotation(t_offset xy, t_minirt *minirt)
 	if (vec3_dot(minirt->selection.rotation_plane->rot_normal, intersect) > 0)
 		minirt->selection.angle *= -1;
 	intersect = minirt->selection.rotation_plane->rot_normal;
-	quaternion_from_axis_angle((double [3]){intersect.x, intersect.y,
+	quaternion_from_axis_angle((double[3]){intersect.x, intersect.y,
 		intersect.z}, minirt->selection.angle,
 		&minirt->selection.selected->tmp_rotation);
 	ft_lstiter(minirt->objects, apply_rot);
@@ -110,6 +110,8 @@ void	calc_rotation(t_offset xy, t_minirt *minirt)
 void	rotate_cam(int x, int y, t_minirt *minirt)
 {
 	t_quaternion	rotation;
+	double			axis_angle[3];
+	double			angle;
 
 	if (!minirt->moving)
 		return ;
@@ -119,10 +121,14 @@ void	rotate_cam(int x, int y, t_minirt *minirt)
 			&rotation);
 		quaternion_multiply(&minirt->cam.rotation_h, &rotation,
 			&minirt->cam.rotation_h);
-		quaternion_x_rotation(-(y - minirt->mouse_events.prev_y) * 0.01,
-			&rotation);
-		quaternion_multiply(&minirt->cam.rotation_v, &rotation,
-			&minirt->cam.rotation_v);
+		angle = quaternion_to_axis_angle(&minirt->cam.rotation_v, axis_angle);
+		if ((angle < PI_2 )&& angle > -PI_2)
+		{
+			quaternion_x_rotation(-(y - minirt->mouse_events.prev_y) * 0.01,
+				&rotation);
+			quaternion_multiply(&minirt->cam.rotation_v, &rotation,
+				&minirt->cam.rotation_v);
+		}
 		quaternion_normalize(&minirt->cam.rotation_v, &minirt->cam.rotation_v);
 		quaternion_normalize(&minirt->cam.rotation_h, &minirt->cam.rotation_h);
 		minirt->mouse_events.prev_x = x;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_hook.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 21:04:12 by itan              #+#    #+#             */
-/*   Updated: 2023/11/06 15:58:08 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/07 00:53:45 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	render_new_scene(t_minirt *minirt)
 			minirt->pixel_size = 1;
 		render(minirt, &thread_init);
 	}
-	if (minirt->render_status == RENDER_NEW_SCENE)
+	else if (minirt->render_status == RENDER_NEW_SCENE)
 	{
 		start_minirt(minirt);
 		minirt->render_status = RENDER_END_ANIMATION;

@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/11/05 22:35:21 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/07 01:03:53 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,12 @@ void	load_texture(t_minirt *rt, void *content)
 		*img = load_image(rt, mt->norm_map_path);
 		mt->norm_map = img;
 	}
-	img = ft_calloc(1, sizeof(t_image));
-	*img = load_image(rt, mt->spec_map_path);
-	mt->specular_map = img;
+	if (mt->spec_map_path)
+	{
+		img = ft_calloc(1, sizeof(t_image));
+		*img = load_image(rt, mt->spec_map_path);
+		mt->specular_map = img;
+	}
 }
 
 void	assign_file_positions(t_file *files, int file_num)
@@ -111,6 +114,7 @@ void	start_minirt(t_minirt *minirt)
 	printf("\e[0;32mParsing done!!! ~~\n\e[0m");
 	if (minirt->render_status == RENDER_NEW_SCENE)
 		free_minirt(minirt);
+	minirt->selection.selected = NULL;
 	minirt->amb_light = parse_info.amb_light;
 	minirt->cam = parse_info.camera;
 	minirt->pt_lights = parse_info.pt_lights;

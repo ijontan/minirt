@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_hook.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 14:44:19 by itan              #+#    #+#             */
-/*   Updated: 2023/11/06 16:56:00 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/07 01:06:15 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,6 @@ int	in_rt_file_position(int x, int y, t_minirt *minirt)
 
 int	mouse_down_hook(int button, int x, int y, t_minirt *minirt)
 {
-	if (button == M_CLK_L && !minirt->moving
-		&& !minirt->selection.translation_plane)
-		select_object((t_offset){.x = x, .y = y}, minirt);
-	if (button == M_CLK_R && minirt->selection.translation_plane)
-		init_rotation((t_offset){.x = x, .y = y}, minirt);
 	if (button == M_CLK_L && x < MENU_WIDTH)
 	{
 		minirt->file_ind = in_rt_file_position(x, y, minirt);
@@ -58,6 +53,11 @@ int	mouse_down_hook(int button, int x, int y, t_minirt *minirt)
 			free(minirt->loading_overlay.msg);
 		}
 	}
+	else if (button == M_CLK_L && !minirt->moving
+		&& !minirt->selection.translation_plane)
+		select_object((t_offset){.x = x, .y = y}, minirt);
+	if (button == M_CLK_R && minirt->selection.translation_plane)
+		init_rotation((t_offset){.x = x, .y = y}, minirt);
 	if (button == M_CLK_L)
 		minirt->mouse_events.holding_m_left = true;
 	else if (button == M_CLK_R)

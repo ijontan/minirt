@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freeing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 10:39:51 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/06 15:30:21 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/07 00:51:00 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	free_minirt(t_minirt *minirt)
 
 	ft_lstclear(&minirt->pt_lights, del_light);
 	ft_lstclear(&minirt->objects, del_obj);
+	minirt->pt_lights = NULL;
+	minirt->objects = NULL;
 	if (minirt->render_status != RENDER_NEW_SCENE)
 	{
 		mlx_destroy_window(minirt->mlx, minirt->win);
