@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 09:11:04 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/07 10:19:05 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/07 10:57:01 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	render_menu_and_overlays(t_minirt *minirt)
 void	put_strings(t_minirt *minirt)
 {
 	if (minirt->render_status == RENDER_CURRENT_SCENE)
-		put_overlay_str(minirt, minirt->loading_overlay.start_x, OVERLAY_START_Y, "Rendering current scene");
+		put_overlay_str(minirt, minirt->loading_overlay.start_x, OVERLAY_START_Y, minirt->loading_overlay.msg);
 	if (minirt->selection.selected)
 		put_obj_menu_str(minirt);
 	put_overlay_str(minirt, minirt->cam_pos_overlay.start_x, CAM_POS_OVERLAY_START_Y, minirt->cam_pos_overlay.msg);

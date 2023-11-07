@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 08:53:24 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/07 09:45:20 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/07 11:02:41 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,12 @@ void	render_loading_overlay(t_minirt *minirt)
 	int		i;
 	int		j;
 
+	minirt->loading_overlay.msg = "Rendering current scene";
+	minirt->loading_overlay.midpoint = (WINDOW_WIDTH + MENU_WIDTH) * 0.5;
+
 	minirt->loading_overlay.len = ft_strlen(minirt->loading_overlay.msg) * CHAR_WIDTH + 20;
-	minirt->loading_overlay.start_x = MID_X - minirt->loading_overlay.len * 0.5;
-	minirt->loading_overlay.end_x = MID_X + minirt->loading_overlay.len * 0.5;
+	minirt->loading_overlay.start_x = minirt->loading_overlay.midpoint - minirt->loading_overlay.len * 0.5;
+	minirt->loading_overlay.end_x = minirt->loading_overlay.midpoint + minirt->loading_overlay.len * 0.5;
 	j = OVERLAY_START_Y;
 	while (++j < OVERLAY_END_Y)
 	{
@@ -37,6 +40,8 @@ void	render_cam_pos_overlay(t_minirt *minirt)
 	int		j;
 
 	minirt->cam_pos_overlay.msg = create_vec3_str("Camera position: ", minirt->cam.position);
+	minirt->cam_pos_overlay.msg = ft_strjoin(minirt->cam_pos_overlay.msg, " | Pixel size: ");
+	minirt->cam_pos_overlay.msg = ft_strjoin(minirt->cam_pos_overlay.msg, ft_itoa(minirt->pixel_size));
 
 	if (minirt->selection.selected)
 		minirt->cam_pos_overlay.midpoint = WINDOW_WIDTH * 0.5;
