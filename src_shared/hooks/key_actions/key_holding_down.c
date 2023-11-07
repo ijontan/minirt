@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 22:07:04 by itan              #+#    #+#             */
-/*   Updated: 2023/11/07 09:22:16 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/07 10:12:29 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	keydown_numbers(int keycode, t_minirt *minirt)
 		minirt->key_events.holding_9 = true;
 	else if (keycode == KEY_0)
 		minirt->key_events.holding_0 = true;
+	render(minirt, &thread_init);
 }
 
 void	keydown_arrows(int keycode, t_minirt *minirt)

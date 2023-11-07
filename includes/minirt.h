@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/07 09:51:28 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/07 10:21:36 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,6 +295,8 @@ typedef struct s_minirt
 	t_overlay		cam_pos_overlay;
 	t_overlay		loading_overlay;
 	t_overlay		selected_obj_overlay;
+
+	int				font_color;
 }					t_minirt;
 
 /**
@@ -372,6 +374,8 @@ char				*create_vec3_str_brac(char *title, t_vec3 coords);
 void				render_loading_overlay(t_minirt *minirt);
 void				render_cam_pos_overlay(t_minirt *minirt);
 void 				put_overlay_str(t_minirt *minirt, int start_x, int start_y, char *str);
+
+// void				put_handle_material_str(t_minirt *minirt);
 
 void				put_sphere_info(t_minirt *minirt);
 void				put_plane_info(t_minirt *minirt);

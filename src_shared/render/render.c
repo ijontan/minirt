@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 09:11:04 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/07 09:52:52 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/07 10:19:05 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	render(t_minirt *minirt, void (*draw_func)(t_minirt *minirt))
 	ft_lstiter(minirt->objects, apply_rot);
 
 	draw_func(minirt);
-	
+
 	render_menu_and_overlays(minirt);
 	mlx_put_image_to_window(minirt->mlx, minirt->win, minirt->image.image, 0,
 		0);

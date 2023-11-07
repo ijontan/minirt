@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:27:15 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/07 09:51:08 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/07 10:23:40 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	render_menu(t_minirt *minirt, int start_x, int end_x, int end_y)
 	{
 		i = start_x - 1;
 		while (++i < end_x)
-			put_pixel(&minirt->image, (t_offset){.x = i, .y = j}, 0x40ffffff);
+			put_pixel(&minirt->image, (t_offset){.x = i, .y = j}, 0x00ffffff);
 	}
 }
 
@@ -61,9 +61,16 @@ void put_menu_str(t_minirt *minirt)
 	mlx_string_put(minirt->mlx, minirt->win, MENU_START_X, SCENES_START_Y,
 		FONT_COLOR, "Select a scene: ");
 	while (++i < minirt->file_num)
+	{
 		if (minirt->rt_files[i].name[0] != '.')
+		{
+			if (!ft_strcmp(minirt->rt_files[i].name, minirt->rt_file_path))
+				minirt->font_color = GREEN;
 			mlx_string_put(minirt->mlx, minirt->win, 40, SCENES_START_Y + (20
-					* j++), FONT_COLOR, minirt->rt_files[i].name);
+					* j++), minirt->font_color, minirt->rt_files[i].name);
+			minirt->font_color = BLACK;
+		}
+	}
 }
 
 void put_obj_menu_str(t_minirt *minirt)
@@ -78,24 +85,57 @@ void put_obj_menu_str(t_minirt *minirt)
 	int i;
 
 	i = -1;
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X, 20, FONT_COLOR,
+	minirt->font_color = BLACK;
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X, 20, minirt->font_color,
 		"Edit material properties: ");
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 40, FONT_COLOR,
+
+	if (minirt->key_events.holding_1)
+		minirt->font_color = GREEN;
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 40, minirt->font_color,
 		"1: Material Colour");
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 60, FONT_COLOR,
+	minirt->font_color = BLACK;
+
+	if (minirt->key_events.holding_2)
+		minirt->font_color = GREEN;
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 60, minirt->font_color,
 		"2: Emission Colour");
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 80, FONT_COLOR,
+	minirt->font_color = BLACK;
+
+	if (minirt->key_events.holding_3)
+		minirt->font_color = GREEN;
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 80, minirt->font_color,
 		"3: Specular Colour");
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 100, FONT_COLOR,
+	minirt->font_color = BLACK;
+
+	if (minirt->key_events.holding_4)
+		minirt->font_color = GREEN;
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 100, minirt->font_color,
 		"4: Diffuse Intensity");
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 120, FONT_COLOR,
+	minirt->font_color = BLACK;
+
+	if (minirt->key_events.holding_5)
+		minirt->font_color = GREEN;
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 120, minirt->font_color,
 		"5: Specular Intensity");
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 140, FONT_COLOR,
+	minirt->font_color = BLACK;
+
+	if (minirt->key_events.holding_6)
+		minirt->font_color = GREEN;
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 140, minirt->font_color,
 		"6: Reflective Intensity");
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 160, FONT_COLOR,
+	minirt->font_color = BLACK;
+
+	if (minirt->key_events.holding_7)
+		minirt->font_color = GREEN;
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 160, minirt->font_color,
 		"7: Emission Intensity");
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 180, FONT_COLOR,
+	minirt->font_color = BLACK;
+
+	if (minirt->key_events.holding_8)
+		minirt->font_color = GREEN;
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 180, minirt->font_color,
 		"8: Shininess");
+	minirt->font_color = BLACK;
 	while (++i < 4)
 	{
 		if (minirt->selection.selected->type == obj[i])

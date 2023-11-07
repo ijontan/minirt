@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_hook.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 14:44:19 by itan              #+#    #+#             */
-/*   Updated: 2023/11/07 01:06:15 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/07 10:34:48 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,7 @@ int	mouse_down_hook(int button, int x, int y, t_minirt *minirt)
 		{
 			minirt->render_status = RENDER_START_ANIMATION;
 			minirt->rt_file_path = minirt->rt_files[minirt->file_ind].name;
-			// minirt->loading_overlay.msg = ft_strjoin("Rendering ",
-			// 		minirt->rt_file_path);
-			free(minirt->loading_overlay.msg);
+			minirt->selection.selected = NULL;
 		}
 	}
 	else if (button == M_CLK_L && !minirt->moving
