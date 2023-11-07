@@ -6,64 +6,32 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 09:11:04 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/06 18:10:20 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/07 09:52:52 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-#define FONT_COLOR BLACK
-
-void	render_menu(t_minirt *minirt)
+void	render_menu_and_overlays(t_minirt *minirt)
 {
-	int		i;
-	int		j;
-
-	j = -1;
-	while (++j < WINDOW_HEIGHT)
-	{
-		i = -1;
-		while (++i < MENU_WIDTH)
-			put_pixel(&minirt->image, (t_offset){.x = i, .y = j}, 0x40ffffff);
-	}
+	if (minirt->render_status == RENDER_CURRENT_SCENE)
+		render_loading_overlay(minirt);
+	if (minirt->selection.selected)
+		render_menu(minirt, WINDOW_WIDTH - MENU_WIDTH, WINDOW_WIDTH, WINDOW_HEIGHT);
+	render_cam_pos_overlay(minirt);
+	render_menu(minirt, 0, MENU_WIDTH, WINDOW_HEIGHT);
 }
 
-void put_menu_str(t_minirt *minirt)
+void	put_strings(t_minirt *minirt)
 {
-	int i;
-	int j;
-	
-	i = -1;
-	j = 1;
-	mlx_string_put(minirt->mlx, minirt->win, 20, 20, FONT_COLOR,
-		"w: move forward");
-	mlx_string_put(minirt->mlx, minirt->win, 20, 40, FONT_COLOR,
-		"s: move backward");
-	mlx_string_put(minirt->mlx, minirt->win, 20, 60, FONT_COLOR,
-		"a: move left");
-	mlx_string_put(minirt->mlx, minirt->win, 20, 80, FONT_COLOR,
-		"d: move right");
-	mlx_string_put(minirt->mlx, minirt->win, 20, 100, FONT_COLOR,
-		"space: move up");
-	mlx_string_put(minirt->mlx, minirt->win, 20, 120, FONT_COLOR,
-		"shift: move down");
-	mlx_string_put(minirt->mlx, minirt->win, 20, 140, FONT_COLOR,
-		"r: render scene");
-	mlx_string_put(minirt->mlx, minirt->win, 20, 160, FONT_COLOR,
-		"f: toggle mode (flying / edit)");
-	mlx_string_put(minirt->mlx, minirt->win, 20, 180, FONT_COLOR,
-		"o: reset camera position");
-	mlx_string_put(minirt->mlx, minirt->win, 20, 200, FONT_COLOR,
-		"up: increase pixel size");
-	mlx_string_put(minirt->mlx, minirt->win, 20, 220, FONT_COLOR,
-		"down: decrease pixel size");
-	mlx_string_put(minirt->mlx, minirt->win, 20, 240, FONT_COLOR, "esc: exit");
-	mlx_string_put(minirt->mlx, minirt->win, MENU_START_X, SCENES_START_Y,
-		FONT_COLOR, "Select a scene: ");
-	while (++i < minirt->file_num)
-		if (minirt->rt_files[i].name[0] != '.')
-			mlx_string_put(minirt->mlx, minirt->win, 40, SCENES_START_Y + (20
-					* j++), FONT_COLOR, minirt->rt_files[i].name);
+	if (minirt->render_status == RENDER_CURRENT_SCENE)
+		put_overlay_str(minirt, minirt->loading_overlay.start_x, OVERLAY_START_Y, "Rendering current scene");
+	if (minirt->selection.selected)
+		put_obj_menu_str(minirt);
+	put_overlay_str(minirt, minirt->cam_pos_overlay.start_x, CAM_POS_OVERLAY_START_Y, minirt->cam_pos_overlay.msg);
+	free(minirt->cam_pos_overlay.msg);
+	put_menu_str(minirt);
+	// put_handle_material_str(minirt);
 }
 
 int	render(t_minirt *minirt, void (*draw_func)(t_minirt *minirt))
@@ -74,19 +42,10 @@ int	render(t_minirt *minirt, void (*draw_func)(t_minirt *minirt))
 
 	draw_func(minirt);
 	
-	render_cam_pos_overlay(minirt);
-	render_menu(minirt);
-	if (minirt->selection.selected)
-		render_obj_menu(minirt);
-
+	render_menu_and_overlays(minirt);
 	mlx_put_image_to_window(minirt->mlx, minirt->win, minirt->image.image, 0,
 		0);
-
-	// if (minirt->render_status == FLOATING_MODE || minirt->render_status == RESET_CAM_ANIMATION || minirt->render_status == RESET_CAM_DONE)
-	put_cam_pos_str(minirt);
-	put_menu_str(minirt);
-	if (minirt->selection.selected)
-		put_obj_menu_str(minirt);
+	put_strings(minirt);
 	mlx_destroy_image(minirt->mlx, minirt->image.image);
 	return (0);
 }

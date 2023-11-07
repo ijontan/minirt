@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_hook.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 21:04:12 by itan              #+#    #+#             */
-/*   Updated: 2023/11/07 02:00:53 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/07 09:21:04 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	render_new_scene(t_minirt *minirt)
 	}
 	else if (minirt->render_status == RENDER_CURRENT_SCENE)
 	{
+		render(minirt, &thread_init);
 		render_gi(minirt);
 		minirt->render_status = RENDER_DONE;
 	}

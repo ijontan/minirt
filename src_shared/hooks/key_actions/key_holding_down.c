@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 22:07:04 by itan              #+#    #+#             */
-/*   Updated: 2023/11/06 11:40:11 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/07 09:22:16 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,7 @@ void	keydown_others(int keycode, t_minirt *minirt)
 	else if (keycode == KEY_SP)
 		minirt->key_events.holding_sp = true;
 	else if (keycode == KEY_R)
-	{
 		minirt->render_status = RENDER_CURRENT_SCENE;
-		minirt->loading_overlay.msg = "Rendering current scene";
-		render_loading_overlay(minirt);
-	}
 	else if (keycode == KEY_F)
 	{
 		minirt->moving = !minirt->moving;

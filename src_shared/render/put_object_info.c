@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   put_object_info.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 17:12:33 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/06 20:23:50 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/07 09:02:15 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ void	put_sphere_info(t_minirt *minirt)
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X, 260, FONT_COLOR,
 		"Properties: ");
 	minirt->msg = create_vec3_str("Center: ", sp->center);
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 280,
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 10, 280,
 		FONT_COLOR, minirt->msg);
 	free(minirt->msg);
 	minirt->msg = ft_strjoin("Radius: ", ft_ftoa(sp->radius, 2));
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 300,
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 10, 300,
 		FONT_COLOR, minirt->msg);
 	free(minirt->msg);
 }
@@ -43,11 +43,11 @@ void	put_plane_info(t_minirt *minirt)
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X, 260, FONT_COLOR,
 		"Properties: ");
 	minirt->msg = create_vec3_str("Point:  ", pl->center);
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 280,
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 10, 280,
 		FONT_COLOR, minirt->msg);
 	free(minirt->msg);
 	minirt->msg = create_vec3_str_brac("Normal: ", pl->rot_normal);
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 300,
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 10, 300,
 		FONT_COLOR, minirt->msg);
 	free(minirt->msg);
 }
@@ -62,19 +62,19 @@ void	put_cylinder_info(t_minirt *minirt)
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X, 260, FONT_COLOR,
 		"Properties: ");
 	minirt->msg = create_vec3_str("Center: ", cy->center);
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 280,
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 10, 280,
 		FONT_COLOR, minirt->msg);
 	free(minirt->msg);
 	minirt->msg = create_vec3_str_brac("Axis:   ", cy->rot_axis);
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 300,
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 10, 300,
 		FONT_COLOR, minirt->msg);
 	free(minirt->msg);
 	minirt->msg = ft_strjoin("Radius: ", ft_ftoa(cy->radius, 2));
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 320,
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 10, 320,
 		FONT_COLOR, minirt->msg);
 	free(minirt->msg);
 	minirt->msg = ft_strjoin("Height: ", ft_ftoa(cy->height, 2));
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 340,
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 10, 340,
 		FONT_COLOR, minirt->msg);
 	free(minirt->msg);
 }
@@ -89,19 +89,19 @@ void	put_cone_info(t_minirt *minirt)
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X, 260, FONT_COLOR,
 		"Properties: ");
 	minirt->msg = create_vec3_str("Tip:    ", cn->tip);
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 280,
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 10, 280,
 		FONT_COLOR, minirt->msg);
 	free(minirt->msg);
 	minirt->msg = create_vec3_str_brac("Axis:   ", cn->rot_axis);
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 300,
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 10, 300,
 		FONT_COLOR, minirt->msg);
 	free(minirt->msg);
 	minirt->msg = ft_strjoin("Radius: ", ft_ftoa(cn->radius, 2));
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 320,
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 10, 320,
 		FONT_COLOR, minirt->msg);
 	free(minirt->msg);
 	minirt->msg = ft_strjoin("Height: ", ft_ftoa(cn->height, 2));
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 340,
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 10, 340,
 		FONT_COLOR, minirt->msg);
 	free(minirt->msg);
 }

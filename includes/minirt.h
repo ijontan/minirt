@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/07 01:36:23 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/07 09:51:28 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,31 @@
 # include <pthread.h>
 # include <stdio.h>
 
-// positions
+// window size
 # define WINDOW_WIDTH 1580
 # define WINDOW_HEIGHT 720
-# define MID_X 640
+# define MID_X 790
 # define MID_Y 360
-# define SCENES_START_Y 360
-// defines the starting Y coordinate of the scenes section of the menu
-# define SCENES_START_X 40
+
+// padding for the menu strings 
 # define MENU_START_X 20
+# define SCENES_START_X 40
+# define SCENES_START_Y 360
+# define OBJ_MENU_START_X 1340
+
+// misc.
 # define MENU_WIDTH 250
 # define CHAR_WIDTH 7
 # define CHAR_HEIGHT 25
-# define OBJ_MENU_START_X 1050
 
-// overlay positions
+// loading overlay
 # define OVERLAY_WIDTH 400
 # define OVERLAY_HEIGHT 40
-// # define OVERLAY_START_X (MID_X - (OVERLAY_WIDTH * 0.5))
-// # define OVERLAY_END_X (MID_X + (OVERLAY_WIDTH * 0.5))
-// # define OVERLAY_START_Y (MID_Y - (OVERLAY_HEIGHT * 0.5))
-// # define OVERLAY_END_Y (MID_Y + (OVERLAY_HEIGHT * 0.5))
 # define OVERLAY_START_Y 340
 # define OVERLAY_END_Y 380
+// camera position overlay
+# define CAM_POS_OVERLAY_START_Y 640
+# define CAM_POS_OVERLAY_END_Y 680
 
 // paths
 # define RT_FILE_DIR "rt_files/scenes/"
@@ -359,18 +361,17 @@ t_color_c			ray_tracing(t_ray ray, t_minirt *minirt,
 // rendering
 int					render(t_minirt *minirt,
 						void (*draw_func)(t_minirt *minirt));
-void				render_loading_overlay(t_minirt *minirt);
 void				render_gi(t_minirt *rt);
-void				render_loading_overlay(t_minirt *minirt);
-void				render_menu(t_minirt *minirt);
-void				render_obj_menu(t_minirt *minirt);
+
+void				render_menu(t_minirt *minirt, int start_x, int end_x, int end_y);
+void 				put_menu_str(t_minirt *minirt);
 void				put_obj_menu_str(t_minirt *minirt);
 char				*create_vec3_str(char *title, t_vec3 coords);
 char				*create_vec3_str_brac(char *title, t_vec3 coords);
 
 void				render_loading_overlay(t_minirt *minirt);
 void				render_cam_pos_overlay(t_minirt *minirt);
-void				put_cam_pos_str(t_minirt *minirt);
+void 				put_overlay_str(t_minirt *minirt, int start_x, int start_y, char *str);
 
 void				put_sphere_info(t_minirt *minirt);
 void				put_plane_info(t_minirt *minirt);
