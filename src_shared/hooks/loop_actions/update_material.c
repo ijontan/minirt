@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_material.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 01:42:37 by itan              #+#    #+#             */
-/*   Updated: 2023/11/05 22:02:57 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/08 14:47:09 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void	update_color(t_color_c *color, t_key_events key_events)
 
 static void	update_value(float *value, t_key_events key_events, t_vec3 step)
 {
+	printf("value: %f\n", *value);
 	if (key_events.holding_up)
 		*value += step.x;
 	if (key_events.holding_down)
@@ -97,5 +98,6 @@ void	update_selected_material(t_minirt *minirt)
 	if (!material)
 		return ;
 	update_fields(minirt, material, key_events);
+	minirt->selected_obj_material = *material;
 	render(minirt, &thread_init);
 }

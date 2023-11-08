@@ -8,7 +8,8 @@
 	"random": "c",
 	"ratio": "c",
 	"tuple": "c",
-	"chrono": "c"
+	"chrono": "c",
+	"algorithm": "c"
 },
   "C_Cpp.errorSquiggles": "disabled"
 }

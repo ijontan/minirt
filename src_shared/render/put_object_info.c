@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 17:12:33 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/07 09:02:15 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/08 15:12:40 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	put_sphere_info(t_minirt *minirt)
 	t_sphere	*sp;
 
 	sp = (t_sphere *)minirt->selection.selected->object;
+	minirt->selected_obj_material = sp->material;
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X, 240, FONT_COLOR,
 		"Object type: Sphere");
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X, 260, FONT_COLOR,
@@ -38,6 +39,7 @@ void	put_plane_info(t_minirt *minirt)
 	t_plane	*pl;
 
 	pl = (t_plane *)minirt->selection.selected->object;
+	minirt->selected_obj_material = pl->material;
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X, 240, FONT_COLOR,
 		"Object type: Plane");
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X, 260, FONT_COLOR,
@@ -57,6 +59,7 @@ void	put_cylinder_info(t_minirt *minirt)
 	t_cylinder	*cy;
 
 	cy = (t_cylinder *)minirt->selection.selected->object;
+	minirt->selected_obj_material = cy->material;
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X, 240, FONT_COLOR,
 		"Object type: Cylinder");
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X, 260, FONT_COLOR,
@@ -84,6 +87,7 @@ void	put_cone_info(t_minirt *minirt)
 	t_cone	*cn;
 
 	cn = (t_cone *)minirt->selection.selected->object;
+	minirt->selected_obj_material = cn->material;
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X, 240, FONT_COLOR,
 		"Object type: Cone");
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X, 260, FONT_COLOR,

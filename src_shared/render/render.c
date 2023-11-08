@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 09:11:04 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/07 10:57:01 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/08 14:36:19 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,14 @@ void	put_strings(t_minirt *minirt)
 	if (minirt->render_status == RENDER_CURRENT_SCENE)
 		put_overlay_str(minirt, minirt->loading_overlay.start_x, OVERLAY_START_Y, minirt->loading_overlay.msg);
 	if (minirt->selection.selected)
+	{
+		printf("object selected\n");
 		put_obj_menu_str(minirt);
+		put_handle_material_str(minirt);
+	}
 	put_overlay_str(minirt, minirt->cam_pos_overlay.start_x, CAM_POS_OVERLAY_START_Y, minirt->cam_pos_overlay.msg);
 	free(minirt->cam_pos_overlay.msg);
 	put_menu_str(minirt);
-	// put_handle_material_str(minirt);
 }
 
 int	render(t_minirt *minirt, void (*draw_func)(t_minirt *minirt))

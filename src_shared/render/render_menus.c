@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:27:15 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/07 10:23:40 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/07 11:12:17 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,49 +89,49 @@ void put_obj_menu_str(t_minirt *minirt)
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X, 20, minirt->font_color,
 		"Edit material properties: ");
 
-	if (minirt->key_events.holding_1)
+	if (minirt->selection.selected_material_field == MATERIAL_COLOR)
 		minirt->font_color = GREEN;
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 40, minirt->font_color,
 		"1: Material Colour");
 	minirt->font_color = BLACK;
 
-	if (minirt->key_events.holding_2)
+	if (minirt->selection.selected_material_field == EMISSION_COLOR)
 		minirt->font_color = GREEN;
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 60, minirt->font_color,
 		"2: Emission Colour");
 	minirt->font_color = BLACK;
 
-	if (minirt->key_events.holding_3)
+	if (minirt->selection.selected_material_field == SPECULAR_COLOR)
 		minirt->font_color = GREEN;
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 80, minirt->font_color,
 		"3: Specular Colour");
 	minirt->font_color = BLACK;
 
-	if (minirt->key_events.holding_4)
+	if (minirt->selection.selected_material_field == DIFFUSE_INTENSITY)
 		minirt->font_color = GREEN;
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 100, minirt->font_color,
 		"4: Diffuse Intensity");
 	minirt->font_color = BLACK;
 
-	if (minirt->key_events.holding_5)
+	if (minirt->selection.selected_material_field == SPECULAR_INTENSITY)
 		minirt->font_color = GREEN;
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 120, minirt->font_color,
 		"5: Specular Intensity");
 	minirt->font_color = BLACK;
 
-	if (minirt->key_events.holding_6)
+	if (minirt->selection.selected_material_field == REFLECTIVE_INTENSITY)
 		minirt->font_color = GREEN;
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 140, minirt->font_color,
 		"6: Reflective Intensity");
 	minirt->font_color = BLACK;
 
-	if (minirt->key_events.holding_7)
+	if (minirt->selection.selected_material_field == EMISSION_INTENSITY)
 		minirt->font_color = GREEN;
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 160, minirt->font_color,
 		"7: Emission Intensity");
 	minirt->font_color = BLACK;
 
-	if (minirt->key_events.holding_8)
+	if (minirt->selection.selected_material_field == SHININESS)
 		minirt->font_color = GREEN;
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_MENU_START_X + 20, 180, minirt->font_color,
 		"8: Shininess");
