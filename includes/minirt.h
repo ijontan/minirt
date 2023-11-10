@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/10 14:21:27 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/10 15:46:01 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ typedef struct s_pt_light
 {
 	t_vec3			position;
 	float			ratio;
-	t_material material; // bonus
+	t_material		material;
 }					t_pt_light;
 
 /* ---------------------------------- parse --------------------------------- */
@@ -162,8 +162,8 @@ typedef struct s_light
 	t_color_c		color;
 }					t_light;
 
-# define MAX_UCHAR_2 65025;
-# define DIV_MAX_UCHAR_2 0.000015384615384615385;
+# define MAX_UCHAR_2 65025
+# define DIV_MAX_UCHAR_2 0.000015384615384615385
 
 /* ---------------------------------- hooks --------------------------------- */
 typedef struct s_key_events
