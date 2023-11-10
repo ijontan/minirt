@@ -3,23 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   loop_hook.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 21:04:12 by itan              #+#    #+#             */
-/*   Updated: 2023/11/07 09:21:04 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/10 15:39:05 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static t_vec3	transforms(t_vec3 position, t_vec3 direction,
-		t_quaternion rotation, float speed)
+static t_vec3	transforms(t_minirt *rt, t_vec3 direction, float speed)
 {
-	t_vec3	ret;
+	t_vec3			ret;
+	t_quaternion	yaw;
 
-	ret = vec3_apply_rot(direction, rotation);
+	quaternion_y_rotation(rt->cam.yaw, &yaw);
+	quaternion_normalize(&yaw, &yaw);
+	ret = vec3_apply_rot(direction, yaw);
 	ret = vec3_multiply(ret, speed);
-	ret = vec3_add(position, ret);
+	ret = vec3_add(rt->cam.position, ret);
 	return (ret);
 }
 
@@ -73,23 +75,17 @@ void	fly_mode_movement(t_minirt *minirt)
 	if (!minirt->moving)
 		return ;
 	if (minirt->key_events.holding_w)
-		minirt->cam.position = transforms(minirt->cam.position,
-				minirt->cam.direction, minirt->cam.rotation_h, 2);
+		minirt->cam.position = transforms(minirt, minirt->cam.direction, 2);
 	if (minirt->key_events.holding_s)
-		minirt->cam.position = transforms(minirt->cam.position,
-				minirt->cam.direction, minirt->cam.rotation_h, -2);
+		minirt->cam.position = transforms(minirt, minirt->cam.direction, -2);
 	if (minirt->key_events.holding_a)
-		minirt->cam.position = transforms(minirt->cam.position,
-				minirt->cam.right, minirt->cam.rotation_h, 2);
+		minirt->cam.position = transforms(minirt, minirt->cam.right, 2);
 	if (minirt->key_events.holding_d)
-		minirt->cam.position = transforms(minirt->cam.position,
-				minirt->cam.right, minirt->cam.rotation_h, -2);
+		minirt->cam.position = transforms(minirt, minirt->cam.right, -2);
 	if (minirt->key_events.holding_lsh)
-		minirt->cam.position = transforms(minirt->cam.position, minirt->cam.up,
-				minirt->cam.rotation_h, -2);
+		minirt->cam.position = transforms(minirt, minirt->cam.up, -2);
 	if (minirt->key_events.holding_sp)
-		minirt->cam.position = transforms(minirt->cam.position, minirt->cam.up,
-				minirt->cam.rotation_h, 2);
+		minirt->cam.position = transforms(minirt, minirt->cam.up, 2);
 	render(minirt, &thread_init);
 }
 

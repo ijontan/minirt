@@ -22,7 +22,9 @@ void	cam_init(t_cam *cam)
 	cam->vp_width = WINDOW_WIDTH;
 	cam->vp_height = WINDOW_HEIGHT;
 	cam->position = vec3_new(0, 0, 0);
-	cam->rotation_v = quaternion_create_id();
-	cam->rotation_h = quaternion_create_id();
+	cam->yaw = 0;
+	cam->pitch = 0;
+	// cam->rotation_v = quaternion_create_id();
+	// cam->rotation_h = quaternion_create_id();
 	cam->right = vec3_cross(cam->direction, cam->up);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_holding_down.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 22:07:04 by itan              #+#    #+#             */
-/*   Updated: 2023/11/07 10:58:39 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/10 14:40:58 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,25 @@ void	keydown_numbers(int keycode, t_minirt *minirt)
 		minirt->key_events.holding_9 = true;
 	else if (keycode == KEY_0)
 		minirt->key_events.holding_0 = true;
+	else
+		return ;
+	render(minirt, &thread_init);
+}
+
+void	keydown_otherkeys(int keycode, t_minirt *minirt)
+{
+	if (keycode == KEY_V)
+		minirt->key_events.holding_v = true;
+	else if (keycode == KEY_B)
+		minirt->key_events.holding_b = true;
+	else if (keycode == KEY_N)
+		minirt->key_events.holding_n = true;
+	else if (keycode == KEY_M)
+		minirt->key_events.holding_m = true;
+	else if (keycode == KEY_U)
+		minirt->selection.selected = NULL;
+	else
+		return ;
 	render(minirt, &thread_init);
 }
 
@@ -70,9 +89,9 @@ void	keydown_char(int keycode, t_minirt *minirt)
 	else if (keycode == KEY_C)
 		minirt->key_events.holding_c = true;
 	else if (keycode == KEY_O)
-		if (minirt->cam.position.x || minirt->cam.position.y || \
-		minirt->cam.position.z || minirt->cam.direction.x != 0 \
-		|| minirt->cam.direction.y != 0 || minirt->cam.direction.z != 1)
+		if (minirt->cam.position.x || minirt->cam.position.y
+			|| minirt->cam.position.z || minirt->cam.direction.x != 0
+			|| minirt->cam.direction.y != 0 || minirt->cam.direction.z != 1)
 			minirt->render_status = RESET_CAM_ANIMATION;
 }
 
@@ -113,6 +132,7 @@ void	keydown_others(int keycode, t_minirt *minirt)
 void	key_holding_down(int keycode, t_minirt *minirt)
 {
 	keydown_numbers(keycode, minirt);
+	keydown_otherkeys(keycode, minirt);
 	keydown_arrows(keycode, minirt);
 	keydown_char(keycode, minirt);
 	keydown_others(keycode, minirt);

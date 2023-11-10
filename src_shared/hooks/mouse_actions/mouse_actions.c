@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:31:12 by itan              #+#    #+#             */
-/*   Updated: 2023/11/06 20:59:39 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/10 15:40:06 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,28 +109,17 @@ void	calc_rotation(t_offset xy, t_minirt *minirt)
 
 void	rotate_cam(int x, int y, t_minirt *minirt)
 {
-	t_quaternion	rotation;
-	double			axis_angle[3];
-	double			angle;
-
 	if (!minirt->moving)
 		return ;
 	if (minirt->moving && minirt->mouse_events.prev_x != -1)
 	{
-		quaternion_y_rotation(-0.01 * (x - minirt->mouse_events.prev_x),
-			&rotation);
-		quaternion_multiply(&minirt->cam.rotation_h, &rotation,
-			&minirt->cam.rotation_h);
-		angle = quaternion_to_axis_angle(&minirt->cam.rotation_v, axis_angle);
-		if ((angle < PI_2 )&& angle > -PI_2)
-		{
-			quaternion_x_rotation(-(y - minirt->mouse_events.prev_y) * 0.01,
-				&rotation);
-			quaternion_multiply(&minirt->cam.rotation_v, &rotation,
-				&minirt->cam.rotation_v);
-		}
-		quaternion_normalize(&minirt->cam.rotation_v, &minirt->cam.rotation_v);
-		quaternion_normalize(&minirt->cam.rotation_h, &minirt->cam.rotation_h);
+		minirt->cam.yaw -= 0.01 * (x - minirt->mouse_events.prev_x);
+		minirt->cam.pitch -= 0.01 * (y - minirt->mouse_events.prev_y);
+		if (minirt->cam.yaw > PI)
+			minirt->cam.yaw -= PI * 2;
+		else if (minirt->cam.yaw < -PI)
+			minirt->cam.yaw += PI * 2;
+		minirt->cam.pitch = float_clamp(minirt->cam.pitch, -PI_2, PI_2);
 		minirt->mouse_events.prev_x = x;
 		minirt->mouse_events.prev_y = y;
 		// mouse_move(minirt, 300, 300);

@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/10 13:26:35 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/10 14:21:27 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,10 @@ typedef struct s_key_events
 	bool			holding_8;
 	bool			holding_9;
 	bool			holding_0;
+	bool			holding_v;
+	bool			holding_b;
+	bool			holding_n;
+	bool			holding_m;
 	bool			holding_up;
 	bool			holding_down;
 	bool			holding_left;
@@ -415,7 +419,10 @@ void				stop_rotation(t_minirt *minirt);
 void				calc_rotation(t_offset xy, t_minirt *minirt);
 void				rotate_cam(int x, int y, t_minirt *minirt);
 void				reset_cam_animation(t_minirt *minirt);
-
+void				update_color(t_color_c *color, t_key_events key_events);
+void				update_value(float *value, t_key_events key_events,
+						t_vec3 step);
+void				update_object(t_minirt *rt);
 /* ------------------------------- mouse_util ------------------------------- */
 
 void				mouse_hide(t_minirt *minirt);

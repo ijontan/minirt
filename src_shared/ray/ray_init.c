@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 02:39:58 by itan              #+#    #+#             */
-/*   Updated: 2023/10/25 01:30:58 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/10 15:39:19 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ t_ray	ray_primary(t_cam *cam, t_offset offset)
 	float			y;
 	float			div_min;
 	int				pad;
+	t_quaternion	yaw;
+	t_quaternion	pitch;
 	t_quaternion	rotation;
 
 	ft_bzero(&ray, sizeof(t_ray));
@@ -46,7 +48,10 @@ t_ray	ray_primary(t_cam *cam, t_offset offset)
 	screen_center = vec3_add(cam->origin, vec3_multiply(cam->direction, 1));
 	ray.direction = vec3_add(screen_center, vec3_multiply(cam->right, -x));
 	ray.direction = vec3_add(ray.direction, vec3_multiply(cam->up, y));
-	quaternion_multiply(&cam->rotation_h, &cam->rotation_v, &rotation);
+	quaternion_y_rotation(cam->yaw, &yaw);
+	quaternion_x_rotation(cam->pitch, &pitch);
+	quaternion_multiply(&yaw, &pitch, &rotation);
+	quaternion_normalize(&rotation, &rotation);
 	ray.direction = vec3_apply_rot(ray.direction, rotation);
 	ray.direction = vec3_normalize(ray.direction);
 	return (ray);

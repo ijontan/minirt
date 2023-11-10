@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 14:48:41 by itan              #+#    #+#             */
-/*   Updated: 2023/11/05 22:18:08 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/10 14:30:40 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ int	key_down_hook(int keycode, t_minirt *minirt)
 		free_minirt(minirt);
 		exit(EXIT_SUCCESS);
 	}
-	if (keycode == KEY_UP && !minirt->selection.selected_material_field)
+	if (keycode == KEY_UP && !minirt->selection.selected)
 	{
 		minirt->pixel_size += 1;
 		render(minirt, &thread_init);
 	}
 	else if (keycode == KEY_DOWN && minirt->pixel_size > 1
-		&& !minirt->selection.selected_material_field)
+		&& !minirt->selection.selected)
 	{
 		minirt->pixel_size -= 1;
 		render(minirt, &thread_init);

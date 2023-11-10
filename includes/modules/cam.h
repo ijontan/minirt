@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 14:31:04 by itan              #+#    #+#             */
-/*   Updated: 2023/10/25 00:43:21 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/10 15:16:10 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,18 @@
  */
 typedef struct s_cam
 {
-	t_vec3			origin;
-	t_vec3			direction;
-	t_vec3			up;
-	t_vec3			right;
-	t_vec3			position;
-	t_quaternion	rotation_h;
-	t_quaternion	rotation_v;
-	float			fov;
-	int				vp_width;
-	int				vp_height;
-}					t_cam;
+	t_vec3	origin;
+	t_vec3	direction;
+	t_vec3	up;
+	t_vec3	right;
+	t_vec3	position;
+	float	yaw;
+	float	pitch;
+	float	fov;
+	int		vp_width;
+	int		vp_height;
+}			t_cam;
 
-void				cam_init(t_cam *cam);
+void		cam_init(t_cam *cam);
 
 #endif

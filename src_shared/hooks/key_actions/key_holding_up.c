@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_holding_up.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 22:14:42 by itan              #+#    #+#             */
-/*   Updated: 2023/11/07 11:04:15 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/10 14:22:14 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,18 @@ void	keyup_numbers(int keycode, t_minirt *minirt)
 		minirt->key_events.holding_9 = false;
 	else if (keycode == KEY_0)
 		minirt->key_events.holding_0 = false;
+}
+
+void	keyup_otherkeys(int keycode, t_minirt *minirt)
+{
+	if (keycode == KEY_V)
+		minirt->key_events.holding_v = false;
+	else if (keycode == KEY_B)
+		minirt->key_events.holding_b = false;
+	else if (keycode == KEY_N)
+		minirt->key_events.holding_n = false;
+	else if (keycode == KEY_M)
+		minirt->key_events.holding_m = false;
 }
 
 void	keyup_arrows(int keycode, t_minirt *minirt)
@@ -81,6 +93,7 @@ void	keyup_others(int keycode, t_minirt *minirt)
 void	key_holding_up(int keycode, t_minirt *minirt)
 {
 	keyup_numbers(keycode, minirt);
+	keyup_otherkeys(keycode, minirt);
 	keyup_arrows(keycode, minirt);
 	keyup_char(keycode, minirt);
 	keyup_others(keycode, minirt);

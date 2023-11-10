@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_environment.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 16:16:39 by rsoo              #+#    #+#             */
-/*   Updated: 2023/10/31 16:34:13 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/10 15:31:21 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,10 @@ void	parse_camera(t_parse *p)
 	p->camera.up = vec3_cross(p->camera.right, p->camera.direction);
 	p->camera.vp_height = WINDOW_HEIGHT;
 	p->camera.vp_width = WINDOW_WIDTH;
-	p->camera.rotation_h = quaternion_create_id();
-	p->camera.rotation_v = quaternion_create_id();
+	p->camera.yaw = 0;
+	p->camera.pitch = 0;
+	// p->camera.rotation_h = quaternion_create_id();
+	// p->camera.rotation_v = quaternion_create_id();
 	p->camera.position = vec3_new(0, 0, 0);
 	p->camera.fov = ft_atof(p->info[3], p);
 	if (p->camera.fov < 0.0 || p->camera.fov > 180.0)
