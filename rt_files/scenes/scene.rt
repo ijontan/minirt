@@ -4,7 +4,7 @@ A 0.3		255,255,255
 
 # Camera
 # position	direction	field of view
-C 0,0,0		0,0,1		40
+C 0,0,0		0,0,1		80
 
 # Point light
 # position		ratio		color
@@ -16,18 +16,18 @@ L 0,0,160		1			255,255,255
 
 # Sphere															Material
 #	centre		diameter	color									specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission color	shininess
-sp	-100,0,200	50			0,150,255								0.1				255,255,255		1					1				0				0,0,0			60
-sp	-50,0,200	50			0,180,255								0.1				200,230,255		0.8					1				0				0,0,0			50
-sp	0,0,200 	50		   	0,210,255								0.1				255,255,255		0.6					1				0				0,0,0			40
-sp	50,0,200	50			0,240,255								0.1				255,255,255		0.4					1				0				0,0,0			30
-sp	100,0,200	50			0,255,255								0.1				255,255,255		0					1				0				0,0,0			20
+sp	-100,0,200	50			0,150,255								1				255,255,255		1					1				0				0,0,0			60
+sp	-50,0,200	50			0,180,255								0.8				200,230,255		0.8					1				0				0,0,0			50
+sp	0,0,200 	50		   	0,210,255								0.6				255,255,255		0.6					1				0				0,0,0			40
+sp	50,0,200	50			0,240,255								0.4				255,255,255		0.4					1				0				0,0,0			30
+sp	100,0,200	50			0,255,255								0.2				255,255,255		0					1				0				0,0,0			20
 
 # Plane																Material
 #	point		normal vector	color								specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission color	shininess
 pl	0,100,200	0,1,0			255,255,255							0				255,255,255		0					1				1				255,255,255		30
-# pl	0,-40,200	0,-1,0			255,255,255							1				255,255,255		1					1				0				0,0,0			100
-pl	120,0,0		1,0,0			0,0,255	    						1				0,0,255		1					1				0				0,0,0			100
-pl	-120,0,0	-1,0,0			255,0,0								1				255,0,0		1					1				0				0,0,0			100
+pl	0,-40,200	0,-1,0			255,255,255							1				255,255,255		1					1				0				0,0,0			30
+pl	120,0,0		1,0,0			0,0,255	    						1				0,0,255		0					1				0				0,0,0			30
+pl	-120,0,0	-1,0,0			255,0,0								1				255,0,0		0					1				0				0,0,0			30
 
 # Cylinder															Material
 #	center		axis direction	diameter	height	color			specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission color	shininess

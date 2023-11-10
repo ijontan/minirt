@@ -6,21 +6,21 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:40:55 by itan              #+#    #+#             */
-/*   Updated: 2023/10/02 19:09:35 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/08 15:42:24 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <stdio.h>
 
-void	calculate_incoming(t_color_c *in_light, t_color_c *rayColor, t_material *material,
-		t_minirt *rt, t_hit_info *hi)
+void	calculate_incoming(t_color_c *in_light, t_color_c *rayColor,
+		t_material *material, t_minirt *rt, t_hit_info *hi)
 // void	calculate_incoming(t_color_c *in_light, t_color_c *rayColor,
 // 		t_material *material)
 {
 	t_color_c	emitting;
-	t_color_c	point_color;
 
+	// t_color_c	point_color;
 	// emitting = get_color(minirt, hit_info);
 	emitting = material->emission;
 	// emitting = color_add(material->emission, emitting);
@@ -29,13 +29,62 @@ void	calculate_incoming(t_color_c *in_light, t_color_c *rayColor, t_material *ma
 	// emitting = phong_reflection(minirt, hit_info);
 	emitting = color_multiply(emitting, *rayColor);
 	*in_light = color_add(*in_light, emitting);
-	point_color = get_lights_color(rt, hi);
-	emitting = color_multiply(point_color, *rayColor);
-	emitting = color_scale(emitting, 0.5f);
-	*in_light = color_add(*in_light, emitting);
-	*rayColor = color_add(*rayColor, point_color);
+	// point_color = get_lights_color(rt, hi);
+	// emitting = color_multiply(point_color, *rayColor);
+	// emitting = color_scale(emitting, 0.5f);
+	// *in_light = color_add(*in_light, emitting);
+	// *rayColor = color_multiply(*rayColor, point_color);
 	(void)rt;
 	(void)hi;
+}
+
+void	calculate_deffuse(t_color_c *in_light, t_color_c *rayColor,
+		t_minirt *rt, t_hit_info *hi)
+{
+	t_color_c	diffused;
+	t_color_c	tmp;
+	t_list		*tmp_list;
+	t_pt_light	*pt_light;
+
+	ft_memset(&diffused, 0, sizeof(t_color_c));
+	tmp_list = rt->pt_lights;
+	while (tmp_list)
+	{
+		pt_light = (t_pt_light *)(tmp_list->content);
+		hi->pt_to_l = vec3_subtract(pt_light->position, hi->intersect_pt);
+		if (!check_l_block(hi, rt, &tmp_list))
+			continue ;
+		hi->pt_to_l = vec3_normalize(hi->pt_to_l);
+		tmp = get_diffused_color(hi, pt_light->material.color);
+		diffused = color_add(diffused, color_multiply(tmp, *rayColor));
+		tmp_list = tmp_list->next;
+	}
+	*in_light = color_add(*in_light, diffused);
+	// *rayColor = color_add(*rayColor, diffused);
+}
+void	calculate_specular(t_color_c *in_light, t_color_c *rayColor,
+		t_minirt *rt, t_hit_info *hi)
+{
+	t_color_c	diffused;
+	t_color_c	tmp;
+	t_list		*tmp_list;
+	t_pt_light	*pt_light;
+
+	ft_memset(&diffused, 0, sizeof(t_color_c));
+	tmp_list = rt->pt_lights;
+	while (tmp_list)
+	{
+		pt_light = (t_pt_light *)(tmp_list->content);
+		hi->pt_to_l = vec3_subtract(pt_light->position, hi->intersect_pt);
+		if (!check_l_block(hi, rt, &tmp_list))
+			continue ;
+		hi->pt_to_l = vec3_normalize(hi->pt_to_l);
+		tmp = get_specular_color(hi, pt_light->material.color);
+		diffused = color_add(diffused, color_multiply(tmp, *rayColor));
+		tmp_list = tmp_list->next;
+	}
+	*in_light = color_add(*in_light, diffused);
+	// *rayColor = color_add(*rayColor, diffused);
 }
 
 t_color_c	get_env_light(t_ray *ray, bool is_env)
@@ -48,11 +97,10 @@ t_color_c	get_env_light(t_ray *ray, bool is_env)
 		return (color_correct_new(0, 0.1, 0.1, 0.1));
 	if (ray->direction.y < 0.0f)
 		return (color_correct_new(0, 0.1, 0.1, 0.1));
-	t = bazier_curves_1d_cubic(0.5f * (ray->direction.y + 1.0f),
-								(double[]){0, -3, 3.5, 1});
+	t = bazier_curves_1d_cubic(0.5f * (ray->direction.y + 1.0f), (double[]){0,
+			-3, 3.5, 1});
 	return (color_tween(color_correct_new(0, 1.0f, 1.0f, 1.0f),
-						color_correct_new(0, 0.4f, 0.6f, 1.0f),
-						t));
+			color_correct_new(0, 0.4f, 0.6f, 1.0f), t));
 }
 
 t_color_c	ray_tracing(t_ray ray, t_minirt *minirt, unsigned int *state)
@@ -61,9 +109,9 @@ t_color_c	ray_tracing(t_ray ray, t_minirt *minirt, unsigned int *state)
 	t_hit_info	hit_info;
 	t_color_c	color;
 	t_color_c	incoming_light;
-	// bool		is_env;
 	bool		is_specular;
 
+	// bool		is_env;
 	// is_env = true;
 	incoming_light = color_correct_new(0, 0, 0, 0);
 	color = color_correct_new(0, 1.0f, 1.0f, 1.0f);
@@ -76,26 +124,35 @@ t_color_c	ray_tracing(t_ray ray, t_minirt *minirt, unsigned int *state)
 			// is_env = false;
 			ray.origin = hit_info.intersect_pt;
 			hit_info.d_diffuse = random_vec3_hs(hit_info.normal, state);
-			hit_info.d_diffuse = vec3_normalize(vec3_add(hit_info.d_diffuse,
-															hit_info.normal));
+			// hit_info.d_diffuse = vec3_normalize(vec3_add(hit_info.d_diffuse,
+			// 			hit_info.normal));
 			is_specular = hit_info.material.specular_i > random_num(state);
+			hit_info.pt_to_cam = vec3_subtract(vec3_add(minirt->cam.origin,
+						minirt->cam.position), hit_info.intersect_pt);
+			hit_info.pt_to_cam = vec3_normalize(hit_info.pt_to_cam);
 			if (is_specular)
 			{
-				hit_info.d_specular = reflection(ray.direction, hit_info.normal);
+				hit_info.d_specular = reflection(ray.direction,
+						hit_info.normal);
 				ray.direction = vec3_tween(hit_info.d_diffuse,
-											hit_info.d_specular,
-											hit_info.material.reflective_i);
+						hit_info.d_specular, hit_info.material.reflective_i);
+				calculate_specular(&incoming_light, &color, minirt, &hit_info);
 			}
 			else
+			{
 				ray.direction = hit_info.d_diffuse;
-			ray.direction = random_vec3_hs(hit_info.normal, state);
-			ray.direction = vec3_normalize(vec3_add(ray.direction,
-													hit_info.normal));
-			//ray->direction = vec3_normalize(vec3_cross(hit_info.normal,
-			//		random_vec3_hs(hit_info.normal, state)));
-			calculate_incoming(&incoming_light, &color, &hit_info.material, minirt, &hit_info);
-			//calculate_incoming(&incoming_light, color,&hit_info.material, minirt, &hit_info);
-			color = color_multiply(color, hit_info.material.color);
+				calculate_deffuse(&incoming_light, &color, minirt, &hit_info);
+			}
+			// ray.direction = random_vec3_hs(hit_info.normal, state);
+			// ray.direction = vec3_normalize(vec3_add(ray.direction,
+			// 			hit_info.normal));
+			// ray.direction = vec3_normalize(vec3_cross(hit_info.normal,
+			// 		random_vec3_hs(hit_info.normal, state)));
+			calculate_incoming(&incoming_light, &color, &hit_info.material,
+				minirt, &hit_info);
+			// calculate_incoming(&incoming_light, color,&hit_info.material,
+			// minirt, &hit_info);
+			// color = color_multiply(color, hit_info.material.color);
 			color = color_multiply(color, color_tween(hit_info.material.color,
 						hit_info.material.specular, (double)is_specular));
 			// color = color_scale(color, 0.5f);

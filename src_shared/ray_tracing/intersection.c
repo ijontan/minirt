@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 22:46:40 by itan              #+#    #+#             */
-/*   Updated: 2023/11/03 01:36:32 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/08 15:30:30 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 // {
 
 // }
-
-typedef t_vec3	(*t_ft_intersect)(void *, t_ray *);
 
 // iterates through the object list and calculates which intersection is the
 // closest for one ray
@@ -29,11 +27,11 @@ t_hit_info	intersect_list(t_minirt *minirt, t_ray *ray)
 	t_list		*lst;
 	t_object	*tmp;
 
-	const t_ft_intersect intersect_ft[PARSE_NUM - 3] = {
-		(t_ft_intersect)&sphere_intersect,
-		(t_ft_intersect)&plane_intersect,
-		(t_ft_intersect)&cylinder_intersect,
-		(t_ft_intersect)&cone_intersect,
+	t_vec3 (*intersect_ft[])(void *, t_ray *) = {
+		(t_vec3(*)(void *, t_ray *)) & sphere_intersect,
+		(t_vec3(*)(void *, t_ray *)) & plane_intersect,
+		(t_vec3(*)(void *, t_ray *)) & cylinder_intersect,
+		(t_vec3(*)(void *, t_ray *)) & cone_intersect,
 	};
 	lst = minirt->objects;
 	ft_memset(&prev_intersect, 0, sizeof(t_vec3));

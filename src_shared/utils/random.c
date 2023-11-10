@@ -42,6 +42,6 @@ float	normal_dist_random_num(unsigned int *state)
 
 	u1 = random_num(state);
 	u2 = random_num(state);
-	r = sqrt(-2.0 * log(u1)) * ft_cos(PI_2 * u2);
+	r = sqrt(-2.0 * log(u1)) * cos(PI_2 * u2);
 	return (r);
 }

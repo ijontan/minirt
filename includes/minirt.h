@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/08 14:46:49 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/10 13:26:35 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define MID_X 790
 # define MID_Y 360
 
-// padding for the menu strings 
+// padding for the menu strings
 # define MENU_START_X 20
 # define SCENES_START_X 40
 # define SCENES_START_Y 360
@@ -368,8 +368,9 @@ int					render(t_minirt *minirt,
 void				render_gi(t_minirt *rt);
 
 // render menu
-void				render_menu(t_minirt *minirt, int start_x, int end_x, int end_y);
-void 				put_menu_str(t_minirt *minirt);
+void				render_menu(t_minirt *minirt, int start_x, int end_x,
+						int end_y);
+void				put_menu_str(t_minirt *minirt);
 void				put_obj_menu_str(t_minirt *minirt);
 char				*create_vec3_str(char *title, t_vec3 coords);
 char				*create_vec3_str_brac(char *title, t_vec3 coords);
@@ -378,7 +379,8 @@ char				*create_color_str_brac(char *title, t_color_c color);
 // render overlay
 void				render_loading_overlay(t_minirt *minirt);
 void				render_cam_pos_overlay(t_minirt *minirt);
-void 				put_overlay_str(t_minirt *minirt, int start_x, int start_y, char *str);
+void				put_overlay_str(t_minirt *minirt, int start_x, int start_y,
+						char *str);
 
 void				put_handle_material_str(t_minirt *minirt);
 
@@ -391,6 +393,10 @@ void				ray_cast(t_minirt *minirt);
 void				draw_scene(t_minirt *minirt);
 void				thread_init(t_minirt *minirt);
 void				thread_raytrace(t_minirt *minirt);
+t_color_c			get_diffused_color(t_hit_info *hi, t_color_c ray_color);
+t_color_c			get_specular_color(t_hit_info *hi, t_color_c ray_color);
+bool				check_l_block(t_hit_info *hi, t_minirt *rt,
+						t_list **tmp_list);
 t_color_c			get_color(t_minirt *rt, t_hit_info *hi);
 t_color_c			get_lights_color(t_minirt *rt, t_hit_info *hi);
 t_image				create_image(t_minirt *rt, t_offset size);

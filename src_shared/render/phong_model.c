@@ -6,13 +6,13 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:40:55 by itan              #+#    #+#             */
-/*   Updated: 2023/11/07 03:02:59 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/08 15:42:24 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static bool	check_l_block(t_hit_info *hi, t_minirt *rt, t_list **tmp_list)
+bool	check_l_block(t_hit_info *hi, t_minirt *rt, t_list **tmp_list)
 {
 	t_ray		ray;
 	t_hit_info	hi2;
@@ -41,7 +41,7 @@ static bool	is_outline(t_minirt *rt, t_hit_info *hi)
 	return (false);
 }
 
-t_color_c	get_deffused_color(t_hit_info *hi, t_color_c ray_color)
+t_color_c	get_diffused_color(t_hit_info *hi, t_color_c ray_color)
 {
 	float		dot_prod;
 	t_color_c	tmp;
@@ -90,13 +90,22 @@ t_color_c	get_lights_color(t_minirt *rt, t_hit_info *hi)
 		if (!check_l_block(hi, rt, &tmp_list))
 			continue ;
 		hi->pt_to_l = vec3_normalize(hi->pt_to_l);
-		ret = color_add(ret, get_deffused_color(hi, pt_light->material.color));
+		ret = color_add(ret, get_diffused_color(hi, pt_light->material.color));
 		ret = color_add(ret, get_specular_color(hi, pt_light->material.color));
 		tmp_list = tmp_list->next;
 	}
 	return (ret);
 }
 
+/**
+ * @brief Get the color object
+ * first get the color from the lights
+ * then add the ambient light
+ * ambient light is calculated with ambient color * ambient ratio * object color
+ *
+ * @param rt
+ * @param hi
+ */
 t_color_c	get_color(t_minirt *rt, t_hit_info *hi)
 {
 	t_color_c	ret;
