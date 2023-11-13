@@ -125,11 +125,11 @@ t_vec3	cylinder_intersect(t_cylinder *cylinder, t_ray *ray)
 	if (!distance)
 		return (sols);
 	return (cylinder_caps_intersect(cylinder, ray, distance > 0));
-	distance = ray_in_cylinder_bound(cylinder, ray, sols.y);
-	if (!distance)
-	{
-		sols.x = sols.y;
-		sols.z = 5;
-		return (sols);
-	}
+	// distance = ray_in_cylinder_bound(cylinder, ray, sols.y);
+	// if (!distance)
+	// {
+	// 	sols.x = sols.y;
+	// 	sols.z = 5;
+	// 	return (sols);
+	// }
 }

@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:40:55 by itan              #+#    #+#             */
-/*   Updated: 2023/11/08 15:42:24 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/11 02:59:39 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	calculate_deffuse(t_color_c *in_light, t_color_c *rayColor,
 	t_list		*tmp_list;
 	t_pt_light	*pt_light;
 
+	if (hi->material.diffuse_i == 0.0f)
+		return ;
 	ft_memset(&diffused, 0, sizeof(t_color_c));
 	tmp_list = rt->pt_lights;
 	while (tmp_list)
@@ -70,6 +72,8 @@ void	calculate_specular(t_color_c *in_light, t_color_c *rayColor,
 	t_list		*tmp_list;
 	t_pt_light	*pt_light;
 
+	if (hi->material.specular_i == 0.0f)
+		return ;
 	ft_memset(&diffused, 0, sizeof(t_color_c));
 	tmp_list = rt->pt_lights;
 	while (tmp_list)
@@ -116,7 +120,7 @@ t_color_c	ray_tracing(t_ray ray, t_minirt *minirt, unsigned int *state)
 	incoming_light = color_correct_new(0, 0, 0, 0);
 	color = color_correct_new(0, 1.0f, 1.0f, 1.0f);
 	i = -1;
-	while (++i < 3)
+	while (++i < 5)
 	{
 		hit_info = intersect_list(minirt, &ray);
 		if (hit_info.hit)

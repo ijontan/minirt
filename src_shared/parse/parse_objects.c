@@ -16,7 +16,7 @@
 static void	parse_material(char *obj_type, int i, t_material *mt, t_parse *p)
 {
 	mt->diffuse_i = 1.0f;
-	mt->shininess = 2.0f;
+	mt->shininess = 7.0f;
 	if (p->info[i] && ft_strncmp(p->info[i], "\n", ft_strlen(p->info[i])))
 	{
 		mt->specular_i = ft_atof(p->info[i], p);

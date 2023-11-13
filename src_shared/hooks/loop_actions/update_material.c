@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 01:42:37 by itan              #+#    #+#             */
-/*   Updated: 2023/11/10 14:28:16 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/10 19:19:41 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	update_fields(t_minirt *minirt, t_material *material,
 			.y = 0, .z = 1});
 	if (minirt->selection.selected_material_field == SHININESS)
 		update_value(&material->shininess, key_events, (t_vec3){.x = 0.5,
-			.y = 1, .z = 50});
+			.y = 7, .z = 120});
 	if (minirt->selection.selected_material_field == EMISSION_INTENSITY)
 		update_value(&material->emission_i, key_events, (t_vec3){.x = 0.01,
 			.y = 0, .z = 1});

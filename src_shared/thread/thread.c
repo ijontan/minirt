@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 22:20:30 by itan              #+#    #+#             */
-/*   Updated: 2023/11/06 12:44:20 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/13 15:06:16 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,55 +22,28 @@ typedef struct s_thread_info
 
 void	*ray_cast_routine(void *data)
 {
-	int				x;
-	int				y;
+	t_offset		xy;
 	t_ray			ray;
 	t_color_c		color;
 	t_hit_info		hit_info;
 	t_thread_info	*info;
-	int				pixel_size;
-	int				i;
-	int				j;
 
 	info = (t_thread_info *)data;
-	pixel_size = info->minirt->pixel_size;
-	y = info->start.y;
-	while (y < info->end.y)
+	xy.y = info->start.y - 1;
+	while (++xy.y < info->end.y)
 	{
-		x = info->start.x;
-		while (x < info->end.x)
+		xy.x = info->start.x - 1;
+		while (++xy.x < info->end.x)
 		{
-			if ((x % pixel_size != 0 || y % pixel_size != 0))
-			{
-				++x;
+			if (!(xy.x % info->minirt->pixel_size == 0 && xy.y
+					% info->minirt->pixel_size == 0))
 				continue ;
-			}
-			ft_memset(&ray, 0, sizeof(t_ray));
-			ray = ray_primary(&info->minirt->cam, (t_offset){.x = x, .y = y});
+			ray = ray_primary(&info->minirt->cam, xy);
 			hit_info = intersect_list(info->minirt, &ray);
-			color = color_correct_new(0, 0, 0, 0);
-			if (hit_info.hit)
-				color = get_color(info->minirt, &hit_info);
-			if (hit_info.hit_selection_plane)
-				color = color_add(color, info->minirt->selection.plane_color);
-			if (hit_info.hit_rotation_plane)
-				color = color_add(color, info->minirt->selection.plane_color);
-			color = color_clamp(color);
-			put_pixel(&info->minirt->image, (t_offset){.x = x, .y = y},
-				color_revert(color).as_int);
-			i = -1;
-			while (++i < pixel_size && x + i < WINDOW_WIDTH)
-			{
-				j = -1;
-				while (++j < pixel_size && y + j < WINDOW_HEIGHT)
-				{
-					put_pixel(&info->minirt->image, (t_offset){.x = x + i,
-						.y = y + j}, color_revert(color).as_int);
-				}
-			}
-			++x;
+			color = get_color_selection(info->minirt, &hit_info);
+			fill_pixel(&info->minirt->image, xy, info->minirt->pixel_size,
+				color);
 		}
-		++y;
 	}
 	return (NULL);
 }

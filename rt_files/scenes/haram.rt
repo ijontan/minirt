@@ -1,6 +1,6 @@
 # Ambient light
 # ratio		color
-A 1.0		255,255,255
+A 0.3		255,255,255
 
 # Camera
 # position	direction	field of view

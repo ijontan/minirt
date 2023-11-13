@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/10 15:46:01 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/12 12:49:21 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -361,6 +361,9 @@ float				float_clamp(float value, float min, float max);
 
 t_hit_info			intersections(t_minirt *minirt, t_ray *ray);
 t_hit_info			intersect_list(t_minirt *minirt, t_ray *ray);
+void				fill_pixel(t_image *image, t_offset xy, int size,
+						t_color_c color);
+t_color_c			get_color_selection(t_minirt *rt, t_hit_info *hi);
 
 t_color_c			get_color(t_minirt *rt, t_hit_info *hi);
 t_color_c			ray_tracing(t_ray ray, t_minirt *minirt,
