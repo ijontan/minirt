@@ -6,11 +6,17 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 18:10:39 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/08 14:53:59 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/14 18:47:55 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+void	append_num_to_str(char **msg, char *str, char *num)
+{
+	*msg = ft_strjoin(str, num);
+	free(num);
+}
 
 char	*ft_ftoa(double num, int precision)
 {
@@ -34,13 +40,20 @@ char	*ft_ftoa(double num, int precision)
 char	*create_vec3_str(char *title, t_vec3 coords)
 {
 	char	*res;
+	char	*num;
 
 	res = ft_strjoin(title, "x: ");
-	res = ft_strjoin(res, ft_ftoa(coords.x, 1));
-	res = ft_strjoin(res, " y: ");
-	res = ft_strjoin(res, ft_ftoa(coords.y, 1));
-	res = ft_strjoin(res, " z: ");
-	res = ft_strjoin(res, ft_ftoa(coords.z, 1));
+	num =  ft_ftoa(coords.x, 1);
+	res = ft_append(res, num);
+	free(num);
+	res = ft_append(res, " y: ");
+	num =  ft_ftoa(coords.y, 1);
+	res = ft_append(res, num);
+	free(num);
+	res = ft_append(res, " z: ");
+	num =  ft_ftoa(coords.z, 1);
+	res = ft_append(res, num);
+	free(num);
 	return (res);
 }
 
@@ -48,14 +61,21 @@ char	*create_vec3_str(char *title, t_vec3 coords)
 char	*create_vec3_str_brac(char *title, t_vec3 coords)
 {
 	char	*res;
+	char	*num;
 
 	res = ft_strjoin(title, "(");
-	res = ft_strjoin(res, ft_ftoa(coords.x, 1));
-	res = ft_strjoin(res, ", ");
-	res = ft_strjoin(res, ft_ftoa(coords.y, 1));
-	res = ft_strjoin(res, ", ");
-	res = ft_strjoin(res, ft_ftoa(coords.z, 1));
-	res = ft_strjoin(res, ")");
+	num =  ft_ftoa(coords.x, 1);
+	res = ft_append(res, num);
+	free(num);
+	res = ft_append(res, ", ");
+	num =  ft_ftoa(coords.y, 1);
+	res = ft_append(res, num);
+	free(num);
+	res = ft_append(res, ", ");
+	num =  ft_ftoa(coords.z, 1);
+	res = ft_append(res, num);
+	free(num);
+	res = ft_append(res, ")");
 	return (res);
 }
 
@@ -63,15 +83,22 @@ char	*create_vec3_str_brac(char *title, t_vec3 coords)
 char	*create_color_str_brac(char *title, t_color_c color)
 {
 	char	*res;
+	char	*num;
 	t_color	reverted_color;
 
 	reverted_color = color_revert(color);
 	res = ft_strjoin(title, "(");
-	res = ft_strjoin(res, ft_ftoa(reverted_color.rgba.r, 1));
-	res = ft_strjoin(res, ", ");
-	res = ft_strjoin(res, ft_ftoa(reverted_color.rgba.g, 1));
-	res = ft_strjoin(res, ", ");
-	res = ft_strjoin(res, ft_ftoa(reverted_color.rgba.b, 1));
-	res = ft_strjoin(res, ")");
+	num = ft_ftoa(reverted_color.rgba.r, 1);
+	res = ft_append(res, num);
+	free(num);
+	res = ft_append(res, ", ");
+	num = ft_ftoa(reverted_color.rgba.r, 1);
+	res = ft_append(res, num);
+	free(num);
+	res = ft_append(res, ", ");
+	num = ft_ftoa(reverted_color.rgba.r, 1);
+	res = ft_append(res, num);
+	free(num);
+	res = ft_append(res, ")");
 	return (res);
 }
