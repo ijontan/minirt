@@ -337,7 +337,7 @@ typedef struct s_hit_info
 	t_vec3			d_specular;
 	t_vec3			pt_to_l;
 	t_vec3			pt_to_cam;
-	t_material		*material;
+	t_material		material;
 	t_object		*object;
 	t_obj_type		obj_type;
 	bool			hit;

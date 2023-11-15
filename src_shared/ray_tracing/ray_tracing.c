@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:40:55 by itan              #+#    #+#             */
-/*   Updated: 2023/11/15 22:07:19 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/15 22:52:35 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdio.h>
 
 void	calculate_incoming(t_color_c *in_light, t_color_c *rayColor,
-		t_material *material, t_minirt *rt)
+		t_material *material)
 {
 	t_color_c	emitting;
 
@@ -32,7 +32,7 @@ void	calculate_deffuse(t_color_c *in_light, t_color_c *rayColor,
 	t_list		*tmp_list;
 	t_pt_light	*pt_light;
 
-	if (hi->material->diffuse_i == 0.0f)
+	if (hi->material.diffuse_i == 0.0f)
 		return ;
 	ft_memset(&diffused, 0, sizeof(t_color_c));
 	tmp_list = rt->pt_lights;
@@ -58,7 +58,7 @@ void	calculate_specular(t_color_c *in_light, t_color_c *rayColor,
 	t_list		*tmp_list;
 	t_pt_light	*pt_light;
 
-	if (hi->material->specular_i == 0.0f)
+	if (hi->material.specular_i == 0.0f)
 		return ;
 	ft_memset(&diffused, 0, sizeof(t_color_c));
 	tmp_list = rt->pt_lights;
@@ -112,7 +112,7 @@ t_color_c	ray_tracing(t_ray ray, t_minirt *minirt, unsigned int *state)
 			hit_info.d_diffuse = random_vec3_hs(hit_info.normal, state);
 			hit_info.d_diffuse = vec3_normalize(vec3_add(hit_info.d_diffuse,
 						hit_info.normal));
-			is_specular = hit_info.material->specular_i > random_num(state);
+			is_specular = hit_info.material.specular_i > random_num(state);
 			hit_info.pt_to_cam = vec3_subtract(vec3_add(minirt->cam.origin,
 						minirt->cam.position), hit_info.intersect_pt);
 			hit_info.pt_to_cam = vec3_normalize(hit_info.pt_to_cam);
@@ -121,7 +121,7 @@ t_color_c	ray_tracing(t_ray ray, t_minirt *minirt, unsigned int *state)
 				hit_info.d_specular = reflection(ray.direction,
 						hit_info.normal);
 				ray.direction = vec3_tween(hit_info.d_diffuse,
-						hit_info.d_specular, hit_info.material->reflective_i);
+						hit_info.d_specular, hit_info.material.reflective_i);
 				calculate_specular(&incoming_light, &ray_c, minirt, &hit_info);
 			}
 			else
@@ -129,10 +129,9 @@ t_color_c	ray_tracing(t_ray ray, t_minirt *minirt, unsigned int *state)
 				ray.direction = hit_info.d_diffuse;
 				calculate_deffuse(&incoming_light, &ray_c, minirt, &hit_info);
 			}
-			calculate_incoming(&incoming_light, &ray_c, hit_info.material,
-				minirt);
-			ray_c = color_multiply(ray_c, color_tween(hit_info.material->color,
-						hit_info.material->specular, (double)is_specular));
+			calculate_incoming(&incoming_light, &ray_c, &hit_info.material);
+			ray_c = color_multiply(ray_c, color_tween(hit_info.material.color,
+						hit_info.material.specular, (double)is_specular));
 		}
 		else
 		{

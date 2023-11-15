@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 03:25:34 by itan              #+#    #+#             */
-/*   Updated: 2023/10/27 15:28:54 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/15 23:12:20 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ t_vec3	get_pixel_vec3(t_image *image, t_offset offset)
 	t_vec3		vec3;
 
 	color_c = get_pixel_color(image, offset);
-	vec3.x = color_c.r;
-	vec3.y = color_c.g;
-	vec3.z = color_c.b;
+	vec3.x = color_c.r * 2 - 1;
+	vec3.y = color_c.g * 2 - 1;
+	vec3.z = color_c.b * 2 - 1;
 	return (vec3_normalize(vec3));
 }

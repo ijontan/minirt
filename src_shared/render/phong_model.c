@@ -50,8 +50,8 @@ t_color_c	get_diffused_color(t_hit_info *hi, t_color_c ray_color)
 	if (dot_prod <= 0)
 		return (color_correct_new(0, 0, 0, 0));
 	dot_prod = float_clamp(dot_prod, 0, 1);
-	tmp = color_multiply(hi->material->color, ray_color);
-	return (color_scale(tmp, dot_prod * hi->material->diffuse_i));
+	tmp = color_multiply(hi->material.color, ray_color);
+	return (color_scale(tmp, dot_prod * hi->material.diffuse_i));
 }
 
 t_color_c	get_specular_color(t_hit_info *hi, t_color_c ray_color)
@@ -65,9 +65,9 @@ t_color_c	get_specular_color(t_hit_info *hi, t_color_c ray_color)
 	if (dot_prod <= 0 || vec3_dot(hi->pt_to_l, hi->normal) <= 0)
 		return (color_correct_new(0, 0, 0, 0));
 	dot_prod = float_clamp(dot_prod, 0, 1);
-	tmp = color_multiply(hi->material->specular, ray_color);
-	return (color_scale(tmp, hi->material->specular_i * powf(dot_prod,
-				hi->material->shininess)));
+	tmp = color_multiply(hi->material.specular, ray_color);
+	return (color_scale(tmp, hi->material.specular_i * powf(dot_prod,
+				hi->material.shininess)));
 }
 
 t_color_c	get_lights_color(t_minirt *rt, t_hit_info *hi)
@@ -115,7 +115,7 @@ t_color_c	get_color(t_minirt *rt, t_hit_info *hi)
 	ret = get_lights_color(rt, hi);
 	tmp = rt->amb_light.color;
 	tmp = color_scale(tmp, rt->amb_light.ratio);
-	tmp = color_multiply(tmp, hi->material->color);
+	tmp = color_multiply(tmp, hi->material.color);
 	ret = color_add(ret, tmp);
 	return (color_clamp(ret));
 }
