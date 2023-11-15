@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/12 12:49:21 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/15 21:23:34 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,13 +328,14 @@ typedef enum e_obj_type
 
 typedef struct s_hit_info
 {
+	t_vec3			intersect;
 	t_vec3			intersect_pt;
 	t_vec3			normal;
 	t_vec3			d_diffuse;
 	t_vec3			d_specular;
 	t_vec3			pt_to_l;
 	t_vec3			pt_to_cam;
-	t_material		material;
+	t_material		*material;
 	t_object		*object;
 	t_obj_type		obj_type;
 	bool			hit;
@@ -361,6 +362,7 @@ float				float_clamp(float value, float min, float max);
 
 t_hit_info			intersections(t_minirt *minirt, t_ray *ray);
 t_hit_info			intersect_list(t_minirt *minirt, t_ray *ray);
+void				get_normal(t_hit_info *hi);
 void				fill_pixel(t_image *image, t_offset xy, int size,
 						t_color_c color);
 t_color_c			get_color_selection(t_minirt *rt, t_hit_info *hi);
