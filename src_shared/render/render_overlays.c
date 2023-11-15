@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 08:53:24 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/07 11:02:41 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/14 18:29:36 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,13 @@ void	render_cam_pos_overlay(t_minirt *minirt)
 {
 	int		i;
 	int		j;
+	char	*tmp;
 
 	minirt->cam_pos_overlay.msg = create_vec3_str("Camera position: ", minirt->cam.position);
-	minirt->cam_pos_overlay.msg = ft_strjoin(minirt->cam_pos_overlay.msg, " | Pixel size: ");
-	minirt->cam_pos_overlay.msg = ft_strjoin(minirt->cam_pos_overlay.msg, ft_itoa(minirt->pixel_size));
-
+	minirt->cam_pos_overlay.msg = ft_append(minirt->cam_pos_overlay.msg, " | Pixel size: ");
+	tmp = ft_itoa(minirt->pixel_size);
+	minirt->cam_pos_overlay.msg = ft_append(minirt->cam_pos_overlay.msg, tmp);
+	free(tmp);
 	if (minirt->selection.selected)
 		minirt->cam_pos_overlay.midpoint = WINDOW_WIDTH * 0.5;
 	else

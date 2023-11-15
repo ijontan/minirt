@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/15 21:23:34 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/15 22:51:42 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@
 # define MENU_START_X 20
 # define SCENES_START_X 40
 # define SCENES_START_Y 360
-# define OBJ_MENU_START_X 1340
-# define MATERIAL_SECTION_START_Y 450
+# define OBJ_START_X 1340
+	// defines the starting X value of the object selection menu
+# define MAT_START_Y 450 
+	// defines the starting Y value of the Material Section
 
 // misc.
 # define MENU_WIDTH 250
@@ -412,6 +414,7 @@ t_image				create_image(t_minirt *rt, t_offset size);
 t_image				load_image(t_minirt *rt, char *path);
 
 char				*ft_ftoa(double num, int precision);
+void				append_num_to_str(char **msg, char *str, char *num);
 /* ---------------------------------- hooks --------------------------------- */
 void				update_selected_material(t_minirt *minirt);
 void				key_holding_down(int keycode, t_minirt *minirt);
