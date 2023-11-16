@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/15 22:51:42 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/16 13:11:26 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@
 # define SCENES_START_X 40
 # define SCENES_START_Y 360
 # define OBJ_START_X 1340
-	// defines the starting X value of the object selection menu
-# define MAT_START_Y 450 
-	// defines the starting Y value of the Material Section
+// defines the starting X value of the object selection menu
+# define MAT_START_Y 450
+// defines the starting Y value of the Material Section
 
 // misc.
 # define MENU_WIDTH 250
@@ -431,6 +431,7 @@ void				update_color(t_color_c *color, t_key_events key_events);
 void				update_value(float *value, t_key_events key_events,
 						t_vec3 step);
 void				update_object(t_minirt *rt);
+int					close_hook(t_minirt *minirt);
 /* ------------------------------- mouse_util ------------------------------- */
 
 void				mouse_hide(t_minirt *minirt);
