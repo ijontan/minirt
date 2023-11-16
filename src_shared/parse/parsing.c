@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:52:31 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/16 20:48:07 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/16 22:33:25 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ bool	parse_rt_file(char *infile, t_parse *parse_info)
 	if (parse_info->infile_fd == 0)
 		return (false);
 	init_parsing(parse_info);
+	cam_init(&parse_info->camera);
 	buff = get_next_line(parse_info->infile_fd);
 	while (buff)
 	{
