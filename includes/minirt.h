@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/16 21:56:35 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/17 01:25:48 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ t_vec3				parse_coordinates(char *s, t_parse *p);
 // error_handling.c
 void				exit_parse(char **info, char *s, char c);
 void				check_line_format(int type, t_parse *p);
+bool				check_info_size(int size, t_parse *p);
 
 // error_handling2.c
 bool				valid_float(char *s);

@@ -33,7 +33,7 @@ bool	valid_float(char *s)
 	}
 	while (ft_isdigit(s[i]))
 		i++;
-	if (!s[i] || s[i] == '\n')
+	if (!s[i])
 		return (true);
 	if (s[i] == '.')
 		i++;
@@ -71,8 +71,10 @@ bool	valid_triplet(char *s)
 	}
 	while (++i < 3)
 	{
+		printf("[%s]\n", val[i]);
 		if (!valid_float(val[i]))
 		{
+			printf("Invalid float: [%s]\n", val[i]);
 			free_2darray(val);
 			return (false);
 		}
