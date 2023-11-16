@@ -6,18 +6,16 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:52:31 by rsoo              #+#    #+#             */
-/*   Updated: 2023/10/30 17:54:40 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/16 22:33:25 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 // parse conditions:
-// - need at least a plane, sphere and cylinder
+// - must have at least: 
 // - each type of element can be separated by one or more line breaks
 // - each type of element can be set in any order in the file
-// - elements which are defined by a capital letter can only be declared once
-// in the scene
 
 // mand_flag: flag and check if all minimum requirements of a scene are present
 static bool	parse_line(char *line, t_parse *p)
@@ -95,6 +93,7 @@ bool	parse_rt_file(char *infile, t_parse *parse_info)
 	if (parse_info->infile_fd == 0)
 		return (false);
 	init_parsing(parse_info);
+	cam_init(&parse_info->camera);
 	buff = get_next_line(parse_info->infile_fd);
 	while (buff)
 	{

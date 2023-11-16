@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/16 18:13:43 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/16 21:56:35 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,11 @@ void				check_line_format(int type, t_parse *p);
 // error_handling2.c
 bool				valid_float(char *s);
 bool				valid_triplet(char *s);
+
+// parse_material_and_uv.c
+void				parse_material(char *obj_type, int i, t_material *mt,
+						t_parse *p);
+void				parse_uv_files(t_material *mt, t_parse *p);
 
 /* -------------------------------------------------------------------------- */
 /*                                    Bonus                                   */
@@ -380,6 +385,7 @@ void				render_gi(t_minirt *rt);
 // render menu
 void				render_menu(t_minirt *minirt, int start_x, int end_x,
 						int end_y);
+void				put_obj_menu_str2(t_minirt *minirt);
 void				put_menu_str(t_minirt *minirt);
 void				put_obj_menu_str(t_minirt *minirt);
 char				*create_vec3_str(char *title, t_vec3 coords);
@@ -397,6 +403,7 @@ void				put_handle_material_str(t_minirt *minirt);
 void				put_sphere_info(t_minirt *minirt);
 void				put_plane_info(t_minirt *minirt);
 void				put_cylinder_info(t_minirt *minirt);
+void				put_cylinder_info2(t_minirt *minirt);
 void				put_cone_info(t_minirt *minirt);
 
 void				ray_cast(t_minirt *minirt);

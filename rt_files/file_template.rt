@@ -14,7 +14,7 @@ L
 # Objects
 
 # Sphere															Material
-#	centre	diameter		color									specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission_color	shininess texture norm_map
+#	centre	diameter		color									specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission_color	shininess texture_map normal_map specular_map
 sp
 
 # Plane																Material

@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 16:47:53 by rsoo              #+#    #+#             */
-/*   Updated: 2023/08/31 10:22:36 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/16 20:29:17 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,3 @@ float	ft_atof(char *s, t_parse *p)
 	}
 	return (p->atof.sign * p->atof.result / p->atof.power);
 }
-
-// int main(int ac, char **av)
-// {
-// 	(void)ac;
-// 	printf("result: %f\n", atof(av[1]));
-// }
