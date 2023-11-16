@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:27:15 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/16 21:27:23 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/16 21:45:44 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,14 @@ void	put_menu_str(t_minirt *minirt)
 void	put_selected_obj_info(t_minirt *minirt)
 {
 	const int	obj[4] = {SPHERE, PLANE, CYLINDER, CONE};
-	const void	(*put_obj_func_ptr[4])(t_minirt *minirt) = {&put_sphere_info,
-		&put_plane_info, &put_cylinder_info, &put_cone_info};
+	void	(*put_obj_func_ptr[4])(t_minirt *minirt);
 	int			i;
 
 	i = -1;
+	put_obj_func_ptr[0] = &put_sphere_info;
+	put_obj_func_ptr[1] = &put_plane_info;
+	put_obj_func_ptr[2] = &put_cylinder_info;
+	put_obj_func_ptr[3] = &put_cone_info;
 	while (++i < 4)
 	{
 		if (minirt->selection.selected->type == obj[i])
