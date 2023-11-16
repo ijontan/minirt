@@ -235,4 +235,4 @@ re:			fclean all
 .PHONY: all clean fclean re debug bonus norm
 
 norm:
-		@norminette $(SRC_DIR) includes/
+		@norminette $(SRC_DIR)
