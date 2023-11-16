@@ -6,27 +6,11 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 00:32:55 by itan              #+#    #+#             */
-/*   Updated: 2023/11/03 17:07:13 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/16 18:01:54 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-/**
- * @brief new bounding box
- *
- * @param min
- * @param max
- * @return t_bound_box
- */
-t_bound_box	bound_box_new(t_vec3 min, t_vec3 max)
-{
-	t_bound_box	bound_box;
-
-	bound_box.min = min;
-	bound_box.max = max;
-	return (bound_box);
-}
 
 float	float_min(float a, float b)
 {
@@ -60,18 +44,6 @@ t_bound_box	bound_box_expand(t_bound_box box, t_vec3 point)
 	return (new_box);
 }
 
-static void	ft_swap_min(float *a, float *b)
-{
-	float	tmp;
-
-	if (*a > *b)
-	{
-		tmp = *a;
-		*a = *b;
-		*b = tmp;
-	}
-}
-
 /**
  * @brief find the intersection between a ray and a bounding box
  *
@@ -91,9 +63,9 @@ bool	bound_box_intersect(t_bound_box box, t_ray ray)
 	tmin.y = (box.min.y - ray.origin.y) / ray.direction.y;
 	tmin.z = (box.min.z - ray.origin.z) / ray.direction.z;
 	tmax.z = (box.max.z - ray.origin.z) / ray.direction.z;
-	ft_swap_min(&tmin.x, &tmax.x);
-	ft_swap_min(&tmin.y, &tmax.y);
-	ft_swap_min(&tmin.z, &tmax.z);
+	swap_if_greater(&tmin.x, &tmax.x);
+	swap_if_greater(&tmin.y, &tmax.y);
+	swap_if_greater(&tmin.z, &tmax.z);
 	return (tmin.x <= tmax.y && tmin.y <= tmax.x && tmin.x <= tmax.z
 		&& tmin.z <= tmax.x && tmin.y <= tmax.z && tmin.z <= tmax.y);
 }

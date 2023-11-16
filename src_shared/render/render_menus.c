@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_menus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:27:15 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/14 19:03:41 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/16 18:02:44 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 void	render_menu(t_minirt *minirt, int start_x, int end_x, int end_y)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	j = -1;
 	while (++j < end_y)
@@ -28,11 +28,11 @@ void	render_menu(t_minirt *minirt, int start_x, int end_x, int end_y)
 	}
 }
 
-void put_menu_str(t_minirt *minirt)
+void	put_menu_str(t_minirt *minirt)
 {
-	int i;
-	int j;
-	
+	int	i;
+	int	j;
+
 	i = -1;
 	j = 1;
 	mlx_string_put(minirt->mlx, minirt->win, 20, 20, FONT_COLOR,
@@ -73,68 +73,56 @@ void put_menu_str(t_minirt *minirt)
 	}
 }
 
-void put_obj_menu_str(t_minirt *minirt)
+void	put_obj_menu_str(t_minirt *minirt)
 {
-	const int obj[4] = {SPHERE, PLANE, CYLINDER, CONE};
-	void (*put_obj_func_ptr[4])(t_minirt *minirt) = {
-		&put_sphere_info,
-		&put_plane_info,
-		&put_cylinder_info,
-		&put_cone_info
-	};
-	int i;
+	const int	obj[4] = {SPHERE, PLANE, CYLINDER, CONE};
+	int			i;
 
+	void (*put_obj_func_ptr[4])(t_minirt * minirt) = {&put_sphere_info,
+		&put_plane_info, &put_cylinder_info, &put_cone_info};
 	i = -1;
 	minirt->font_color = BLACK;
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X, 20, minirt->font_color,
-		"Edit material properties: ");
-
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X, 20,
+		minirt->font_color, "Edit material properties: ");
 	if (minirt->selection.selected_material_field == MATERIAL_COLOR)
 		minirt->font_color = GREEN;
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 20, 40, minirt->font_color,
-		"1: Material Colour");
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 20, 40,
+		minirt->font_color, "1: Material Colour");
 	minirt->font_color = BLACK;
-
 	if (minirt->selection.selected_material_field == EMISSION_COLOR)
 		minirt->font_color = GREEN;
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 20, 60, minirt->font_color,
-		"2: Emission Colour");
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 20, 60,
+		minirt->font_color, "2: Emission Colour");
 	minirt->font_color = BLACK;
-
 	if (minirt->selection.selected_material_field == SPECULAR_COLOR)
 		minirt->font_color = GREEN;
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 20, 80, minirt->font_color,
-		"3: Specular Colour");
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 20, 80,
+		minirt->font_color, "3: Specular Colour");
 	minirt->font_color = BLACK;
-
 	if (minirt->selection.selected_material_field == DIFFUSE_INTENSITY)
 		minirt->font_color = GREEN;
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 20, 100, minirt->font_color,
-		"4: Diffuse Intensity");
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 20, 100,
+		minirt->font_color, "4: Diffuse Intensity");
 	minirt->font_color = BLACK;
-
 	if (minirt->selection.selected_material_field == SPECULAR_INTENSITY)
 		minirt->font_color = GREEN;
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 20, 120, minirt->font_color,
-		"5: Specular Intensity");
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 20, 120,
+		minirt->font_color, "5: Specular Intensity");
 	minirt->font_color = BLACK;
-
 	if (minirt->selection.selected_material_field == REFLECTIVE_INTENSITY)
 		minirt->font_color = GREEN;
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 20, 140, minirt->font_color,
-		"6: Reflective Intensity");
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 20, 140,
+		minirt->font_color, "6: Reflective Intensity");
 	minirt->font_color = BLACK;
-
 	if (minirt->selection.selected_material_field == EMISSION_INTENSITY)
 		minirt->font_color = GREEN;
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 20, 160, minirt->font_color,
-		"7: Emission Intensity");
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 20, 160,
+		minirt->font_color, "7: Emission Intensity");
 	minirt->font_color = BLACK;
-
 	if (minirt->selection.selected_material_field == SHININESS)
 		minirt->font_color = GREEN;
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 20, 180, minirt->font_color,
-		"8: Shininess");
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 20, 180,
+		minirt->font_color, "8: Shininess");
 	minirt->font_color = BLACK;
 	while (++i < 4)
 	{
@@ -145,4 +133,3 @@ void put_obj_menu_str(t_minirt *minirt)
 		}
 	}
 }
-

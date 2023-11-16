@@ -6,18 +6,11 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 14:48:41 by itan              #+#    #+#             */
-/*   Updated: 2023/11/10 14:30:40 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/16 17:13:42 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-int	x_button_exit(int keycode, t_minirt *minirt)
-{
-	(void)keycode;
-	(void)minirt;
-	exit(EXIT_SUCCESS);
-}
 
 void	select_material_field(int keycode, t_minirt *minirt)
 {
@@ -44,6 +37,15 @@ void	select_material_field(int keycode, t_minirt *minirt)
 		selection->selected_material_field = NOT_SELECTED;
 	else if (keycode == KEY_0)
 		selection->selected_material_field = NOT_SELECTED;
+}
+
+void	key_holding_down(int keycode, t_minirt *minirt)
+{
+	keydown_numbers(keycode, minirt);
+	keydown_otherkeys(keycode, minirt);
+	keydown_arrows(keycode, minirt);
+	keydown_char(keycode, minirt);
+	keydown_others(keycode, minirt);
 }
 
 int	key_down_hook(int keycode, t_minirt *minirt)
@@ -74,6 +76,10 @@ int	key_down_hook(int keycode, t_minirt *minirt)
 
 int	key_up_hook(int keycode, t_minirt *minirt)
 {
-	key_holding_up(keycode, minirt);
+	keyup_numbers(keycode, minirt);
+	keyup_otherkeys(keycode, minirt);
+	keyup_arrows(keycode, minirt);
+	keyup_char(keycode, minirt);
+	keyup_others(keycode, minirt);
 	return (0);
 }

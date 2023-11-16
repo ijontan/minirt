@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 22:20:30 by itan              #+#    #+#             */
-/*   Updated: 2023/11/13 15:06:16 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/16 18:13:53 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,37 +79,22 @@ void	thread_init(t_minirt *minirt)
 
 void	*ray_trace_routine(void *data)
 {
-	int				x;
-	int				y;
+	t_offset		xy;
 	t_ray			ray;
-	t_color_c		color;
 	t_thread_info	*info;
-	int				cycle;
-	unsigned int	state;
-	t_color_c		incoming_light;
 
 	info = (t_thread_info *)data;
-	y = info->start.y;
-	while (y < info->end.y)
+	xy.y = info->start.y;
+	while (xy.y < info->end.y)
 	{
-		x = info->start.x;
-		while (x < info->end.x)
+		xy.x = info->start.x;
+		while (xy.x < info->end.x)
 		{
-			color = color_correct_new(0, 0, 0, 0);
-			cycle = -1;
-			ray = ray_primary(&info->minirt->cam, (t_offset){.x = x, .y = y});
-			state = (unsigned int)((x + y * WINDOW_WIDTH));
-			while (++cycle < 50)
-			{
-				incoming_light = ray_tracing(ray, info->minirt, &state);
-				color = color_add(color, incoming_light);
-			}
-			color = color_scale(color, 1 / (float)cycle);
-			put_pixel(&info->minirt->image, (t_offset){.x = x, .y = y},
-				color_revert(color).as_int);
-			++x;
+			ray = ray_primary(&info->minirt->cam, xy);
+			calculate_cycle(ray, info->minirt, xy);
+			++xy.x;
 		}
-		++y;
+		++xy.y;
 	}
 	printf("start: %.5d, end: %.5d\n", info->start.y, info->end.y);
 	return (NULL);

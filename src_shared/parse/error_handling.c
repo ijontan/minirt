@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 18:03:48 by rsoo              #+#    #+#             */
-/*   Updated: 2023/10/03 13:10:42 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/16 18:28:50 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,15 @@ static void	exit_format_err(char **info, char *s, int type)
 
 static void	check_line_format2(int type, t_parse *p)
 {
-	if (type == SPHERE && (!valid_triplet(p->info[1]) || !valid_float(p->info[2]) || \
-	!valid_triplet(p->info[3])))
+	if (type == SPHERE && (!valid_triplet(p->info[1])
+			|| !valid_float(p->info[2]) || !valid_triplet(p->info[3])))
 		exit_format_err(p->info, "Sphere", SPHERE);
-	else if (type == PLANE && (!valid_triplet(p->info[1]) || !valid_triplet(p->info[2]) || \
-	!valid_triplet(p->info[3])))
+	else if (type == PLANE && (!valid_triplet(p->info[1])
+			|| !valid_triplet(p->info[2]) || !valid_triplet(p->info[3])))
 		exit_format_err(p->info, "Plane", PLANE);
-	else if (type == CYLINDER && (!valid_triplet(p->info[1]) || \
-	!valid_triplet(p->info[2]) || !valid_float(p->info[3]) || \
-	!valid_float(p->info[4]) || !valid_triplet(p->info[5])))
+	else if (type == CYLINDER && (!valid_triplet(p->info[1])
+			|| !valid_triplet(p->info[2]) || !valid_float(p->info[3])
+			|| !valid_float(p->info[4]) || !valid_triplet(p->info[5])))
 		exit_format_err(p->info, "Cylinder", CYLINDER);
 }
 
@@ -65,20 +65,19 @@ checks if the info in the .rt file is in the correct format by checking:
 */
 void	check_line_format(int type, t_parse *p)
 {
-	if (type == AMB_LIGHT && (!check_info_size(3, p) || \
-	!valid_float(p->info[1]) || !valid_triplet(p->info[2])))
+	if (type == AMB_LIGHT && (!check_info_size(3, p) || !valid_float(p->info[1])
+			|| !valid_triplet(p->info[2])))
 		exit_format_err(p->info, "Ambient light", AMB_LIGHT);
-	else if (type == CAM && (!check_info_size(4, p) || \
-	!valid_triplet(p->info[1]) || !valid_triplet(p->info[2]) || \
-	!valid_float(p->info[3])))
+	else if (type == CAM && (!check_info_size(4, p)
+			|| !valid_triplet(p->info[1]) || !valid_triplet(p->info[2])
+			|| !valid_float(p->info[3])))
 		exit_format_err(p->info, "Camera", CAM);
-	else if (type ==  LIGHT && (!check_info_size(4, p) || \
-	!valid_triplet(p->info[1]) || !valid_float(p->info[2]) || \
-	!valid_triplet(p->info[3])))
+	else if (type == LIGHT && (!check_info_size(4, p)
+			|| !valid_triplet(p->info[1]) || !valid_float(p->info[2])
+			|| !valid_triplet(p->info[3])))
 		exit_format_err(p->info, "Lighting", LIGHT);
 	check_line_format2(type, p);
 }
-
 
 void	exit_parse(char **info, char *s, char c)
 {

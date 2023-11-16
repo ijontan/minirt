@@ -100,7 +100,7 @@ void	calc_rotation(t_offset xy, t_minirt *minirt)
 	if (vec3_dot(minirt->selection.rotation_plane->rot_normal, intersect) > 0)
 		minirt->selection.angle *= -1;
 	intersect = minirt->selection.rotation_plane->rot_normal;
-	quaternion_from_axis_angle((double[3]){intersect.x, intersect.y,
+	quaternion_from_axis_angle((double [3]){intersect.x, intersect.y,
 		intersect.z}, minirt->selection.angle,
 		&minirt->selection.selected->tmp_rotation);
 	ft_lstiter(minirt->objects, apply_rot);
@@ -122,7 +122,6 @@ void	rotate_cam(int x, int y, t_minirt *minirt)
 		minirt->cam.pitch = float_clamp(minirt->cam.pitch, -PI_2, PI_2);
 		minirt->mouse_events.prev_x = x;
 		minirt->mouse_events.prev_y = y;
-		// mouse_move(minirt, 300, 300);
 	}
 	if (minirt->mouse_events.prev_x == -1)
 	{

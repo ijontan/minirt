@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_menu_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 18:10:39 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/14 18:47:55 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/16 18:15:33 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,15 @@ char	*create_vec3_str(char *title, t_vec3 coords)
 	char	*num;
 
 	res = ft_strjoin(title, "x: ");
-	num =  ft_ftoa(coords.x, 1);
+	num = ft_ftoa(coords.x, 1);
 	res = ft_append(res, num);
 	free(num);
 	res = ft_append(res, " y: ");
-	num =  ft_ftoa(coords.y, 1);
+	num = ft_ftoa(coords.y, 1);
 	res = ft_append(res, num);
 	free(num);
 	res = ft_append(res, " z: ");
-	num =  ft_ftoa(coords.z, 1);
+	num = ft_ftoa(coords.z, 1);
 	res = ft_append(res, num);
 	free(num);
 	return (res);
@@ -64,15 +64,15 @@ char	*create_vec3_str_brac(char *title, t_vec3 coords)
 	char	*num;
 
 	res = ft_strjoin(title, "(");
-	num =  ft_ftoa(coords.x, 1);
+	num = ft_ftoa(coords.x, 1);
 	res = ft_append(res, num);
 	free(num);
 	res = ft_append(res, ", ");
-	num =  ft_ftoa(coords.y, 1);
+	num = ft_ftoa(coords.y, 1);
 	res = ft_append(res, num);
 	free(num);
 	res = ft_append(res, ", ");
-	num =  ft_ftoa(coords.z, 1);
+	num = ft_ftoa(coords.z, 1);
 	res = ft_append(res, num);
 	free(num);
 	res = ft_append(res, ")");

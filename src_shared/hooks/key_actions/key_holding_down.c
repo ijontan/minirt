@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 22:07:04 by itan              #+#    #+#             */
-/*   Updated: 2023/11/10 14:40:58 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/16 17:12:21 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,7 @@ void	keydown_char(int keycode, t_minirt *minirt)
 		minirt->key_events.holding_c = true;
 	else if (keycode == KEY_O)
 		if (minirt->cam.position.x || minirt->cam.position.y
-			|| minirt->cam.position.z || minirt->cam.direction.x != 0
-			|| minirt->cam.direction.y != 0 || minirt->cam.direction.z != 1)
+			|| minirt->cam.position.z || minirt->cam.yaw || minirt->cam.pitch)
 			minirt->render_status = RESET_CAM_ANIMATION;
 }
 
@@ -102,38 +101,23 @@ void	keydown_others(int keycode, t_minirt *minirt)
 	else if (keycode == KEY_SP)
 		minirt->key_events.holding_sp = true;
 	else if (keycode == KEY_R)
-	{
 		minirt->render_status = RENDER_CURRENT_SCENE;
-		render(minirt, &thread_init);
-	}
 	else if (keycode == KEY_F)
 	{
 		minirt->moving = !minirt->moving;
 		minirt->selection.selected = NULL;
 		if (minirt->moving)
 		{
-			minirt->render_status = FLOATING_MODE;
 			minirt->mouse_events.prev_x = -1;
-			// minirt->mouse_events.prev_y = 300;
-			mouse_move(minirt, minirt->cam.vp_width * 0.5, minirt->cam.vp_height
-				* 0.5);
+			minirt->render_status = FLOATING_MODE;
 			mouse_hide(minirt);
 		}
 		else
 		{
+			minirt->mouse_events.prev_x = -1;
 			minirt->render_status = NON_FLOATING_MODE;
 			render(minirt, &thread_init);
-			minirt->mouse_events.prev_x = -1;
 			mouse_show(minirt);
 		}
 	}
-}
-
-void	key_holding_down(int keycode, t_minirt *minirt)
-{
-	keydown_numbers(keycode, minirt);
-	keydown_otherkeys(keycode, minirt);
-	keydown_arrows(keycode, minirt);
-	keydown_char(keycode, minirt);
-	keydown_others(keycode, minirt);
 }

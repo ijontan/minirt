@@ -33,7 +33,6 @@ typedef struct s_object
 	t_quaternion	tmp_rotation;
 }					t_object;
 
-t_bound_box			bound_box_new(t_vec3 min, t_vec3 max);
 t_bound_box			bound_box_expand(t_bound_box box, t_vec3 point);
 bool				bound_box_intersect(t_bound_box box, t_ray ray);
 t_bound_box			get_sphere_bound(t_sphere *sphere);

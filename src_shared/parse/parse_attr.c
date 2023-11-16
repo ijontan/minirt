@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_attr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 20:20:11 by rsoo              #+#    #+#             */
-/*   Updated: 2023/10/02 11:20:33 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/16 18:23:22 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ bool	check_rgb(char *s, t_parse *p)
 		{
 			free_2darray(rgb_values);
 			return (false);
-		}	
+		}
 	}
 	free_2darray(rgb_values);
 	return (true);
@@ -50,7 +50,7 @@ bool	check_norm_vec_range(char *s, t_parse *p)
 		{
 			free_2darray(comp);
 			return (false);
-		}	
+		}
 	}
 	free_2darray(comp);
 	return (true);
@@ -59,11 +59,11 @@ bool	check_norm_vec_range(char *s, t_parse *p)
 t_vec3	assign_norm_vec(t_parse *p)
 {
 	t_vec3	res;
-	
+
 	res.x = p->coords[0];
 	res.y = p->coords[1];
 	res.z = p->coords[2];
-	return vec3_normalize(res);
+	return (vec3_normalize(res));
 }
 
 t_vec3	parse_coordinates(char *s, t_parse *p)

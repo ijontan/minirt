@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 21:04:12 by itan              #+#    #+#             */
-/*   Updated: 2023/11/10 15:39:05 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/16 16:52:23 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,18 @@ void	end_pixelate(void *rt)
 void	render_new_scene(t_minirt *minirt)
 {
 	static t_animations	animation;
+	double				*ctl_pts;
 
-	if (minirt->render_status == RENDER_START_ANIMATION)
+	animation.frame_max = 50;
+	if (minirt->render_status == RENDER_START_ANIMATION
+		|| minirt->render_status == RENDER_END_ANIMATION)
 	{
-		animation.frame_max = 50;
+		ctl_pts = (double [3]){40, 10, 4};
+		if (minirt->render_status == RENDER_START_ANIMATION)
+			ctl_pts = (double [3]){4, 10, 40};
 		handle_animation(minirt, &animation, NULL, end_pixelate);
-		minirt->pixel_size = bazier_curves_1d_quadratic(animation.t,
-				(double[3]){4, 10, 40});
-		render(minirt, &thread_init);
-	}
-	if (minirt->render_status == RENDER_END_ANIMATION)
-	{
-		handle_animation(minirt, &animation, NULL, end_pixelate);
-		minirt->pixel_size = bazier_curves_1d_quadratic(animation.t,
-				(double[3]){40, 10, 4});
-		if (minirt->pixel_size < 1)
-			minirt->pixel_size = 1;
+		minirt->pixel_size = bazier_curves_1d_quadratic(animation.t, ctl_pts);
+		minirt->pixel_size = float_clamp(minirt->pixel_size, 1, 40);
 		render(minirt, &thread_init);
 	}
 	else if (minirt->render_status == RENDER_NEW_SCENE)
@@ -63,11 +59,7 @@ void	render_new_scene(t_minirt *minirt)
 		minirt->render_status = RENDER_END_ANIMATION;
 	}
 	else if (minirt->render_status == RENDER_CURRENT_SCENE)
-	{
-		render(minirt, &thread_init);
 		render_gi(minirt);
-		minirt->render_status = RENDER_DONE;
-	}
 }
 
 void	fly_mode_movement(t_minirt *minirt)

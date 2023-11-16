@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 21:13:49 by itan              #+#    #+#             */
-/*   Updated: 2023/11/15 23:44:09 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/16 13:42:01 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,24 @@
 
 void	get_sphere_normal(t_hit_info *hi)
 {
-	t_vec3		n_from_map;
-	t_vec3		t;
-	t_vec3		b;
-	t_vec3		n;
-	t_offset	uv;
+	t_vec3	n_from_map;
+	t_vec3	t;
+	t_vec3	b;
+	t_vec3	n;
 
 	hi->material = ((t_sphere *)hi->object->object)->material;
 	hi->normal = sphere_normal((t_sphere *)(hi->object->object),
 			hi->intersect_pt);
-	uv = uv_sphere(hi->normal, hi->material.texture->size);
 	if (hi->material.texture)
-		hi->material.color = get_pixel_color(hi->material.texture, uv);
-	uv = uv_sphere(hi->normal, hi->material.specular_map->size);
+		hi->material.color = get_pixel_color(hi->material.texture,
+				uv_sphere(hi->normal, hi->material.texture->size));
 	if (hi->material.specular_map)
-		hi->material.specular = get_pixel_color(hi->material.specular_map, uv);
-	uv = uv_sphere(hi->normal, hi->material.norm_map->size);
+		hi->material.specular = get_pixel_color(hi->material.specular_map,
+				uv_sphere(hi->normal, hi->material.specular_map->size));
 	if (hi->material.norm_map)
 	{
-		n_from_map = get_pixel_vec3(hi->material.norm_map, uv);
+		n_from_map = get_pixel_vec3(hi->material.norm_map, uv_sphere(hi->normal,
+					hi->material.norm_map->size));
 		t = vec3_cross(hi->normal, (t_vec3){0, 0, 1});
 		b = vec3_cross(hi->normal, t);
 		n = vec3_add(vec3_multiply(t, n_from_map.x), vec3_multiply(b,

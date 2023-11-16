@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 14:32:18 by itan              #+#    #+#             */
-/*   Updated: 2023/10/22 14:45:21 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/16 17:17:03 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ typedef struct s_ray
 {
 	t_vec3		origin;
 	t_vec3		direction;
-	t_vec3		inverse_direction;
-	float		intensity;
 	t_color_c	color;
 }				t_ray;
 

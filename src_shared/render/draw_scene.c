@@ -3,45 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   draw_scene.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 14:57:08 by itan              #+#    #+#             */
-/*   Updated: 2023/10/31 16:34:13 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/16 18:13:45 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	draw_scene(t_minirt *minirt)
+void	calculate_cycle(t_ray ray, t_minirt *minirt, t_offset xy)
 {
-	int				x;
-	int				y;
 	int				cycle;
 	unsigned int	state;
-	t_ray			ray;
 	t_color_c		color;
 	t_color_c		incoming_light;
 
-	y = 0;
-	while (y < WINDOW_HEIGHT)
+	color = color_correct_new(0, 0, 0, 0);
+	cycle = -1;
+	while (++cycle < 50)
 	{
-		x = 0;
-		while (x < WINDOW_WIDTH)
+		incoming_light = ray_tracing(ray, minirt, &state);
+		color = color_add(color, incoming_light);
+	}
+	color = color_scale(color, 1 / (float)cycle);
+	put_pixel(&minirt->image, xy, color_revert(color).as_int);
+}
+
+void	draw_scene(t_minirt *minirt)
+{
+	t_offset	xy;
+	t_ray		ray;
+
+	xy.y = 0;
+	while (xy.y < WINDOW_HEIGHT)
+	{
+		xy.x = 0;
+		while (xy.x < WINDOW_WIDTH)
 		{
-			color = color_correct_new(0, 0, 0, 0);
-			cycle = -1;
-			ray = ray_primary(&minirt->cam, (t_offset){.x = x, .y = y});
-			state = (unsigned int)((x + y * WINDOW_WIDTH));
-			while (++cycle < 10)
-			{
-				incoming_light = ray_tracing(ray, minirt, &state);
-				color = color_add(color, incoming_light);
-			}
-			color = color_scale(color, 1 / (float)cycle);
-			put_pixel(&minirt->image, (t_offset){.x = x, .y = y},
-				color_revert(color).as_int);
-			++x;
+			ray = ray_primary(&minirt->cam, xy);
+			calculate_cycle(ray, minirt, xy);
+			++xy.x;
 		}
-		++y;
+		++xy.y;
 	}
 }

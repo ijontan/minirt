@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 21:11:10 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/06 13:16:33 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/16 17:49:17 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_cone
 	float		radius;
 	float		angle;
 	float		cos_squared;
+	float		cos;
 	t_material	material;
 }				t_cone;
 

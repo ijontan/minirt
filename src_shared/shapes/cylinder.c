@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 14:56:25 by itan              #+#    #+#             */
-/*   Updated: 2023/11/06 12:19:40 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/16 17:38:28 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ t_vec3	cylinder_caps_intersect(t_cylinder *cylinder, t_ray *ray, bool is_top)
 		cp = vec3_multiply(cylinder->rot_axis, cylinder->height * 0.5);
 	else
 		cp = vec3_multiply(cylinder->rot_axis, cylinder->height * -0.5);
-	// printf("cp: %f, %f, %f\n", cp.x, cp.y, cp.z);
 	op = vec3_add(cylinder->center, cp);
 	if (is_top)
 		cp = vec3_multiply(cylinder->rot_axis, -1);
@@ -93,7 +92,6 @@ t_vec3	cylinder_caps_intersect(t_cylinder *cylinder, t_ray *ray, bool is_top)
  */
 t_vec3	cylinder_intersect(t_cylinder *cylinder, t_ray *ray)
 {
-	t_vec3	oc;
 	t_vec3	abc;
 	float	discriminant;
 	t_ray	ray2;
@@ -101,35 +99,19 @@ t_vec3	cylinder_intersect(t_cylinder *cylinder, t_ray *ray)
 	float	distance;
 
 	ray2.direction = vec3_cross(ray->direction, cylinder->rot_axis);
-	oc = vec3_cross(vec3_subtract(ray->origin, cylinder->center),
+	ray2.origin = vec3_cross(vec3_subtract(ray->origin, cylinder->center),
 			cylinder->rot_axis);
 	abc.x = vec3_dot(ray2.direction, ray2.direction);
-	abc.y = 2.0f * vec3_dot(oc, ray2.direction);
-	abc.z = vec3_dot(oc, oc) - cylinder->radius * cylinder->radius;
+	abc.y = 2.0f * vec3_dot(ray2.origin, ray2.direction);
+	abc.z = vec3_dot(ray2.origin, ray2.origin) - cylinder->radius
+		* cylinder->radius;
 	discriminant = abc.y * abc.y - 4.0f * abc.x * abc.z;
 	if (discriminant < 0)
 		return (vec3_new(0, 0, 0));
-	discriminant = sqrtf(discriminant);
-	sols.z = 1.0f / (2.0f * abc.x);
-	sols.x = (-abc.y - discriminant) * sols.z;
-	sols.y = (-abc.y + discriminant) * sols.z;
-	sols.z = 2;
-	if (sols.x > sols.y)
-	{
-		discriminant = sols.x;
-		sols.x = sols.y;
-		sols.y = discriminant;
-	}
-	// if distance == 0 means intersection hits the cylinder pipe
+	sols = calc_t(abc.x, abc.y, sqrtf(discriminant));
+	swap_if_greater(&sols.x, &sols.y);
 	distance = ray_in_cylinder_bound(cylinder, ray, sols.x);
 	if (!distance)
 		return (sols);
 	return (cylinder_caps_intersect(cylinder, ray, distance > 0));
-	// distance = ray_in_cylinder_bound(cylinder, ray, sols.y);
-	// if (!distance)
-	// {
-	// 	sols.x = sols.y;
-	// 	sols.z = 5;
-	// 	return (sols);
-	// }
 }

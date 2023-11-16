@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/16 13:11:26 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/16 18:13:43 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -349,7 +349,6 @@ void				draw_scene(t_minirt *minirt);
 void				start_minirt(t_minirt *minirt);
 
 void				init_hooks(t_minirt *minirt);
-int					x_button_exit(int keycode, t_minirt *minirt);
 int					key_down_hook(int keycode, t_minirt *minirt);
 int					key_up_hook(int keycode, t_minirt *minirt);
 int					mouse_down_hook(int button, int x, int y, t_minirt *minirt);
@@ -402,6 +401,7 @@ void				put_cone_info(t_minirt *minirt);
 
 void				ray_cast(t_minirt *minirt);
 void				draw_scene(t_minirt *minirt);
+void				calculate_cycle(t_ray ray, t_minirt *minirt, t_offset xy);
 void				thread_init(t_minirt *minirt);
 void				thread_raytrace(t_minirt *minirt);
 t_color_c			get_diffused_color(t_hit_info *hi, t_color_c ray_color);
@@ -417,8 +417,19 @@ char				*ft_ftoa(double num, int precision);
 void				append_num_to_str(char **msg, char *str, char *num);
 /* ---------------------------------- hooks --------------------------------- */
 void				update_selected_material(t_minirt *minirt);
-void				key_holding_down(int keycode, t_minirt *minirt);
-void				key_holding_up(int keycode, t_minirt *minirt);
+
+void				keydown_numbers(int keycode, t_minirt *minirt);
+void				keydown_otherkeys(int keycode, t_minirt *minirt);
+void				keydown_arrows(int keycode, t_minirt *minirt);
+void				keydown_char(int keycode, t_minirt *minirt);
+void				keydown_others(int keycode, t_minirt *minirt);
+
+void				keyup_numbers(int keycode, t_minirt *minirt);
+void				keyup_otherkeys(int keycode, t_minirt *minirt);
+void				keyup_arrows(int keycode, t_minirt *minirt);
+void				keyup_char(int keycode, t_minirt *minirt);
+void				keyup_others(int keycode, t_minirt *minirt);
+
 void				add_translation_plane(t_minirt *rt);
 void				remove_translation_plane(t_minirt *rt);
 void				translate_objects(int x, int y, t_minirt *minirt);

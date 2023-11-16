@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 22:14:42 by itan              #+#    #+#             */
-/*   Updated: 2023/11/10 14:22:14 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/16 17:10:21 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,4 @@ void	keyup_others(int keycode, t_minirt *minirt)
 		minirt->key_events.holding_lsh = false;
 	else if (keycode == KEY_SP)
 		minirt->key_events.holding_sp = false;
-}
-
-void	key_holding_up(int keycode, t_minirt *minirt)
-{
-	keyup_numbers(keycode, minirt);
-	keyup_otherkeys(keycode, minirt);
-	keyup_arrows(keycode, minirt);
-	keyup_char(keycode, minirt);
-	keyup_others(keycode, minirt);
 }

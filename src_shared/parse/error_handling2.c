@@ -2,18 +2,16 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   error_handling2.c                                  :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
-	+:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+      
-	+#+        */
-/*                                                +#+#+#+#+#+  
-	+#+           */
-/*   Created: 2023/08/29 23:40:25 by rsoo              #+#    #+#             */
-/*   Updated: 2023/08/29 23:40:25 by rsoo             ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/16 18:25:29 by itan              #+#    #+#             */
+/*   Updated: 2023/11/16 18:25:29 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
 
 // checks if the float / int format is correct:
 // 255: returns true
@@ -22,7 +20,7 @@
 // 003
 bool	valid_float(char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (s[i] == '-')
@@ -32,7 +30,7 @@ bool	valid_float(char *s)
 	{
 		printf("\e[0;31mError: %s not allowed \
 				\nExpected float format: 0.4\e[0m\n\n",
-				s);
+			s);
 		return (false);
 	}
 	while (ft_isdigit(s[i]))
@@ -50,7 +48,7 @@ bool	valid_float(char *s)
 
 static bool	check_triplet_size(char **val)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (val[i])
@@ -63,8 +61,8 @@ static bool	check_triplet_size(char **val)
 // checks if the triplet format (x, y, z) is correct:
 bool	valid_triplet(char *s)
 {
-	char **val;
-	int i;
+	char	**val;
+	int		i;
 
 	val = ft_split(s, ',');
 	i = -1;
