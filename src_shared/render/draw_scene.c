@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 14:57:08 by itan              #+#    #+#             */
-/*   Updated: 2023/11/16 18:13:45 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/17 01:27:35 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	calculate_cycle(t_ray ray, t_minirt *minirt, t_offset xy)
 
 	color = color_correct_new(0, 0, 0, 0);
 	cycle = -1;
-	while (++cycle < 50)
+	state = (unsigned int)((xy.x + xy.y * WINDOW_WIDTH));
+	while (++cycle < 20)
 	{
 		incoming_light = ray_tracing(ray, minirt, &state);
 		color = color_add(color, incoming_light);
