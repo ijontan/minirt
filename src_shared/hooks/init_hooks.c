@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 13:46:15 by itan              #+#    #+#             */
-/*   Updated: 2023/11/16 13:11:44 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/16 13:14:44 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	init_hooks(t_minirt *minirt)
 {
-	(void)minirt;
 	mlx_hook(minirt->win, 2, 1L << 0, key_down_hook, minirt);
 	mlx_hook(minirt->win, 3, 1L << 1, key_up_hook, minirt);
 	mlx_hook(minirt->win, 4, 1L << 2, mouse_down_hook, minirt);
