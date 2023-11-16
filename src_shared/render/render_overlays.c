@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_overlays.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 08:53:24 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/16 18:21:08 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/16 21:11:51 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,13 @@ void	render_loading_overlay(t_minirt *minirt)
 void	render_cam_pos_overlay(t_minirt *minirt)
 {
 	t_offset	xy;
-	char		*tmp;
 
 	minirt->cam_pos_overlay.msg = create_vec3_str("Camera position: ",
 			minirt->cam.position);
 	minirt->cam_pos_overlay.msg = ft_append(minirt->cam_pos_overlay.msg,
 			" | Pixel size: ");
-	tmp = ft_itoa(minirt->pixel_size);
-	minirt->cam_pos_overlay.msg = ft_append(minirt->cam_pos_overlay.msg, tmp);
-	free(tmp);
+	append_num_to_str(&minirt->cam_pos_overlay.msg, \
+	minirt->cam_pos_overlay.msg, ft_itoa(minirt->pixel_size));
 	if (minirt->selection.selected)
 		minirt->cam_pos_overlay.midpoint = WINDOW_WIDTH * 0.5;
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_menus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:27:15 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/16 18:02:44 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/16 21:27:23 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,30 @@ void	render_menu(t_minirt *minirt, int start_x, int end_x, int end_y)
 	}
 }
 
-void	put_menu_str(t_minirt *minirt)
+void	put_file_str(t_minirt *minirt)
 {
 	int	i;
 	int	j;
 
 	i = -1;
 	j = 1;
+	mlx_string_put(minirt->mlx, minirt->win, MENU_START_X, SCENES_START_Y,
+		FONT_COLOR, "Select a scene: ");
+	while (++i < minirt->file_num)
+	{
+		if (minirt->rt_files[i].name[0] != '.')
+		{
+			if (!ft_strcmp(minirt->rt_files[i].name, minirt->rt_file_path))
+				minirt->font_color = GREEN;
+			mlx_string_put(minirt->mlx, minirt->win, 40, SCENES_START_Y + (20
+					* j++), minirt->font_color, minirt->rt_files[i].name);
+			minirt->font_color = BLACK;
+		}
+	}
+}
+
+void	put_menu_str(t_minirt *minirt)
+{
 	mlx_string_put(minirt->mlx, minirt->win, 20, 20, FONT_COLOR,
 		"w: move forward");
 	mlx_string_put(minirt->mlx, minirt->win, 20, 40, FONT_COLOR,
@@ -58,29 +75,29 @@ void	put_menu_str(t_minirt *minirt)
 	mlx_string_put(minirt->mlx, minirt->win, 20, 220, FONT_COLOR,
 		"down: decrease pixel size");
 	mlx_string_put(minirt->mlx, minirt->win, 20, 240, FONT_COLOR, "esc: exit");
-	mlx_string_put(minirt->mlx, minirt->win, MENU_START_X, SCENES_START_Y,
-		FONT_COLOR, "Select a scene: ");
-	while (++i < minirt->file_num)
+	put_file_str(minirt);
+}
+
+void	put_selected_obj_info(t_minirt *minirt)
+{
+	const int	obj[4] = {SPHERE, PLANE, CYLINDER, CONE};
+	const void	(*put_obj_func_ptr[4])(t_minirt *minirt) = {&put_sphere_info,
+		&put_plane_info, &put_cylinder_info, &put_cone_info};
+	int			i;
+
+	i = -1;
+	while (++i < 4)
 	{
-		if (minirt->rt_files[i].name[0] != '.')
+		if (minirt->selection.selected->type == obj[i])
 		{
-			if (!ft_strcmp(minirt->rt_files[i].name, minirt->rt_file_path))
-				minirt->font_color = GREEN;
-			mlx_string_put(minirt->mlx, minirt->win, 40, SCENES_START_Y + (20
-					* j++), minirt->font_color, minirt->rt_files[i].name);
-			minirt->font_color = BLACK;
+			(*put_obj_func_ptr[i])(minirt);
+			return ;
 		}
 	}
 }
 
 void	put_obj_menu_str(t_minirt *minirt)
 {
-	const int	obj[4] = {SPHERE, PLANE, CYLINDER, CONE};
-	int			i;
-
-	void (*put_obj_func_ptr[4])(t_minirt * minirt) = {&put_sphere_info,
-		&put_plane_info, &put_cylinder_info, &put_cone_info};
-	i = -1;
 	minirt->font_color = BLACK;
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X, 20,
 		minirt->font_color, "Edit material properties: ");
@@ -103,33 +120,6 @@ void	put_obj_menu_str(t_minirt *minirt)
 		minirt->font_color = GREEN;
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 20, 100,
 		minirt->font_color, "4: Diffuse Intensity");
-	minirt->font_color = BLACK;
-	if (minirt->selection.selected_material_field == SPECULAR_INTENSITY)
-		minirt->font_color = GREEN;
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 20, 120,
-		minirt->font_color, "5: Specular Intensity");
-	minirt->font_color = BLACK;
-	if (minirt->selection.selected_material_field == REFLECTIVE_INTENSITY)
-		minirt->font_color = GREEN;
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 20, 140,
-		minirt->font_color, "6: Reflective Intensity");
-	minirt->font_color = BLACK;
-	if (minirt->selection.selected_material_field == EMISSION_INTENSITY)
-		minirt->font_color = GREEN;
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 20, 160,
-		minirt->font_color, "7: Emission Intensity");
-	minirt->font_color = BLACK;
-	if (minirt->selection.selected_material_field == SHININESS)
-		minirt->font_color = GREEN;
-	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 20, 180,
-		minirt->font_color, "8: Shininess");
-	minirt->font_color = BLACK;
-	while (++i < 4)
-	{
-		if (minirt->selection.selected->type == obj[i])
-		{
-			(*put_obj_func_ptr[i])(minirt);
-			return ;
-		}
-	}
+	put_obj_menu_str2(minirt);
+	put_selected_obj_info(minirt);
 }

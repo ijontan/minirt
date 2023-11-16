@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   put_object_info.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 17:12:33 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/16 18:16:09 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/16 21:16:21 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	put_sphere_info(t_minirt *minirt)
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 10, 280, FONT_COLOR,
 		minirt->msg);
 	free(minirt->msg);
-	append_num_to_str(&minirt->msg, "Center: ", ft_ftoa(sp->radius, 2));
+	append_num_to_str(&minirt->msg, "Radius: ", ft_ftoa(sp->radius, 2));
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 10, 300, FONT_COLOR,
 		minirt->msg);
 	free(minirt->msg);
