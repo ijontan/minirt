@@ -12,7 +12,6 @@
 
 #include "minirt.h"
 
-
 // checks if the float / int format is correct:
 // 255: returns true
 // 4.0: returns true
