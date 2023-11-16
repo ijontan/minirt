@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/16 21:37:10 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/16 21:56:35 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -403,6 +403,7 @@ void				put_handle_material_str(t_minirt *minirt);
 void				put_sphere_info(t_minirt *minirt);
 void				put_plane_info(t_minirt *minirt);
 void				put_cylinder_info(t_minirt *minirt);
+void				put_cylinder_info2(t_minirt *minirt);
 void				put_cone_info(t_minirt *minirt);
 
 void				ray_cast(t_minirt *minirt);

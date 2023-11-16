@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 21:34:24 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/16 21:38:20 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/16 22:12:21 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	parse_uv_files(t_material *mt, t_parse *p)
 {
 	int	i;
 
-	i = 10;
-	if (p->info[++i])
+	i = 11;
+	if (p->info[4] && p->info[11])
 	{
 		mt->texture_path = ft_strdup(p->info[i]);
 		printf("texture path: %s\n", mt->texture_path);

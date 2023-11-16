@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:27:15 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/16 21:45:44 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/16 22:01:43 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	put_menu_str(t_minirt *minirt)
 void	put_selected_obj_info(t_minirt *minirt)
 {
 	const int	obj[4] = {SPHERE, PLANE, CYLINDER, CONE};
-	void	(*put_obj_func_ptr[4])(t_minirt *minirt);
+	void		(*put_obj_func_ptr[4])(t_minirt *minirt);
 	int			i;
 
 	i = -1;
