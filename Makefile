@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+         #
+#    By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/18 20:55:16 by itan              #+#    #+#              #
-#    Updated: 2023/10/24 13:35:27 by itan             ###   ########.fr        #
+#    Updated: 2023/11/17 15:20:55 by rsoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -187,27 +187,27 @@ $(DDIR)/%.o:	$(DDIR)/%.c
 $(NAME):	$(mlx) $(LIBDIR)/$(LIBNAME) $(MOBJ) 
 			@printf "\n$(MAGENTA)$(BRIGHT)Compiling $(NAME)...          \n"
 			@$(CC) $(CFLAGS) $(MOBJ) $(INC) -o $(NAME) $(LIB) $(MLXLIB)
-			@printf "$(GREEN)COMPLETE!!\n\n"
+			@printf "$(GREEN)COMPLETE!!\n\n$(NORMAL)"
 
 $(BNAME):	$(mlx) $(LIBDIR)/$(LIBNAME) $(BOBJ)
 			@printf "\n$(MAGENTA)$(BRIGHT)Compiling $(BNAME)...          \n"
 			@$(CC) $(CFLAGS) $(BOBJ) $(INC) -o $(BNAME) $(LIB) $(MLXLIB)
-			@printf "$(GREEN)COMPLETE!!\n\n"
+			@printf "$(GREEN)COMPLETE!!\n\n$(NORMAL)"
 
 $(DMNAME):	$(mlx) $(MSRC) $(DSRC) $(LIBDIR)/$(LIBNAME) $(HEADERS)
 			@printf "\n$(MAGENTA)Compiling $(DMNAME) for $(NAME)...          \n"
 			@$(CC) $(CFLAGS) $(DFLAGS) $(INC) $(MSRC) $(DSRC) -o $(DMNAME) $(LIB) $(MLXLIB)
-			@printf "$(GREEN)COMPLETE!!\n\n"
+			@printf "$(GREEN)COMPLETE!!\n\n$(NORMAL)"
 
 $(DBNAME):	$(mlx) $(BSRC) $(DSRC) $(LIBDIR)/$(LIBNAME) $(HEADERS)
 			@printf "\n$(MAGENTA)Compiling $(DBNAME) for $(NAME)...          \n"
 			@$(CC) $(CFLAGS) $(DFLAGS) $(INC) $(BSRC) $(DSRC) -o $(DBNAME) $(LIB) $(MLXLIB)
-			@printf "$(GREEN)COMPLETE!!\n\n"
+			@printf "$(GREEN)COMPLETE!!\n\n$(NORMAL)"
 
 $(TNAME):	$(mlx) $(LIBDIR)/$(LIBNAME) $(TOBJ) 
 			@printf "\n$(MAGENTA)Compiling $(TNAME) for $(NAME)...          \n"
 			@g++ -std=c++14 $(TOBJ) $(INC) -o $(TNAME) $(LIB) $(MLXLIB)
-			@printf "$(GREEN)COMPLETE!!\n\n"
+			@printf "$(GREEN)COMPLETE!!\n\n$(NORMAL)"
 
 $(LIBDIR)/$(LIBNAME):
 		@git submodule update --init --recursive

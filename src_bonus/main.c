@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/11/17 01:37:44 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/17 15:21:21 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ int	main(int ac, char **av)
 	t_minirt	minirt;
 
 	if (ac != 2)
-		return (printf("\e[0);31mError: argument error\n\
-		Expected input format: ./minirt ~.rt\e[0m"));
+		return (printf("\e[0;31mError: argument error\n\
+Expected input format: ./minirt ~.rt\e[0m"));
 	ft_memset(&minirt, 0, sizeof(t_minirt));
 	minirt.pixel_size = 1;
 	minirt.mlx = mlx_init();

@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 18:03:48 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/17 11:33:15 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/17 15:34:02 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,12 @@ void	exit_format_err(char **info, char *s, int type)
 void	exit_material_format_err(char **info, char *obj_type)
 {
 	free_2darray(info);
-	printf("\e[0;31mError: %s material format\nExpected Format Example:\
-... [float] [color] [float] [float] [float] [color] [float]\e[0m\n", obj_type);
+	printf("\e[0;31mError: %s material / uv map format\nExpected Format \
+Example: ... + [float] [color] [float] [float] [float] [color] \
+[float]\e[0m\n", obj_type);
+	if (!ft_strncmp(obj_type, "Sphere", ft_strlen(obj_type)))
+		printf("\n\e[0;31mOptional sphere uv map: \nExpected Format Example:\
+ ... + [file path] [file path] [file path]\e[0m\n");
 	exit(EXIT_FAILURE);
 }
 

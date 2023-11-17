@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 17:12:33 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/16 21:55:58 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/17 15:16:08 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	put_sphere_info(t_minirt *minirt)
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 10, 300, FONT_COLOR,
 		minirt->msg);
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 10, 340, FONT_COLOR,
+		"Translate: z / x / c + left drag");
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 10, 360, FONT_COLOR,
 		"Edit radius: v + up / down");
 	free(minirt->msg);
 }
@@ -94,8 +96,12 @@ void	put_cone_info2(t_minirt *minirt, t_cone *cn)
 		minirt->msg);
 	free(minirt->msg);
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 10, 380, FONT_COLOR,
-		"Edit radius: v + up / down");
+		"Translate: z / x / c + left drag");
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 10, 400, FONT_COLOR,
+		"Rotate: z / x / c + right drag");
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 10, 420, FONT_COLOR,
+		"Edit radius: v + up / down");
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 10, 440, FONT_COLOR,
 		"Edit height: b + up / down");
 }
 

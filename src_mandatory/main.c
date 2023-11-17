@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/11/16 22:30:00 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/17 15:18:59 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 		return (printf("\e[0;31mError: argument error\n\
-		Expected input format: ./minirt ~.rt\e[0m"));
+Expected input format: ./minirt ~.rt\e[0m"));
 	ft_memset(&minirt, 0, sizeof(t_minirt));
 	minirt.pixel_size = 3;
 	minirt.mlx = mlx_init();

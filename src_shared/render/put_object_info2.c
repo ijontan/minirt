@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 21:55:22 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/16 21:57:18 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/17 15:16:21 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ void	put_cylinder_info2(t_minirt *minirt)
 		minirt->msg);
 	free(minirt->msg);
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 10, 380, FONT_COLOR,
-		"Edit radius: v + up / down");
+		"Translate: z / x / c + left drag");
 	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 10, 400, FONT_COLOR,
+		"Rotate: z / x / c + right drag");
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 10, 420, FONT_COLOR,
+		"Edit radius: v + up / down");
+	mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X + 10, 440, FONT_COLOR,
 		"Edit height: b + up / down");
 }
