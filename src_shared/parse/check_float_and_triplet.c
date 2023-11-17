@@ -12,11 +12,11 @@
 
 #include "minirt.h"
 
-bool    exit_float_err(char *s)
+bool	exit_float_err(char *s)
 {
-    printf("\e[0;31mError: float %s is not valid \
+	printf("\e[0;31mError: float %s is not valid \
             \nExpected float format example: 0.4\e[0m\n\n", s);
-    return (false);
+	return (false);
 }
 
 // checks if the float / int format is correct:
@@ -77,7 +77,6 @@ bool	valid_triplet(char *s)
 	{
 		if (!valid_float(val[i]))
 		{
-			printf("\e[0;31mInvalid float: %s\e[0m\n", val[i]);
 			free_2darray(val);
 			return (false);
 		}

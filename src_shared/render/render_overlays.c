@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 08:53:24 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/17 00:05:24 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/17 13:45:35 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	render_loading_overlay(t_minirt *minirt)
 void	render_cam_pos_overlay2(t_minirt *minirt)
 {
 	t_offset	xy;
-	
+
 	xy.y = CAM_POS_OVERLAY_START_Y;
 	while (++xy.y < CAM_POS_OVERLAY_END_Y)
 	{

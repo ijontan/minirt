@@ -6,11 +6,12 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:52:31 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/17 01:05:58 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/17 13:34:57 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "errno.h"
 
 // parse conditions:
 // - must have at least: 
@@ -54,7 +55,10 @@ static int	open_infile(char *infile)
 	fd = open(infile, O_RDONLY);
 	if (fd < 0)
 	{
-		printf("\e[0;31mError: File %s does not exist\e[0m\n", infile);
+		if (errno == ENOENT)
+			printf("\e[0;31mError: File %s does not exist\e[0m\n", infile);
+		else if (errno == EACCES)
+			printf("\e[0;31mError: File %s can't be accessed\e[0m\n", infile);
 		exit(EXIT_FAILURE);
 		return (0);
 	}
@@ -89,7 +93,7 @@ static void	init_parsing(t_parse *p)
 void	get_lines(t_parse *parse_info)
 {
 	char	*buff;
-	
+
 	buff = get_next_line(parse_info->infile_fd);
 	if (!buff)
 	{

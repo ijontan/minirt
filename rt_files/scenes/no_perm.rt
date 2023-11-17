@@ -20,7 +20,7 @@ L -50,0,200		0			255,0,255
 # Plane																Material
 #	point		normal vector	color								specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission color	shininess
 pl	0,40,200	0,1,0			0,0,0							    0				255,255,255		0					1				0				255,255,255		150
-pl	0,-40,200	0,-1,0			255,255,255							0				255,255,255		0					1				0				0,0,0			150				
+pl	0,-40,200	0,-1,0			255,255,255							0				255,255,255		0					1				0				0,0,0			150
 pl	120,0,0		1,0,0			0,0,255								1				0,0,255		    1					1				0				0,0,0			150
 pl	-120,0,0	-1,0,0			255,0,0								1				255,0,0		    1					1				0				0,0,0			150
 pl	0,0,600   	0,0,1			0,255,0								0				255,255,255		0					1				0				0,0,0			150

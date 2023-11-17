@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 21:34:24 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/17 11:42:05 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/17 13:51:52 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@ void	parse_uv_files(t_material *mt, t_parse *p)
 	{
 		mt->texture_path = ft_strdup(p->info[i]);
 		printf("texture path: %s\n", mt->texture_path);
-	} else
+	}
+	else
 		return ;
 	if (p->info[++i])
 	{
 		mt->norm_map_path = ft_strdup(p->info[i]);
 		printf("normal path: %s\n", mt->norm_map_path);
-	} else
+	}
+	else
 		return ;
 	if (p->info[++i])
 	{
@@ -75,6 +77,8 @@ void	parse_material(char *obj_type, int i, t_material *mt, t_parse *p)
 {
 	mt->diffuse_i = 1.0f;
 	mt->shininess = 7.0f;
+	if (check_info_size(i, p))
+		return ;
 	if (p->info[i] && (!check_info_size(i + 7, p) && \
 	!check_info_size(i + 10, p)))
 		exit_material_format_err(p->info, obj_type);
