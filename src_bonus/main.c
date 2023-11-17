@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/11/16 22:31:03 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/17 01:37:44 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,41 +19,6 @@ void	list_iter(t_list *lst, t_minirt *rt, void (*f)(t_minirt *, void *))
 	{
 		f(rt, lst->content);
 		lst = lst->next;
-	}
-}
-
-void	load_texture(t_minirt *rt, void *content)
-{
-	t_object	*obj;
-	t_material	*mt;
-	t_image		*img;
-
-	obj = (t_object *)content;
-	if (obj->type == SPHERE)
-		mt = &((t_sphere *)obj->object)->material;
-	else if (obj->type == PLANE)
-		mt = &((t_plane *)obj->object)->material;
-	else if (obj->type == CYLINDER)
-		mt = &((t_cylinder *)obj->object)->material;
-	else
-		return ;
-	if (mt->texture_path)
-	{
-		img = ft_calloc(1, sizeof(t_image));
-		*img = load_image(rt, mt->texture_path);
-		mt->texture = img;
-	}
-	if (mt->norm_map_path)
-	{
-		img = ft_calloc(1, sizeof(t_image));
-		*img = load_image(rt, mt->norm_map_path);
-		mt->norm_map = img;
-	}
-	if (mt->spec_map_path)
-	{
-		img = ft_calloc(1, sizeof(t_image));
-		*img = load_image(rt, mt->spec_map_path);
-		mt->specular_map = img;
 	}
 }
 
@@ -129,7 +94,7 @@ int	main(int ac, char **av)
 	t_minirt	minirt;
 
 	if (ac != 2)
-		return (printf("\e[0;31mError: argument error\n\
+		return (printf("\e[0);31mError: argument error\n\
 		Expected input format: ./minirt ~.rt\e[0m"));
 	ft_memset(&minirt, 0, sizeof(t_minirt));
 	minirt.pixel_size = 1;

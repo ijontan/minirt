@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/17 01:25:48 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/17 09:37:56 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -349,6 +349,7 @@ typedef struct s_hit_info
 	bool			hit;
 	bool			hit_selection_plane;
 	bool			hit_rotation_plane;
+	bool			is_specular;
 }					t_hit_info;
 
 void				draw_scene(t_minirt *minirt);
@@ -367,7 +368,6 @@ t_vec3				random_vec3(unsigned int *state);
 t_vec3				random_vec3_hs(t_vec3 normal, unsigned int *state);
 float				float_clamp(float value, float min, float max);
 
-t_hit_info			intersections(t_minirt *minirt, t_ray *ray);
 t_hit_info			intersect_list(t_minirt *minirt, t_ray *ray);
 void				get_normal(t_hit_info *hi);
 void				fill_pixel(t_image *image, t_offset xy, int size,
@@ -377,6 +377,12 @@ t_color_c			get_color_selection(t_minirt *rt, t_hit_info *hi);
 t_color_c			get_color(t_minirt *rt, t_hit_info *hi);
 t_color_c			ray_tracing(t_ray ray, t_minirt *minirt,
 						unsigned int *state);
+void				calculate_deffuse(t_color_c *in_light, t_color_c *ray_c,
+						t_minirt *rt, t_hit_info *hi);
+void				calculate_specular(t_color_c *in_light, t_color_c *ray_c,
+						t_minirt *rt, t_hit_info *hi);
+t_color_c			get_env_light(t_ray *ray, bool is_env);
+void				load_texture(t_minirt *rt, void *content);
 
 // rendering
 int					render(t_minirt *minirt,
