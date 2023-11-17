@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/17 09:37:56 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/17 11:35:29 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,12 +145,17 @@ bool				check_norm_vec_range(char *s, t_parse *p);
 t_vec3				assign_norm_vec(t_parse *p);
 t_vec3				parse_coordinates(char *s, t_parse *p);
 
-// error_handling.c
-void				exit_parse(char **info, char *s, char c);
-void				check_line_format(int type, t_parse *p);
+// format_error_handling.c
 bool				check_info_size(int size, t_parse *p);
+void				exit_format_err(char **info, char *s, int type);
+void				exit_material_format_err(char **info, char *obj_type);
+void				check_line_format(int type, t_parse *p);
 
-// error_handling2.c
+// exit_parse.c
+void				exit_parse(char **info, char *s, char c);
+void				exit_parse_material(char **info, char *s, char c);
+
+// check_float_and_triplet.c
 bool				valid_float(char *s);
 bool				valid_triplet(char *s);
 
@@ -331,7 +336,8 @@ typedef enum e_obj_type
 	CONE = 3,
 	AMB_LIGHT,
 	CAM,
-	LIGHT
+	LIGHT,
+	MATERIAL
 }					t_obj_type;
 
 typedef struct s_hit_info

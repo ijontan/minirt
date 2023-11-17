@@ -1,86 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_handling2.c                                  :+:      :+:    :+:   */
+/*   exit_parse.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/16 20:23:36 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/16 20:23:36 by rsoo             ###   ########.fr       */
+/*   Created: 2023/11/17 11:34:32 by rsoo              #+#    #+#             */
+/*   Updated: 2023/11/17 11:34:32 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-// checks if the float / int format is correct:
-// 255: returns true
-// 4.0: returns true
-// 00.3
-// 003
-bool	valid_float(char *s)
+void	exit_parse_material(char **info, char *s, char c)
 {
-	int	i;
-
-	i = 0;
-	if (s[i] == '-')
-		i++;
-	if ((s[i] == '0' && ft_isdigit(s[i + 1])) || s[i] == '.'
-		|| !ft_isdigit(s[i]))
-	{
-		printf("\e[0;31mError: %s not allowed \
-				\nExpected float format: 0.4\e[0m\n\n", s);
-		return (false);
-	}
-	while (ft_isdigit(s[i]))
-		i++;
-	if (!s[i])
-		return (true);
-	if (s[i] == '.')
-		i++;
-	while (ft_isdigit(s[i]))
-		i++;
-	if (s[i])
-		return (false);
-	return (true);
-}
-
-static bool	check_triplet_size(char **val)
-{
-	int	i;
-
-	i = 0;
-	while (val[i])
-		i++;
-	if (i == 3)
-		return (true);
-	return (false);
-}
-
-// checks if the triplet format (x, y, z) is correct:
-bool	valid_triplet(char *s)
-{
-	char	**val;
-	int		i;
-
-	val = ft_split(s, ',');
-	i = -1;
-	if (!check_triplet_size(val))
-	{
-		free_2darray(val);
-		return (false);
-	}
-	while (++i < 3)
-	{
-		printf("[%s]\n", val[i]);
-		if (!valid_float(val[i]))
-		{
-			printf("Invalid float: [%s]\n", val[i]);
-			free_2darray(val);
-			return (false);
-		}
-	}
-	free_2darray(val);
-	return (true);
+	if (info)
+		free_2darray(info);
+	printf("\e[0;31mError: %s ", s);
+	if (c == 'i')
+		printf("index out of range [0.0, 1.0]\e[0m\n");
+	else if (c == 'c')
+		printf("color out of range [0, 255]\e[0m\n");
+	free(s);
+	exit(EXIT_FAILURE);
 }
 
 void	exit_parse2(char *s, char c)

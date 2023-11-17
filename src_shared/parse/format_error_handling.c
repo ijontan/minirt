@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_handling.c                                   :+:      :+:    :+:   */
+/*   format_error_handling.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 18:03:48 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/17 01:25:27 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/17 11:33:15 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,37 +24,34 @@ bool	check_info_size(int size, t_parse *p)
 	return (false);
 }
 
-static void	exit_format_err(char **info, char *s, int type)
+void	exit_format_err(char **info, char *s, int type)
 {
 	free_2darray(info);
 	printf("\e[0;31mError: %s format\nExpected Format Example: ", s);
 	if (type == AMB_LIGHT)
-		printf("A 0.2 255,255,255\e[0m\n");
+		printf("A [float] [color]\e[0m\n");
 	else if (type == CAM)
-		printf("C -50,0,20 0,0,0 70\e[0m\n");
+		printf("C [position] [direction] [float]\e[0m\n");
 	else if (type == LIGHT)
-		printf("L -40,0,30 0.7 255,255,255\e[0m\n");
+		printf("L [position] [float] [color]\e[0m\n");
 	else if (type == SPHERE)
-		printf("sp 0,0,20 20 255,0,0\e[0m\n");
+		printf("sp [position] [float] [color]\e[0m\n");
 	else if (type == PLANE)
-		printf("pl 0,0,0 0,1.0,0 255,0,225\e[0m\n");
+		printf("pl [position] [direction] [color]\e[0m\n");
 	else if (type == CYLINDER)
-		printf("cy 50.0,0.0,20.6 0,0,1.0 14.2 21.42 10,0,255\e[0m\n");
+		printf("cy [position] [direction] [float] [float] [color]\e[0m\n");
+	else if (type == MATERIAL)
+		printf("... [float] [color] [float] [float] \
+		[float] [color] [float]\e[0m\n");
 	exit(EXIT_FAILURE);
 }
 
-static void	check_line_format2(int type, t_parse *p)
+void	exit_material_format_err(char **info, char *obj_type)
 {
-	if (type == SPHERE && (!valid_triplet(p->info[1]) || \
-	!valid_float(p->info[2]) || !valid_triplet(p->info[3])))
-		exit_format_err(p->info, "Sphere", SPHERE);
-	else if (type == PLANE && (!valid_triplet(p->info[1]) || \
-	!valid_triplet(p->info[2]) || !valid_triplet(p->info[3])))
-		exit_format_err(p->info, "Plane", PLANE);
-	else if (type == CYLINDER && (!valid_triplet(p->info[1])
-			|| !valid_triplet(p->info[2]) || !valid_float(p->info[3])
-			|| !valid_float(p->info[4]) || !valid_triplet(p->info[5])))
-		exit_format_err(p->info, "Cylinder", CYLINDER);
+	free_2darray(info);
+	printf("\e[0;31mError: %s material format\nExpected Format Example:\
+... [float] [color] [float] [float] [float] [color] [float]\e[0m\n", obj_type);
+	exit(EXIT_FAILURE);
 }
 
 /*
@@ -76,5 +73,14 @@ void	check_line_format(int type, t_parse *p)
 	!valid_triplet(p->info[1]) || !valid_float(p->info[2]) || \
 	!valid_triplet(p->info[3])))
 		exit_format_err(p->info, "Lighting", LIGHT);
-	check_line_format2(type, p);
+	else if (type == SPHERE && (!valid_triplet(p->info[1]) || \
+	!valid_float(p->info[2]) || !valid_triplet(p->info[3])))
+		exit_format_err(p->info, "Sphere", SPHERE);
+	else if (type == PLANE && (!valid_triplet(p->info[1]) || \
+	!valid_triplet(p->info[2]) || !valid_triplet(p->info[3])))
+		exit_format_err(p->info, "Plane", PLANE);
+	else if (type == CYLINDER && (!valid_triplet(p->info[1])
+			|| !valid_triplet(p->info[2]) || !valid_float(p->info[3])
+			|| !valid_float(p->info[4]) || !valid_triplet(p->info[5])))
+		exit_format_err(p->info, "Cylinder", CYLINDER);
 }
