@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/17 16:30:58 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/17 11:53:31 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define SCENES_START_Y 360
 # define OBJ_START_X 1340
 // defines the starting X value of the object selection menu
-# define MAT_START_Y 450
+# define MAT_START_Y 500
 // defines the starting Y value of the Material Section
 
 // misc.

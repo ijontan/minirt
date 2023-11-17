@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:26:00 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/17 16:36:38 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/17 11:50:07 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,8 @@ char	*get_dir_path(char *path)
 {
 	int		path_ind;
 	char	*dir_path;
-	int		i;
 
 	path_ind = ft_strlen(path) - 1;
-	i = 0;
 	while (path[path_ind] != '/')
 		path_ind--;
 	dir_path = ft_strdup(path);
