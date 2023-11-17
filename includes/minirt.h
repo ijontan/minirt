@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/17 11:35:29 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/17 16:30:58 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,6 +302,7 @@ typedef struct s_minirt
 	int				pixel_size;
 	bool			moving;
 
+	char			*dir_path;
 	t_file			*rt_files;
 	int				file_num;
 
@@ -472,5 +473,11 @@ void				mouse_move(t_minirt *minirt, int x, int y);
 /* ------------------------------ freeing_utils ----------------------------- */
 
 void				free_minirt(t_minirt *minirt);
+
+/* ------------------------------ file_handling ----------------------------- */
+void				init_files(t_minirt *minirt, char **av);
+char				*get_dir_path(char *path);
+void				assign_file_positions(t_file *files, int file_num);
+t_file				*get_files(int *num_of_files, char *dir_path);
 
 #endif

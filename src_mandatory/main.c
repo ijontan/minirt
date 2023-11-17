@@ -6,58 +6,11 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/11/17 15:18:59 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/17 16:34:31 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <dirent.h>
-
-void	assign_file_positions(t_file *files, int file_num)
-{
-	int	i;
-	int	temp;
-
-	i = -1;
-	while (++i < file_num)
-	{
-		temp = SCENES_START_Y + i * 20;
-		files[i].top_left.x = SCENES_START_X;
-		files[i].top_left.y = temp;
-		files[i].bottom_right.x = SCENES_START_X + (ft_strlen(files[i].name)
-				* CHAR_WIDTH);
-		files[i].bottom_right.y = temp + CHAR_HEIGHT;
-	}
-}
-
-// *num_of_files -= 2; accounts for the files . and ..
-t_file	*get_files(int *num_of_files, char *dir_path)
-{
-	struct dirent	**name_list;
-	t_file			*files;
-	int				i;
-	int				file_ind;
-
-	i = -1;
-	file_ind = 0;
-	*num_of_files = scandir(dir_path, &name_list, NULL, NULL);
-	if (*num_of_files < 0)
-		perror("scandir");
-	files = (t_file *)ft_calloc(*num_of_files - 2, sizeof(t_file));
-	while (++i < *num_of_files)
-	{
-		if (name_list[i]->d_name[0] != '.')
-		{
-			files[file_ind].name = ft_strjoin(RT_FILE_DIR,
-					name_list[i]->d_name);
-			file_ind++;
-		}
-		free(name_list[i]);
-	}
-	free(name_list);
-	*num_of_files -= 2;
-	return (files);
-}
 
 void	start_minirt(t_minirt *minirt)
 {
@@ -93,10 +46,8 @@ Expected input format: ./minirt ~.rt\e[0m"));
 	init_hooks(&minirt);
 	minirt.selection.outline_color = color_correct_new(0, 1, 1, 0.5);
 	minirt.selection.plane_color = color_correct_new(0, 0.4, 0.4, 0.2);
-	minirt.rt_files = get_files(&minirt.file_num, "rt_files/scenes");
-	assign_file_positions(minirt.rt_files, minirt.file_num);
 	minirt.render_status = RENDER_FIRST_SCENE;
-	minirt.rt_file_path = av[1];
+	init_files(&minirt, av);
 	start_minirt(&minirt);
 	mlx_loop(minirt.mlx);
 }
