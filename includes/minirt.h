@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/17 02:17:57 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/17 09:37:56 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ t_vec3				parse_coordinates(char *s, t_parse *p);
 // error_handling.c
 void				exit_parse(char **info, char *s, char c);
 void				check_line_format(int type, t_parse *p);
+bool				check_info_size(int size, t_parse *p);
 
 // error_handling2.c
 bool				valid_float(char *s);

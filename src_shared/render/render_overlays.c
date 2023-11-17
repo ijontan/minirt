@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 08:53:24 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/16 21:11:51 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/17 00:05:24 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,30 @@ void	render_loading_overlay(t_minirt *minirt)
 	}
 }
 
-void	render_cam_pos_overlay(t_minirt *minirt)
+void	render_cam_pos_overlay2(t_minirt *minirt)
 {
 	t_offset	xy;
+	
+	xy.y = CAM_POS_OVERLAY_START_Y;
+	while (++xy.y < CAM_POS_OVERLAY_END_Y)
+	{
+		xy.x = minirt->cam_pos_overlay.start_x;
+		while (++xy.x < minirt->cam_pos_overlay.end_x)
+			put_pixel(&minirt->image, xy, 0x00ffffff);
+	}
+}
+
+void	render_cam_pos_overlay(t_minirt *minirt)
+{
+	char		*tmp;
 
 	minirt->cam_pos_overlay.msg = create_vec3_str("Camera position: ",
 			minirt->cam.position);
 	minirt->cam_pos_overlay.msg = ft_append(minirt->cam_pos_overlay.msg,
 			" | Pixel size: ");
-	append_num_to_str(&minirt->cam_pos_overlay.msg, \
-	minirt->cam_pos_overlay.msg, ft_itoa(minirt->pixel_size));
+	tmp = ft_itoa(minirt->pixel_size);
+	minirt->cam_pos_overlay.msg = ft_append(minirt->cam_pos_overlay.msg, tmp);
+	free(tmp);
 	if (minirt->selection.selected)
 		minirt->cam_pos_overlay.midpoint = WINDOW_WIDTH * 0.5;
 	else
@@ -56,13 +70,7 @@ void	render_cam_pos_overlay(t_minirt *minirt)
 		- minirt->cam_pos_overlay.len * 0.5;
 	minirt->cam_pos_overlay.end_x = minirt->cam_pos_overlay.midpoint
 		+ minirt->cam_pos_overlay.len * 0.5;
-	xy.y = CAM_POS_OVERLAY_START_Y;
-	while (++xy.y < CAM_POS_OVERLAY_END_Y)
-	{
-		xy.x = minirt->cam_pos_overlay.start_x;
-		while (++xy.x < minirt->cam_pos_overlay.end_x)
-			put_pixel(&minirt->image, xy, 0x00ffffff);
-	}
+	render_cam_pos_overlay2(minirt);
 }
 
 void	put_overlay_str(t_minirt *minirt, int start_x, int start_y, char *str)

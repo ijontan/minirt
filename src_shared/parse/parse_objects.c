@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 17:14:41 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/16 22:12:39 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/17 01:29:32 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	parse_sphere(t_parse *p)
 	else
 		exit_parse(p->info, "Sphere", 'c');
 	parse_material("Sphere", 4, &sphere->material, p);
-	parse_uv_files(&sphere->material, p);
+	if (check_info_size(14, p))
+		parse_uv_files(&sphere->material, p);
 	add_object(&p->objects, sphere, SPHERE);
 }
 

@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:52:31 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/16 22:33:25 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/17 01:05:58 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ static int	open_infile(char *infile)
 	fd = open(infile, O_RDONLY);
 	if (fd < 0)
 	{
-		printf("\e[0;31mError: unable to open input file (%s)\e[0m\n", infile);
+		printf("\e[0;31mError: File %s does not exist\e[0m\n", infile);
+		exit(EXIT_FAILURE);
 		return (0);
 	}
 	return (fd);
@@ -85,26 +86,37 @@ static void	init_parsing(t_parse *p)
 	p->obj_code[6] = CONE;
 }
 
-bool	parse_rt_file(char *infile, t_parse *parse_info)
+void	get_lines(t_parse *parse_info)
 {
 	char	*buff;
-
-	parse_info->infile_fd = open_infile(infile);
-	if (parse_info->infile_fd == 0)
-		return (false);
-	init_parsing(parse_info);
-	cam_init(&parse_info->camera);
+	
 	buff = get_next_line(parse_info->infile_fd);
+	if (!buff)
+	{
+		printf("\e[0;31mError: File is empty\e[0m\n");
+		exit(EXIT_FAILURE);
+	}
 	while (buff)
 	{
 		if (!parse_line(buff, parse_info))
 		{
 			free(buff);
-			return (false);
+			printf("Exiting: parse_line error\n");
+			exit(EXIT_FAILURE);
 		}
 		free(buff);
 		buff = get_next_line(parse_info->infile_fd);
 	}
 	free(buff);
+}
+
+bool	parse_rt_file(char *infile, t_parse *parse_info)
+{
+	parse_info->infile_fd = open_infile(infile);
+	if (parse_info->infile_fd == 0)
+		return (false);
+	init_parsing(parse_info);
+	cam_init(&parse_info->camera);
+	get_lines(parse_info);
 	return (true);
 }

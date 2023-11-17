@@ -6,13 +6,13 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 18:03:48 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/16 20:27:58 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/17 01:25:27 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static bool	check_info_size(int size, t_parse *p)
+bool	check_info_size(int size, t_parse *p)
 {
 	int	i;
 
