@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   put_material_info.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 09:57:34 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/16 18:19:31 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/17 14:21:27 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	put_handle_material_str2(t_minirt *minirt)
 	else if (minirt->selection.selected_material_field == DIFFUSE_INTENSITY)
 	{
 		append_num_to_str(&minirt->msg, "Diffuse Intensity: ",
-			ft_ftoa(minirt->selected_obj_material.diffuse_i, 1));
+			ft_ftoa(minirt->selected_obj_material.diffuse_i, 2));
 		mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X, MAT_START_Y,
 			minirt->font_color, minirt->msg);
 		free(minirt->msg);
@@ -52,7 +52,7 @@ void	put_handle_material_str3(t_minirt *minirt)
 	if (minirt->selection.selected_material_field == SPECULAR_INTENSITY)
 	{
 		append_num_to_str(&minirt->msg, "Specular Intensity: ",
-			ft_ftoa(minirt->selected_obj_material.specular_i, 1));
+			ft_ftoa(minirt->selected_obj_material.specular_i, 2));
 		mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X, MAT_START_Y,
 			minirt->font_color, minirt->msg);
 		free(minirt->msg);
@@ -60,7 +60,7 @@ void	put_handle_material_str3(t_minirt *minirt)
 	else if (minirt->selection.selected_material_field == REFLECTIVE_INTENSITY)
 	{
 		append_num_to_str(&minirt->msg, "Reflective Intensity: ",
-			ft_ftoa(minirt->selected_obj_material.reflective_i, 1));
+			ft_ftoa(minirt->selected_obj_material.reflective_i, 2));
 		mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X, MAT_START_Y,
 			minirt->font_color, minirt->msg);
 		free(minirt->msg);
@@ -72,7 +72,7 @@ void	put_handle_material_str4(t_minirt *minirt)
 	if (minirt->selection.selected_material_field == EMISSION_INTENSITY)
 	{
 		append_num_to_str(&minirt->msg, "Emission Intensity: ",
-			ft_ftoa(minirt->selected_obj_material.emission_i, 1));
+			ft_ftoa(minirt->selected_obj_material.emission_i, 2));
 		mlx_string_put(minirt->mlx, minirt->win, OBJ_START_X, MAT_START_Y,
 			minirt->font_color, minirt->msg);
 		free(minirt->msg);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_menu_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 18:10:39 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/16 18:15:33 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/17 14:19:07 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ char	*ft_ftoa(double num, int precision)
 
 	num_int = (int)num;
 	res = ft_itoa(num_int);
+	if (precision == 0)
+		return (res);
 	tmp = ft_append(res, ".");
 	num_int = (int)((num - num_int) * pow(10, precision));
 	if (num_int < 0)
@@ -88,15 +90,15 @@ char	*create_color_str_brac(char *title, t_color_c color)
 
 	reverted_color = color_revert(color);
 	res = ft_strjoin(title, "(");
-	num = ft_ftoa(reverted_color.rgba.r, 1);
+	num = ft_ftoa(reverted_color.rgba.r, 0);
 	res = ft_append(res, num);
 	free(num);
 	res = ft_append(res, ", ");
-	num = ft_ftoa(reverted_color.rgba.r, 1);
+	num = ft_ftoa(reverted_color.rgba.g, 0);
 	res = ft_append(res, num);
 	free(num);
 	res = ft_append(res, ", ");
-	num = ft_ftoa(reverted_color.rgba.r, 1);
+	num = ft_ftoa(reverted_color.rgba.b, 0);
 	res = ft_append(res, num);
 	free(num);
 	res = ft_append(res, ")");
