@@ -17,6 +17,11 @@ t_image	load_image(t_minirt *rt, char *path)
 	t_image	img;
 
 	img.image = mlx_xpm_file_to_image(rt->mlx, path, &img.size.x, &img.size.y);
+	if (!img.image)
+	{
+		printf("Error\nInvalid texture path: %s\n", path);
+		return (img);
+	}
 	img.buffer = mlx_get_data_addr(img.image, &img.pixel_bits, &img.line_bytes,
 			&img.endian);
 	return (img);

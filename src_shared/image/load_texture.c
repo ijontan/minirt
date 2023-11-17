@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 01:36:00 by itan              #+#    #+#             */
-/*   Updated: 2023/11/17 01:42:23 by itan             ###   ########.fr       */
+/*   Updated: 2023/11/17 15:25:38 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ static t_image	*load_image_alloc(t_minirt *rt, char *path)
 
 	img = malloc(sizeof(t_image));
 	*img = load_image(rt, path);
-	return (img);
+	if (img->image)
+		return (img);
+	free(img);
+	return (NULL);
 }
 
 void	load_texture(t_minirt *rt, void *content)
