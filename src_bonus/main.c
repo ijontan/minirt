@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:21:33 by itan              #+#    #+#             */
-/*   Updated: 2023/11/17 16:32:19 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/19 16:32:39 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ void	start_minirt(t_minirt *minirt)
 
 	ft_memset(&parse_info, 0, sizeof(t_parse));
 	printf("Parsing: %s\n", minirt->rt_file_path);
-	if (!parse_rt_file(minirt->rt_file_path, &parse_info))
-		return ;
+	parse_rt_file(minirt->rt_file_path, &parse_info);
 	printf("\e[0;32mParsing done!!! ~~\n\e[0m");
 	if (minirt->render_status == RENDER_NEW_SCENE)
 		free_minirt(minirt);

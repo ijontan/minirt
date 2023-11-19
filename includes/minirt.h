@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/17 11:53:31 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/19 16:22:47 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ typedef struct s_parse
 }					t_parse;
 
 // parsing.c
-bool				parse_rt_file(char *infile, t_parse *parse_info);
+void				parse_rt_file(char *infile, t_parse *parse_info);
 
 // parsing_utils.c
 void				free_2darray(char **s);
@@ -479,5 +479,6 @@ void				init_files(t_minirt *minirt, char **av);
 char				*get_dir_path(char *path);
 void				assign_file_positions(t_file *files, int file_num);
 t_file				*get_files(int *num_of_files, char *dir_path);
+void				check_valid_file_name(char *infile_name);
 
 #endif

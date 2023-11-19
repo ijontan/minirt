@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:52:31 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/17 13:34:57 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/19 16:20:54 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static int	open_infile(char *infile)
 		else if (errno == EACCES)
 			printf("\e[0;31mError: File %s can't be accessed\e[0m\n", infile);
 		exit(EXIT_FAILURE);
-		return (0);
 	}
 	return (fd);
 }
@@ -114,13 +113,11 @@ void	get_lines(t_parse *parse_info)
 	free(buff);
 }
 
-bool	parse_rt_file(char *infile, t_parse *parse_info)
+void	parse_rt_file(char *infile, t_parse *parse_info)
 {
+	check_valid_file_name(infile);
 	parse_info->infile_fd = open_infile(infile);
-	if (parse_info->infile_fd == 0)
-		return (false);
 	init_parsing(parse_info);
 	cam_init(&parse_info->camera);
 	get_lines(parse_info);
-	return (true);
 }

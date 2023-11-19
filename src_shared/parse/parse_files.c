@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:26:00 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/17 11:50:07 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/11/19 17:31:43 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,45 +43,61 @@ void	assign_file_positions(t_file *files, int file_num)
 	}
 }
 
-// *num_of_files -= 2; accounts for the files . and ..
+int	get_num_of_redundant_files(struct dirent **name_list, int n)
+{
+	int	num;
+	int	i;
+
+	num = 0;
+	i = -1;
+	while (++i < n)
+		if (name_list[i]->d_name[0] == '.')
+			num++;
+	return (num);
+}
+
 t_file	*get_files(int *num_of_files, char *dir_path)
 {
 	struct dirent	**name_list;
 	t_file			*files;
 	int				i;
 	int				file_ind;
+	int				n;
 
 	i = -1;
 	file_ind = 0;
 	*num_of_files = scandir(dir_path, &name_list, NULL, NULL);
 	if (*num_of_files < 0)
 		return (NULL);
-	files = (t_file *)ft_calloc(*num_of_files - 2, sizeof(t_file));
+	n = get_num_of_redundant_files(name_list, *num_of_files);
+	files = (t_file *)ft_calloc(*num_of_files - n, sizeof(t_file));
 	while (++i < *num_of_files)
 	{
 		if (name_list[i]->d_name[0] != '.')
-		{
-			files[file_ind].name = ft_strjoin(dir_path,
-					name_list[i]->d_name);
-			file_ind++;
-		}
+			files[file_ind++].name = ft_strjoin(dir_path,\
+		name_list[i]->d_name);
 		free(name_list[i]);
 	}
 	free(name_list);
-	*num_of_files -= 2;
+	*num_of_files -= n;
 	return (files);
 }
 
-void	init_files(t_minirt *minirt, char **av)
+void	check_valid_file_name(char *infile_name)
 {
-	minirt->rt_file_path = av[1];
-	minirt->dir_path = get_dir_path(av[1]);
-	minirt->rt_files = get_files(&minirt->file_num, minirt->dir_path);
-	free(minirt->dir_path);
-	if (!minirt->rt_files)
+	char	*extension;
+	char	*tmp;
+	int		infile_len;
+
+	extension = ft_strdup(".rt");
+	infile_len = ft_strlen(infile_name);
+	tmp = infile_name + (infile_len - 3);
+	if (ft_strncmp(tmp, extension, 3))
 	{
-		printf("\e[0;31mError: Directory %s not found\e[0m", minirt->dir_path);
+		printf("\e[0;31mError: File %s is not allowed. It must end with the \
+.rt extension\e[0m\n", infile_name);
+		free(extension);
 		exit(EXIT_FAILURE);
 	}
-	assign_file_positions(minirt->rt_files, minirt->file_num);
+	free(extension);
 }

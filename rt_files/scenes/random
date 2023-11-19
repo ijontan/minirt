@@ -1,0 +1,30 @@
+# Ambient light
+# ratio		color
+A 0.3		255,255,255
+
+# Camera
+# position	direction	field of view
+C 0,0,0		0,0,1		30
+
+# Point light
+# position		ratio		color
+L 0,80,160		1			255,255,255
+L 0,0,160		1			255,255,255
+
+# __________________________________________________________________________________________________________________________________________________________________
+# Objects
+
+# Plane																Material
+#	point		normal vector	color								specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission_color	shininess
+# pl	0,-40,200	0,-1,0			255,255,255							0				255,255,255		0					0				0				0,0,0			30
+# pl	120,0,0		1,0,0			0,0,255								0				255,255,255		0					0				0				0,0,0			30
+
+# Sphere
+sp	0,0,100	50	0,150,0											1				255,255,255		1					1				0				0,0,0			10
+
+# Cone																Material
+#	tip			axis direction	diameter	height		color		specular_index	specular_color	reflective_index	diffuse_index	emission_index	emission_color	shininess
+co  0,100,200 	0,0.3,-1		30			100			0,255,0
+co  0,100,200 	0,0.3,1			60			150			0,0,255
+co  0,100,200 	0,-1,1			100			200			255,0,255
+co  0,100,200 	0,-1,-1			10			50			255,255,0
