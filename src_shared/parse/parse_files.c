@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_files.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:26:00 by rsoo              #+#    #+#             */
-/*   Updated: 2023/11/19 17:31:43 by rsoo             ###   ########.fr       */
+/*   Updated: 2024/01/24 15:53:01 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,7 @@ t_file	*get_files(int *num_of_files, char *dir_path)
 	while (++i < *num_of_files)
 	{
 		if (name_list[i]->d_name[0] != '.')
-			files[file_ind++].name = ft_strjoin(dir_path,\
-		name_list[i]->d_name);
+			files[file_ind++].name = ft_strjoin(dir_path, name_list[i]->d_name);
 		free(name_list[i]);
 	}
 	free(name_list);
