@@ -50,7 +50,7 @@ with different level of reflection
 ![tracing](screenshots/pathTracing.jpg)
 
 example simulating different Metals
-![tracing](screenshots/metels.jpg)
+![matels](screenshots/matels.jpg)
 
 ## Getting Started <a name = "getting_started"></a>
 
