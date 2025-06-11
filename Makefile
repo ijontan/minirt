@@ -6,7 +6,7 @@
 #    By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/18 20:55:16 by itan              #+#    #+#              #
-#    Updated: 2023/11/17 15:20:55 by rsoo             ###   ########.fr        #
+#    Updated: 2025/06/11 23:47:30 by itan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,13 +79,17 @@ UNAME := $(shell uname)
 mlxlib		= ./includes/minilibx_opengl/libmlx.a
 
 ifeq ($(UNAME), Linux)
-MLXLIB	= -I /usr/local/include -L/usr/local/lib -lbsd -lmlx -lXext -lX11
+MLXLIB	= -I./includes/minilibx-linux/ -L./includes/minilibx-linux/ -lbsd -lmlx -lXext -lX11
+mlx = ./includes/minilibx-linux/libmlx.a
+mlxdir = ./includes/minilibx-linux
+mlxflag = CC=clang 
 endif
 ifeq ($(UNAME), Darwin)
 INC += -I /usr/local/include 
 CFLAGS += -D __APPLE__
 MLXLIB	= -I./includes/minilibx_opengl/ -L./includes/minilibx_opengl -lmlx -framework OpenGL -framework AppKit
 mlx = $(mlxlib)
+mlxdir = ./includes/minilibx_opengl/
 endif
 
 
@@ -214,7 +218,7 @@ $(LIBDIR)/$(LIBNAME):
 		@make -C $(LIBDIR) --no-print-directory
 
 $(mlx):
-		@make -C ./includes/minilibx_opengl --no-print-directory
+		@make $(mlxflag) -C $(mlxdir) --no-print-directory
 
 clean:
 		@printf "$(RED)$(BRIGHT)Removing $(NAME) objects...\n$(NORMAL)"

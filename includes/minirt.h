@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 13:22:20 by itan              #+#    #+#             */
-/*   Updated: 2023/11/19 16:22:47 by rsoo             ###   ########.fr       */
+/*   Updated: 2025/06/11 23:09:22 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #  include <key_macos.h>
 # else
 #  include <key_linux.h>
-#  include <mlx.h>
+#  include "./minilibx-linux/mlx.h"
 # endif
 
 # include "libft.h"
